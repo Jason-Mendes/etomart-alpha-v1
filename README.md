@@ -1,3 +1,6 @@
+# etomart
+E-Store Platform - Grocery delivery WebApp - Front-End: React - Back-End/Web Server: Node.js (JavaScript/TypeScript) - Database: Firebase (NoSQL) (Firestore or Realtime Database)  Components  - Client-Side Framework: React - Styling: Tailwind CSS
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,7 +71,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 ### This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
-# etomart
-E-Store Platform - Grocery delivery WebApp - Front-End: React - Back-End/Web Server: Node.js (JavaScript/TypeScript) - Database: Firebase (NoSQL) (Firestore or Realtime Database)  Components  - Client-Side Framework: React - Styling: Tailwind CSS
+
 >>>>>>> 80f072c01236aa31541b82aec4db921112cbafa4
