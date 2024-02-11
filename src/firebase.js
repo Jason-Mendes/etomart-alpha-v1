@@ -1,12 +1,18 @@
-// Import additional services as needed
-
+// Import the Firebase modules needed
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/firebase-auth';
-import { firebaseConfig } from 'firebase/firebase-config';
-const app = initializeApp(appConfig);
-// Initialize Cloud Firestore through Firebase (using v9)
+import { getAuth } from 'firebase/auth';
+
+
+// Import the firebaseConfig object
+import { firebaseConfig } from './firebase-config'; // Ensure this path is correct
+
+// Initialize Firebase with your project's configuration
+const app = initializeApp(firebaseConfig);
+
+// Initialize Cloud Firestore and Authentication
 const db = getFirestore(app);
 const auth = getAuth(app);
-// Export other services as needed so you can use them throughout your application.
+
+// Export the initialized services so you can use them throughout your application
 export { db, auth };
