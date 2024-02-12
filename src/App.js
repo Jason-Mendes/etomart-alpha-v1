@@ -7,7 +7,7 @@ import NavBar from './components/NavBar';
 // import Home from './components/Home';
 import Products from './components/Products';
 import Cart from './components/Cart';
-// import UserProfile from './components/UserProfile';
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
@@ -17,8 +17,8 @@ function App() {
         <NavBar />
         <Routes>
           {/* Update these Route components once the corresponding components are ready */}
-          {/* <Route path="/" element={<Home />} exact />
-          <Route path="/profile" element={<UserProfile />} /> */}
+          {/* <Route path="/" element={<Home />} exact />} /> */}
+          <Route path="/profile" element={<UserProfile />} />
         <Route path="/products" element={<Products />} />
         <Route path="/cart" element={<Cart />} />
         </Routes>
