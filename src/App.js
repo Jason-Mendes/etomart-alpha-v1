@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { CartProvider } from './context/CartContext';
 import NavBar from './components/NavBar';
-// Assuming these components will be created and used later
+// these components will be created and used later
 import Home from './components/Home';
 import Products from './components/Products';
 import Cart from './components/Cart';
