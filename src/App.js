@@ -17,7 +17,8 @@ function App() {
         <NavBar />
         <Routes>
           {/* Update these Route components once the corresponding components are ready} */}
-          { <Route path="/" element={<Home />} exact />}
+          <Route path="/" exact element={<LandingPage />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<UserProfile />} />
         <Route path="/products" element={<Products />} />
         <Route path="/cart" element={<Cart />} />

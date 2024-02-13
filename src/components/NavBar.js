@@ -6,7 +6,7 @@ function NavBar() {
         <nav className="bg-gray-800 text-white p-4">
         <ul className="flex space-x-4">
           <li>
-            <Link to="/" className="hover:text-gray-300">Home</Link>
+            <Link to="/home" className="hover:text-gray-300">Home</Link>
           </li>
           <li>
             <Link to="/products" className="hover:text-gray-300">Products</Link>
