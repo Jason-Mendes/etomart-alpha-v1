@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function OPNavBar() {
-  console.log('Rendering OPNavBar');
+  // console.log('Rendering OPNavBar');
     return (
         <nav className="bg-slate-100 text-black p-4">
         <ul className="flex space-x-4">
@@ -27,3 +27,4 @@ function OPNavBar() {
 }
 
 export default OPNavBar;
+//Other Pages Nav Bar

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function LPNavBar() {
-  console.log('Rendering LPNavBar');
+  // console.log('Rendering LPNavBar');
     return (
         <nav className="bg-slate-100 text-orange-500 p-4">
         <ul className="flex space-x-4">
@@ -27,3 +27,4 @@ function LPNavBar() {
 }
 
 export default LPNavBar;
+//Landing Pages Nav Bar
