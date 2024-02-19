@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { CartProvider } from './context/CartContext';
-import NavBar from './components/NavBar';
-// these components will be created and used later
+import NavbarWrapper from './components/NavBarWrapper'; // Adjust the import path as necessary
+import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import Products from './components/Products';
 import Cart from './components/Cart';
@@ -12,24 +12,47 @@ import UserProfile from './components/UserProfile';
 function App() {
   return (
     <Router>
-       <CartProvider>
+      <CartProvider>
         <div>
-        <NavBar />
-        <Routes>
-          {/* Update these Route components once the corresponding components are ready} */}
-          {/* <Route path="/" exact element={<LandingPage />} /> */}
-          <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<UserProfile />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/cart" element={<Cart />} />
-        </Routes>
-      </div>
+          <NavbarWrapper /> {/* This will conditionally render the correct navbar */}
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/LandingPage" element={<LandingPage />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/user-profile" element={<UserProfile />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
+        </div>
       </CartProvider>
     </Router>
   );
 }
 
 export default App;
+
+
+// function App() {
+//   return (
+//     <Router>
+//        <CartProvider>
+//         <div>
+//         <NavBar />
+//         <Routes>
+//           {/* Update these Route components once the corresponding components are ready} */}
+//           {/* <Route path="/" exact element={<LandingPage />} /> */}
+//           <Route path="/home" element={<Home />} />
+//           <Route path="/profile" element={<UserProfile />} />
+//         <Route path="/products" element={<Products />} />
+//         <Route path="/cart" element={<Cart />} />
+//         </Routes>
+//       </div>
+//       </CartProvider>
+//     </Router>
+//   );
+// }
+
+// export default App;
 
 
 
