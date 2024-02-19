@@ -1,3 +1,7 @@
-import React from "react";
+import React from 'react'
 
-function LandingPage({ landingpage })
+export const LandingPage = () => {
+  return (
+    <div>LandingPage</div>
+  )
+}
