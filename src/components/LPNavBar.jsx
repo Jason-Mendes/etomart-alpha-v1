@@ -6,10 +6,10 @@ function LPNavBar() {
   // console.log('Rendering LPNavBar');
   return (
     //navbar container
-    <nav className="bg-slate-100 text-black px-4">
-      <div className="max-w-[2000px]  mt-0 mb-4 mr-0 ml-0 px-4">
+    <nav className="bg-slate-100 text-black px-4 ">
+      
         {/* Text and Image Container */}
-        <div className=" flex justify-between mt-0 mb-4  px-4 items-center max-w-[1850px]  ">
+        <div className=" flex justify-between mt-0  px-4 items-center max-w-[1850px]  ">
           {/* Text Component */}
           <Text
             className="text-[25px] sm:text-[25px] md:text-[25px] text-orange-500 my-4 ml-4 mr-4"
@@ -19,7 +19,7 @@ function LPNavBar() {
           </Text>
           {/* Image Component */}
           <Img
-            className="h-[40px] my-0 ml-4 mr-4" // Adjust margin as needed
+            className="h-[40px] my-4 ml-4 mr-4" // Adjust margin as needed
             src="images/img_group36.svg"
             alt="groupThirtySix"
           />
@@ -42,7 +42,7 @@ function LPNavBar() {
              </ul>
           */}
           </div>
-          </div>
+          
       </nav>
       //navbar container ends
     );
