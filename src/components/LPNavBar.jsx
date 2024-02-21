@@ -1,11 +1,29 @@
 import React from 'react';
+import { Button, Img, List, Text } from '../components';
 import { Link } from 'react-router-dom';
 
 function LPNavBar() {
   // console.log('Rendering LPNavBar');
-    return (
-        <nav className="bg-slate-100 text-black p-4">
-        <ul className="flex space-x-4">
+  return (
+    //navbar container
+    <nav className="bg-slate-100 text-black px-4">
+      <div className="max-w-[2000px]  mt-0 mb-4 mr-0 ml-0 px-4">
+        {/* Text and Image Container */}
+        <div className=" flex justify-between mt-0 mb-4  px-4 items-center max-w-[1850px]  ">
+          {/* Text Component */}
+          <Text
+            className="text-[25px] sm:text-[25px] md:text-[25px] text-orange-500 my-4 ml-4 mr-4"
+            size="txtShrikhandRegular45 " 
+          >
+            Etomart
+          </Text>
+          {/* Image Component */}
+          <Img
+            className="h-[40px] my-0 ml-4 mr-4" // Adjust margin as needed
+            src="images/img_group36.svg"
+            alt="groupThirtySix"
+          />
+          {/* <ul className="flex space-x-4"> 
           <li>
             <Link to="/LandingPage" className="hover:text-white">LandingPage</Link>
           </li>
@@ -20,9 +38,13 @@ function LPNavBar() {
           </li>
           <li>
             <Link to="/user-profile" className="hover:text-white">User Profile</Link>
-          </li>
-        </ul>
+          </li> 
+             </ul>
+          */}
+          </div>
+          </div>
       </nav>
+      //navbar container ends
     );
 }
 
