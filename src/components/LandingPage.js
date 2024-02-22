@@ -17,7 +17,7 @@ function LandingPage() {
               <Text className="text-left text-3xl md:text-5xl text-black-900 my-4 mr-4">
                 Your Daily Food Delivered Hot & Fresh
               </Text>
-              <Img className="h-[434px] md:h-auto object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] ml-4" src="images/img_istockphoto141.png" alt="Delivered Food" loading="lazy"/>
+              <Img className="h-[434px] md:h-auto object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] ml-1" src="images/img_istockphoto141.png" alt="Delivered Food" loading="lazy"/>
             </div>
             <Text className="text-4xl md:text-[34px] sm:text-[32px] text-white-A700 ml-[700px] md:ml-0">
               Groceries, Meals, Pharmacies, anything!
