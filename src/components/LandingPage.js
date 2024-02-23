@@ -8,21 +8,30 @@ function LandingPage() {
     <div className=''>
      <div className="bg-white-A700 font-montserrat w-full">
   <div className="flex flex-col justify-end pt-0 w-full">
-    <div className="flex flex-col justify-start pb-[100px] rounded-sm w-full">
-      <div className="relative w-full h-[696px] md:h-[703px] sm:h-[947px]">
-        <div className="bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] rounded-tr-[200px] shadow-bs h-full m-auto">
-        <div className="absolute top-[5%] w-[90%] flex flex-col my-4 ml-4 mr-4  mt-0  px-4  ">
-          <div className="flex flex-col justify-start w-full gap-[60px] md:gap-4 ">
-            <div className="flex justify-between items-center max-w-[1050px] mt-4 mr-10 px-10">
+
+      <div className="flex-col relative w-full h-[696px] md:h-[703px] sm:h-[947px]">
+        <div className="flex justify-between items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] rounded-tr-[200px] shadow-bs h-full m-auto ">
+        <div className="absolute top-[5%] w-[90%] my-4 ml-4 mr-4  mt-0  px-6  ">
+          
+          <div className="mt-0 mb-16 flex items-center justify-between py-4 px-4 sm:mx-0 sm:mb-0 sm:px-0 md:px-6">
               <Text className="text-left text-3xl md:text-5xl text-black-900 my-4 mr-4">
                 Your Daily Food Delivered Hot & Fresh
               </Text>
-              <Img className="h-[434px] md:h-auto object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] ml-1" src="images/img_istockphoto141.png" alt="Delivered Food" loading="lazy"/>
+              <div className="flex gap-[60px] md:gap-50 md:ml-60 justify-content:flex-end">
+  <div className="flex flex-col justify-start w-full gap-[60px] md:gap-4">
+    </div>
+  <Img
+    className="  object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] "
+    src="images/img_istockphoto141.png"
+    loading="lazy"
+  />
+</div>
+
             </div>
             <Text className="text-4xl md:text-[34px] sm:text-[32px] text-white-A700 ml-[700px] md:ml-0">
               Groceries, Meals, Pharmacies, anything!
             </Text>
-          </div>
+          
         </div>
       </div>
       <div className="flex flex-col justify-start w-[32%] md:w-full ml-14 md:ml-0">
@@ -46,7 +55,7 @@ function LandingPage() {
         </div>
       </div>
     </div>
-  </div>
+
 </div>
 </div>
 
