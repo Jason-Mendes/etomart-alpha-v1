@@ -13,12 +13,14 @@ function LPNavBar() {
         <h1 className='-mt-2 text-3xl font-bold text-[#df7000] whitespace-nowrap'>Etomart</h1>
       </div>
       {/* Image Component */}
-    <Img className="h-[40px] my-0 ml-2 mr-10 md:mr-20 lg:mr-40" src="images/img_group36.svg" alt="groupThirtySix" />
+    <Img className="h-[40px] my-0 ml-0 mr-0 md:mr-0 lg:mr-0" src="images/img_group36.svg" alt="groupThirtySix" />
+{/*
 <ul className="flex space-x-4">
+        
       <li>
         <Link to="/LandingPage" className="hover:text-white">LandingPage</Link>
       </li>
-          {/*
+       
           <li>
             <Link to="/home" className="hover:text-white">Home</Link>
           </li>
@@ -31,9 +33,9 @@ function LPNavBar() {
           <li>
             <Link to="/user-profile" className="hover:text-white">User Profile</Link>
           </li> 
-             */}
+             
              </ul>
-       
+       */}
           </div>
           
       </nav>

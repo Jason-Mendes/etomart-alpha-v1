@@ -14,7 +14,7 @@ function LandingPage() {
             <div className="flex justify-between items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] rounded-tr-[200px] shadow-bs h-full m-auto"
             style={{ height: '570px' }}>
               <div className="absolute top-5 my-4 ml-4 mr-4 mt-0 px-6">
-                <div className="mt-0 mb-16 flex items-center justify-between py-4 px-4 sm:mx-0 sm:mb-0 sm:px-0 md:px-6">
+                <div className="mt-0  flex items-center justify-between py-4 px-4 sm:mx-0 sm:mb-0 sm:px-0 md:px-0">
                   <Text className="text-5xl text-black-900 w-96" style={{ width: '900px', height: '170px' }}>
                     Your Daily Food <br/> Delivered <br/> Hot & Fresh
                   </Text>
@@ -28,14 +28,39 @@ function LandingPage() {
                  </Text>
               </div>
             </div>
-            <div className="flex flex-col justify-start w-32 md:w-full ml-14 md:ml-0">
-              <div className="flex flex-col justify-start w-full gap-60 md:gap-10">
+                {/* Location stuff*/}
+
+                
                 {/* Additional Components */}
+                <div className="flex-col relative w-full h-[696px] md:h-[600px] sm:h-[947px]">
+                <div className="flex justify-between items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] shadow-bs h-full m-auto"
+            style={{ height: '570px' }}>
+    <div className="container mx-auto py-12"> {/* Main container */}
+      <div className="grid grid-cols-3 gap-6"> {/* 3 columns with spacing */}
+        <div className="col-span-1"> {/* Column 1 */}
+          <Button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+            Button 1
+          </Button>
+        </div>
+        <div className="col-span-1"> {/* Column 2 */}
+          <Button className="bg-green-500 text-white px-4 py-2 rounded-md">
+            Button 2
+          </Button>
+        </div>
+        <div className="col-span-1"> {/* Column 3 */}
+          <Button className="bg-orange-500 text-white px-4 py-2 rounded-md">
+            Button 3
+          </Button>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+
               </div>
             </div>
           </div>
-        </div>
-      </div>
+
       
       {/* Hero Slider Section */}
       <section className="hero-section">
@@ -59,7 +84,7 @@ function LandingPage() {
       
       {/* Call to Action Section */}
       <section className="cta">
-        <Link to="/products" className="btn btn-primary">Shop Now</Link>
+        {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
       </section>
       
       {/* Footer Section */}
