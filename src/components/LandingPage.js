@@ -11,17 +11,17 @@ function LandingPage() {
           <div className="flex-col relative w-full ">
             <div className="flex justify-between items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] rounded-tr-[200px] shadow-2xl h-full m-auto" style={{ height: '500px' }}>
               <div className="absolute top-5 my-4 ml-4 mr-4 mt-0 px-6">
-              <div className="mt-0 flex items-center justify-between py-4 px-4 sm:mx-0 sm:mb-0 sm:px-0 md:px-0 ">
-              <div className="flex flex-row justify-between items-center">
-                <Text className="text-5xl text-black-900 font-montserrat font-bold mb-0 ml-16 mr-20">
-                  Your Daily Food <br/> Delivered <br/> Hot & Fresh
-                </Text>
-                <div className="flex flex-col"> {/* Container for the image and second text */}
-  <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px]" src="images/Main_groceries_reverse.jpg" loading="lazy" style={{ width: '800px', height: '370px' }} />
-  <div className="flex justify-center"> {/* Container for the second text */}
-    <Text className="text-3xl text-white font-montserrat font-bold mt-4 mb-4 ml-0 mr-0">
-      Groceries, Meals, Pharmacies, anything!
-    </Text>
+                <div className="mt-0 flex items-center justify-between py-4 px-4 sm:mx-0 sm:mb-0 sm:px-0 md:px-0 ">
+                  <div className="flex flex-row justify-between items-center">
+                    <Text className="text-5xl text-black-900 font-montserrat font-bold mb-0 ml-16 mr-20">
+                      Your Daily Food <br /> Delivered <br /> Hot & Fresh
+                    </Text>
+                    <div className="flex flex-col"> {/* Container for the image and second text */}
+                      <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px]" src="images/Main_groceries_reverse.jpg" loading="lazy" style={{ width: '800px', height: '370px' }} />
+                      <div className="flex justify-center"> {/* Container for the second text */}
+                        <Text className="text-3xl text-white font-montserrat font-bold mt-4 mb-4 ml-0 mr-0">
+                          Groceries, Meals, Pharmacies, anything!
+                        </Text>
 
 
                       </div>
@@ -37,71 +37,71 @@ function LandingPage() {
 
 
 
-                 {/* Location stuff*/}{/* Location stuff */}
-                              
-                 <div className="container bg-white flex items-center p-5 m-8">
-  <div className="button-group flex flex-col items-start">
-    <div className="button-row flex items-center mb-6">
-      <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat">
-        <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy" />
-        <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">Whats your Address?</p>
-      </Button>
-    </div>
+      {/* Location stuff*/}{/* Location stuff */}
 
-    <div className="button-row flex mt-2">
-      <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat">
-        <img className="h-[20px] ml-0.5 md:ml-[0] mt-0.5 w-[42px]" src="images/img_save.svg" alt="save" loading="lazy" />
-        <p className="text-left md:text-lg sm:text-[28px] text-[32px] text-gray-600 font-bold">Use Current Location</p>
-      </Button>
-    </div>
+      <div className="container bg-white flex items-center p-5 m-8">
+        <div className="button-group flex flex-col items-start">
+          <div className="button-row flex items-center mb-6">
+            <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat">
+              <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy" />
+              <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">Whats your Address?</p>
+            </Button>
+          </div>
+
+          <div className="button-row flex mt-2">
+            <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat">
+              <img className="h-[20px] ml-0.5 md:ml-[0] mt-0.5 w-[42px]" src="images/img_save.svg" alt="save" loading="lazy" />
+              <p className="text-left md:text-lg sm:text-[28px] text-[32px] text-gray-600 font-bold">Use Current Location</p>
+            </Button>
+          </div>
 
 
-              
-                </div>
-                </div>  
-                {/* Additional Components*/}
-                <div className="flex justify-between items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] shadow-bs h-full m-auto"
-            style={{ height: '570px' }}>
-    <div className="container flex justify-center items-center p-5 m-8">
-        <div className="button-group flex flex-col items-center">
+
+        </div>
+      </div>
+      {/* Additional Components*/}
+      <div className="flex justify-between items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] shadow-bs h-full m-auto"
+        style={{ height: '570px' }}>
+        <div className="container flex justify-center items-center p-5 m-8">
+          <div className="button-group flex flex-col items-center">
             <div className="button-row flex">
-                <Button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">Button 1</Button>
-                <Button className="bg-amber-600 text-white px-4 py-2 rounded-md mr-2">Button 2</Button>
-                <Button className="bg-amber-600 text-white px-4 py-2 rounded-md">Button 3</Button>
+              <Button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">Button 1</Button>
+              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md mr-2">Button 2</Button>
+              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md">Button 3</Button>
             </div>
             <div className="button-row flex mt-2">
-                <Button className="bg-amber-600 text-white px-4 py-2 rounded-md mr-2">Button 4</Button>
-                <Button className="bg-amber-600 text-white px-4 py-2 rounded-md mr-2">Button 5</Button>
-                <Button className="bg-amber-600 text-white px-4 py-2 rounded-md">Button 6</Button>
+              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md mr-2">Button 4</Button>
+              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md mr-2">Button 5</Button>
+              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md">Button 6</Button>
             </div>
+          </div>
         </div>
-    </div>
-</div> 
- {/* Hero Slider Section */}
+      </div>
+      {/* Hero Slider Section */}
       <section className="hero-section">
         {/* Hero Slider or Static Image */}
       </section>
-      
+
       {/* Search Functionality Section */}
       <section className="search-bar">
         {/* Search Input */}
       </section>
-      
+
       {/* Featured Products or Categories Section */}
       <section className="featured-products">
         {/* Dynamically list featured products or categories */}
       </section>
-      
+
       {/* Testimonials or Reviews Section */}
       <section className="testimonials">
         {/* Display user testimonials */}
       </section>
-      
+
       {/* Call to Action Section */}
       <section className="cta">
         {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
       </section>
-      
+
       {/* Footer Section */}
       <footer className="site-footer">
         {/* Footer Content */}
@@ -110,32 +110,32 @@ function LandingPage() {
       <section className="hero-section">
         {/* Hero Slider or Static Image */}
       </section>
-      
+
       {/* Search Functionality Section */}
       <section className="search-bar">
         {/* Search Input */}
       </section>
-      
+
       {/* Featured Products or Categories Section */}
       <section className="featured-products">
         {/* Dynamically list featured products or categories */}
       </section>
-      
+
       {/* Testimonials or Reviews Section */}
       <section className="testimonials">
         {/* Display user testimonials */}
       </section>
-      
+
       {/* Call to Action Section */}
       <section className="cta">
         {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
       </section>
-      
+
       {/* Footer Section */}
       <footer className="site-footer">
         {/* Footer Content */}
       </footer>
-      </div>
+    </div>
   );
 }
 
