@@ -13,7 +13,7 @@ function LandingPage() {
               <div className="absolute top-5 my-4 ml-4 mr-4 mt-0 px-6">
                 <div className="mt-0 flex items-center justify-between py-4 px-4 sm:mx-0 sm:mb-0 sm:px-0 md:px-0 ">
                   <div className="flex flex-row justify-between items-center">
-                    <Text className="text-5xl text-black-900 font-montserrat font-bold mb-0 ml-16 mr-20">
+                    <Text className="text-5xl text-black-900 font-Pacifico font-bold mb-0 ml-16 mr-20">
                       Your Daily Food <br /> Delivered <br /> Hot & Fresh
                     </Text>
                     <div className="flex flex-col"> {/* Container for the image and second text */}
