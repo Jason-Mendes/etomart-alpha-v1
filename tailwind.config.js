@@ -8,7 +8,7 @@ module.exports = {
         shrikhand: ['Shrikhand', 'normal'],
         Pacifico: ['Pacifico', 'cursive'],
         fontWeight: ['400'],
-  fontStyle: ['normal'],
+        fontStyle: ['normal'],
       },
       },
     },
