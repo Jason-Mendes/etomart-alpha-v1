@@ -1,7 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Namdhinggo&family=Shrikhand&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Pacifico&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -11,13 +11,13 @@ function OPNavBar() {
   };
 
   return (
-    <>
+    <div className="font-josefin-sans">
       <nav className="bg-slate-100 text-orange-500 px-4">
         <div className="mt-0  flex items-center justify-between py-0 sm:mx-0 sm:mb-4 md:px-4">
-          <div className="flex items-center mt-4 mb-4">
-            <h1 className='-mt-2 text-3xl font-shrikhand text-[#df7000] whitespace-nowrap'>Etomart</h1>
+          <div className="flex items-center mt-4 mb-4 ">
+            <h1 className='-mt-2 text-3xl pt-1 font-shrikhand text-[#df7000] whitespace-nowrap'>Etomart</h1>
           </div>
-          <ul className="hidden md:flex">
+          <ul className="hidden md:flex font-bold text-lg">
             <li className='px-4 whitespace-nowrap '>
               <Link to="/LandingPage" className="hover:text-black">LandingPage</Link>
             </li>
@@ -40,7 +40,7 @@ function OPNavBar() {
         </div>
       </nav>
       <div className={`flex justify-end md:hidden ${nav ? 'block' : 'hidden'} transition-all duration-500 ease-in-out`}>
-        <div>
+        <div >
           <ul className='uppercase p-2'>
             <li className='p-2 whitespace-nowrap border-b'>
               <Link to="/LandingPage" className="hover:text-black">Landing Page</Link>
@@ -60,7 +60,7 @@ function OPNavBar() {
           </ul>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

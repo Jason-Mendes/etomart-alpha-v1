@@ -5,17 +5,23 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        shrikhand: ['Shrikhand', 'normal'],
-        Pacifico: ['Pacifico', 'cursive'],
-        fontWeight: ['400'],
-        fontStyle: ['normal'],
+        shrikhand: ['Shrikhand', 'cursive'],
+        pacifico: ['Pacifico', 'cursive'],
+        'josefin-sans': ['Josefin Sans', 'sans-serif'],
       },
+      fontWeight: {
+        normal: '400',
+      },
+      fontStyle: {
+        normal: 'normal',
+      },
+      fontOpticalSizing: {
+        auto: 'auto',
       },
     },
-    variants: {
-      extend: {},
-    },
-    plugins:[],
-  };
-  
-  
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+};

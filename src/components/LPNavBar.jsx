@@ -7,7 +7,7 @@ function LPNavBar() {
   return (
     //navbar container
     <nav className="bg-slate-100 text-orange-500 px-4">
-    <div className="-mt-2 flex items-center justify-between -py-4 sm:mx-0 sm:mb-0 md:px-4">
+    <div className="-mt-2 pt-1 flex items-center justify-between -py-4 sm:mx-0 sm:mb-0 md:px-4">
 
       <div className="flex items-center mt-6 mb-4">
         <h1 className='-mt-2 text-3xl font-shrikhand  text-[#df7000] whitespace-nowrap'>Etomart</h1>
