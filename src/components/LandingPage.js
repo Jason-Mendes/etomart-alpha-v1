@@ -38,19 +38,20 @@ function LandingPage() {
 
 
       {/* Location stuff*/}{/* Location stuff */}
-
       <div className="container bg-white flex items-center p-5 m-8">
         <div className="button-group flex flex-col items-start">
           <div className="button-row flex items-center mb-6">
-            <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat">
-              <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy" />
-              <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">Whats your Address?</p>
+            <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
+              <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy"></img>
+              <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">What's your Address?</p>
             </Button>
           </div>
 
+
+
           <div className="button-row flex mt-2">
-            <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat">
-              <img className="h-[20px] ml-0.5 md:ml-[0] mt-0.5 w-[42px]" src="images/img_save.svg" alt="save" loading="lazy" />
+            <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
+              <img className="h-5 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
               <p className="text-left md:text-lg sm:text-[28px] text-[32px] text-gray-600 font-bold">Use Current Location</p>
             </Button>
           </div>
