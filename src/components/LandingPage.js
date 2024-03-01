@@ -6,24 +6,30 @@ function LandingPage() {
   return (
     <div className="">
       {/* Hero Section */}
-      <div className="w-full ">
-        <div className="flex flex-col justify-end pt-0 w-full">
-          <div className="flex-col relative w-full ">
-            <div className="flex justify-between items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] rounded-tr-[200px] shadow-2xl h-full m-auto" style={{ height: '500px' }}>
-              <div className="absolute top-5 my-4 ml-4 mr-4 mt-0 px-6">
-                <div className="mt-0 flex items-center justify-between py-4 px-4 sm:mx-0 sm:mb-0 sm:px-0 md:px-0 ">
-                  <div className="flex flex-row justify-between items-center">
-                    <Text className="text-5xl text-black-900 font-montserrat font-bold mb-0 ml-16 mr-20">
-                      Your Daily Food <br /> Delivered <br /> Hot & Fresh
-                    </Text>
-                    <div className="flex flex-col"> {/* Container for the image and second text */}
-                      <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px]" src="images/Main_groceries_reverse.jpg" loading="lazy" style={{ width: '800px', height: '370px' }} />
-                      <div className="flex justify-center"> {/* Container for the second text */}
-                        <Text className="text-3xl text-white font-montserrat font-bold mt-4 mb-4 ml-0 mr-0">
+      <div className="">
+        <div className="flex flex-col pt-0 ">
+          <div className="flex-col relative ">
+            <div className="section flex justify-center items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] rounded-tr-[200px] shadow-2xl w-screen h-96 mt-0 relative">
+              <div className="absolute top-5 my-4 ml-0 mr-0 mt-0 px-0 w-full">
+                <div className="mt-2 flex py-0 px-4 sm:px-16 md:px-6"> 
+                  <div className="flex flex-col sm:flex-row justify-center gap-16 items-center">
+                    {/* First Text */}
+                    <div className="text-container">
+                      <Text className="text-2xl sm:text-2xl md:text-4xl lg:text-5xl text-black-900 font-montserrat font-bold -mt-16 mb-0 sm:ml-16 sm:mr-0 md:mr-12 md:ml-10">
+                        Your Daily Food <br /> Delivered <br /> Hot & Fresh
+                      </Text>
+                    </div>
+                    {/* Image and Second Text */}
+                    <div className="flex flex-row sm:flex-col items-center">
+                      {/* Image */}
+                      <div className="image-container">
+                        <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] sm:w-1/2 md:w-auto" src="images/Main_groceries_reverse.jpg" loading="lazy" style={{ width: '900px', height: '290px' }} />
+                      </div>
+                      {/* Second Text */}
+                      <div className="text-container">
+                        <Text className="text-3xl text-white font-montserrat font-bold mt-4 mb-4 sm:ml-0 md:ml-4"> {/* Center the text */}
                           Groceries, Meals, Pharmacies, anything!
                         </Text>
-
-
                       </div>
                     </div>
                   </div>
@@ -60,7 +66,7 @@ function LandingPage() {
 
         </div>
       </div>
-      {/* Additional Components*/}
+      {/* Additional Components
       <div className="flex justify-between items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] shadow-bs h-full m-auto"
         style={{ height: '570px' }}>
         <div className="container flex justify-center items-center p-5 m-8">
@@ -77,7 +83,7 @@ function LandingPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Hero Slider Section */}
       <section className="hero-section">
         {/* Hero Slider or Static Image */}
