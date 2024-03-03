@@ -1,33 +1,65 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+
+// import { Link } from 'react-router-dom';
 import { Button, Img, Text } from '../components';
 
+import React, { useState, useEffect } from 'react';
+
+
 function LandingPage() {
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 640); // Assuming 1024px is the threshold for a large screen
+    };
+
+    // Initial call to set screen size
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); // Empty dependency array means the effect runs only once after mount
+
   return (
-    <div className="">
+    <div className="overflow-hidden">
       {/* Hero Section */}
       <div className="">
-        <div className="flex flex-col pt-0 ">
+        <div className="flex flex-col pt-0 mx-auto">
           <div className="flex-col relative ">
-            <div className="section flex justify-center items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] rounded-tr-[200px] shadow-2xl w-screen h-96 mt-0 relative">
-              <div className="absolute top-5 my-4 ml-0 mr-0 mt-0 px-0 w-full">
-                <div className="mt-2 flex py-0 px-4 sm:px-16 md:px-6"> 
-                  <div className="flex flex-col sm:flex-row justify-center gap-16 items-center">
-                    {/* First Text */}
-                    <div className="text-container">
-                      <Text className="text-2xl sm:text-2xl md:text-4xl lg:text-5xl text-black-900 font-montserrat font-bold -mt-16 mb-0 sm:ml-16 sm:mr-0 md:mr-12 md:ml-10">
-                        Your Daily Food <br /> Delivered <br /> Hot & Fresh
-                      </Text>
+          <div className="section flex justify-center items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] rounded-tr-[200px] shadow-2xl h-[28rem] mt-0 relative" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+            <div className="absolute -top-0 lg:top-5 my-4 ml-0 mr-0 mt-0 px-0 w-full">
+                <div className="mt-2 flex py-0 px-4 sm:px-16 md:px-6">
+                  <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-4 md:gap-4 lg:gap-16  items-center">
+                    {/* Conditional Rendering based on Screen Size */}
+                    <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap">
+                      {isLargeScreen ? (
+                        <Text className="sm:text-2xl md:text-4xl lg:text-5xl text-black-900 font-montserrat font-bold sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 lg:-mt-16 md:pr-4">
+                          Your Daily Food <br /> Delivered <br /> Hot & Fresh
+                        </Text>
+                      ) : (
+                        <Text className="text-2xl  text-black-900 font-montserrat font-bold -mt-0 mb-0  -ml-28 px-4 ">
+                          Your Daily Food Delivered Hot & Fresh
+                        </Text>
+                      )}
                     </div>
+
                     {/* Image and Second Text */}
-                    <div className="flex flex-row sm:flex-col items-center">
+                    <div className="flex flex-col sm:flex-col items-center">
                       {/* Image */}
-                      <div className="image-container">
-                        <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] sm:w-1/2 md:w-auto" src="images/Main_groceries_reverse.jpg" loading="lazy" style={{ width: '900px', height: '290px' }} />
+                      <div className="image-container ">
+                        <Img
+                          className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] sm:w-1/2 md:w-auto"
+                          src="images/Main_groceries_reverse.jpg"
+                          loading="lazy"
+                          style={{ width: '650px', height: '320px' }}
+                        />
                       </div>
                       {/* Second Text */}
                       <div className="text-container">
-                        <Text className="text-3xl text-white font-montserrat font-bold mt-4 mb-4 sm:ml-0 md:ml-4"> {/* Center the text */}
+                        <Text className="text-2xl sm:text-1xl md:text-2xl lg:text-3xl text-white font-montserrat font-bold mt-4 mb-4 sm:ml-0 md:ml-4">
                           Groceries, Meals, Pharmacies, anything!
                         </Text>
                       </div>
@@ -39,12 +71,12 @@ function LandingPage() {
           </div>
         </div>
       </div>
-
+  
 
 
 
       {/* Location stuff*/}{/* Location stuff */}
-      <div className="container bg-white flex items-center p-5 m-8">
+      <div className="container bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
         <div className="button-group flex flex-col items-start">
           <div className="button-row flex items-center mb-6">
             <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
@@ -66,24 +98,38 @@ function LandingPage() {
 
         </div>
       </div>
-      {/* Additional Components
-      <div className="flex justify-between items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] shadow-bs h-full m-auto"
-        style={{ height: '570px' }}>
+      {/* Additional Components */}
+      <div className="section flex justify-center items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-2xl h-[28rem] mt-0 relative" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+            
         <div className="container flex justify-center items-center p-5 m-8">
           <div className="button-group flex flex-col items-center">
             <div className="button-row flex">
-              <Button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">Button 1</Button>
-              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md mr-2">Button 2</Button>
-              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md">Button 3</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 1</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 2</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 3</Button>
             </div>
             <div className="button-row flex mt-2">
-              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md mr-2">Button 4</Button>
-              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md mr-2">Button 5</Button>
-              <Button className="bg-amber-600 text-white px-4 py-2 rounded-md">Button 6</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 4</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 5</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 6</Button>
+            </div>
+            <div className="button-row flex mt-2">
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 7</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 8</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 9</Button>
+            </div>
+            <div className="button-row flex mt-2">
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 10</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 11</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 12</Button>
+            </div>
+            <div className="button-row flex mt-2">
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 13</Button>
+              <Button className="bg-slate-100 text-black px-4 py-2 rounded-md mr-2">Button 14</Button>
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
       {/* Hero Slider Section */}
       <section className="hero-section">
         {/* Hero Slider or Static Image */}
