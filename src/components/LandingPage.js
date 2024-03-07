@@ -40,7 +40,7 @@ function LandingPage() {
                           Your Daily Food <br /> Delivered <br /> Hot & Fresh
                         </Text>
                       ) : (
-                        <Text className="text-2xl  text-black-900 font-montserrat font-bold -mt-0 mb-0  -ml-28 px-4 ">
+                        <Text className=" text-xs text-black-900 font-montserrat font-bold -mt-0 mb-0  -ml-32 px-4 ">
                           Your Daily Food Delivered Hot & Fresh
                         </Text>
                       )}
@@ -58,11 +58,17 @@ function LandingPage() {
                         />
                       </div>
                       {/* Second Text */}
-                      <div className="text-container">
-                        <Text className="text-2xl sm:text-1xl md:text-2xl lg:text-3xl text-white font-montserrat font-bold mt-4 mb-4 sm:ml-0 md:ml-4">
+                      <div className="text-container items-center">
+                      {isLargeScreen ? (
+                        <Text className=" sm:text-1xl md:text-2xl lg:text-3xl text-white font-montserrat font-bold mt-4 mb-4 sm:ml-0 md:ml-0">
+                           Groceries, Meals, Pharmacies, anything!
+                        </Text>
+                      ) : (
+                        <Text className="text-sm text-white font-montserrat font-bold mt-4">
                           Groceries, Meals, Pharmacies, anything!
                         </Text>
-                      </div>
+                      )}
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -101,98 +107,103 @@ function LandingPage() {
       </div>
       {/* Locations */}
       {/* Conditional Rendering based on Screen Size */}
-      <div className="section  flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-2xl h-[36rem]  relative" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+      <div className="section flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-2xl h-auto relative" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
 
-        <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap mt-4 md:py-2 md:pb-2 ">
+        <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
           {isLargeScreen ? (
-            <Text className="sm:text-4xl md:text-3xl lg:text-1xl text-black-900 font-montserrat font-bold sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
+            <Text className="sm:text-4xl md:text-3xl lg:text-1xl text-black-900 font-montserrat font-bold  sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
               Explore Etomart Regions
             </Text>
           ) : (
-            <Text className="text-2xl  text-black-900 font-montserrat font-bold -mt-0 mb-0  -ml-28 px-4 ">
+            <Text className="flex justify-center text-2xl  text-black-900 font-montserrat font-bold  ">
               Explore Etomart Regions
             </Text>
           )}
         </div>
 
         {/* Second Text */}
-        <div className="flex flex-col sm:flex-col items-center">
-        </div>
-        {/* Second Text */}
-        <div className="text-container md:py-0 md:pt-2">
-          <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-2xl text-white font-montserrat  mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">
-          Delivered to you at your convenience!
-          </Text>
+        <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
+          {isLargeScreen ? (
+            <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-2xl text-white font-montserrat  mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">
+               Delivered to you at your convenience!
+            </Text>
+          ) : (
+            <Text className="flex justify-center text-1xl  text-white font-montserrat   ">
+              Delivered to you at your convenience!
+            </Text>
+          )}
         </div>
 
         <div className="">
-  <div className="">
-    <div className=' w-full'>
-              <div className="button-row flex flex-row gap-12 mt-2 mb-6  mx-24 h-16 "> {/* Adjust the gap as needed */}
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-16 rounded-[36px] shadow-lg font-montserrat border border-slate-100 w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 1</p>
-                </Button>
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg font-montserrat border border-slate-100 w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 2</p>
-                </Button>
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 3</p>
-                </Button>
-              </div>
-              <div className="  button-row  flex flex-row gap-12   mt-2 mb-6 mx-24 h-16">
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 4</p>
-                </Button>
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">button 6</p>
-                </Button>
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Kavango West</p>
-                </Button>
-              </div>
-              <div className="  button-row  flex flex-row gap-12  mt-2 mb-6 mx-24 h-16">
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 7</p>
-                </Button>
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 8</p>
-                </Button>
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Otjozondjupa</p>
-                </Button>
-              </div>
-              <div className="  button-row  flex flex-row gap-12  mt-2 mb-6 mx-24 h-16">
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 10</p>
-                </Button>
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 11</p>
-                </Button>
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 12</p>
-                </Button>
-              </div>
-              <div className="  button-row  flex flex-row gap-12  mt-2 mb-6 mx-24 h-16">
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 13</p>
-                </Button>
-                <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- w-[270px]">
-                  <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                  <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 14</p>
-                </Button>
+          <div className=" button-row flex flex-col">
+            <div className='w-full button-row flex flex-col'>
+               <div className="button-row flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4   sm:mx-24 h-16"> {/* Adjust the gap as needed */}
+                    <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 1</p>
+                    </Button>
+                    <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 2</p>
+                    </Button>
+                    <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 3</p>
+                    </Button>
+                  </div>
+                  <div className="button-row flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4 sm:mx-24 h-16"> {/* Adjust the gap as needed */}
+                    {/* <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 1</p>
+                    </Button>
+                    <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 2</p>
+                    </Button>
+                    <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 3</p>
+                    </Button> */}
+                  </div>
+                  <div className="button-row flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4 sm:mx-24 h-16"> {/* Adjust the gap as needed */}
+                    {/* <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 1</p>
+                    </Button>
+                    <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 2</p>
+                    </Button>
+                    <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 3</p>
+                    </Button> */}
+                  </div>
+                  <div className="button-row flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4 sm:mx-24 h-16"> {/* Adjust the gap as needed */}
+                    {/* <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 1</p>
+                    </Button>
+                    <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 2</p>
+                    </Button>
+                    <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- sm:w-[270px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 3</p>
+                    </Button> */}
+                  </div>
+                  <div className="  button-row  flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4 sm:mx-24 h-16">
+                    {/* the following buttons width is diferent from the rest w-[260px]*/}
+                    {/* <Button className="flex items-center bg-white text-black px-4 py-2 ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-50 w-[260px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 13</p>
+                    </Button>
+                    <Button className="flex items-center bg-white text-black px-4 py-2 ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-50 w-[260px]">
+                      <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                      <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 14</p>
+                    </Button> */}
+                    
               </div>
             </div>
           </div>
