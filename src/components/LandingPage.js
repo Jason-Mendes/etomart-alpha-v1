@@ -22,17 +22,14 @@ function LandingPage() {
     // Cleanup the event listener
     return () => window.removeEventListener('resize', handleResize);
   }, []); // Empty dependency array means the effect runs only once after mount
-
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
       <div className="">
         <div className="flex flex-col pt-0 mx-auto">
-          <div className="flex-col relative ">
-            <div className="section flex justify-center items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] rounded-tr-[200px] shadow-2xl h-[28rem] mt-0 relative" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
-              <div className="absolute -top-0 lg:top-5 my-4 ml-0 mr-0 mt-0 px-0 w-full">
-                <div className="mt-2 flex py-0 px-4 sm:px-16 md:px-6">
-                  <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-4 md:gap-4 lg:gap-16  items-center">
+        <div className="flex-col relative ">
+            {/*Minimum height of 16rem (256px) for smaller screens. Preferred height of 22vw (22% of the viewport width) for medium screens. Maximum height of 28rem (448px) for larger screens.*/}
+            <div className="orange_section flex justify-center items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] rounded-tr-[200px] shadow-2xl mt-0 relative overflow-x-hidden" style={{ maxWidth: '1260px', margin: '0 auto', height: 'clamp(20rem, 34vw, 28rem)'}}>
                     {/* Conditional Rendering based on Screen Size */}
                     <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap">
                       {isLargeScreen ? (
@@ -50,12 +47,21 @@ function LandingPage() {
                     <div className="flex flex-col sm:flex-col items-center">
                       {/* Image */}
                       <div className="image-container ">
-                        <Img
+                      {isLargeScreen ? (
+                          <Img
                           className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] sm:w-1/2 md:w-auto"
                           src="images/Main_groceries_reverse.jpg"
                           loading="lazy"
-                          style={{ width: '650px', height: '320px' }}
+                          style={{  height: '320px' }}
                         />
+                      ) : (
+                        <Img
+                        className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] sm:w-1/2 w-250"
+                        src="images/Main_groceries_reverse.jpg"
+                        loading="lazy"
+                        style={{ height: '0px' }}
+                      />
+                      )}
                       </div>
                       {/* Second Text */}
                       <div className="text-container items-center">
@@ -74,10 +80,6 @@ function LandingPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
 
 
 
