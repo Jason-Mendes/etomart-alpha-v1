@@ -1,16 +1,13 @@
 
-// import { Link } from 'react-router-dom';
-import { Button, Img, Text } from '../components';
-
 import React, { useState, useEffect } from 'react';
-
+import { Button, Img, Text } from '../components';
 
 function LandingPage() {
   const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 640); // Assuming 1024px is the threshold for a large screen
+      setIsLargeScreen(window.innerWidth >= 640);
     };
 
     // Initial call to set screen size
@@ -21,67 +18,50 @@ function LandingPage() {
 
     // Cleanup the event listener
     return () => window.removeEventListener('resize', handleResize);
-  }, []); // Empty dependency array means the effect runs only once after mount
+  }, []);
+
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
-      <div className="">
-        <div className="flex flex-col pt-0 mx-auto">
-        <div className="flex-col relative ">
-            {/*Minimum height of 16rem (256px) for smaller screens. Preferred height of 22vw (22% of the viewport width) for medium screens. Maximum height of 28rem (448px) for larger screens.*/}
-            <div className="orange_section flex justify-center items-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] rounded-tr-[200px] shadow-2xl mt-0 relative overflow-x-hidden" style={{ maxWidth: '1260px', margin: '0 auto', height: 'clamp(20rem, 34vw, 28rem)'}}>
-                    {/* Conditional Rendering based on Screen Size */}
-                    <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap">
-                      {isLargeScreen ? (
-                        <Text className="sm:text-2xl md:text-4xl lg:text-5xl text-black-900 font-montserrat font-bold sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 lg:-mt-16 md:pr-4">
-                          Your Daily Food <br /> Delivered <br /> Hot & Fresh
-                        </Text>
-                      ) : (
-                        <Text className=" text-xs text-black-900 font-montserrat font-bold -mt-0 mb-0  -ml-32 px-4 ">
-                          Your Daily Food Delivered Hot & Fresh
-                        </Text>
-                      )}
-                    </div>
+      {/* Orange Section */}
+      <div className="section flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-2xl relative  md:h-auto  md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+        {/* Content goes here */}
+        <div className='text_image_container flex md:items-center overflow-hidden'>
+          <div class="flex justify-center flex-grow md:-mt-20">
 
-                    {/* Image and Second Text */}
-                    <div className="flex flex-col sm:flex-col items-center">
-                      {/* Image */}
-                      <div className="image-container ">
-                      {isLargeScreen ? (
-                          <Img
-                          className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] sm:w-1/2 md:w-auto"
-                          src="images/Main_groceries_reverse.jpg"
-                          loading="lazy"
-                          style={{  height: '320px' }}
-                        />
-                      ) : (
-                        <Img
-                        className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] sm:w-1/2 w-250"
-                        src="images/Main_groceries_reverse.jpg"
-                        loading="lazy"
-                        style={{ height: '0px' }}
-                      />
-                      )}
-                      </div>
-                      {/* Second Text */}
-                      <div className="text-container items-center">
-                      {isLargeScreen ? (
-                        <Text className=" sm:text-1xl md:text-2xl lg:text-3xl text-white font-montserrat font-bold mt-4 mb-4 sm:ml-0 md:ml-0">
-                           Groceries, Meals, Pharmacies, anything!
-                        </Text>
-                      ) : (
-                        <Text className="text-sm text-white font-montserrat font-bold mt-4">
-                          Groceries, Meals, Pharmacies, anything!
-                        </Text>
-                      )}
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+          {isLargeScreen ? (
+            <Text className="text-base text-nowrap mt-2 mr-6 md:text-5xl text-black-900 font-montserrat font-bold">
+       Your Daily Food <br /> Delivered <br /> Hot & Fresh
+            </Text>
+          ) : (
+            <Text className="text-base text-nowrap mt-2 mr-6 md:text-5xl text-black-900 font-montserrat font-bold ">
+              Your Daily Food <br /> Delivered <br /> Hot & Fresh
+            
+            </Text>
+          )}
+
+          </div>
+          <div className='flex flex-col'>
+            <div className='w-full md:w-auto md:max-w-screen-sm'>
+              <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] md:mb-4 w-40 h-auto md:w-screen md:h-80 " src="images/Main_groceries_reverse.jpg" loading="lazy" />
             </div>
 
+            <div className="flex justify-center mt-4">
+              <p className="text-sm md:text-2xl text-white font-montserrat font-bold">Groceries, Meals, Pharmacies, anything!</p>
+            </div>
+          </div>
 
+        </div>
+      </div>
+
+
+
+
+      
+ 
+
+  
 
       {/* Location stuff*/}
       <div className="container bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
