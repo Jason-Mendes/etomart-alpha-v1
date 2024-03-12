@@ -24,36 +24,40 @@ function LandingPage() {
     <div className="overflow-hidden">
       {/* Hero Section */}
       {/* Orange Section */}
-      <div className="section flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-2xl relative  md:h-auto  md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+      <div className="section flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-2xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
         {/* Content goes here */}
-        <div className='text_image_container flex md:items-center overflow-hidden'>
-          <div class="flex justify-center flex-grow md:-mt-20">
-
-
-          {isLargeScreen ? (
-            <Text className="text-base text-nowrap mt-2 mr-6 md:text-5xl text-black-900 font-montserrat font-bold">
-       Your Daily Food <br /> Delivered <br /> Hot & Fresh
-            </Text>
-          ) : (
-            <Text className="text-base text-nowrap mt-2 mr-6 md:text-5xl text-black-900 font-montserrat font-bold ">
-              Your Daily Food <br /> Delivered <br /> Hot & Fresh
-            
-            </Text>
-          )}
-
+        <div className='text_image_container flex items-center justify-evenly md:items-center overflow-hidden md:gap-6 sm:mr-16 md:mr-0 mr-0'>
+          <div className="flex justify-center flex-grow md:-mt-20  ">
+            {/* First is large screens, second is normal to small screens*/}
+            {isLargeScreen ? (
+              <Text className="sm:text-2xl text-nowrap mt-2  md:text-4xl text-black-900 font-montserrat font-bold">
+                Your Daily Food <br /> Delivered <br /> Hot & Fresh
+              </Text>
+            ) : (
+              <Text className="text-base  text-nowrap mt-2 mr-6  text-black-900 font-montserrat font-bold">
+                Your Daily Food <br /> Delivered <br /> Hot & Fresh
+              </Text>
+            )}
           </div>
           <div className='flex flex-col'>
             <div className='w-full md:w-auto md:max-w-screen-sm'>
-              <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] md:mb-4 w-40 h-auto md:w-screen md:h-80 " src="images/Main_groceries_reverse.jpg" loading="lazy" />
+              <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] mb-4 w-60 h-auto md:w-screen md:h-80" src="images/Main_groceries_reverse.jpg" loading="lazy" />
             </div>
-
-            <div className="flex justify-center mt-4">
-              <p className="text-sm md:text-2xl text-white font-montserrat font-bold">Groceries, Meals, Pharmacies, anything!</p>
+            {/* Wrap the additional content in a separate div */}
+            <div className="hidden sm:hidden md:block lg:block xl:block 2xl:block">
+              <div className="flex justify-center mt-4">
+                <p className="text-sm md:text-2xl text-white font-montserrat font-bold">Groceries, Meals, Pharmacies, anything!</p>
+              </div>
             </div>
           </div>
-
+        </div>
+        <div className="md:hidden lg:hidden xl:hidden 2xl:hidden">
+          <div className="flex justify-center mt-4">
+            <p className="text-sm sm:text-xl md:text-2xl text-white font-montserrat font-bold">Groceries, Meals, Pharmacies, anything!</p>
+          </div>
         </div>
       </div>
+
 
 
 
