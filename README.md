@@ -42,6 +42,20 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+## Development Pipeline
+
+# 1. Process
+Processes must enable faster feedback cycles and create a culture for learning 
+
+# 2. Architecture
+Architecture should be agile for change and resilient to failure
+
+# 3. Technology
+Technology is imperative for innovation, increasing productivity and maximizing impact
+
+# 4. Infrastructure
+A robust infrastructure is the foundation for innovative platforms.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
