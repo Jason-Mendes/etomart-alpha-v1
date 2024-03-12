@@ -7,7 +7,9 @@ module.exports = {
       fontFamily: {
         shrikhand: ['Shrikhand', 'cursive'],
         pacifico: ['Pacifico', 'cursive'],
-        'josefin-sans': ['Josefin Sans', 'sans-serif'],
+        josefin_sans: ['Josefin Sans', 'sans-serif'],
+        Agbalumo: ['Agbalumo', 'system-ui'],
+        Kaushan: ['Kaushan Script', 'cursive'],
       },
       fontWeight: {
         normal: '400',

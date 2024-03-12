@@ -43,7 +43,7 @@ function OPNavBar() {
         }
         `}
       </style>
-      <div className="font-josefin-sans">
+      <div className="font-josefin_sans ">
         <nav id="opnavbar" className="bg-slate-100 text-orange-500 px-4">
           {/*  <div className="mt-0  flex items-center justify-between py-0 sm:mx-0 sm:mb-4 md:px-4"> */}
           {/* this or that ^ /*/}

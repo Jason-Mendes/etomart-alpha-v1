@@ -21,55 +21,55 @@ function LandingPage() {
   }, []);
 
   return (
-    <div className="content-wrapper ">
+    <div id="Landing_Page_Main_Body" className="content-wrapper ">
       <div className="overflow-hidden">
         {/* Hero Section */}
         {/* Orange Section */}
-        <div className="section flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-2xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+        <div id="LP_section_1" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-2xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
           {/* Content goes here */}
-          <div className='text_image_container flex items-center justify-evenly md:items-center overflow-hidden md:gap-6 sm:mr-16 md:mr-0 mr-0'>
-            <div className="flex justify-center flex-grow md:-mt-20  ">
+          <div id="text_1_image_container" className=' flex items-center justify-evenly md:items-center overflow-hidden md:gap-6 sm:mr-16 md:mr-0 mr-0'>
+            <div id="text_1_container" className="flex justify-center flex-grow md:-mt-20  ">
               {/* First is large screens, second is normal to small screens*/}
               {isLargeScreen ? (
-                <Text className="sm:text-2xl text-nowrap mt-2  md:text-4xl text-black-900 font-montserrat font-bold">
+                <Text className="sm:text-2xl text-nowrap mt-2  md:text-5xl text-black-900 font-Agbalumo font-bold">
                   Your Daily Food <br /> Delivered <br /> Hot & Fresh
                 </Text>
               ) : (
-                <Text className="text-base  text-nowrap mt-2 mr-6  text-black-900 font-montserrat font-bold">
+                <Text className="text-2xl  text-nowrap mt-2 mr-6  text-black-900 font-Agbalumo font-bold">
                   Your Daily Food <br /> Delivered <br /> Hot & Fresh
                 </Text>
               )}
             </div>
-            <div className='flex flex-col'>
-              <div className='w-full md:w-auto md:max-w-screen-sm'>
+            <div id="text_2_image_container"  className='flex flex-col'>
+              <div id="image_container" className='w-full md:w-auto md:max-w-screen-sm'>
                 <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] mb-4 w-60 h-auto md:w-screen md:h-80" src="images/Main_groceries_reverse.jpg" loading="lazy" />
               </div>
               {/* Wrap the additional content in a separate div */}
-              <div className="hidden sm:hidden md:block lg:block xl:block 2xl:block">
+              <div id="text_2_container_show_large_screens" className="hidden sm:hidden md:block lg:block xl:block 2xl:block">
                 <div className="flex justify-center mt-4">
-                  <p className="text-sm md:text-2xl text-white font-josefin-sans font-bold">Groceries, Meals, Pharmacies, anything!</p>
+                  <p className="text-sm md:text-3xl text-white font-josefin_sans font-bold">Groceries, Meals, Pharmacies, anything!</p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="md:hidden lg:hidden xl:hidden 2xl:hidden">
+          <div  id="text_2_container_show_small_screens" className="md:hidden lg:hidden xl:hidden 2xl:hidden">
             <div className="flex justify-center mt-4">
-              <p className="text-sm sm:text-xl md:text-2xl text-white font-josefin-sans  font-bold">Groceries, Meals, Pharmacies, anything!</p>
+              <p className="text-xl sm:text-xl md:text-2xl text-white font_josefin-sans  font-bold">Groceries, Meals, Pharmacies, anything!</p>
             </div>
           </div>
         </div>
       
         {/* Location stuff*/}
-        <div className="container bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+        <div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
           <div className="button-group flex flex-col items-start">
-            <div className="button-row flex items-center mb-6">
+            <div id="location_buttons_1_container" className="button-row flex items-center mb-6">
               <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
                 <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy"></img>
                 <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">What's your Address?</p>
               </Button>
             </div>
             {/* current Location stuff*/}
-            <div className="button-row flex mt-2">
+            <div id="location_buttons_1_container" className="button-row flex mt-2">
               <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
                 <img className="h-5 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
                 <p className="text-left md:text-lg sm:text-[28px] text-[32px] text-gray-600 font-bold">Use Current Location</p>
