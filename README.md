@@ -56,6 +56,9 @@ Technology is imperative for innovation, increasing productivity and maximizing 
 ### 4. Infrastructure
 A robust infrastructure is the foundation for innovative platforms.
 
+![image](https://github.com/Jason-Mendes/etomart/assets/67435959/12684e5e-2ff0-4db3-af82-b0e21c7cc7ea)
+
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
