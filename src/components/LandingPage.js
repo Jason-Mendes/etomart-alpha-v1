@@ -9,10 +9,19 @@ function LandingPage() {
 //Country stuff
   const regions = [
     { code: 'ALB', name: 'Albania', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/al-a6a6e8ad28b3af63bd4e.svg' },
-    { code: 'AUT', name: 'Austria', flagUrl: 'data:image/svg+xml;base64,...' },
-    { code: 'AZE', name: 'Azerbaijan', flagUrl: 'data:image/svg+xml;base64,...' },
+    { code: 'HRV', name: 'Croatia', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/hr-89b8c8af46eef412f1cd.svg'},
+    { code: 'CYP', name: 'Cyprus', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/cy-c956003b42baa905013c.svg' },
+    { code: 'ALB', name: 'Albania', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/al-a6a6e8ad28b3af63bd4e.svg' },
     { code: 'HRV', name: 'Croatia', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/hr-89b8c8af46eef412f1cd.svg' },
     { code: 'CYP', name: 'Cyprus', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/cy-c956003b42baa905013c.svg' },
+    { code: 'ALB', name: 'Albania', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/al-a6a6e8ad28b3af63bd4e.svg' },
+    { code: 'HRV', name: 'Croatia', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/hr-89b8c8af46eef412f1cd.svg' },
+    { code: 'CYP', name: 'Cyprus', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/cy-c956003b42baa905013c.svg' },
+    { code: 'ALB', name: 'Albania', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/al-a6a6e8ad28b3af63bd4e.svg' },
+    { code: 'HRV', name: 'Croatia', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/hr-89b8c8af46eef412f1cd.svg' },
+    { code: 'CYP', name: 'Cyprus', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/cy-c956003b42baa905013c.svg' },
+    { code: 'ALB', name: 'Albania', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/al-a6a6e8ad28b3af63bd4e.svg' },
+    { code: 'HRV', name: 'Croatia', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/hr-89b8c8af46eef412f1cd.svg' }
   ]; 
   useEffect(() => {
     const handleResize = () => {
@@ -129,58 +138,66 @@ function LandingPage() {
         {/* Locations */}
         {/* Conditional Rendering based on Screen Size */}
         
-        <div id="LP_section_2" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>    
-          <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
-            {isLargeScreen ? (
-              <Text className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
-                Explore Etomart Regions
-              </Text>
-            ) : (
-              <Text className="flex justify-center text-2xl text-black-900 font-Agbalumo font-bold ">
-                Explore Etomart Regions
-              </Text>
-            )}
-          </div>
-          <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
-            {isLargeScreen ? (
-              <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">
-                Delivered to you at your convenience!
-              </Text>
-            ) : (
-              <Text className="flex justify-center text-1xl text-white font-josefin_sans ">
-                Delivered to you at your convenience!
-              </Text>
-            )}
-<div className="flex flex-wrap">
-  {regions.map((country, index) => (
-    <div key={country.code} className="w-1/3 p-2"> {/* Set width to 1/3 of the container */}
-      <a
-        href={`/en/${country.code.toLowerCase()}`}
-        className="block px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors duration-300"
-        style={{ '--item-index': index }}
-      >
-        <div className="flex items-center">
-          <div className="w-6 h-6 mr-2">
-            <img src={country.flagUrl} alt={`${country.name} flag`} className="w-full h-full object-contain" />
-          </div>
-          <div>{country.name}</div>
-        </div>
-        <div className="ml-2">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 fill-current text-gray-600">
-            <g fill="none" fillRule="evenodd">
-              <path fill="none" d="M0 0h24v24H0z" />
-              <path d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164" fill="#202125" />
-            </g>
-          </svg>
-        </div>
-      </a>
-    </div>
-  ))}
-</div></div>
-
-
-
+        <div id="LP_section_2" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
+  <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
+    {isLargeScreen ? (
+      <Text className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
+        Explore Etomart Regions
+      </Text>
+    ) : (
+      <Text className="flex justify-center text-2xl text-black-900 font-Agbalumo font-bold ">
+        Explore Etomart Regions
+      </Text>
+    )}
+  </div>
+  <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
+    {isLargeScreen ? (
+      <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">
+        Delivered to you at your convenience!
+      </Text>
+    ) : (
+      <Text className="flex justify-center text-1xl text-white font-josefin_sans ">
+        Delivered to you at your convenience!
+      </Text>
+    )}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-x-24 md:gap-y-4 py-2 px-16">
+      {regions.map((country, index) => (
+        <div key={country.code} className="flex justify-center">
+          <a
+            href={`/en/${country.code.toLowerCase()}`}
+            className="border border-slate-300 shadow- px-16 py-5 rounded-[34px] bg-gray-100 hover:bg-gray-200 transition-colors duration-300 flex items-center"
+          >
+            <div className="flex items-center">
+              <div className="w-6 h-6 mr-2">
+                <img
+                  src={country.flagUrl}
+                  alt={`${country.name} flag`}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>{country.name}</div>
             </div>
+            <div className="ml-2">
+              <svg
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4 fill-current text-gray-600"
+              >
+                <g fill="none" fillRule="evenodd">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path
+                    d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
+                    fill="#202125"
+                  />
+                </g>
+              </svg>
+            </div>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+          </div></div>
         <div class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full p-6">
             <p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p>
             <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What They Are Saying</p>
@@ -240,7 +257,7 @@ function LandingPage() {
         </footer>
    
       </div>    
-      </div>
+      
   );
 }
 
