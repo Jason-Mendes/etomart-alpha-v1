@@ -1,10 +1,19 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button, Img, Text } from '../components';
 
 function LandingPage() {
   const [isLargeScreen, setIsLargeScreen] = useState(false);
-
+   //Location buttons stuff  
+  const [isEditing, setIsEditing] = useState(false);
+  const [location, setLocation] = useState('');
+//Country stuff
+  const regions = [
+    { code: 'ALB', name: 'Albania', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/al-a6a6e8ad28b3af63bd4e.svg' },
+    { code: 'AUT', name: 'Austria', flagUrl: 'data:image/svg+xml;base64,...' },
+    { code: 'AZE', name: 'Azerbaijan', flagUrl: 'data:image/svg+xml;base64,...' },
+    { code: 'HRV', name: 'Croatia', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/hr-89b8c8af46eef412f1cd.svg' },
+    { code: 'CYP', name: 'Cyprus', flagUrl: 'https://wolt-com-static-assets.wolt.com/images/cy-c956003b42baa905013c.svg' },
+  ]; 
   useEffect(() => {
     const handleResize = () => {
       setIsLargeScreen(window.innerWidth >= 640);
@@ -20,18 +29,34 @@ function LandingPage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  //Location buttons stuff  
+
+  const handleInputChange = (e) => {
+    setLocation(e.target.value);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    // Save the location data here
+    setIsEditing(false);
+  };
+
   return (
     <div id="Landing_Page_Main_Body" className="content-wrapper ">
       <div className="overflow-hidden">
         {/* Hero Section */}
         {/* Orange Section */}
-        <div id="LP_section_1" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-2xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
-          {/* Content goes here */}
-          <div id="text_1_image_container" className=' flex items-center justify-evenly md:items-center overflow-hidden md:gap-6 sm:mr-16 md:mr-0 mr-0'>
-            <div id="text_1_container" className="flex justify-center flex-grow md:-mt-20  ">
+        <div id="LP_section_1" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>   
+         {/* This is a style for the orange section to just be in the center when you zoom out and not span the whole page style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}> */}
+          {/* Orange Content section  */}
+          <div id="text_1_image_container" className=' flex items-center justify-evenly md:items-center overflow-hidden md:gap-6 lg:gap-16 xl:gap-20 2xl:gap-72 sm:mr-16 md:mr-0 mr-0'>
+            <div id="text_1_container" className="flex justify-center flex-grow md:-mt-20 p-6 ml-6">
               {/* First is large screens, second is normal to small screens*/}
               {isLargeScreen ? (
-                <Text className="sm:text-2xl text-nowrap mt-2  md:text-5xl text-black-900 font-Agbalumo font-bold">
+                <Text className="sm:text-2xl text-nowrap mt-2  md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo font-bold">
                   Your Daily Food <br /> Delivered <br /> Hot & Fresh
                 </Text>
               ) : (
@@ -40,14 +65,16 @@ function LandingPage() {
                 </Text>
               )}
             </div>
-            <div id="text_2_image_container"  className='flex flex-col'>
-              <div id="image_container" className='w-full md:w-auto md:max-w-screen-sm'>
-                <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] mb-4 w-60 h-auto md:w-screen md:h-80" src="images/Main_groceries_reverse.jpg" loading="lazy" />
+            
+            <div id="text_2_image_container"  className='flex flex-col '>
+              
+              <div id="image_container">
+                <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] mb-4 w-60 h-auto md:w-screen md:h-60 lg:w-screen lg:h-64 xl:w-screen xl:h-72 2xl:w-screen 2xl:h-80" src="images/Main_groceries_reverse.jpg" loading="lazy" />
               </div>
               {/* Wrap the additional content in a separate div */}
               <div id="text_2_container_show_large_screens" className="hidden sm:hidden md:block lg:block xl:block 2xl:block">
                 <div className="flex justify-center mt-4">
-                  <p className="text-sm md:text-3xl text-white font-josefin_sans font-bold">Groceries, Meals, Pharmacies, anything!</p>
+                  <p className="text-sm md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans font-bold">Groceries, Meals, Pharmacies, anything!</p>
                 </div>
               </div>
             </div>
@@ -58,9 +85,31 @@ function LandingPage() {
             </div>
           </div>
         </div>
-      
+        {/* Location stuff */}
+        <div id="location_buttons_container" className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen" style={{ maxWidth: '1800px', marginLeft: 'auto', marginRight: 'auto' }}>
+           {/* different styling method to make it start at the end of the page<div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>*/}
+  <div className="button-group flex items-start ">
+    <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
+      {/* Button 1 */}
+      <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200" onClick={handleEditClick}>
+        <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy" />
+        <p className={`text-left md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${isEditing ? 'hidden' : ''}`}>What's your Address?</p>
+        <input className={`text-left md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${!isEditing ? 'hidden' : ''}`} type="text" value={location} onChange={handleInputChange} />
+      </Button>
+
+      {/* Button 2 */}
+      <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200" onClick={handleSaveClick}>
+        <img className="h-5 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+        <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-[28px] text-[32px] text-gray-600 font-bold">Use Current Location</p>
+      </Button>
+    </div>
+  </div>
+</div>
+
+        {/* Location stuff ends */}
+  
         {/* Location stuff*/}
-        <div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+        {/* <div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
           <div className="button-group flex flex-col items-start">
             <div id="location_buttons_1_container" className="button-row flex items-center mb-6">
               <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
@@ -68,7 +117,7 @@ function LandingPage() {
                 <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">What's your Address?</p>
               </Button>
             </div>
-            {/* current Location stuff*/}
+            {/* current Location stuff
             <div id="location_buttons_1_container" className="button-row flex mt-2">
               <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
                 <img className="h-5 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
@@ -76,169 +125,122 @@ function LandingPage() {
               </Button>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* Locations */}
         {/* Conditional Rendering based on Screen Size */}
-        <div className="section flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-2xl h-auto relative" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+        
+        <div id="LP_section_2" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>    
           <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
             {isLargeScreen ? (
-              <Text className="sm:text-4xl md:text-3xl lg:text-1xl text-black-900 font-montserrat font-bold  sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
+              <Text className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
                 Explore Etomart Regions
               </Text>
             ) : (
-              <Text className="flex justify-center text-2xl  text-black-900 font-montserrat font-bold  ">
+              <Text className="flex justify-center text-2xl text-black-900 font-Agbalumo font-bold ">
                 Explore Etomart Regions
               </Text>
             )}
           </div>
-          {/* Second Text */}
           <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
             {isLargeScreen ? (
-              <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-2xl text-white font-montserrat  mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">
-                 Delivered to you at your convenience!
+              <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">
+                Delivered to you at your convenience!
               </Text>
             ) : (
-              <Text className="flex justify-center text-1xl  text-white font-montserrat   ">
+              <Text className="flex justify-center text-1xl text-white font-josefin_sans ">
                 Delivered to you at your convenience!
               </Text>
             )}
+<div className="flex flex-wrap">
+  {regions.map((country, index) => (
+    <div key={country.code} className="w-1/3 p-2"> {/* Set width to 1/3 of the container */}
+      <a
+        href={`/en/${country.code.toLowerCase()}`}
+        className="block px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors duration-300"
+        style={{ '--item-index': index }}
+      >
+        <div className="flex items-center">
+          <div className="w-6 h-6 mr-2">
+            <img src={country.flagUrl} alt={`${country.name} flag`} className="w-full h-full object-contain" />
           </div>
-          <div className="">
-            <div className=" button-row flex flex-col">
-              <div className='w-full button-row flex flex-col'>
-                 <div className="button-row flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4   sm:mx-24 h-16"> {/* Adjust the gap as needed */}
-                      <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 1</p>
-                      </Button>
-                      <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 2</p>
-                      </Button>
-                      <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 3</p>
-                      </Button>
-                    </div>
-                    <div className="button-row flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4 sm:mx-24 h-16"> {/* Adjust the gap as needed */}
-                      {/* <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 1</p>
-                      </Button>
-                      <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 2</p>
-                      </Button>
-                      <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 3</p>
-                      </Button> */}
-                    </div>
-                    <div className="button-row flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4 sm:mx-24 h-16"> {/* Adjust the gap as needed */}
-                      {/* <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 1</p>
-                      </Button>
-                      <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 2</p>
-                      </Button>
-                      <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 3</p>
-                      </Button> */}
-                    </div>
-                    <div className="button-row flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4 sm:mx-24 h-16"> {/* Adjust the gap as needed */}
-                      {/* <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 1</p>
-                      </Button>
-                      <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-100 sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 2</p>
-                      </Button>
-                      <Button className="flex items-center bg-white text-black px-4 py-2  ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate- sm:w-[270px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 3</p>
-                      </Button> */}
-                    </div>
-                    <div className="  button-row  flex flex-col sm:flex-row gap-4 sm:gap-12 mt-2 mb-6 mx-4 sm:mx-24 h-16">
-                      {/* the following buttons width is diferent from the rest w-[260px]*/}
-                      {/* <Button className="flex items-center bg-white text-black px-4 py-2 ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-50 w-[260px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 13</p>
-                      </Button>
-                      <Button className="flex items-center bg-white text-black px-4 py-2 ml-16 rounded-[36px] shadow-lg pr-12 font-montserrat border border-slate-50 w-[260px]">
-                        <img className="h-6 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                        <p className="text-left md:text-[24px] sm:text-[28px] text-[32px] text-gray-600 font-bold">Button 14</p>
-                      </Button> */}
-      
-                </div>
-              </div>
-            </div>
-          </div>
+          <div>{country.name}</div>
         </div>
-        <div class="flex flex-col font-montserrat md:gap-10 gap-[100px] h-[845px] md:h-auto items-center justify-start max-w-[1226px] mt-8 mx-auto md:px-5 py-2.5 w-full">
-          <div class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full">
-            <p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-montserrat">Testimonials</p>
-            <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-montserrat">What They Are Saying</p>
-            <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] text-gray-600_01 font-montserrat font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-            <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full"> <img class="h-10 w-[232px]" src="images/img_ratings.svg" alt="ratings" loading="lazy"></img>
-              <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"><p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-montserrat font-semibold">John Doe</p>
-              </div>
-            </div>
-          </div>
+        <div className="ml-2">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 fill-current text-gray-600">
+            <g fill="none" fillRule="evenodd">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164" fill="#202125" />
+            </g>
+          </svg>
         </div>
-        {/* Hero Slider Section */}
-        <section className="hero-section">
-          {/* Hero Slider or Static Image */}
-        </section>
-        {/* Search Functionality Section */}
-        <section className="search-bar">
-          {/* Search Input */}
-        </section>
-        {/* Featured Products or Categories Section */}
-        <section className="featured-products">
-          {/* Dynamically list featured products or categories */}
-        </section>
-        {/* Testimonials or Reviews Section */}
-        <section className="testimonials">
-          {/* Display user testimonials */}
-        </section>
-        {/* Call to Action Section */}
-        <section className="cta">
-          {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
-        </section>
-        {/* Footer Section */}
-        <footer className="site-footer">
-          {/* Footer Content */}
-        </footer>
-        {/* Hero Slider Section */}
-        <section className="hero-section">
-          {/* Hero Slider or Static Image */}
-        </section>
-        {/* Search Functionality Section */}
-        <section className="search-bar">
-          {/* Search Input */}
-        </section>
-        {/* Featured Products or Categories Section */}
-        <section className="featured-products">
-          {/* Dynamically list featured products or categories */}
-        </section>
-        {/* Testimonials or Reviews Section */}
-        <section className="testimonials">
-          {/* Display user testimonials */}
-        </section>
-        {/* Call to Action Section */}
-        <section className="cta">
-          {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
-        </section>
-        {/* Footer Section */}
-        <footer className="site-footer">
-          {/* Footer Content */}
-        </footer>
-      </div>
+      </a>
     </div>
+  ))}
+</div></div>
+
+
+
+            </div>
+        <div class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full p-6">
+            <p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p>
+            <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What They Are Saying</p>
+            <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
+            <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full"> <img class="h-10 w-[232px]" src="images/img_ratings.svg" alt="ratings" loading="lazy"></img>
+              <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"><p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">John Doe</p>
+              </div>
+            </div>
+          </div>
+        {/* Hero Slider Section */}
+        <section className="hero-section">
+          {/* Hero Slider or Static Image */}
+        </section>
+        {/* Search Functionality Section */}
+        <section className="search-bar">
+          {/* Search Input */}
+        </section>
+        {/* Featured Products or Categories Section */}
+        <section className="featured-products">
+          {/* Dynamically list featured products or categories */}
+        </section>
+        {/* Testimonials or Reviews Section */}
+        <section className="testimonials">
+          {/* Display user testimonials */}
+        </section>
+        {/* Call to Action Section */}
+        <section className="cta">
+          {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
+        </section>
+        {/* Footer Section */}
+        <footer className="site-footer">
+          {/* Footer Content */}
+        </footer>
+        {/* Hero Slider Section */}
+        <section className="hero-section">
+          {/* Hero Slider or Static Image */}
+        </section>
+        {/* Search Functionality Section */}
+        <section className="search-bar">
+          {/* Search Input */}
+        </section>
+        {/* Featured Products or Categories Section */}
+        <section className="featured-products">
+          {/* Dynamically list featured products or categories */}
+        </section>
+        {/* Testimonials or Reviews Section */}
+        <section className="testimonials">
+          {/* Display user testimonials */}
+        </section>
+        {/* Call to Action Section */}
+        <section className="cta">
+          {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
+        </section>
+        {/* Footer Section */}
+        <footer className="site-footer">
+          {/* Footer Content */}
+        </footer>
+   
+      </div>    
+      </div>
   );
 }
 
