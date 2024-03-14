@@ -233,35 +233,33 @@ function LandingPage() {
       <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">John Doe</p>
     </div>
   </div>
-  <div id="LP_section_5_orange"
-  className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10 "
-  style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
-    <div id="how it works" class="flex flex-col items-center justify-center px-2.5 py -[3px] w-auto">
-      <p class="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works</p>
+  <div id="LP_section_5_orange" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
+  <div className="flex flex-col items-center w-full mb-8">
+    <div id="how-it-works" className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+      <p className="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works</p>
     </div>
-    <div id="how it works2" class="flex flex-col items-center justify-center px-2.5 pt-6 pb-6 w-auto">
-      <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-white font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-    </div>
-
-    <div id="cards" class="relative bottom-[0] flex md:flex-row flex-col md:gap-10 gap-6 h-[724px] md:h-auto inset-x-[0] items-center justify-center mx-auto p-2.5 w-full">
-      <div class="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
-        <img class="h-[131px] w-[131px]" src="images/img_materialsymbol.svg" alt="materialsymbol" />
-        <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Choose How Often</p>
-        <p class="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et</p>
-      </div>
-      <div class="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
-        <img class="h-[131px] w-[131px]" src="images/img_mdicursorpointer.svg" alt="mdicursorpointe" />
-        <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Choose How Often</p>
-        <p class="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et</p>
-      </div>
-      <div class="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
-        <img class="h-[120px] w-[120px]" src="images/img_mditruckdelivery.svg" alt="mditruckdeliver" />
-        <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Fast Deliveries</p>
-        <p class="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum</p>
-      </div>
+    <div id="how-it-works-text" className="flex flex-col items-center justify-center px-2.5 pt-6 pb-6 w-auto">
+      <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-white font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
     </div>
   </div>
-
+  <div id="cards" className="flex flex-col md:flex-row md:gap-10 gap-6 items-center justify-center mx-auto p-2.5 w-full">
+    <div className="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
+      <img className="h-[131px] w-[131px]" src="images/img_materialsymbol.svg" alt="materialsymbol" />
+      <p className="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Choose How Often</p>
+      <p className="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et</p>
+    </div>
+    <div className="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
+      <img className="h-[131px] w-[131px]" src="images/img_mdicursorpointer.svg" alt="mdicursorpointe" />
+      <p className="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Choose How Often</p>
+      <p className="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et</p>
+    </div>
+    <div className="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
+      <img className="h-[120px] w-[120px]" src="images/img_mditruckdelivery.svg" alt="mditruckdeliver" />
+      <p className="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Fast Deliveries</p>
+      <p className="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum</p>
+    </div>
+  </div>
+</div>
     </div>
 
         {/* Hero Slider Section */}
