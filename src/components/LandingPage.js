@@ -7,7 +7,7 @@ function LandingPage() {
   //Location buttons stuff  
   const [isEditing, setIsEditing] = useState(false);
   const [location, setLocation] = useState('');
-  //Country stuff
+  //Regions stuff
   const regions = [
     { code: 'ALB', name: 'Khomas', flagPath: '/images/regions/khomas.jpeg' },
     { code: 'HRV', name: 'Erongo', flagPath: '/images/regions/erongo.jpeg' },
@@ -24,6 +24,28 @@ function LandingPage() {
     { code: 'ALB', name: 'Kavango East', flagPath: '/images/regions/kavango east.jpeg' },
     { code: 'HRV', name: 'Kavango West', flagPath: '/images/regions/kavango west.jpeg' }
   ];
+
+  //   //what is etomart stuff
+  // const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  // //what is etomart stuff
+  // const handlePlayVideo = () => {
+  //   setIsVideoPlaying(!isVideoPlaying);
+  // };
+
+  
+  //hide etomart video stuff 
+  // Get the button element
+// const button = document.querySelector('#text_button_image button');
+
+// // Get the div to be hidden
+// const divToHide = document.getElementById('text_button_image');
+
+
+// // Add event listener to the button
+// button.addEventListener('click', function() { 
+//   // Hide the div
+//   divToHide.style.display = 'none';
+// });
 
   const handleClick = (url) => {
     // Handle the click event here
@@ -210,12 +232,61 @@ function LandingPage() {
  {/* Regions Buttons ends*/}
 </div>
 </div>
-<div id="LP_testimonials_container_4" class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6">
+<div id="LP_Did_you_know_container_4" class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6">
+    <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+    <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">Did you Know?</p>
+  </div>
+  <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+    <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
+  </div>
+
+  <div id="LP_section_5_orange" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
+  <div className="flex flex-col items-center w-full mb-8">
+    <div id="how-it-works" className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+      <p className="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works?</p>
+    </div>
+    <div id="how-it-works-text" className="flex flex-col items-center justify-center px-2.5 pt-6 pb-6 w-auto">
+      <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-white font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
+    </div>
+  </div>
+  <div id="cards" className="flex flex-wrap justify-center gap-6">
+  <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
+    <img className="h-[96px] w-[96px] mb-4" src="images/img_materialsymbol.svg" alt="materialsymbol" />
+    <div className="text-center p-2">
+      <p id="title" className="text-xl text-gray-800_02 font-bold mb-2">Order at Your convenience</p>
+      <div className="text-center p-2">
+        <p id="body" className="text-base text-gray-800_03 font-semibold">Browse through a wide selection of restaurants and shops, and order your favorite meals, groceries, or other essentials.</p>
+      </div>
+    </div>
+  </div>
+
+  <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
+    <img className="h-[96px] w-[96px] mb-4" src="images/img_mdicursorpointer.svg" alt="mdicursorpointe" />
+    <div className="text-center p-2">
+      <p id="title" className="text-xl text-gray-800_02 font-bold mb-2">Fast Delivery</p>
+      <div className="text-center p-2">
+        <p id="body" className="text-base text-gray-800_03 font-semibold">Etomart's fleet of delivery partners ensures your order arrives quickly, so you can enjoy your meals or items wherever and whenever</p>
+      </div>
+    </div>
+  </div>
+
+  <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
+    <img className="h-[96px] w-[96px] mb-4" src="images/img_mditruckdelivery.svg" alt="mditruckdeliver" />
+    <div className="text-center p-2">
+      <p id="title" className="text-xl text-gray-800_02 font-bold mb-2">Convenient Tracking</p>
+      <div className="text-center p-2">
+        <p id="body" className="text-base text-gray-800_03 font-semibold">Track your order in real-time through the Etomart site, so you always know when your delivery is on its way.</p>
+      </div>
+    </div>
+    </div>
+</div></div>
+   </div>
+    <div id="LP_testimonials_container_4" class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6">
   <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
     <p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p>
   </div>
   <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-    <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What They Are Saying</p>
+    <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What Other's Are Saying</p>
   </div>
   <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
     <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
@@ -232,38 +303,49 @@ function LandingPage() {
     <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
       <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">John Doe</p>
     </div>
-  </div>
-  <div id="LP_section_5_orange" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
-  <div className="flex flex-col items-center w-full mb-8">
-    <div id="how-it-works" className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-      <p className="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works</p>
+    </div></div>
+ 
+    
+    <div
+  id="LP_section_3_orange"
+  className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
+  style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}
+>
+  <div
+    id="text_button_image"
+    className="flex flex-col md:flex-row justify-center items-center gap-4 w-full p-4"
+  >
+    <div className="flex items-center justify-center w-full md:w-1/2 px-4 md:px-0">
+      <div id="text" className="relative max-w-3xl p-4 md:p-16 text-center">
+        <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black mb-4">
+          What is Etomart?
+        </h2>
+        <p className="text-base md:text-xl text-white font-medium mb-8">
+          Etomart makes it incredibly easy for you to discover and get what you
+          want. Delivered to you – quickly, reliably and affordably.
+        </p>
+        <button className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md hover:bg-slate-300 transition-colors duration-300">
+          <span>Watch Video</span>
+        </button>
+      </div>
     </div>
-    <div id="how-it-works-text" className="flex flex-col items-center justify-center px-2.5 pt-6 pb-6 w-auto">
-      <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-white font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-    </div>
-  </div>
-  <div id="cards" className="flex flex-col md:flex-row md:gap-10 gap-6 items-center justify-center mx-auto p-2.5 w-full">
-    <div className="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
-      <img className="h-[131px] w-[131px]" src="images/img_materialsymbol.svg" alt="materialsymbol" />
-      <p className="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Choose How Often</p>
-      <p className="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et</p>
-    </div>
-    <div className="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
-      <img className="h-[131px] w-[131px]" src="images/img_mdicursorpointer.svg" alt="mdicursorpointe" />
-      <p className="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Choose How Often</p>
-      <p className="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et</p>
-    </div>
-    <div className="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
-      <img className="h-[120px] w-[120px]" src="images/img_mditruckdelivery.svg" alt="mditruckdeliver" />
-      <p className="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Fast Deliveries</p>
-      <p className="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum</p>
+    <div
+      id="card"
+      className="flex flex-wrap justify-center gap-6 w-full md:w-1/2 p-4 md:px-0"
+    >
+      <div className="bg-white w-full md:w-auto h-full bg-cover bg-center rounded-lg flex flex-col items-center py-4 md:py-[21px] px-4 md:px-[21px]  max-w-[200px] sm:max-w-[300px] md:max-w-none shadow-md">
+        <div className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-none">
+          <img
+            className="w-full h-auto rounded-xl"
+            src="images/website_intro/video-cover-image-4.jpg"
+            alt="web_intro"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </div>
-    </div>
-
-        {/* Hero Slider Section */}
-        <section className="hero-section">
+  <section className="hero-section">
           {/* Hero Slider or Static Image */}
         </section>
         {/* Search Functionality Section */}
