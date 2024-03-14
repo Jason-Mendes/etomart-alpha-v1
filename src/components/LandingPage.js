@@ -238,91 +238,27 @@ function LandingPage() {
   </div>
   <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
     <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-  </div>
-
-  <div id="LP_section_5_orange" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
-  <div className="flex flex-col items-center w-full mb-8">
-    <div id="how-it-works" className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-      <p className="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works?</p>
-    </div>
-    <div id="how-it-works-text" className="flex flex-col items-center justify-center px-2.5 pt-6 pb-6 w-auto">
-      <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-white font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-    </div>
-  </div>
-  <div id="cards" className="flex flex-wrap justify-center gap-6">
-  <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
-    <img className="h-[96px] w-[96px] mb-4" src="images/img_materialsymbol.svg" alt="materialsymbol" />
-    <div className="text-center p-2">
-      <p id="title" className="text-xl text-gray-800_02 font-bold mb-2">Order at Your convenience</p>
-      <div className="text-center p-2">
-        <p id="body" className="text-base text-gray-800_03 font-semibold">Browse through a wide selection of restaurants and shops, and order your favorite meals, groceries, or other essentials.</p>
-      </div>
-    </div>
-  </div>
-
-  <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
-    <img className="h-[96px] w-[96px] mb-4" src="images/img_mdicursorpointer.svg" alt="mdicursorpointe" />
-    <div className="text-center p-2">
-      <p id="title" className="text-xl text-gray-800_02 font-bold mb-2">Fast Delivery</p>
-      <div className="text-center p-2">
-        <p id="body" className="text-base text-gray-800_03 font-semibold">Etomart's fleet of delivery partners ensures your order arrives quickly, so you can enjoy your meals or items wherever and whenever</p>
-      </div>
-    </div>
-  </div>
-
-  <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
-    <img className="h-[96px] w-[96px] mb-4" src="images/img_mditruckdelivery.svg" alt="mditruckdeliver" />
-    <div className="text-center p-2">
-      <p id="title" className="text-xl text-gray-800_02 font-bold mb-2">Convenient Tracking</p>
-      <div className="text-center p-2">
-        <p id="body" className="text-base text-gray-800_03 font-semibold">Track your order in real-time through the Etomart site, so you always know when your delivery is on its way.</p>
-      </div>
-    </div>
-    </div>
-</div></div>
-   </div>
-    <div id="LP_testimonials_container_4" class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6">
-  <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-    <p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p>
-  </div>
-  <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-    <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What Other's Are Saying</p>
-  </div>
-  <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-    <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-  </div>
-
-  <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
-    <img class="h-[117px] md:h-auto rounded-[50%] w-[117px]" src="images/img_ellipse1.png" alt="ellipseOne" />
-  </div>
-  <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-    <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-  </div>
-  <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
-    <img class="h-10 w-[232px]" src="images/img_ratings.svg" alt="ratings" loading="lazy" />
-    <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-      <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">John Doe</p>
-    </div>
     </div></div>
- 
-    
+
+
+
     <div
-  id="LP_section_3_orange"
-  className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
-  style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}
->
-  <div
-    id="text_button_image"
-    className="flex flex-col md:flex-row justify-center items-center gap-4 w-full p-4"
-  >
-    <div className="flex items-center justify-center w-full md:w-1/2 px-4 md:px-0">
-      <div id="text" className="relative max-w-3xl p-4 md:p-16 text-center">
-        <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black mb-4">
-          What is Etomart?
-        </h2>
-        <p className="text-base md:text-xl text-white font-medium mb-8">
-          Etomart makes it incredibly easy for you to discover and get what you
-          want. Delivered to you – quickly, reliably and affordably.
+          id="LP_section_3_orange"
+          className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
+          style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}
+        >
+          <div
+            id="text_button_image"
+            className="flex flex-col md:flex-row justify-center items-center gap-8  p-4"
+          >
+            <div className="flex items-center justify-center w-full md:w-1/2 px-4 md:px-0">
+              <div id="text" className="relative max-w-3xl p-4 md:p-16 text-center">
+                <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black mb-4">
+                  What is Etomart?
+                </h2>
+                <p className="text-base md:text-xl text-white font-medium mb-8">
+                  Etomart makes it incredibly easy for you to discover and get what you
+                  want. Delivered to you – quickly, reliably and affordably.
         </p>
         <button className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md hover:bg-slate-300 transition-colors duration-300">
           <span>Watch Video</span>
@@ -333,8 +269,8 @@ function LandingPage() {
       id="card"
       className="flex flex-wrap justify-center gap-6 w-full md:w-1/2 p-4 md:px-0"
     >
-      <div className="bg-white w-full md:w-auto h-full bg-cover bg-center rounded-lg flex flex-col items-center py-4 md:py-[21px] px-4 md:px-[21px]  max-w-[200px] sm:max-w-[300px] md:max-w-none shadow-md">
-        <div className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-none">
+      <div className="bg-white w-full md:w-auto h-full bg-cover bg-center rounded-lg flex flex-col items-center py-4 md:py-[21px] px-4 md:px-[21px]  max-w-[200px] sm:max-w-[300px] md:max-w-[400px] max-h-[200px] sm:max-h-[300px] md:max-h-[450px] shadow-md">
+        <div className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-none max-h-[200px] sm:max-h-[300px] md:max-h-[400px]">
           <img
             className="w-full h-auto rounded-xl"
             src="images/website_intro/video-cover-image-4.jpg"
@@ -345,6 +281,82 @@ function LandingPage() {
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+       
+        <div id="LP_testimonials_container_4" class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6">
+          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+            <p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p>
+          </div>
+          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+            <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What Other's Are Saying</p>
+          </div>
+          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+            <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
+          </div>
+
+          <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
+            <img class="h-[117px] md:h-auto rounded-[50%] w-[117px]" src="images/img_ellipse1.png" alt="ellipseOne" />
+          </div>
+          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+            <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
+          </div>
+          <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
+            <img class="h-10 w-[232px]" src="images/img_ratings.svg" alt="ratings" loading="lazy" />
+            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+              <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">John Doe</p>
+            </div>
+          </div></div>
+
+          <div id="LP_section_5_orange" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
+            <div className="flex flex-col items-center w-full mb-8">
+              <div id="how-it-works" className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+                <p className="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works?</p>
+              </div>
+              <div id="how-it-works-text" className="flex flex-col items-center justify-center px-2.5 pt-6 pb-6 w-auto">
+                <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-white font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
+              </div>
+            </div>
+            <div id="cards" className="flex flex-wrap justify-center gap-6">
+              <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
+                <img className="h-[96px] w-[96px] mb-4" src="images/img_materialsymbol.svg" alt="materialsymbol" />
+                <div className="text-center p-2">
+                  <p id="title" className="text-xl text-gray-800_02 font-bold mb-2">Order at Your convenience</p>
+                  <div className="text-center p-2">
+                    <p id="body" className="text-base text-gray-800_03 font-semibold">Browse through a wide selection of restaurants and shops, and order your favorite meals, groceries, or other essentials.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
+                <img className="h-[96px] w-[96px] mb-4" src="images/img_mdicursorpointer.svg" alt="mdicursorpointe" />
+                <div className="text-center p-2">
+                  <p id="title" className="text-xl text-gray-800_02 font-bold mb-2">Fast Delivery</p>
+                  <div className="text-center p-2">
+                    <p id="body" className="text-base text-gray-800_03 font-semibold">Etomart's fleet of delivery partners ensures your order arrives quickly, so you can enjoy your meals or items wherever and whenever</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
+                <img className="h-[96px] w-[96px] mb-4" src="images/img_mditruckdelivery.svg" alt="mditruckdeliver" />
+                <div className="text-center p-2">
+                  <p id="title" className="text-xl text-gray-800_02 font-bold mb-2">Convenient Tracking</p>
+                  <div className="text-center p-2">
+                    <p id="body" className="text-base text-gray-800_03 font-semibold">Track your order in real-time through the Etomart site, so you always know when your delivery is on its way.</p>
+                  </div>
+                </div>
+              </div>
+            </div></div>
+
+        
   <section className="hero-section">
           {/* Hero Slider or Static Image */}
         </section>
