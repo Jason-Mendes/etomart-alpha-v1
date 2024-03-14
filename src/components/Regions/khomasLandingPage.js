@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Img, Text } from '../components';
+import { Button, Img, Text } from '..';
 
 
 function LandingPage() {
@@ -66,7 +66,7 @@ function LandingPage() {
       <div className="overflow-hidden">
         {/* Hero Section */}
         {/* Orange Section */}
-        <div id="LP_section_1_orange" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
+        <div id="LP_section_1" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
           {/* This is a style for the orange section to just be in the center when you zoom out and not span the whole page style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}> */}
           {/* Orange Content section  */}
           <div id="text_1_image_container" className=' flex items-center justify-evenly md:items-center overflow-hidden md:gap-6 lg:gap-16 xl:gap-20 2xl:gap-72 sm:mr-16 md:mr-0 mr-0'>
@@ -103,7 +103,7 @@ function LandingPage() {
           </div>
         </div>
         {/* Location stuff */}
-        <div id="LP_location_buttons_container_2" className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen" style={{ maxWidth: '1800px', marginLeft: 'auto', marginRight: 'auto' }}>
+        <div id="location_buttons_container" className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen" style={{ maxWidth: '1800px', marginLeft: 'auto', marginRight: 'auto' }}>
           {/* different styling method to make it start at the end of the page<div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>*/}
           <div className="button-group flex items-start ">
             <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
@@ -146,7 +146,7 @@ function LandingPage() {
         {/* Locations */}
         {/* Conditional Rendering based on Screen Size */}
 
-        <div id="LP_section_3_orange" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
+        <div id="LP_section_2" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
           <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
             {isLargeScreen ? (
               <Text className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
@@ -207,63 +207,23 @@ function LandingPage() {
     </div>
   ))}
 </div>
- {/* Regions Buttons ends*/}
-</div>
-</div>
-<div id="LP_testimonials_container_4" class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6">
-  <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-    <p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p>
-  </div>
-  <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-    <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What They Are Saying</p>
-  </div>
-  <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-    <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-  </div>
-
-  <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
-    <img class="h-[117px] md:h-auto rounded-[50%] w-[117px]" src="images/img_ellipse1.png" alt="ellipseOne" />
-  </div>
-  <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-    <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-  </div>
-  <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
-    <img class="h-10 w-[232px]" src="images/img_ratings.svg" alt="ratings" loading="lazy" />
-    <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-      <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">John Doe</p>
-    </div>
-  </div>
-  <div id="LP_section_5_orange"
-  className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10 "
-  style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
-    <div id="how it works" class="flex flex-col items-center justify-center px-2.5 py -[3px] w-auto">
-      <p class="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works</p>
-    </div>
-    <div id="how it works2" class="flex flex-col items-center justify-center px-2.5 pt-6 pb-6 w-auto">
-      <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-white font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-    </div>
-
-    <div id="cards" class="relative bottom-[0] flex md:flex-row flex-col md:gap-10 gap-6 h-[724px] md:h-auto inset-x-[0] items-center justify-center mx-auto p-2.5 w-full">
-      <div class="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
-        <img class="h-[131px] w-[131px]" src="images/img_materialsymbol.svg" alt="materialsymbol" />
-        <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Choose How Often</p>
-        <p class="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et</p>
-      </div>
-      <div class="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
-        <img class="h-[131px] w-[131px]" src="images/img_mdicursorpointer.svg" alt="mdicursorpointe" />
-        <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Choose How Often</p>
-        <p class="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et</p>
-      </div>
-      <div class="bg-white flex sm:flex-1 flex-col gap-[50px] items-center justify-center py-[21px] rounded-[20px] shadow-md w-full md:w-auto">
-        <img class="h-[120px] w-[120px]" src="images/img_mditruckdelivery.svg" alt="mditruckdeliver" />
-        <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-800_02 w-auto font-bold">Fast Deliveries</p>
-        <p class="max-w-[344px] md:max-w-full text-center text-gray-800_03 text-xl font-semibold">Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum</p>
-      </div>
-    </div>
-  </div>
-
-    </div>
-
+ {/* Regions Buttons */}
+</div></div>
+        <div class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full p-6">
+        <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"><p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p></div>
+          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"> <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What They Are Saying</p></div>
+          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"><p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl  text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p></div>
+          <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full"> <img class="h-10 w-[232px]" src="images/img_ratings.svg" alt="ratings" loading="lazy"></img>
+            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"><p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">John Doe</p>
+            </div>
+            <div className="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
+              <Img
+                className="h-[117px] md:h-auto rounded-[50%] w-[117px]"
+                src="images/img_ellipse1.png"
+                alt="ellipseOne"
+              /></div>
+          </div>
+        </div>
         {/* Hero Slider Section */}
         <section className="hero-section">
           {/* Hero Slider or Static Image */}
