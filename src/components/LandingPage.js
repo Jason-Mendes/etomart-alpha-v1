@@ -7,6 +7,8 @@ function LandingPage() {
   //Location buttons stuff  
   const [isEditing, setIsEditing] = useState(false);
   const [location, setLocation] = useState('');
+  const [numStars] = useState(5); // State for the number of stars
+  const [currentSlide, setCurrentSlide] = useState(0);
   //Regions stuff
   const regions = [
     { code: 'ALB', name: 'Khomas', flagPath: '/images/regions/khomas.jpeg' },
@@ -24,6 +26,25 @@ function LandingPage() {
     { code: 'ALB', name: 'Kavango East', flagPath: '/images/regions/kavango east.jpeg' },
     { code: 'HRV', name: 'Kavango West', flagPath: '/images/regions/kavango west.jpeg' }
   ];
+
+  const testimonials = [
+    {
+      imageSrc: 'images/img_ellipse1.png',
+      textBelowImage: 'Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.',
+      numStars: 5,
+      testimonialAuthor: 'John Doe',
+      
+    },
+    {
+      imageSrc: 'images/img_ellipse1.png',
+      textBelowImage: 'Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.',
+      numStars: 1,
+      testimonialAuthor: 'John Doe',
+      
+    },
+    // Add more testimonials as needed
+  ];
+
 
   //   //what is etomart stuff
   // const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -81,6 +102,18 @@ function LandingPage() {
   const handleSaveClick = () => {
     // Save the location data here
     setIsEditing(false);
+  };
+
+  // // render starts testimonials container
+  // const TestimonialComponent = () => {
+  //   const [numStars, setNumStars] = useState(5);
+  // };
+  const handleNextSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide === testimonials.length - 1 ? 0 : prevSlide + 1));
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide === 0 ? testimonials.length - 1 : prevSlide - 1));
   };
 
   return (
@@ -190,26 +223,26 @@ function LandingPage() {
                 Delivered to you at your convenience!
               </Text>
             )}
- {/* Regions Buttons */}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-x-16 gap-y-6 md:gap-x-40 py-2 px-16">
+ {/* Regions Buttons */}<div id='button sizing' className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-2 px-16">
   {regions.map((country, index) => (
-    <div key={country.code} className="flex justify-center">
-      <div className="button-row flex flex-col gap-4 items-center justify-center md:items-center lg:items-center xl:items-center 2xl:items-center mb-4 w-full">
+    <div key={country.code} className="flex justify-start">
+      <div className="button-row flex flex-col gap-4 mb-4 w-full">
         <Button
-          className="flex flex-wrap justif-start items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200 w-full"
+          className={`flex flex-shrink-0 justify-between items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 min-w-[280px] overflow-hidden`}
           onClick={() => handleClick(`/en/${country.code.toLowerCase()}`)}
         >
-          <img
-            className="rounded-[36px] h-6 mr-2 flex-shrink-0"
-            src={country.flagPath}
-            alt={`${country.name} flag`}
-            loading="lazy"
-          />
-          <p className=" text-left md:text-base lg:text-lg xl:text-xl 2xl:text-2xl sm:text-lg text-xl text-gray-700 font-bold flex-shrink">
-            {country.name}
-          </p>
-          <div className="ml-2 flex-shrink-0">
+          <div className="flex items-center flex-grow">
+            <img
+              className="rounded-[36px] h-10 mr-2 flex-shrink-0"
+              src={country.flagPath}
+              alt={`${country.name} flag`}
+              loading="lazy"
+            />
+            <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
+              {country.name}
+            </p>
+          </div>
+          <div className="ml-auto pr-2 flex-shrink-0">
             <svg
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
@@ -229,6 +262,7 @@ function LandingPage() {
     </div>
   ))}
 </div>
+
  {/* Regions Buttons ends*/}
 </div>
 </div>
@@ -289,31 +323,66 @@ function LandingPage() {
 
 
 
-
-       
-        <div id="LP_testimonials_container_4" class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6">
-          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-            <p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p>
+<div id="LP_testimonials_container_4" className="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6">
+  <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+    <p className="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p>
+  </div>
+  <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+    <p className="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What Others Are Saying</p>
+  </div>
+  <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+    <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
+  </div>
+  {/* Slideshow */}
+  <div className="flex items-center justify-center relative overflow-hidden w-full">
+    {/* Slides */}
+    <div className="flex transition-transform duration-500 ease-in-out transform">
+      {testimonials.map((testimonial, index) => (
+        <div key={index} className={`h-[454px] md:h-auto items-center justify-center max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full ${currentSlide === index ? 'opacity-100' : 'opacity-0 absolute top-0 left-0'}`}>
+          <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
+            <img className="flex items-center justify-center h-[117px] md:h-auto rounded-[50%] w-[117px]" src={testimonial.imageSrc} alt={`Testimonial ${index + 1}`} />
           </div>
-          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-            <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What Other's Are Saying</p>
-          </div>
-          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-            <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-          </div>
-
-          <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
-            <img class="h-[117px] md:h-auto rounded-[50%] w-[117px]" src="images/img_ellipse1.png" alt="ellipseOne" />
-          </div>
-          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-            <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
-          </div>
-          <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
-            <img class="h-10 w-[232px]" src="images/img_ratings.svg" alt="ratings" loading="lazy" />
-            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-              <p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">John Doe</p>
+          <div className="flex flex-row items-center justify-center  w-auto">
+            
+            <div className="flex items-center justify-center p-4 "> {/* Button container */}
+              {/* Controls */}
+              <button onClick={handlePrevSlide} className="p-4 bg-white border border-slate-200 shadow-lg  w-8 h-8 flex items-center justify-center focus:outline-none z-10">
+                &lt;
+              </button>
+              <div className="flex flex-col items-center justify-center p-6  w-auto">
+              <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-gray-600_01 font-josefin_sans font-semibold">{testimonial.textBelowImage}</p>
             </div>
-          </div></div>
+              <button onClick={handleNextSlide} className="p-4 bg-white border border-slate-200 shadow-lg  w-8 h-8 flex items-center justify-center focus:outline-none z-10">
+                &gt;
+              </button>
+            </div>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 items-center w-full">
+            <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
+              <div className="flex flex-wrap justify-center gap-6 items-center g-white-A700 flex-col p-3 rounded-[30px] shadow-bs3 w-full">
+                <div className='flex flex-wrap justify-center gap-4 items-center g-white-A700 flex-row p-2 shadow-bs3 w-full'>
+                  {Array.from({ length: testimonial.numStars }, (_, starIndex) => (
+                    <div key={starIndex} className="flex flex-wrap justify-center items-center" style={{ width: '40px', height: '40px' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                          <path d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z" fill="#FE9E0D" />
+                        </g>
+                      </svg>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+                <p className="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">{testimonial.testimonialAuthor}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
 
           <div id="LP_section_5_orange" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
             <div className="flex flex-col items-center w-full mb-8">
