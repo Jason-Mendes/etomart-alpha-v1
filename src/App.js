@@ -2,19 +2,20 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { CartProvider } from './context/CartContext';
-import NavbarWrapper from './components/NavBarWrapper'; // Adjust the import path as necessary
+import NavbarWrapper from './components/NavBarWrapper';
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import Products from './components/Products';
 import Cart from './components/Cart';
 import UserProfile from './components/UserProfile';
+import KhomasLandingPage from './components/Regions/khomasLandingPage';
 
 function App() {
   return (
     <Router>
       <CartProvider>
         <div>
-          <NavbarWrapper /> {/* This will conditionally render the correct navbar */}
+          <NavbarWrapper />
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/LandingPage" element={<LandingPage />} />
@@ -22,6 +23,7 @@ function App() {
             <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/products" element={<Products />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/LandingPage-khomas" element={<KhomasLandingPage />} />
           </Routes>
         </div>
       </CartProvider>
@@ -30,7 +32,6 @@ function App() {
 }
 
 export default App;
-
 
 // function App() {
 //   return (

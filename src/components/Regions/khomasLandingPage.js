@@ -1,286 +1,151 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Img, Text } from '..';
 
+function KhomasLandingPage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-function LandingPage() {
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
-  //Location buttons stuff  
-  const [isEditing, setIsEditing] = useState(false);
-  const [location, setLocation] = useState('');
-  //Country stuff
-  const regions = [
-    { code: 'ALB', name: 'Khomas', flagPath: '/images/regions/khomas.jpeg' },
-    { code: 'HRV', name: 'Erongo', flagPath: '/images/regions/erongo.jpeg' },
-    { code: 'CYP', name: 'Oshana', flagPath:  '/images/regions/oshana.jpeg' },
-    { code: 'ALB', name: 'Omusati ', flagPath:  '/images/regions/omusati.jpeg' },
-    { code: 'HRV', name: 'Karas', flagPath: '/images/regions/kharas2.jpeg' },
-    { code: 'CYP', name: 'Ohangwena', flagPath: '/images/regions/ohangwena.jpeg' },
-    { code: 'ALB', name: 'Zambezi', flagPath: '/images/regions/zambezi.jpeg' },
-    { code: 'HRV', name: 'Oshikoto', flagPath: '/images/regions/oshikoto.jpeg' },
-    { code: 'CYP', name: 'Omaheke', flagPath: '/images/regions/omaheke.jpeg' },
-    { code: 'ALB', name: 'Hardap', flagPath: '/images/regions/hardap.jpeg' },
-    { code: 'HRV', name: 'Otjozondjupa', flagPath: '/images/regions/otjozondjupa.jpeg' },
-    { code: 'CYP', name: 'Kunene', flagPath: '/images/regions/kunene2.jpeg' },
-    { code: 'ALB', name: 'Kavango East', flagPath: '/images/regions/kavango east.jpeg' },
-    { code: 'HRV', name: 'Kavango West', flagPath: '/images/regions/kavango west.jpeg' }
+  const testimonials = [
+    {
+      imageSrc: 'images/img_ellipse1.png',
+      textBelowImage: 'Lorem ipsum dolor sit amet consectetur.',
+      numStars: 1,
+      testimonialAuthor: 'John Doe',
+    },
+    {
+      imageSrc: 'images/img_ellipse1.png',
+      textBelowImage: 'Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.',
+      numStars: 5,
+      testimonialAuthor: 'John Doe',
+    },
+    {
+      imageSrc: 'images/img_ellipse1.png',
+      textBelowImage: 'Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil',
+      numStars: 3,
+      testimonialAuthor: 'John Doe',
+    }
+    // Add more testimonials as needed
   ];
 
-  const handleClick = (url) => {
-    // Handle the click event here
-    // You can navigate to the URL or perform any other action
-    console.log('Clicked URL:', url);
-  };
-
   useEffect(() => {
-    const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 640);
-    };
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide === testimonials.length - 1 ? 0 : prevSlide + 1));
+    }, 10000);
 
-    // Initial call to set screen size
-    handleResize();
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
-    // Event listener for window resize
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup the event listener
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  //Location buttons stuff  
-
-  const handleInputChange = (e) => {
-    setLocation(e.target.value);
+  const handlePrevSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide === 0 ? testimonials.length - 1 : prevSlide - 1));
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleSaveClick = () => {
-    // Save the location data here
-    setIsEditing(false);
+  const handleNextSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide === testimonials.length - 1 ? 0 : prevSlide + 1));
   };
 
   return (
-    <div id="Landing_Page_Main_Body" className="content-wrapper ">
-      <div className="overflow-hidden">
-        {/* Hero Section */}
-        {/* Orange Section */}
-        <div id="LP_section_1" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[180px] rounded-tr-[180px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
-          {/* This is a style for the orange section to just be in the center when you zoom out and not span the whole page style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}> */}
-          {/* Orange Content section  */}
-          <div id="text_1_image_container" className=' flex items-center justify-evenly md:items-center overflow-hidden md:gap-6 lg:gap-16 xl:gap-20 2xl:gap-72 sm:mr-16 md:mr-0 mr-0'>
-            <div id="text_1_container" className="flex justify-center flex-grow md:-mt-20 p-6 ml-6">
-              {/* First is large screens, second is normal to small screens*/}
-              {isLargeScreen ? (
-                <Text className="sm:text-2xl text-nowrap mt-2  md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo font-bold">
-                  Your Daily Food <br /> Delivered <br /> Hot & Fresh
-                </Text>
-              ) : (
-                <Text className="text-2xl  text-nowrap mt-2 mr-6  text-black-900 font-Agbalumo font-bold">
-                  Your Daily Food <br /> Delivered <br /> Hot & Fresh
-                </Text>
-              )}
-            </div>
-
-            <div id="text_2_image_container" className='flex flex-col '>
-
-              <div id="image_container">
-                <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] mb-4 w-60 h-auto md:w-screen md:h-60 lg:w-screen lg:h-64 xl:w-screen xl:h-72 2xl:w-screen 2xl:h-80" src="images/Main_groceries_reverse.jpg" loading="lazy" />
+    <div>
+      <div id="LP_section_5_orange" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
+        <div className="flex flex-col items-center w-full mb-8">
+          <div id="how-it-works" className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+            <p className="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works?</p>
+          </div>
+        </div>
+      </div>
+      
+      <div id='Testimonials Card' className="w-full flex justify-center">
+  <div id="LP_testimonials_container_4" className="flex flex-col items-center gap-[35px] justify-start w-full pt-16 pb-16 px-4 md:px-10">
+    {/* Slideshow */}
+    <div className="flex transition-transform duration-500 ease-in-out transform" key={currentSlide}>
+      {testimonials.map((testimonial, index) => (
+        <div
+          key={index}
+          className={`bg-slate-50 border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] rounded-tl-[200px] rounded-tr-[200px] shadow-xl max-w-full md:max-w-[928px] p-6 ${
+            currentSlide === index ? 'opacity-100' : 'opacity-0 absolute'
+          }`}
+        >
+          <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
+            <img
+              className="flex items-center justify-center h-[117px] md:h-auto rounded-[50%] w-[117px]"
+              src={testimonial.imageSrc}
+              alt={`Testimonial ${index + 1}`}
+            />
+          </div>
+          <div
+            id="text part"
+            className="flex flex-wrap justify-center gap-4 items-center g-white-A700 flex-row p-2 shadow-bs3 w-full"
+          >
+            <div className="flex flex-row items-center justify-center w-auto">
+              <div className="flex items-center justify-center p-2">
+                {/* Controls */}
+                <button
+                  onClick={handlePrevSlide}
+                  className="p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full" 
+                >
+                  &lt;
+                </button>
+                <div className="flex flex-col items-center justify-center px-6 w-auto">
+                  {/* Text container with fixed width and height */}
+                  <div className="flex items-center justify-center overflow-hidden md:w-[550px] md:h-[100px] w-full h-auto">
+                    <p className="text-center text-lg md:text-2xl font-josefin_sans font-semibold line-clamp-3">
+                      {testimonial.textBelowImage}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleNextSlide}
+                  className="bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
+                >
+                  &gt;
+                </button>
               </div>
-              {/* Wrap the additional content in a separate div */}
-              <div id="text_2_container_show_large_screens" className="hidden sm:hidden md:block lg:block xl:block 2xl:block">
-                <div className="flex justify-center mt-4">
-                  <p className="text-sm md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans font-bold">Groceries, Meals, Pharmacies, anything!</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 items-center w-full">
+            <div className="flex flex-col items-center justify-center px-6 pb-4 w-auto">
+              <div className="flex flex-wrap justify-center gap-6 items-center g-white-A700 flex-col p-3 shadow-bs3 w-full pb-4">
+                <div className="flex flex-wrap justify-center gap-4 items-center g-white-A700 flex-row pb-8 shadow-bs3 w-full">
+                  {Array.from({ length: testimonial.numStars }, (_, starIndex) => (
+                    <div
+                      key={starIndex}
+                      className="flex flex-wrap justify-center items-center w-10 h-10"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                          <path
+                            d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z"
+                            fill="#FE9E0D"
+                          />
+                        </g>
+                      </svg>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          </div>
-          <div id="text_2_container_show_small_screens" className="md:hidden lg:hidden xl:hidden 2xl:hidden">
-            <div className="flex justify-center mt-4">
-              <p className="text-xl sm:text-xl md:text-2xl text-white font_josefin-sans  font-bold">Groceries, Meals, Pharmacies, anything!</p>
-            </div>
-          </div>
-        </div>
-        {/* Location stuff */}
-        <div id="location_buttons_container" className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen" style={{ maxWidth: '1800px', marginLeft: 'auto', marginRight: 'auto' }}>
-          {/* different styling method to make it start at the end of the page<div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>*/}
-          <div className="button-group flex items-start ">
-            <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
-              {/* Button 1 */}
-              <Button className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200" onClick={handleEditClick}>
-                <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy" />
-                <p className={`text-left md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${isEditing ? 'hidden' : ''}`}>What's your Address?</p>
-                <input className={`text-left md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${!isEditing ? 'hidden' : ''}`} type="text" value={location} onChange={handleInputChange} />
-              </Button>
-
-              {/* Button 2 */}
-              <Button className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200" onClick={handleSaveClick}>
-                <img className="h-5 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-gray-600 font-bold">Use Current Location</p>
-              </Button>
+              <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+                <p className="text-xl md:text-3xl text-center text-gray-900 w-auto font-josefin_sans font-semibold">
+                  {testimonial.testimonialAuthor}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Location stuff ends */}
-
-        {/* Location stuff*/}
-        {/* <div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
-          <div className="button-group flex flex-col items-start">
-            <div id="location_buttons_1_container" className="button-row flex items-center mb-6">
-              <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
-                <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy"></img>
-                <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">What's your Address?</p>
-              </Button>
-            </div>
-            {/* current Location stuff
-            <div id="location_buttons_1_container" className="button-row flex mt-2">
-              <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
-                <img className="h-5 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
-                <p className="text-left md:text-lg sm:text-[28px] text-[32px] text-gray-600 font-bold">Use Current Location</p>
-              </Button>
-            </div>
-          </div>
-        </div> */}
-        {/* Locations */}
-        {/* Conditional Rendering based on Screen Size */}
-
-        <div id="LP_section_2" className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
-          <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
-            {isLargeScreen ? (
-              <Text className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
-                Explore Etomart Regions
-              </Text>
-            ) : (
-              <Text className="flex justify-center text-2xl text-black-900 font-Agbalumo font-bold ">
-                Explore Etomart Regions
-              </Text>
-            )}
-          </div>
-          <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
-            {isLargeScreen ? (
-              <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">
-                Delivered to you at your convenience!
-              </Text>
-            ) : (
-              <Text className="flex justify-center text-1xl text-white font-josefin_sans ">
-                Delivered to you at your convenience!
-              </Text>
-            )}
- {/* Regions Buttons */}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-x-16 gap-y-6 md:gap-x-40 py-2 px-16">
-  {regions.map((country, index) => (
-    <div key={country.code} className="flex justify-center">
-      <div className="button-row flex flex-col gap-4 items-center justify-center md:items-center lg:items-center xl:items-center 2xl:items-center mb-4 w-full">
-        <Button
-          className="flex flex-wrap justif-start items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200 w-full"
-          onClick={() => handleClick(`/en/${country.code.toLowerCase()}`)}
-        >
-          <img
-            className="rounded-[36px] h-6 mr-2 flex-shrink-0"
-            src={country.flagPath}
-            alt={`${country.name} flag`}
-            loading="lazy"
-          />
-          <p className=" text-left md:text-base lg:text-lg xl:text-xl 2xl:text-2xl sm:text-lg text-xl text-gray-700 font-bold flex-shrink">
-            {country.name}
-          </p>
-          <div className="ml-2 flex-shrink-0">
-            <svg
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-6 fill-current text-gray-600"
-            >
-              <g fill="none" fillRule="evenodd">
-                <path fill="none" d="M0 0h24v24H0z" />
-                <path
-                  d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
-                  fill="#202125"
-                />
-              </g>
-            </svg>
-          </div>
-        </Button>
-      </div>
+      ))}
     </div>
-  ))}
+  </div>
 </div>
- {/* Regions Buttons */}
-</div></div>
-        <div class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full p-6">
-        <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"><p class="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p></div>
-          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"> <p class="text-left md:text-5xl text-6xl text-gray-800 w-auto font-bold font-Agbalumo">What They Are Saying</p></div>
-          <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"><p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl  text-gray-600_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p></div>
-          <div class="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full"> <img class="h-10 w-[232px]" src="images/img_ratings.svg" alt="ratings" loading="lazy"></img>
-            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"><p class="text-3xl sm:text-[26px] md:text-[28px] text-center text-gray-900 w-auto font-josefin_sans font-semibold">John Doe</p>
-            </div>
-            <div className="bg-white-A700 flex flex-col gap-[34px] h-[454px] md:h-auto items-center justify-start max-w-[928px] p-2.5 rounded-[30px] shadow-bs3 w-full">
-              <Img
-                className="h-[117px] md:h-auto rounded-[50%] w-[117px]"
-                src="images/img_ellipse1.png"
-                alt="ellipseOne"
-              /></div>
+
+      <div id="another_section" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
+        <div className="flex flex-col items-center w-full mb-8">
+          <div id="how-it-works" className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+            <p className="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">Another Section</p>
           </div>
         </div>
-        {/* Hero Slider Section */}
-        <section className="hero-section">
-          {/* Hero Slider or Static Image */}
-        </section>
-        {/* Search Functionality Section */}
-        <section className="search-bar">
-          {/* Search Input */}
-        </section>
-        {/* Featured Products or Categories Section */}
-        <section className="featured-products">
-          {/* Dynamically list featured products or categories */}
-        </section>
-        {/* Testimonials or Reviews Section */}
-        <section className="testimonials">
-          {/* Display user testimonials */}
-        </section>
-        {/* Call to Action Section */}
-        <section className="cta">
-          {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
-        </section>
-        {/* Footer Section */}
-        <footer className="site-footer">
-          {/* Footer Content */}
-        </footer>
-        {/* Hero Slider Section */}
-        <section className="hero-section">
-          {/* Hero Slider or Static Image */}
-        </section>
-        {/* Search Functionality Section */}
-        <section className="search-bar">
-          {/* Search Input */}
-        </section>
-        {/* Featured Products or Categories Section */}
-        <section className="featured-products">
-          {/* Dynamically list featured products or categories */}
-        </section>
-        {/* Testimonials or Reviews Section */}
-        <section className="testimonials">
-          {/* Display user testimonials */}
-        </section>
-        {/* Call to Action Section */}
-        <section className="cta">
-          {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
-        </section>
-        {/* Footer Section */}
-        <footer className="site-footer">
-          {/* Footer Content */}
-        </footer>
       </div>
-
-
     </div>
-
   );
 }
 
-export default LandingPage;
+export default KhomasLandingPage;
+
 
 
 // import React from 'react';
@@ -478,7 +343,7 @@ export default LandingPage;
 //           <div className="bg-white-A700 rounded-[36px] shadow-bs1 p-[9px] flex flex-col items-center justify-end w-full ">
 //             <div className="flex items-center justify-start gap-[53px] mt-[7px] w-[88%] md:w-full">
 //               <Img className="h-[67px]" src="images/img_linkedin.svg" alt="LinkedIn"/>
-//               <Text className="text-[32px] md:text-3xl text-gray-600">
+//               <Text className="text-[32px] md:text-3xl text-zinc-950">
 //                 What's your Address?
 //               </Text>
 //             </div>
@@ -533,3 +398,51 @@ export default LandingPage;
 // }
 
 // export default LandingPage;
+
+// {/* <section className="hero-section">
+// {/* Hero Slider or Static Image */}
+// </section></>
+// {/* Search Functionality Section */}
+// <section className="search-bar">
+//   {/* Search Input */}
+// </section>
+// {/* Featured Products or Categories Section */}
+// <section className="featured-products">
+//   {/* Dynamically list featured products or categories */}
+// </section>
+// {/* Testimonials or Reviews Section */}
+// <section className="testimonials">
+//   {/* Display user testimonials */}
+// </section>
+// {/* Call to Action Section */}
+// <section className="cta">
+//   {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
+// </section>
+// {/* Footer Section */}
+// <footer className="site-footer">
+//   {/* Footer Content */}
+// </footer>
+// {/* Hero Slider Section */}
+// <section className="hero-section">
+//   {/* Hero Slider or Static Image */}
+// </section>
+// {/* Search Functionality Section */}
+// <section className="search-bar">
+//   {/* Search Input */}
+// </section>
+// {/* Featured Products or Categories Section */}
+// <section className="featured-products">
+//   {/* Dynamically list featured products or categories */}
+// </section>
+// {/* Testimonials or Reviews Section */}
+// <section className="testimonials">
+//   {/* Display user testimonials */}
+// </section>
+// {/* Call to Action Section */}
+// <section className="cta">
+//   {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
+// </section>
+// {/* Footer Section */}
+// <footer className="site-footer">
+//   {/* Footer Content */}
+// </footer> */}
