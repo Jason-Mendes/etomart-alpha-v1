@@ -831,7 +831,13 @@ function LandingPage() {
         <div
           id="LP_section_3_orange"
           className="bg-[#ee9613] border border-solid border-white-A700_19 rounded-tl-[150px] rounded-tr-[150px] shadow-xl relative"
+         style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}
         >
+        {/* <div
+          id="LP_section_3_orange"
+          className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
+          style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}
+        > */}
           <div className="container mx-auto px-0 py-10 md:py-10 flex flex-col md:flex-row justify-between items-center">
             <div className="flex flex-col items-start justify-between">
               <div className="flex items-start justify-start ">
@@ -994,47 +1000,7 @@ function LandingPage() {
           </div>
         </div>
       </footer>
-
-      <section className="hero-section">
-        {/* Hero Slider or Static Image */}
-      </section>
-      {/* Search Functionality Section */}
-      <section className="search-bar">{/* Search Input */}</section>
-      {/* Featured Products or Categories Section */}
-      <section className="featured-products">
-        {/* Dynamically list featured products or categories */}
-      </section>
-      {/* Testimonials or Reviews Section */}
-      <section className="testimonials">
-        {/* Display user testimonials */}
-      </section>
-      {/* Call to Action Section */}
-      <section className="cta">
-        {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
-      </section>
-      {/* Footer Section */}
-      <footer className="site-footer">{/* Footer Content */}</footer>
-      {/* Hero Slider Section */}
-      <section className="hero-section">
-        {/* Hero Slider or Static Image */}
-      </section>
-      {/* Search Functionality Section */}
-      <section className="search-bar">{/* Search Input */}</section>
-      {/* Featured Products or Categories Section */}
-      <section className="featured-products">
-        {/* Dynamically list featured products or categories */}
-      </section>
-      {/* Testimonials or Reviews Section */}
-      <section className="testimonials">
-        {/* Display user testimonials */}
-      </section>
-      {/* Call to Action Section */}
-      <section className="cta">
-        {/* <Link to="/products" className="btn btn-primary">Shop Now</Link> */}
-      </section>
-      {/* Footer Section */}
-      <footer className="site-footer">{/* Footer Content */}</footer>
-    </div>
+     </div>
   );
 }
 
