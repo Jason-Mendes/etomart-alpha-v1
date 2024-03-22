@@ -43,7 +43,7 @@ function OPNavBar() {
         }
         `}
       </style>
-      <div className="font-josefin_sans ">
+      <div className="font-josefin_sans">
         <nav id="opnavbar" className="bg-slate-100 text-orange-500 px-4">
           {/*  <div className="mt-0  flex items-center justify-between py-0 sm:mx-0 sm:mb-4 md:px-4"> */}
           {/* this or that ^ /*/}
@@ -73,7 +73,7 @@ function OPNavBar() {
             </div>
           </div>
         </nav>
-        <div className={`flex justify-end md:hidden ${nav ? 'block' : 'hidden'} transition-all duration-500 ease-in-out`}>
+        <div className={`flex absolute z-10 justify-end md:hidden ${nav ? 'block' : 'hidden'} transition-all duration-500 ease-in-out`}>
           <div >
             <ul className='uppercase p-2'>
               <li className='p-2 whitespace-nowrap border-b'>
