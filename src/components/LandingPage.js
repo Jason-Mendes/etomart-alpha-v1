@@ -269,13 +269,13 @@ function LandingPage() {
                   loading="lazy"
                 />
                 <p
-                  className={`text-left md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${isEditing ? "hidden" : ""
+                  className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${isEditing ? "hidden" : ""
                     }`}
                 >
                   What's your Address?
                 </p>
                 <input
-                  className={`text-left md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${!isEditing ? "hidden" : ""
+                  className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${!isEditing ? "hidden" : ""
                     }`}
                   type="text"
                   value={location}
@@ -494,25 +494,25 @@ function LandingPage() {
 
 
         <div
-          id="LP_location_buttons_container_2"
-          className="flex items-center justify-center  p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
+          id="LP_location_Testimonials_container_2"
+          className="flex items-center justify-center  p-16 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
           style={{
             maxWidth: "1800px",
             marginLeft: "auto",
             marginRight: "auto",
           }}>
-          <div id="Testimonials Card" className="w-full flex justify-center">
+          <div id="Testimonials Card" className="flex flex-col items-center justify-center w-full -mt-16">
             <div
               id="LP_testimonials_container_4"
               className="flex flex-col items-center gap-[35px] justify-start w-full pt-16 pb-16 px-4 md:px-10"
             >
               <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                <p className="text-left sm:text-[21px] md:text-[23px] text-[25px] text-orange-500 w-auto font-bold font-shrikhand">
+                <p className="text-center sm:text-[28px] md:text-[38px] text-[38px] text-orange-500 w-auto font-bold font-shrikhand">
                   Testimonials
                 </p>
               </div>
               <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                <p className="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
+                <p className="text-center md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
                   What Others Are Saying
                 </p>
               </div>
@@ -613,24 +613,24 @@ function LandingPage() {
         </div>
 
         <div
-          id="LP_section_5_orange"
-          className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10"
+          id="LP_section_5_orange_How_it_Works"
+          className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative p-16 h-auto"
           style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
         >
-          <div className="flex flex-col items-center w-full mb-8">
+          <div className="flex flex-col items-center justify-center w-full -mt-6">
             <div
               id="how-it-works"
-              className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto"
+              className="flex flex-col items-center justify-center  p-2 w-auto"
             >
-              <p className="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
+              <p className="text-center md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
                 How it Works?
               </p>
             </div>
             <div
               id="how-it-works-text"
-              className="flex flex-col items-center justify-center px-2.5 pt-6 pb-6 w-auto"
+              className="flex flex-col items-center justify-center  p-6 w-auto"
             >
-              <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-white font-josefin_sans font-semibold">
+              <p className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl text-white font-josefin_sans font-semibold">
                 Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non
                 et elit. Dolor turpis molestie dui magnis facilisis at fringilla
                 quam.
@@ -638,7 +638,7 @@ function LandingPage() {
             </div>
           </div>
           <div id="cards" className="flex flex-wrap justify-center gap-6">
-            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
+            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
                 src="images/img_materialsymbol.svg"
@@ -647,14 +647,14 @@ function LandingPage() {
               <div className="text-center p-2">
                 <p
                   id="title"
-                  className="text-xl text-black font-bold mb-2"
+                  className=" text-black text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl font-bold mb-2"
                 >
                   Order at Your convenience
                 </p>
                 <div className="text-center p-2">
                   <p
                     id="body"
-                    className="text-base text-black font-semibold"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl text-black font-semibold"
                   >
                     Browse through a wide selection of restaurants and shops,
                     and order your favorite meals, groceries, or other
@@ -664,7 +664,7 @@ function LandingPage() {
               </div>
             </div>
 
-            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
+            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
                 src="images/img_mdicursorpointer.svg"
@@ -673,14 +673,14 @@ function LandingPage() {
               <div className="text-center p-2">
                 <p
                   id="title"
-                  className="text-xl text-black font-bold mb-2"
+                  className=" text-black text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl font-bold mb-2"
                 >
                   Fast Delivery
                 </p>
                 <div className="text-center p-2">
                   <p
                     id="body"
-                    className="text-base text-black font-semibold"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl text-black font-semibold"
                   >
                     Etomart's fleet of delivery partners ensures your order
                     arrives quickly, so you can enjoy your meals or items
@@ -690,7 +690,7 @@ function LandingPage() {
               </div>
             </div>
 
-            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[300px] h-[320px]">
+            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
                 src="images/img_mditruckdelivery.svg"
@@ -699,14 +699,14 @@ function LandingPage() {
               <div className="text-center p-2">
                 <p
                   id="title"
-                  className="text-xl text-black font-bold mb-2"
+                  className=" text-black text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl font-bold mb-2"
                 >
                   Convenient Tracking
                 </p>
                 <div className="text-center p-2">
                   <p
                     id="body"
-                    className="text-base text-black font-semibold"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl text-black font-semibold"
                   >
                     Track your order in real-time through the Etomart site, so
                     you always know when your delivery is on its way.
@@ -743,8 +743,8 @@ function LandingPage() {
                     ></div>
                   </div>
                   <div className="flex flex-col items-center justify-center p-0">
-                    <div className="flex flex-col items-center justify-center  max-w-[340px] h-[120px]">
-                      <p className="text-center text-lg font-josefin_sans font-bold overflow-hidden line-clamp-3 m-2 p-0">
+                    <div className="flex flex-col items-center justify-center  max-w-[440px] h-[120px]">
+                      <p className="text-center text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl font-josefin_sans font-bold overflow-hidden line-clamp-3 m-2 p-0">
                         Get paid as a courier partner
                       </p>
                     </div>
@@ -771,8 +771,8 @@ function LandingPage() {
                     ></div>
                   </div>
                   <div className="flex flex-col items-center justify-center p-0">
-                    <div className="flex flex-col items-center justify-center  max-w-[340px] h-[120px]">
-                      <p className="text-center text-lg font-josefin_sans font-bold overflow-hidden line-clamp-3 m-2 p-0">
+                    <div className="flex flex-col items-center justify-center  max-w-[440px] h-[120px]">
+                    <p className="text-center text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl font-josefin_sans font-bold overflow-hidden line-clamp-3 m-2 p-0">
                         Serve more people as a restaurant partner
                       </p>
                     </div>
@@ -799,8 +799,8 @@ function LandingPage() {
                     ></div>
                   </div>
                   <div className="flex flex-col items-center justify-center p-0">
-                    <div className="flex flex-col items-center justify-center  max-w-[340px] h-[120px]">
-                      <p className="text-center text-lg  font-josefin_sans font-bold overflow-hidden line-clamp-3 m-2 p-0">
+                    <div className="flex flex-col items-center justify-center  max-w-[440px] h-[120px]">
+                    <p className="text-center text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl font-josefin_sans font-bold overflow-hidden line-clamp-3 m-2 p-0">
                         Enter a new chapter and find a job at Etomart
                       </p>
                     </div>
