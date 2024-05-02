@@ -718,7 +718,7 @@ function LandingPage() {
         </div>
 
         <div
-          id="LP_location_buttons_container_2"
+          id="LP_Hungry_for_more_than_food_buttons_container_2"
           className="flex items-center justify-center  p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
           style={{
             maxWidth: "1800px",
@@ -727,95 +727,104 @@ function LandingPage() {
           }}
         >
           <div className="flex flex-col items-center justify-center px-2.5 py-20  w-auto">
-            <h2 className="text-5xl font-Agbalumo font-bold mb-16">
+            <h2 className="text-5xl font-Agbalumo font-bold mb-8">
               Hungry for more than food?
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6">
-              <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
-                <div className="p-0 m-2">
-                  <div className="p-0 m-4">
-                    <div
+            <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
+  <div className="p-0 m-2">
+    <div className="p-0 m-4">
+    <div
                       className="h-96 bg-cover bg-center border border-solid rounded-2xl"
                       style={{
                         backgroundImage:
                           "url(https://consumer-static-assets.wolt.com/frontpage-assets/courier-card-image.jpg)",
                       }}
                     ></div>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-0">
-                    <div className="flex flex-col items-center justify-center  max-w-[440px] h-[120px]">
-                      <p className="text-center text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl font-josefin_sans font-bold overflow-hidden line-clamp-3 m-2 p-0">
-                        Get paid as a courier partner
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-center justify-center p-0 m-2 ">
-                      <a
-                        href="https://careers.wolt.com"
-                        className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
-                      >
-                        Apply now
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div className="text-center p-8">
+        <p
+          id="body"
+          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6"
+          style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
+        >
+          Get paid as a courier partner. 
+        </p>
+      </div>
+    </div>
+  </div>
+  <div className="flex items-center justify-center p-4 m-2">
+    <a
+      href="https://careers.wolt.com"
+      className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
+    >
+      Apply now
+    </a>
+  </div>
+</div>
+
               <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
-                <div className="p-0 m-2">
-                  <div className="p-0 m-4">
-                    <div
+              <div className="p-0 m-2">
+    <div className="p-0 m-4">
+    <div
                       className="h-96 bg-cover bg-center border border-solid rounded-2xl"
                       style={{
                         backgroundImage:
                           "url(https://consumer-static-assets.wolt.com/frontpage-assets/restaurant-card-image.jpg)",
                       }}
                     ></div>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-0">
-                    <div className="flex flex-col items-center justify-center  max-w-[440px] h-[120px]">
-                    <p className="text-center text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl font-josefin_sans font-bold overflow-hidden line-clamp-3 m-2 p-0">
-                        Serve more people as a restaurant partner
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-center justify-center p-0 m-2 ">
-                      <a
-                        href="https://careers.wolt.com"
-                        className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
-                      >
-                        Apply now
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div className="text-center p-8">
+        <p
+          id="body"
+          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6"
+          style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
+        >
+          Serve more people as a restaurant partner
+        </p>
+      </div>
+    </div>
+  </div>
+  <div className="flex items-center justify-center p-4 m-2">
+    <a
+      href="https://careers.wolt.com"
+      className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
+    >
+      Apply now
+    </a>
+  </div>
+</div>
+
               <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
-                <div className="p-0 m-2">
-                  <div className="p-0 m-4">
-                    <div
-                      className="h-96 bg-cover bg-center border border-solid rounded-2xl"
-                      style={{
-                        backgroundImage:
-                          "url(https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg)",
-                      }}
-                    ></div>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-0">
-                    <div className="flex flex-col items-center justify-center  max-w-[440px] h-[120px]">
-                    <p className="text-center text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl font-josefin_sans font-bold overflow-hidden line-clamp-3 m-2 p-0">
-                        Enter a new chapter and find a job at Etomart
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-center justify-center p-0 m-2 ">
-                      <a
-                        href="https://careers.wolt.com"
-                        className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
-                      >
-                        Apply now
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <div className="p-0 m-2">
+    <div className="p-0 m-4">
+      <div
+        className="h-96 bg-cover bg-center border border-solid rounded-2xl"
+        style={{
+          backgroundImage:
+            "url(https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg)",
+        }}
+      ></div>
+      <div className="text-center p-8">
+        <p
+          id="body"
+          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6"
+          style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
+        >
+          Enter a new chapter and find a job at Etomart
+        </p>
+      </div>
+    </div>
+  </div>
+  <div className="flex items-center justify-center p-4 m-2">
+    <a
+      href="https://careers.wolt.com"
+      className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
+    >
+      Apply now
+    </a>
+  </div>
+ 
+
+                    </div></div>
           </div>
         </div>
 
