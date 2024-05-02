@@ -744,7 +744,7 @@ function LandingPage() {
       <div className="text-center p-8">
         <p
           id="body"
-          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6"
+          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
           style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
         >
           Get paid as a courier partner. 
@@ -775,7 +775,7 @@ function LandingPage() {
       <div className="text-center p-8">
         <p
           id="body"
-          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6"
+          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
           style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
         >
           Serve more people as a restaurant partner
@@ -803,10 +803,10 @@ function LandingPage() {
             "url(https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg)",
         }}
       ></div>
-      <div className="text-center p-8">
+      <div className="text-center p-8 ">
         <p
           id="body"
-          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6"
+          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
           style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
         >
           Enter a new chapter and find a job at Etomart
