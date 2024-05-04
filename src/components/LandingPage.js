@@ -200,7 +200,7 @@ function LandingPage() {
 
   return (
     <div id="Landing_Page_Main_Body" className="content-wrapper ">
-      <div className="overflow-auto">
+      <div className="overflow-auto bg-[#fafafa]">
         {/* Hero Section */}
         {/* Orange Section */}
         <div className="bg-[#ee9613] border border-solid border-white-A700_19 rounded-tr-[150px] rounded-bl-[150px] rounded-br-[150px] shadow-xl relative p-4 w-full overflow-auto">

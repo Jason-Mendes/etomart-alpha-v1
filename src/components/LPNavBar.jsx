@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
-import { Button, Img, List, Text } from '../components';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import LoginSignupModal from './LoginSignupModal';
 
-function LPNavBar() {
+const LPNavBar = () => {
+  const [isNavbarSticky, setIsNavbarSticky] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
-      const navbar = document.getElementById('lpnavbar');
       const scrollPosition = window.scrollY;
-
-      if (scrollPosition > 0) {
-        navbar.classList.add('sticky');
-      } else {
-        navbar.classList.remove('sticky');
-      }
+      setIsNavbarSticky(scrollPosition > 0);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -26,32 +22,51 @@ function LPNavBar() {
   return (
     <div>
       <style>
-  {`
-    .sticky {
-      position: fixed;
-      z-index: 100;
-      width: 100%; 
-    }
-  `}
-</style>
-      <nav id="lpnavbar" className="bg-slate-100 text-orange-500 px-4">
-      {/* <div className="-mt-2 pt-1 flex items-center justify-between -py-4 sm:mx-0 sm:mb-0 md:px-4"> */}
-      {/* this or that ^ /*/}
+        {`
+          .sticky {
+            position: fixed;
+            z-index: 100;
+            width: 100%;
+          }
+
+          .flex-container {
+            display: flex;
+            align-items: center;
+            gap: 6px; /* Adjust the gap as needed */
+          }
+        `}
+      </style>
+
+      <nav
+  id="lpnavbar"
+  className={`bg-[#f9f9f9] px-4 ${isNavbarSticky ? 'sticky' : ''}`}
+>
+
         <div className="flex items-center justify-between mx-auto max-w-7xl">
           <div className="flex items-center mt-6 mb-4">
-            <h1 className="-mt-2 text-3xl font-shrikhand text-[#df7000] whitespace-nowrap">
+            <h1 className="-mt-2 text-3xl font-shrikhand text-[#ee9613] whitespace-nowrap">
               <Link to="/LandingPage">Etomart</Link>
             </h1>
           </div>
-          <Img
-            className="h-[40px] my-0 ml-0 mr-0 md:mr-0 lg:mr-0"
-            src="images/img_group36.svg"
-            alt="groupThirtySix"
-          />
+
+          {/* Buttons container */}
+          <div className="flex-container">
+            {/* Render the modal component */}
+            <LoginSignupModal>
+              <button className=" hover:bg-black hover:text-white font-Agbalumo h-[35px] px-4  bg-[#ee9613] text-Black rounded">
+                Login
+              </button>
+            </LoginSignupModal>
+            <LoginSignupModal>
+              <button className=" hover:bg-black hover:text-white  font-Agbalumo h-[35px] px-4  bg-[#ee9613] text-Black rounded">
+                Sign Up
+              </button>
+            </LoginSignupModal>
+          </div>
         </div>
       </nav>
     </div>
   );
-}
+};
 
 export default LPNavBar;
