@@ -3,8 +3,35 @@ E-Store Platform - Grocery delivery WebApp - Front-End: React - Back-End/Web Ser
 
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was Strarted with [Create React App](https://github.com/facebook/create-react-app).
+**Create a New React App:**
 
+- Open your terminal or command prompt.
+- Navigate to the directory where you want to create your app.
+
+Run to **Install project dependencies**
+
+```jsx
+npm install
+```
+
+Run
+
+```jsx
+npm install react-scripts --save
+```
+
+Update Node.js and npm
+
+```jsx
+npm install -g npm
+```
+
+- Run the following command to update Nodejs to a set version! (Optional)
+
+```jsx
+npm install -g npm@10.4.0 
+```
 ## Available Scripts
 
 In the project directory, you can run:
