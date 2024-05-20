@@ -82,20 +82,20 @@ const LPNavBar = () => {
           </div>
 
           {/* Buttons container */}
-          <div className="flex-container">
-            <button onClick={handleLoginClick} className="hover:bg-black hover:text-white font-Agbalumo h-[35px] px-4 bg-[#ee9613] text-Black rounded">
-              Login
+          <div className="flex-container flex space-x-4">
+            <button onClick={handleLoginClick} className="hover:bg-black hover:text-white  font-josefin_sans py-2 px-4 bg-[#f7a832]  text-Black rounded">
+              Log in
             </button>
-            <button onClick={handleSignupClick} className="hover:bg-black hover:text-white font-Agbalumo h-[35px] px-4 bg-[#ee9613] text-Black rounded">
-              Sign Up
+            <button onClick={handleSignupClick} className="hover:bg-black hover:text-white   font-josefin_sans py-2 px-4 bg-[#ff9f10]  text-Black rounded">
+              Sign up
             </button>
-            <button onClick={handleForgotPasswordClick} className=" hidden hover:bg-black hover:text-white font-Agbalumo h-[35px] px-4 bg-[#ee9613] text-Black rounded">
+            <button onClick={handleForgotPasswordClick} className=" hidden hover:bg-black hover:text-white   font-josefin_sans py-2 px-4 bg-[#ee9613] text-Black rounded">
             Forgot Password
             </button>
-            <button onClick={handleAuthenticatedLoginClick} className="hidden hover:bg-black hover:text-white font-Agbalumo h-[35px] px-4 bg-[#ee9613] text-Black rounded">
+            <button onClick={handleAuthenticatedLoginClick} className="hidden hover:bg-black hover:text-white   font-josefin_sans py-2 px-4 bg-[#ee9613] text-Black rounded">
             Authenticated Log in
             </button>
-            <button onClick={handleAuthenticatedSignupClick} className="hidden hover:bg-black hover:text-white font-Agbalumo h-[35px] px-4 bg-[#ee9613] text-Black rounded">
+            <button onClick={handleAuthenticatedSignupClick} className="hidden hover:bg-black hover:text-white   font-josefin_sans py-2 px-4 bg-[#ee9613] text-Black rounded">
             Authenticated Sign in
             </button>
           </div>
