@@ -30,69 +30,68 @@ function OPNavBar() {
   };
 
   return (
-    <div className='relative z-10'>
+    <div className="relative z-10">
       <style>
-        {`
-          .sticky {
-            position: fixed;
-            z-index: 100;
-            width: 100%;
-          }
-        `}
+        {`.sticky {
+          position: fixed;
+          z-index: 100;
+          width: 100%;
+          top: 0;
+        }`}
       </style>
-      <div className='font-josefin_sans'>
-        <nav id='opnavbar' className='bg-[#f9f9f9] text-orange-500 px-4'>
-          <div className='flex items-center justify-between mx-auto max-w-7xl'>
-            <div className='flex items-center mt-4 mb-4 '>
-              <h1 className='-mt-2 text-3xl pt-1 font-shrikhand  text-orange-500 whitespace-nowrap'>
-                <Link to='/Home'>Etomart</Link>
+      <div className="font-josefin_sans">
+        <nav id="opnavbar" className="bg-[#f9f9f9] text-orange-500 px-4">
+          <div className="flex items-center justify-between mx-auto max-w-7xl">
+            <div className="flex items-center mt-4 mb-4">
+              <h1 className="-mt-2 text-3xl pt-1 font-shrikhand text-orange-500 whitespace-nowrap">
+                <Link to="/Home">Etomart</Link>
               </h1>
-              <div className='ml-4'>
+              <div className="ml-4">
                 <LocationButton />
               </div>
             </div>
-            <div className='flex-grow md:flex-none mr-4'>
+            <div className="hidden md:flex flex-grow md:flex-none md:w-auto mr-4 w-full">
               <SearchBar />
             </div>
-            <div className='hidden md:flex items-center justify-end space-x-4 font-bold text-lg'>
-              <div className='ml-4'>
+            <div className="hidden md:flex items-center space-x-4">
+              <div className="md:block">
                 <HomeIcon />
               </div>
-              <div className='ml-4 mr-4'>
+              <div className="hidden lg:block">
                 <CartIcon />
               </div>
-              <div className='mr-4'>
+              <div className="hidden xl:block">
                 <UserProfileIcon />
               </div>
             </div>
-            <div onClick={handleNav} className='block md:hidden'>
+            <div className="xl:hidden cursor-pointer" onClick={handleNav}>
               {nav ? <CgClose size={30} /> : <CgMenuRound size={30} />}
             </div>
           </div>
         </nav>
         <div
-          className={`flex absolute z-20 justify-end md:hidden ${
+          className={`absolute z-20 w-full bg-[#f9f9f9] xl:hidden ${
             nav ? 'block' : 'hidden'
           } transition-all duration-500 ease-in-out`}
         >
-          <ul className='uppercase p-2 space-y-2'>
-            <li className='p-2 whitespace-nowrap border-b'>
-              <Link to='/LandingPage' className='hover:text-black'>
+          <ul className="uppercase p-2 space-y-2">
+            <li className="p-2 whitespace-nowrap border-b">
+              <Link to="/LandingPage" className="hover:text-black">
                 Landing Page
               </Link>
             </li>
-            <li className='p-2 whitespace-nowrap border-b'>
-              <Link to='/home' className='hover:text-black'>
+            <li className="p-2 whitespace-nowrap border-b">
+              <Link to="/home" className="hover:text-black">
                 Home
               </Link>
             </li>
-            <li className='p-2 whitespace-nowrap border-b'>
-              <Link to='/products' className='hover:text-black'>
+            <li className="p-2 whitespace-nowrap border-b">
+              <Link to="/products" className="hover:text-black">
                 Products
               </Link>
             </li>
-            <li className='p-2 whitespace-nowrap'>
-              <Link to='/user-profile' className='hover:text-black'>
+            <li className="p-2 whitespace-nowrap">
+              <Link to="/user-profile" className="hover:text-black">
                 User Profile
               </Link>
             </li>

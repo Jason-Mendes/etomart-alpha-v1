@@ -8,9 +8,7 @@ const SearchBar = () => {
   };
 
   const handleSearch = () => {
-    // Implement search functionality here
     console.log('Searching for:', searchValue);
-    // Optionally, you can perform search operations or API calls here
   };
 
   const clearSearch = () => {
@@ -18,12 +16,12 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex items-center p-4">
+    <div className="flex items-center w-full p-4">
       <div className="flex items-center w-full relative">
         <input
           placeholder="Search in Etomart..."
           data-test-id="SearchInput"
-          className="flex-grow px-16 py-2 rounded-full border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="flex-grow w-full md:w-auto px-16 py-2 rounded-full border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
           value={searchValue}
           onChange={handleInputChange}
         />
