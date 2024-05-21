@@ -103,92 +103,105 @@ function KhomasLandingPage() {
               Restaurants, Stores and Supermarkets Near Me
               </p>
             </div>
-            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-              <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-zinc-950_01 font-josefin_sans font-semibold">
-                Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non
-                et elit. Dolor turpis molestie dui magnis facilisis at fringilla
-                quam.
+            <div
+          id="LP_section_5_orange_How_it_Works"
+          className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative p-16 h-auto"
+          style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
+        >
+          <div className="flex flex-col items-center justify-center w-full -mt-6">
+            <div
+              id="how-it-works"
+              className="flex flex-col items-center justify-center  p-2 w-auto"
+            >
+              <p className="text-center md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
+                How it Works?
               </p>
             </div>
-          </div>
-
-        <div id='Testimonials Card' className="w-full flex justify-center">
-          <div id="LP_testimonials_container_4" className="flex flex-col items-center gap-[35px] justify-start w-full pt-16 pb-16 px-4 md:px-10">
-            {/* Slideshow */}
-            <div className="flex transition-transform duration-500 ease-in-out transform" key={currentSlide}>
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className={`bg-slate-50 border border-solid border-white-A700_19 rounded-bl-[200px] rounded-br-[200px] rounded-tl-[200px] rounded-tr-[200px] shadow-xl max-w-full md:max-w-[928px] p-6 ${currentSlide === index ? 'opacity-100' : 'opacity-0 absolute'}`}
+            <div
+              id="how-it-works-text"
+              className="flex flex-col items-center justify-center  p-6 w-auto"
+            >
+          <div id="cards" className="flex flex-wrap justify-center gap-6">
+            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
+              <img
+                className="h-[96px] w-[96px] mb-4"
+                src="images/img_materialsymbol.svg"
+                alt="materialsymbol"
+              />
+              <div className="text-center p-2">
+                <p
+                  id="title"
+                  className=" text-black text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl font-bold mb-2"
                 >
-                  <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
-                    <img
-                      className="flex items-center justify-center h-[117px] md:h-auto rounded-[50%] w-[117px]"
-                      src={testimonial.imageSrc}
-                      alt={`Testimonial ${index + 1}`} />
-                  </div>
-                  <div
-                    id="text part"
-                    className="flex flex-wrap justify-center gap-4 items-center g-white-A700 flex-row p-2 shadow-bs3 w-full"
+                  Order at Your convenience
+                </p>
+                <div className="text-center p-2">
+                  <p
+                    id="body"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl text-black font-semibold"
                   >
-                    <div className="flex flex-row items-center justify-center w-auto">
-                      <div className="flex items-center justify-center p-2">
-                        {/* Controls */}
-                        <button
-                          onClick={handlePrevSlide}
-                          className="p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
-                        >
-                          &lt;
-                        </button>
-                        <div className="flex flex-col items-center justify-center px-6 w-auto">
-                          {/* Text container with fixed width and height */}
-                          <div className="flex items-center justify-center overflow-hidden md:w-[550px] md:h-[100px] w-full h-auto">
-                            <p className="text-center text-lg md:text-2xl font-josefin_sans font-semibold line-clamp-3">
-                              {testimonial.textBelowImage}
-                            </p>
-                          </div>
-                        </div>
-                        <button
-                          onClick={handleNextSlide}
-                          className="bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
-                        >
-                          &gt;
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap justify-center gap-6 items-center w-full">
-                    <div className="flex flex-col items-center justify-center px-6 pb-4 w-auto">
-                      <div className="flex flex-wrap justify-center gap-6 items-center g-white-A700 flex-col p-3 shadow-bs3 w-full pb-4">
-                        <div className="flex flex-wrap justify-center gap-4 items-center g-white-A700 flex-row pb-8 shadow-bs3 w-full">
-                          {Array.from({ length: testimonial.numStars }, (_, starIndex) => (
-                            <div
-                              key={starIndex}
-                              className="flex flex-wrap justify-center items-center w-10 h-10"
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg">
-                                <g>
-                                  <path
-                                    d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z"
-                                    fill="#FE9E0D" />
-                                </g>
-                              </svg>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                        <p className="text-xl md:text-3xl text-center text-gray-900 w-auto font-josefin_sans font-semibold">
-                          {testimonial.testimonialAuthor}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                    Browse through a wide selection of restaurants and shops,
+                    and order your favorite meals, groceries, or other
+                    essentials.
+                  </p>
                 </div>
-              ))}
+              </div>
+              </div>        </div>        </div>
+
+            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
+              <img
+                className="h-[96px] w-[96px] mb-4"
+                src="images/img_mdicursorpointer.svg"
+                alt="mdicursorpointe"
+              />
+              <div className="text-center p-2">
+                <p
+                  id="title"
+                  className=" text-black text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl font-bold mb-2"
+                >
+                  Fast Delivery
+                </p>
+                <div className="text-center p-2">
+                  <p
+                    id="body"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl text-black font-semibold"
+                  >
+                    Etomart's fleet of delivery partners ensures your order
+                    arrives quickly, so you can enjoy your meals or items
+                    wherever and whenever
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
+              <img
+                className="h-[96px] w-[96px] mb-4"
+                src="images/img_mditruckdelivery.svg"
+                alt="mditruckdeliver"
+              />
+              <div className="text-center p-2">
+                <p
+                  id="title"
+                  className=" text-black text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl font-bold mb-2"
+                >
+                  Convenient Tracking
+                </p>
+                <div className="text-center p-2">
+                  <p
+                    id="body"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl text-black font-semibold"
+                  >
+                    Track your order in real-time through the Etomart site, so
+                    you always know when your delivery is on its way.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+          </div>
+
 
         <div id="another_section" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
           <div className="flex flex-col items-center w-full mb-8">
