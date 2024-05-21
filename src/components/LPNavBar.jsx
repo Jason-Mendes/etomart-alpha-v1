@@ -26,7 +26,10 @@ const LPNavBar = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  },
+  []);
+
+
   const handleLoginClick = () => {
     setShowLoginModal(true);
   };

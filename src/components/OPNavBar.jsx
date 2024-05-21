@@ -6,8 +6,22 @@ import SearchBar from './SearchBar';
 import CartIcon from './CartIcon';
 import UserProfileIcon from './UserProfileIcon';
 import HomeIcon from './HomeIcon';
-
+import LocationModal from './LocationModal'
 function OPNavBar() {
+
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  
+  const handleLocationClick = () => {
+    setShowLocationModal(true);
+  };
+
+  
+  const closeModals = () => {
+    setShowLocationModal(false);
+  
+  };
+
+  
   useEffect(() => {
     const handleScroll = () => {
       const navbar = document.getElementById('opnavbar');
@@ -40,15 +54,15 @@ function OPNavBar() {
         }`}
       </style>
       <div className="font-josefin_sans">
-        <nav id="opnavbar" className="bg-[#f9f9f9] text-orange-500 px-4">
+        <nav id="opnavbar" className="bg-[#f9f9f9] text-[#ee9613] px-4">
           <div className="flex items-center justify-between mx-auto max-w-7xl">
             <div className="flex items-center mt-4 mb-4">
-              <h1 className="-mt-2 text-3xl pt-1 font-shrikhand text-orange-500 whitespace-nowrap">
-                <Link to="/Home">Etomart</Link>
+              <h1 className="-mt-2 text-3xl pt-1 font-shrikhand text-[#ee9613] whitespace-nowrap">
+                <Link to="/LandingPage">Etomart</Link>
               </h1>
               <div className="ml-4">
-                <LocationButton />
-              </div>
+  <LocationButton onClick={handleLocationClick} />
+</div>
             </div>
             <div className="hidden md:flex flex-grow md:flex-none md:w-auto mr-4 w-full">
               <SearchBar />
@@ -69,6 +83,21 @@ function OPNavBar() {
             </div>
           </div>
         </nav>
+
+
+         {/* Render modals */}
+      <LocationModal
+        showModal={showLocationModal}
+        closeModal={closeModals}
+        openNewLocationModal={() => {
+          closeModals();
+        }}
+      />
+      
+     
+    </div>
+
+
         <div
           className={`absolute z-20 w-full bg-[#f9f9f9] xl:hidden ${
             nav ? 'block' : 'hidden'
@@ -97,7 +126,7 @@ function OPNavBar() {
                 <CartIcon />
               </div>
               <div className="mb-2">
-                  <button className="w-full  py-2 text-center text-orange-500 hover:bg-[#ffaf5e4b] rounded-md">
+                  <button className="w-full  py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md">
                     Login or register
                   </button>
                 </div>
@@ -119,7 +148,7 @@ function OPNavBar() {
                  
                 </div>
                 <div className="mt-2">
-                  <button className="w-full px-4 py-2 text-left text-orange-500 hover:bg-[#ffaf5e4b]  rounded-md">
+                  <button className="w-full px-4 py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]  rounded-md">
                     Support
                   </button>
                 </div>
@@ -128,7 +157,7 @@ function OPNavBar() {
           </div>
         )}
       </div>
-    </div>
+
   );
 }
 

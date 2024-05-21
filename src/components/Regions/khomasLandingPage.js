@@ -43,14 +43,74 @@ function KhomasLandingPage() {
   };
 
   return (
- <div className='relative z-0'>
-        <div id="LP_section_5_orange" className="relative z-0  flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl  md:h-auto md:p-10 h-auto p-10" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
-          <div className="relative z-0 flex flex-col items-center w-full mb-8">
-            <div id="how-it-works" className="relative z-0 flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-              <p className="relative z-0 text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works?</p>
-            </div>
+    <div className="relative z-0">
+    <div id="LP_section_5_orange" className="relative z-0 flex justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl md:h-auto md:p-10 h-auto p-10" style={{ width: '65%', maxWidth: '100vw', margin: '0 auto' }}>
+      <div className="relative z-0 flex items-center justify-center w-full mb-0">
+        <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
+          <div role="tablist" className=" flex space-x-2 gap-2">
+            <a
+              role="tab"
+              aria-selected="false"
+              className=" flex items-center space-x-2 gap-2 px-4 py-2 rounded-full bg-white shadow-md hover:bg-gray-200 transition duration-150"
+              href="/en/discovery"
+            >
+              <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current text-Black">
+                {/* Store SVG icon */}
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M.646 0A.646.646 0 0 0 0 .646V4.5a3.5 3.5 0 0 0 6.25 2.165A3.494 3.494 0 0 0 9 8c1.116 0 2.11-.522 2.75-1.335a3.498 3.498 0 0 0 5.75-.362A3.5 3.5 0 0 0 24 4.5V.647A.646.646 0 0 0 23.354 0h-5.708a.647.647 0 0 0-.146.017.647.647 0 0 0-.146-.017H.646ZM2 2v2.5a1.5 1.5 0 1 0 3 0V2H2Zm17 0v2.5a1.5 1.5 0 0 0 3 0V2h-3Zm-6 2.5V2h3v2.5a1.5 1.5 0 0 1-3 0ZM7.5 2v2.5a1.5 1.5 0 1 0 3 0V2h-3Z"
+                />
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M1 22V8.45a3.491 3.491 0 0 0 2 1.015V22h8V12h7.5v10H21V9.465a3.49 3.49 0 0 0 2-1.016V22a1 1 0 1 1 0 2H1a1 1 0 1 1 0-2Zm12 0h3.5v-8H13v8Z"
+                />
+                <path d="M5.5 12a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3Z" />
+              </svg>
+              <span className="text-black">Stores</span>
+            </a>
+            <a
+              role="tab"
+              aria-selected="false"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md hover:bg-gray-200 transition duration-150"
+              href="/en/discovery/restaurants"
+            >
+              <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current text-black">
+                {/* Restaurant SVG icon */}
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M10 1a1 1 0 112 0v5a4.009 4.009 0 01-2.667 3.772.5.5 0 00-.333.471V23a1 1 0 11-2 0V10.243a.5.5 0 00-.333-.471A4.009 4.009 0 014 6V1a1 1 0 112 0v5c0 .522.205 1.025.571 1.398A.251.251 0 007 7.223V1a1 1 0 112 0v6.225a.251.251 0 00.429.175c.367-.374.572-.877.571-1.4V1zM20.5.75a.75.75 0 00-.75-.75C17.418 0 15.064 6.055 15 13.243v.021c.004.686.563 1.24 1.25 1.236H18a.5.5 0 01.5.5v8a1 1 0 102 0V.75z"
+                />
+              </svg>
+              <span className="text-black">Restaurants</span>
+            </a>
           </div>
         </div>
+      </div>
+    
+ 
+  
+        </div>
+
+        <div
+            id="LP_Did_you_know_container_4"
+            class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6"
+          >
+            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+              <p class="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
+              Restaurants, Stores and Supermarkets Near Me
+              </p>
+            </div>
+            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+              <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-zinc-950_01 font-josefin_sans font-semibold">
+                Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non
+                et elit. Dolor turpis molestie dui magnis facilisis at fringilla
+                quam.
+              </p>
+            </div>
+          </div>
 
         <div id='Testimonials Card' className="w-full flex justify-center">
           <div id="LP_testimonials_container_4" className="flex flex-col items-center gap-[35px] justify-start w-full pt-16 pb-16 px-4 md:px-10">
