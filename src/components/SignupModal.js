@@ -69,7 +69,7 @@ const SignupModal = ({ showModal, closeModal, openLoginModal,  openForgotPasswor
               <div className={`w-12/6 bg-[#ffffff] rounded-lg p-4 pt-8 m-8 z-50`}>
                 <div className="relative">
                   <img
-                    src="images/Mais_rdedeverse.jpg"
+                    src="/images/Mais_rdedeverse.jpg"
                     alt="img"
                     className="w-full  md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl max-h-[70vh] min-h-[50vh] rounded-r-2xl md:block object-cover" // Increased max-h and min-h
                     style={{ maxHeight: '70vh', minHeight: '140vh' }} // Increased max-height and min-height

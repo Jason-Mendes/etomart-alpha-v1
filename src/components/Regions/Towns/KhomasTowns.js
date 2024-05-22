@@ -130,7 +130,7 @@ function KhomasTowns() {
             <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
-                src="images/img_materialsymbol.svg"
+                src="/images/img_materialsymbol.svg"
                 alt="materialsymbol"
               />
               <div className="text-center p-2">
@@ -156,7 +156,7 @@ function KhomasTowns() {
             <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
-                src="images/img_mdicursorpointer.svg"
+                src="/images/img_mdicursorpointer.svg"
                 alt="mdicursorpointe"
               />
               <div className="text-center p-2">
@@ -182,7 +182,7 @@ function KhomasTowns() {
             <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
-                src="images/img_mditruckdelivery.svg"
+                src="/images/img_mditruckdelivery.svg"
                 alt="mditruckdeliver"
               />
               <div className="text-center p-2">
@@ -243,7 +243,7 @@ export default KhomasTowns;
 //                     Your Daily Food <br /> Delivered <br /> Hot & Fresh
 //                   </Text>
 //                   <div className="flex justify-end md:ml-5">
-//                     <Img className="object-cover rounded-bl-3xl rounded-br-3xl" src="images/img_istockphoto141.png" loading="lazy" style={{ width: '500px', height: '400px' }} />
+//                     <Img className="object-cover rounded-bl-3xl rounded-br-3xl" src="/images/img_istockphoto141.png" loading="lazy" style={{ width: '500px', height: '400px' }} />
                  
 //                   <Text className="text-3xl text-white absolute top-[450px] left-[30px] md:left-[40px]">
 //                     Groceries, Meals, Pharmacies, anything!
@@ -307,7 +307,7 @@ export default KhomasTowns;
 //                     Your Daily Food <br/> Delivered <br/> Hot & Fresh
 //                   </Text>
 //                   <div className="flex justify-end md:ml-5">
-//                     <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px]" src="images/img_istockphoto141.png" loading="lazy" style={{ width: '1500px', height: '400px' }} />
+//                     <Img className="object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px]" src="/images/img_istockphoto141.png" loading="lazy" style={{ width: '1500px', height: '400px' }} />
 //                   </div>
 //                 </div>
 //                 <Text className="text-3xl text-white absolute top-[450px] left-[30px] md:left-[40px]"
@@ -402,7 +402,7 @@ export default KhomasTowns;
 
 //                 <Img
 //                   className=" object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] "
-//                   src="images/img_istockphoto141.png"
+//                   src="/images/img_istockphoto141.png"
 //                   loading="lazy"
 //                   style={{ width: '1500px', height: '400px' }}
 //                 />
@@ -418,7 +418,7 @@ export default KhomasTowns;
 //         <div className="flex flex-col justify-start w-full gap-[60px] md:gap-10">
 //           <div className="bg-white-A700 rounded-[36px] shadow-bs1 p-[9px] flex flex-col items-center justify-end w-full ">
 //             <div className="flex items-center justify-start gap-[53px] mt-[7px] w-[88%] md:w-full">
-//               <Img className="h-[67px]" src="images/img_linkedin.svg" alt="LinkedIn"/>
+//               <Img className="h-[67px]" src="/images/img_linkedin.svg" alt="LinkedIn"/>
 //               <Text className="text-[32px] md:text-3xl text-zinc-950">
 //                 What's your Address?
 //               </Text>
@@ -426,7 +426,7 @@ export default KhomasTowns;
 //           </div>
 //           <div className="relative w-[78%] sm:w-full h-[60px] md:h-[57px] ml-[37px] md:ml-0">
 //             <div className="bg-white-A700 rounded-[30px] shadow-bs1 p-[7px] flex items-start justify-end w-full h-full">
-//               <Img className="h-[41px] mt-0.5 w-[42px]" src="images/img_save.svg" alt="Save"/>
+//               <Img className="h-[41px] mt-0.5 w-[42px]" src="/images/img_save.svg" alt="Save"/>
 //             </div>
 //             <Text className="absolute top-[12%] right-[2%] text-[32px] md:text-3xl text-amber-700">
 //               Use Current Location

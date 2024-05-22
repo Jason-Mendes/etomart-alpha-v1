@@ -128,20 +128,20 @@ function LandingPage() {
 
   const testimonials = [
     {
-      imageSrc: "images/img_ellipse1.png",
+      imageSrc: "/images/img_ellipse1.png",
       textBelowImage: "Lorem ipsum dolor sit amet consectetur.",
       numStars: 1,
       testimonialAuthor: "John Doe",
     },
     {
-      imageSrc: "images/img_ellipse1.png",
+      imageSrc: "/images/img_ellipse1.png",
       textBelowImage:
         "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
       numStars: 5,
       testimonialAuthor: "John Doe",
     },
     {
-      imageSrc: "images/img_ellipse1.png",
+      imageSrc: "/images/img_ellipse1.png",
       textBelowImage:
         "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
       numStars: 3,
@@ -254,7 +254,7 @@ function LandingPage() {
                     {/* p-10 controls the stuff scrolling left to right when the screen is smaller  */}
                     <img
                       className="relative object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] w-96 h-auto md:w-screen md:h-60 lg:w-screen lg:h-64 xl:w-screen xl:h-72 2xl:w-screen 2xl:h-80"
-                      src="images/Main_groceries_reverse.jpg"
+                      src="/images/Main_groceries_reverse.jpg"
                       loading="lazy"
                       alt="Groceries" />
                     <div
@@ -293,7 +293,7 @@ function LandingPage() {
                 >
                   <img
                     className="h-7 mr-2"
-                    src="images/img_linkedin.svg"
+                    src="/images/img_linkedin.svg"
                     alt="linkedin"
                     loading="lazy" />
                   <p
@@ -315,7 +315,7 @@ function LandingPage() {
                 >
                   <img
                     className="h-5 mr-2"
-                    src="images/img_save.svg"
+                    src="/images/img_save.svg"
                     alt="save"
                     loading="lazy" />
                   <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-zinc-950 font-bold">
@@ -333,14 +333,14 @@ function LandingPage() {
       <div className="button-group flex flex-col items-start">
         <div id="location_buttons_1_container" className="button-row flex items-center mb-6">
           <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
-            <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy"></img>
+            <img className="h-7 mr-2" src="/images/img_linkedin.svg" alt="linkedin" loading="lazy"></img>
             <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">What's your Address?</p>
           </Button>
         </div>
         {/* current Location stuff
         <div id="location_buttons_1_container" className="button-row flex mt-2">
           <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
-            <img className="h-5 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+            <img className="h-5 mr-2" src="/images/img_save.svg" alt="save" loading="lazy" />
             <p className="text-left md:text-lg sm:text-[28px] text-[32px] text-zinc-950 font-bold">Use Current Location</p>
           </Button>
         </div>
@@ -485,7 +485,7 @@ function LandingPage() {
                 <div className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-none max-h-[200px] sm:max-h-[300px] md:max-h-[400px] flex items-center justify-center">
                   <img
                     className="w-full h-auto rounded-xl"
-                    src="images/website_intro/video-cover-image-4.jpg"
+                    src="/images/website_intro/video-cover-image-4.jpg"
                     alt="web_intro" />
                 </div>
               </div>
@@ -505,7 +505,7 @@ function LandingPage() {
               <video
                 className="absolute rounded-3xl inset-0 w-full h-full object-fill"
 
-                poster="images/website_intro/video-cover-image-4.jpg"
+                poster="/images/website_intro/video-cover-image-4.jpg"
                 controls
                 volume={0.5}
                 onEnded={handleVideoEnded}
@@ -665,7 +665,7 @@ function LandingPage() {
             <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
-                src="images/img_materialsymbol.svg"
+                src="/images/img_materialsymbol.svg"
                 alt="materialsymbol" />
               <div className="text-center p-2">
                 <p
@@ -690,7 +690,7 @@ function LandingPage() {
             <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
-                src="images/img_mdicursorpointer.svg"
+                src="/images/img_mdicursorpointer.svg"
                 alt="mdicursorpointe" />
               <div className="text-center p-2">
                 <p
@@ -715,7 +715,7 @@ function LandingPage() {
             <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
-                src="images/img_mditruckdelivery.svg"
+                src="/images/img_mditruckdelivery.svg"
                 alt="mditruckdeliver" />
               <div className="text-center p-2">
                 <p
