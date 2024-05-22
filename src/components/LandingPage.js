@@ -26,7 +26,7 @@ function LandingPage() {
     {
       code: "ALB",
       name: "Khomas",
-      flagPath: "/images/regions/Khomas.jpeg",
+      flagPath: "/images/regions/khomas2.jpeg",
       path: "/LP/Khomas"
     },
     { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg",

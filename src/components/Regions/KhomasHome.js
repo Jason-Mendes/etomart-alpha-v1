@@ -21,7 +21,7 @@ function KhomasHome () {
     {
       code: "ALB",
       name: "Khomas",
-      flagPath: "/images/regions/khomas.jpeg",
+      flagPath: "/images/regions/khomas2.jpeg",
       path: "/LP/Khomas",
     }
   ];
@@ -37,17 +37,17 @@ function KhomasHome () {
   //Towns Stuff
 
   const towns = [
-    { code: "ALB", name: "Windhoek", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "BUK", name: "Brakwater", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "DOE", name: "Dordabis", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "GBN", name: "Gobabis", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "GRS", name: "Groendrift", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "HCH", name: "Hochfeld", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "KHR", name: "Khorixas", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    // { code: "KLN", name: "Klein Windhoek", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "OJO", name: "Ojozondjupa", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "RHN", name: "Rehoboth", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "WSN", name: "Witvlei", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" }
+    { code: "ALB", name: "Windhoek", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "BUK", name: "Brakwater", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "DOE", name: "Dordabis", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "GBN", name: "Gobabis", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "GRS", name: "Groendrift", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "HCH", name: "Hochfeld", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "KHR", name: "Khorixas", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    // { code: "KLN", name: "Klein Windhoek", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "OJO", name: "Ojozondjupa", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "RHN", name: "Rehoboth", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "WSN", name: "Witvlei", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" }
   ];
 
   const handletownsClick = (path) => {
