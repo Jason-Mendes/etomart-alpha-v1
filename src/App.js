@@ -17,7 +17,7 @@ function App() {
     <Router>
       <CartProvider>
         <div>
-          <NavbarWrapper />
+          {/* <NavbarWrapper /> */}
           <Routes>
           <Route path="/" element={<LandingPage />} />
             <Route path="/LP" element={<LandingPage />} />

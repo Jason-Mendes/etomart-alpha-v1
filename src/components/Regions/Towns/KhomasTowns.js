@@ -1,5 +1,7 @@
+import React, { useState, useEffect } from "react";
+import OPNavBar from '../../OPNavBar'; //or import OPNavBar from '../../components/OPNavBar';
 
-import React, { useState, useEffect } from 'react';
+
 
 function KhomasTowns() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -43,9 +45,12 @@ function KhomasTowns() {
   };
 
   return (
-    <div className="relative z-0">
-    <div id="LP_section_5_orange" className="relative z-0 flex justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl md:h-auto md:p-10 h-auto p-10" style={{ width: '65%', maxWidth: '100vw', margin: '0 auto' }}>
-      <div className="relative z-0 flex items-center justify-center w-full mb-0">
+    <div><div>
+      <OPNavBar/>
+    </div>
+    <div className="relative z-10">
+    <div id="LP_section_5_orange" className="relative z-10 flex justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl md:h-auto md:p-10 h-auto p-10" style={{ width: '65%', maxWidth: '100vw', margin: '0 auto' }}>
+      <div className="relative z-10 flex items-center justify-center w-full mb-0">
         <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
           <div role="tablist" className=" flex space-x-2 gap-2">
             <a
@@ -210,6 +215,7 @@ function KhomasTowns() {
             </div>
           </div>
         </div>
+      </div>
       </div>
   );
 }

@@ -44,11 +44,11 @@ function OPNavBar() {
   };
 
   return (
-    <div className="relative z-10">
+    <div className="relative z-20">
       <style>
         {`.sticky {
           position: fixed;
-          z-index: 100;
+          z-index: 20;
           width: 100%;
           top: 0;
         }`}
@@ -197,7 +197,7 @@ export default OPNavBar;
 //   };
 
 //   return (
-//     <div className='relative z-10'>
+//     <div className='relative z-20'>
 //       <div>
 //         <style>
 //           {`

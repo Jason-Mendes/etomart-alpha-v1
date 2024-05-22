@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Img, Text } from "..";
 import { useNavigate } from "react-router-dom";
-
+import LPNavBar from "../LPNavBar";
 function KhomasHome () {
 
   const [isLargeScreen, setIsLargeScreen] = useState(false);
@@ -20,7 +20,7 @@ function KhomasHome () {
   const region = [
     {
       code: "ALB",
-      name: "Kavango West",
+      name: "Khomas",
       flagPath: "/images/regions/khomas.jpeg",
       path: "/LP/Khomas",
     }
@@ -35,46 +35,19 @@ function KhomasHome () {
   };
 
   //Towns Stuff
+
   const towns = [
-    {
-      code: "ALB",
-      name: "Windhoek",
-      flagPath: "/images/regions/khomas.jpeg",
-      path: "/LP/Khomas/Towns",
-    },
-    { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg" },
-    { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg" },
-    { code: "ALB", name: "Omusati ", flagPath: "/images/regions/omusati.jpeg" },
-    { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg" },
-    {
-      code: "CYP",
-      name: "Ohangwena",
-      flagPath: "/images/regions/ohangwena.jpeg",
-    },
-    { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg" },
-    {
-      code: "HRV",
-      name: "Oshikoto",
-      flagPath: "/images/regions/oshikoto.jpeg",
-    },
-    { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg" },
-    { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg" },
-    {
-      code: "HRV",
-      name: "Otjozondjupa",
-      flagPath: "/images/regions/otjozondjupa.jpeg",
-    },
-    { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg" },
-    {
-      code: "ALB",
-      name: "Kavango East",
-      flagPath: "/images/regions/kavango east.jpeg",
-    },
-    {
-      code: "HRV",
-      name: "Kavango West",
-      flagPath: "/images/regions/kavango west.jpeg",
-    },
+    { code: "ALB", name: "Windhoek", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "BUK", name: "Brakwater", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "DOE", name: "Dordabis", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "GBN", name: "Gobabis", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "GRS", name: "Groendrift", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "HCH", name: "Hochfeld", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "KHR", name: "Khorixas", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    // { code: "KLN", name: "Klein Windhoek", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "OJO", name: "Ojozondjupa", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "RHN", name: "Rehoboth", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "WSN", name: "Witvlei", flagPath: "/images/regions/khomas.jpeg", path: "/LP/Khomas/Towns" }
   ];
 
   const handletownsClick = (path) => {
@@ -120,20 +93,20 @@ function KhomasHome () {
 
   const testimonials = [
     {
-      imageSrc: "images/img_ellipse1.png",
+      imageSrc: "/images/img_ellipse1.png",
       textBelowImage: "Lorem ipsum dolor sit amet consectetur.",
       numStars: 1,
       testimonialAuthor: "John Doe",
     },
     {
-      imageSrc: "images/img_ellipse1.png",
+      imageSrc: "/images/img_ellipse1.png",
       textBelowImage:
         "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
       numStars: 5,
       testimonialAuthor: "John Doe",
     },
     {
-      imageSrc: "images/img_ellipse1.png",
+      imageSrc: "/images/img_ellipse1.png",
       textBelowImage:
         "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
       numStars: 3,
@@ -218,6 +191,9 @@ function KhomasHome () {
   };
 
   return (
+    <div><div>
+      <LPNavBar />
+    </div>
     <div id="Landing_Page_Main_Body" className="content-wrapper ">
       <div className="overflow-auto bg-[#fafafa]">
         {/* Hero Section */}
@@ -235,28 +211,27 @@ function KhomasHome () {
                 </p>
               </div>
               <div
-                id="text_1_image_container"
-                className="flex  flex-row md:flex-row items-center justify-evenly md:gap-0 lg:gap-16 xl:gap-20 2xl:gap-72 md:mr-2 mr-2 md:p-2"
-                style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
-              >
-                <div id="image_container" className="relative px-10 m-2">
-                  {/* p-10 controls the stuff scrolling left to right when the screen is smaller  */}
-                  <img
-                    className="relative object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] w-96 h-auto md:w-screen md:h-60 lg:w-screen lg:h-64 xl:w-screen xl:h-72 2xl:w-screen 2xl:h-80"
-                    src="images/Main_groceries_reverse.jpg"
-                    loading="lazy"
-                    alt="Groceries"
-                  />
-                  <div
-                    id="text_2_container"
-                    className="relative flex flex-col items-center justify-center p-2 w-auto"
-                  >
-                    <p
-                      className="text-xs sm:text-base md:text-2xl lg:text-3xl xl:text-3xl 2xl:text-5xl text-white font-josefin_sans font-bold text-center whitespace-nowrap"
-                      style={{ width: "100%", margin: "0 auto" }}
+                  id="text_1_image_container"
+                  className="flex  flex-row md:flex-row items-center justify-evenly md:gap-0 lg:gap-16 xl:gap-20 2xl:gap-72 md:mr-2 mr-2 md:p-2"
+                  style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
+                >
+                  <div id="image_container" className="relative px-10 m-2">
+                    {/* p-10 controls the stuff scrolling left to right when the screen is smaller  */}
+                    <img
+                      className="relative object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] w-96 h-auto md:w-screen md:h-60 lg:w-screen lg:h-64 xl:w-screen xl:h-72 2xl:w-screen 2xl:h-80"
+                      src="/images/Main_groceries_reverse.jpg"
+                      loading="lazy"
+                      alt="Groceries" />
+                    <div
+                      id="text_2_container"
+                      className="relative flex flex-col items-center justify-center p-2 w-auto"
                     >
-                      Groceries, Meals, Pharmacies, anything!
-                    </p>
+                      <p
+                        className="text-xs sm:text-base md:text-2xl lg:text-3xl xl:text-3xl 2xl:text-5xl text-white font-josefin_sans font-bold text-center whitespace-nowrap"
+                        style={{ width: "100%", margin: "0 auto" }}
+                      >
+                        Groceries, Meals, Pharmacies, anything!
+                      </p>
                   </div>
                 </div>
               </div>
@@ -283,7 +258,7 @@ function KhomasHome () {
               >
                 <img
                   className="h-7 mr-2"
-                  src="images/img_linkedin.svg"
+                  src="/images/img_linkedin.svg"
                   alt="linkedin"
                   loading="lazy"
                 />
@@ -309,7 +284,7 @@ function KhomasHome () {
               >
                 <img
                   className="h-5 mr-2"
-                  src="images/img_save.svg"
+                  src="/images/img_save.svg"
                   alt="save"
                   loading="lazy"
                 />
@@ -328,14 +303,14 @@ function KhomasHome () {
           <div className="button-group flex flex-col items-start">
             <div id="location_buttons_1_container" className="button-row flex items-center mb-6">
               <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
-                <img className="h-7 mr-2" src="images/img_linkedin.svg" alt="linkedin" loading="lazy"></img>
+                <img className="h-7 mr-2" src="/images/img_linkedin.svg" alt="linkedin" loading="lazy"></img>
                 <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">What's your Address?</p>
               </Button>
             </div>
             {/* current Location stuff
             <div id="location_buttons_1_container" className="button-row flex mt-2">
               <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
-                <img className="h-5 mr-2" src="images/img_save.svg" alt="save" loading="lazy" />
+                <img className="h-5 mr-2" src="/images/img_save.svg" alt="save" loading="lazy" />
                 <p className="text-left md:text-lg sm:text-[28px] text-[32px] text-zinc-950 font-bold">Use Current Location</p>
               </Button>
             </div>
@@ -345,12 +320,12 @@ function KhomasHome () {
         {/* Conditional Rendering based on Screen Size */}
         <div
   id="LP_section_3_orange"
-  className="flex-col sm:flex-col md:flex-row items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10"
-  style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
->
+  className="flex-col sm:flex-col md:flex-row items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10">
+  {/* Your content goes here */}
+
   <div className="flex flex-col md:flex-row w-full">
     <div className="md:w-1/2 md:pr-4 md:mb-6">
-      <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 ">
+      <div className="text-container md:flex md:items-end md:justify-end whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 ">
         {isLargeScreen ? (
           <Text className="sm:text-3xl md:text-2xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-0 md:ml-0 md:py-0 lg:mt-0 lg:my-0">
             Explore Etomart Towns
@@ -361,7 +336,7 @@ function KhomasHome () {
           </Text>
         )}
       </div>
-      <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
+      <div className="text-container md:flex md:items-end md:justify-end whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
         {isLargeScreen ? (
           <Text className="text-base sm:text-base md:text-base lg:text-2xl xl:text-3xl 2xl:text-4xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-0 md:ml-0">
             Delivered to you at your convenience!
@@ -381,7 +356,7 @@ function KhomasHome () {
             <div key={region.code} className="flex justify-center w-full">
               <div className="flex flex-row gap-4 w-full">
                 <Button
-                  className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 max-w-[240px] h-14 overflow-hidden`}
+                  className={`flex justify-center items-center bg-orange-300 text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans max-w-[240px] h-14 overflow-hidden`}
                   onClick={() => handleregionClick(region.path)}
                 >
                   <div className="flex items-center">
@@ -397,14 +372,15 @@ function KhomasHome () {
                   </div>
                 </Button>
                 <Button
-  className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 w-40 h-14 overflow-hidden`}
+  className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 min-w-[150px] h-14 overflow-hidden`}
   onClick={() => handleregionClick(region.path)}
 >
   <div className="flex items-center justify-between w-full ">
-    <p className="text-center text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-xl text-gray-700 font-bold">
-      Go to all
-    </p>
-    <div className="flex items-center justify-end mr-2">
+  <a
+                    href="/LP" className="text-center text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-xl text-gray-700 font-bold">
+     All Regions
+    </a>
+    <div className="flex items-center justify-end -mr-2">
       <svg
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
@@ -531,12 +507,12 @@ function KhomasHome () {
               </div>
             </div>
             {/* Video */}
-            <div id="card" className="flex flex-wrap justify-center gap-6 w-full md:w-1/2 p-4 md:px-0 z-0">
+            <div id="card" className="flex flex-wrap justify-center gap-6 w-full md:w-1/2 p-4 md:px-0 z-10">
               <div className="bg-white w-full md:w-auto h-full bg-cover bg-center rounded-lg flex flex-col items-center py-4 md:py-[21px] px-4 md:px-[21px] max-w-[200px] sm:max-w-[300px] md:max-w-[400px] max-h-[200px] sm:max-h-[300px] md:max-h-[450px] shadow-md relative">
                 <div className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-none max-h-[200px] sm:max-h-[300px] md:max-h-[400px] flex items-center justify-center">
                   <img
                     className="w-full h-auto rounded-xl"
-                    src="images/website_intro/video-cover-image-4.jpg"
+                    src="/images/website_intro/video-cover-image-4.jpg"
                     alt="web_intro"
                   />
                 </div>
@@ -557,7 +533,7 @@ function KhomasHome () {
               <video
                 className="absolute rounded-3xl inset-0 w-full h-full object-fill"
 
-                poster="images/website_intro/video-cover-image-4.jpg"
+                poster="/images/website_intro/video-cover-image-4.jpg"
                 controls
                 volume={0.5}
                 onEnded={handleVideoEnded}
@@ -720,7 +696,7 @@ function KhomasHome () {
             <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
-                src="images/img_materialsymbol.svg"
+                src="/images/img_materialsymbol.svg"
                 alt="materialsymbol"
               />
               <div className="text-center p-2">
@@ -746,7 +722,7 @@ function KhomasHome () {
             <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
-                src="images/img_mdicursorpointer.svg"
+                src="/images/img_mdicursorpointer.svg"
                 alt="mdicursorpointe"
               />
               <div className="text-center p-2">
@@ -772,7 +748,7 @@ function KhomasHome () {
             <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
               <img
                 className="h-[96px] w-[96px] mb-4"
-                src="images/img_mditruckdelivery.svg"
+                src="/images/img_mditruckdelivery.svg"
                 alt="mditruckdeliver"
               />
               <div className="text-center p-2">
@@ -1126,6 +1102,7 @@ function KhomasHome () {
           </div>
         </footer>
       </div>
+    </div>
     </div>
   );
 }

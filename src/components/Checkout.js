@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { processPayment, createOrder } from './paymentService'; // Import your payment and order services
 
 function Checkout() {
@@ -7,7 +7,7 @@ function Checkout() {
     const [shippingInfo, setShippingInfo] = useState({
         name: '', address: '', city: '', country: ''
     });
-    const history = useHistory(); // Enables navigation post-checkout
+    const navigate = useNavigate(); // Enables navigation post-checkout
 
     // Handle form field changes
     const handleFormChange = (event) => {
@@ -27,7 +27,7 @@ function Checkout() {
             // Integrate PayGate payment processing
             const paymentResult = await processPayment(shippingInfo);
             if (paymentResult.success) {
-                history.push('/order-success'); // Navigate to success page
+                navigate('/order-success'); // Navigate to success page
             } else {
                 // Handle payment failure
                 console.error('Payment failed:', paymentResult.message);
@@ -35,7 +35,7 @@ function Checkout() {
         } else {
             // COD order processing
             await createOrder({ ...shippingInfo, paymentMethod });
-            history.push('/order-success'); // Navigate to success page
+            navigate('/order-success'); // Navigate to success page
         }
     };
 
@@ -154,12 +154,12 @@ export default Checkout;
 
 
 // // import React, { useState } from 'react';
-// // import { useHistory } from 'react-router-dom'; // Import useHistory for redirection after checkout
+// // import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection after checkout
 
 // // function Checkout({ cart, clearCart }) {
 // //     const [shippingInfo, setShippingInfo] = useState({ name: '', address: '', city: '', country: '' });
 // //     const [paymentMethod, setPaymentMethod] = useState('COD'); // Default to COD
-// //     const history = useHistory(); // For redirecting after successful checkout
+// //     const navigate = useNavigate(); // For redirecting after successful checkout
 
 // //     const handleFormChange = (event) => {
 // //         const { name, value } = event.target;
@@ -176,7 +176,7 @@ export default Checkout;
 // //         // This is a placeholder; replace with actual implementation.
 
 // //         clearCart(); // Clear the cart after saving the order
-// //         history.push('/order-success'); // Redirect to a success page
+// //         navigate('/order-success'); // Redirect to a success page
 // //     };
 
 // //     const processPayGatePayment = async () => {
@@ -188,7 +188,7 @@ export default Checkout;
 
 // //         // After successful payment:
 // //         clearCart(); // Clear the cart
-// //         history.push('/order-success'); // Redirect to a success page
+// //         navigate('/order-success'); // Redirect to a success page
 // //     };
 
 // //     const handleSubmit = async (event) => {

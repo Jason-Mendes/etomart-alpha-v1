@@ -66,7 +66,7 @@ const SignupModal = ({ showModal, closeModal, openLoginModal,  openForgotPasswor
               <h2 className="flex item-center justify-center mr-8 text-center text-[#000000] md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo font-bold mb-4 ">
                 Sign Up
               </h2>
-              <div className={`w-12/6 bg-[#ffffff] rounded-lg p-4 pt-8 m-8 z-10`}>
+              <div className={`w-12/6 bg-[#ffffff] rounded-lg p-4 pt-8 m-8 z-50`}>
                 <div className="relative">
                   <img
                     src="images/Mais_rdedeverse.jpg"

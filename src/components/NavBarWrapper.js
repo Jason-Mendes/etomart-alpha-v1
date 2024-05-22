@@ -1,15 +1,15 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import LPNavBar from './LPNavBar';  // Ensure this path is correct
-import OPNavBar from './OPNavBar'; // Ensure this path is correct
+// import React from 'react';
+// import { useLocation } from 'react-router-dom';
+// import LPNavBar from './LPNavBar';  // Ensure this path is correct
+// import OPNavBar from './OPNavBar'; // Ensure this path is correct
 
-const NavbarWrapper = () => {
-  const location = useLocation();
+// const NavbarWrapper = () => {
+//   const location = useLocation();
   
-  // Determine which navbar to render based on the current path
-  const isLandingPage = location.pathname === '/' || location.pathname === '/LP';
+//   // Determine which navbar to render based on the current path
+//   const isLandingPage = location.pathname === '/' || location.pathname === '/LP';
   
-  return isLandingPage ? <LPNavBar /> : <OPNavBar />;
-};
+//   return isLandingPage ? <LPNavBar /> : <OPNavBar />;
+// };
 
-export default NavbarWrapper;
+// export default NavbarWrapper;

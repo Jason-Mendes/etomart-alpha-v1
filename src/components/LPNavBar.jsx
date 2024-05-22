@@ -64,7 +64,7 @@ const LPNavBar = () => {
         {`
           .sticky {
             position: fixed;
-            z-index: 100;
+            z-index: 20;
             width: 100%;
           }
 
