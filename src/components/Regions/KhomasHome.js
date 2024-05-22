@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Img, Text } from "../components";
+import { Button, Img, Text } from "..";
 import { useNavigate } from "react-router-dom";
 
-function LandingPage() {
+function KhomasHome () {
+
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   //Location buttons stuff
   const [isEditing, setIsEditing] = useState(false);
@@ -14,14 +15,32 @@ function LandingPage() {
   // JavaScript
   const [isVideoVisible, setIsVideoVisible] = useState(false);
 
+  //Region for Town stuff
 
-  //Regions stuff
-  const regions = [
+  const region = [
     {
       code: "ALB",
-      name: "Khomas",
-      flagPath: "/images/regions/Khomas.jpeg",
-      path: "src/components/Regions/KhomasHome.js",
+      name: "Kavango West",
+      flagPath: "/images/regions/khomas.jpeg",
+      path: "/LP/Khomas",
+    }
+  ];
+
+  const handleregionClick = (path) => {
+    if (path === "src/components/Regions/Towns/KhomasTowns.js") {
+      navigate("/LP/Khomas"); // Replace '/khomas' with the appropriate route path
+    } else {
+      navigate(path);
+    }
+  };
+
+  //Towns Stuff
+  const towns = [
+    {
+      code: "ALB",
+      name: "Windhoek",
+      flagPath: "/images/regions/khomas.jpeg",
+      path: "/LP/Khomas/Towns",
     },
     { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg" },
     { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg" },
@@ -58,9 +77,9 @@ function LandingPage() {
     },
   ];
 
-  const handleregionsClick = (path) => {
-    if (path === "src/components/Regions/KhomasHome.js") {
-      navigate("/LP/Khomas"); // Replace '/Khomas' with the appropriate route path
+  const handletownsClick = (path) => {
+    if (path === "src/components/Regions/Towns/KhomasTowns.js") {
+      navigate("/LP/Khomas/Towns"); // Replace '/khomas' with the appropriate route path
     } else {
       navigate(path);
     }
@@ -159,7 +178,7 @@ function LandingPage() {
     setIsEditing(false);
   };
 
-  // // render starts testimonials container
+  // // render stars testimonials container
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) =>
@@ -324,54 +343,114 @@ function LandingPage() {
         </div> */}
         {/* Locations */}
         {/* Conditional Rendering based on Screen Size */}
-
         <div
-          id="LP_section_3_orange"
-          className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10"
-          style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
-        >
-          <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
-            {isLargeScreen ? (
-              <Text className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
-                Explore Etomart Regions
-              </Text>
-            ) : (
-              <Text className="flex justify-center text-2xl text-black-900 font-Agbalumo font-bold ">
-                Explore Etomart Regions
-              </Text>
-            )}
-          </div>
-          <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
-            {isLargeScreen ? (
-              <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">
-                Delivered to you at your convenience!
-              </Text>
-            ) : (
-              <Text className="flex justify-center text-1xl text-white font-josefin_sans ">
-                Delivered to you at your convenience!
-              </Text>
-            )}
-            {/* Regions Buttons */}
+  id="LP_section_3_orange"
+  className="flex-col sm:flex-col md:flex-row items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10"
+  style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
+>
+  <div className="flex flex-col md:flex-row w-full">
+    <div className="md:w-1/2 md:pr-4 md:mb-6">
+      <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 ">
+        {isLargeScreen ? (
+          <Text className="sm:text-3xl md:text-2xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-0 md:ml-0 md:py-0 lg:mt-0 lg:my-0">
+            Explore Etomart Towns
+          </Text>
+        ) : (
+          <Text className="flex justify-center text-xl text-black-900 font-Agbalumo font-bold">
+            Explore Etomart Towns
+          </Text>
+        )}
+      </div>
+      <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
+        {isLargeScreen ? (
+          <Text className="text-base sm:text-base md:text-base lg:text-2xl xl:text-3xl 2xl:text-4xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-0 md:ml-0">
+            Delivered to you at your convenience!
+          </Text>
+        ) : (
+          <Text className="flex justify-center text-base text-white font-josefin_sans">
+            Delivered to you at your convenience!
+          </Text>
+        )}
+      </div>
+    </div>
+    <div className="md:w-1/2 md:pl-4 mt-6 md:mt-0">
+      {/* Region */}
+      <div className="flex items-center justify-center">
+        <div className="flex flex-wrap justify-center gap-4 pb-6 pt-6">
+          {region.map((region, index) => (
+            <div key={region.code} className="flex justify-center w-full">
+              <div className="flex flex-row gap-4 w-full">
+                <Button
+                  className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 max-w-[240px] h-14 overflow-hidden`}
+                  onClick={() => handleregionClick(region.path)}
+                >
+                  <div className="flex items-center">
+                    <img
+                      className="rounded-[36px] h-8 mr-2"
+                      src={region.flagPath}
+                      alt={`${region.name} flag`}
+                      loading="lazy"
+                    />
+                    <p className="text-center text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl text-gray-700 font-bold">
+                      {region.name}
+                    </p>
+                  </div>
+                </Button>
+                <Button
+  className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 w-40 h-14 overflow-hidden`}
+  onClick={() => handleregionClick(region.path)}
+>
+  <div className="flex items-center justify-between w-full ">
+    <p className="text-center text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-xl text-gray-700 font-bold">
+      Go to all
+    </p>
+    <div className="flex items-center justify-end mr-2">
+      <svg
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-4 h-6 fill-current text-zinc-950 transform rotate-180"
+      >
+        <g fill="none" fillRule="evenodd">
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path
+            d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
+            fill="#202125"
+          />
+        </g>
+      </svg>
+    </div>
+  </div>
+</Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Region Buttons end*/}
+    </div>
+  </div>
+
+            {/* Towns Buttons */}
             <div
               id="button sizing"
-              className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-2 px-16"
+              className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-0 px-16"
             >
-              {regions.map((region, index) => (
-                <div key={region.code} className="flex justify-start">
-                  <div className="button-row flex flex-col gap-4 mb-4 w-full">
+              {towns.map((towns, index) => (
+                <div key={towns.code} className="flex justify-center w-full">
+                  <div className="button-row flex flex-col gap-4 mb-4">
                     <Button
                       className={`flex flex-shrink-0 justify-between items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 min-w-[280px] overflow-hidden`}
-                      onClick={() => handleregionsClick(region.path)}
+                      onClick={() => handletownsClick(towns.path)}
                     >
                       <div className="flex items-center flex-grow">
                         <img
                           className="rounded-[36px] h-10 mr-2 flex-shrink-0"
-                          src={region.flagPath}
-                          alt={`${region.name} flag`}
+                          src={towns.flagPath}
+                          alt={`${towns.name} flag`}
                           loading="lazy"
                         />
                         <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
-                          {region.name}
+                          {towns.name}
                         </p>
                       </div>
                       <div className="ml-auto pr-2 flex-shrink-0">
@@ -393,9 +472,9 @@ function LandingPage() {
                   </div>
                 </div>
               ))}
-            </div>
+            
 
-            {/* Regions Buttons ends*/}
+            {/* Towns Buttons ends*/}
           </div>
         </div>
         <div
@@ -1051,4 +1130,5 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+
+export default KhomasHome;

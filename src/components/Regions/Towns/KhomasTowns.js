@@ -1,7 +1,7 @@
-import NavbarWrapper from '../NavBarWrapper';
+
 import React, { useState, useEffect } from 'react';
 
-function KhomasLandingPage() {
+function KhomasTowns() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const testimonials = [
@@ -214,7 +214,7 @@ function KhomasLandingPage() {
   );
 }
 
-export default KhomasLandingPage;
+export default KhomasTowns;
 
 
 

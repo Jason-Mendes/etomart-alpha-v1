@@ -7,7 +7,7 @@ const NavbarWrapper = () => {
   const location = useLocation();
   
   // Determine which navbar to render based on the current path
-  const isLandingPage = location.pathname === '/' || location.pathname === '/LandingPage';
+  const isLandingPage = location.pathname === '/' || location.pathname === '/LP';
   
   return isLandingPage ? <LPNavBar /> : <OPNavBar />;
 };

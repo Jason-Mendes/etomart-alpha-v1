@@ -8,7 +8,9 @@ import Home from './components/Home';
 import Products from './components/Products';
 // import CartIcon from './components/CartIcon';
 import UserProfile from './components/UserProfile';
-import KhomasLandingPage from './components/Regions/khomasLandingPage';
+// import KhomasLandingPage from './components/Regions/khomasLandingPage';
+import KhomasHome from './components/Regions/KhomasHome';
+import KhomasTowns from './components/Regions/Towns/KhomasTowns';
 
 function App() {
   return (
@@ -17,13 +19,16 @@ function App() {
         <div>
           <NavbarWrapper />
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
+            <Route path="/LP" element={<LandingPage />} />
             <Route path="/LandingPage" element={<LandingPage />} />
             <Route path="/home" element={<Home />} />
             {/* <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/products" element={<Products />} /> */}
             {/* <Route path="/cart" element={<CartIcon/>} /> */}
-            <Route path="/LandingPage-khomas" element={<KhomasLandingPage />} />
+            {/* <Route path="/LandingPage-khomas" element={<KhomasLandingPage />} /> */}
+            <Route path="/LP/Khomas" element={<KhomasHome />} />
+            <Route path="/LP/Khomas/Towns" element={<KhomasTowns />} />
           </Routes>
         </div>
       </CartProvider>

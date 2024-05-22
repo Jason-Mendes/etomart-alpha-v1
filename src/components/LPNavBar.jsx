@@ -80,7 +80,7 @@ const LPNavBar = () => {
         <div className="flex items-center justify-between mx-auto max-w-7xl">
           <div className="flex items-center mt-6 mb-4">
             <h1 className="-mt-2 text-3xl font-shrikhand text-[#ee9613] whitespace-nowrap">
-              <Link to="/LandingPage">Etomart</Link>
+              <Link to="/LP">Etomart</Link>
             </h1>
           </div>
 

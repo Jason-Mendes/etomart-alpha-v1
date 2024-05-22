@@ -58,7 +58,7 @@ function OPNavBar() {
           <div className="flex items-center justify-between mx-auto max-w-7xl">
             <div className="flex items-center mt-4 mb-4">
               <h1 className="-mt-2 text-3xl pt-1 font-shrikhand text-[#ee9613] whitespace-nowrap">
-                <Link to="/LandingPage">Etomart</Link>
+                <Link to="/LP">Etomart</Link>
               </h1>
               <div className="ml-4">
   <LocationButton onClick={handleLocationClick} />
@@ -226,7 +226,7 @@ export default OPNavBar;
 //               </div>
 //               <ul className="hidden md:flex font-bold text-lg">
 //                 {/* <li className='px-4 whitespace-nowrap'>
-//                   <Link to="/LandingPage" className="hover:text-black">Landing Page</Link>
+//                   <Link to="/LP" className="hover:text-black">Landing Page</Link>
 //                 </li> */}
 //                 {/* <li className='flex items-center justify-center whitespace-nowrap'>
 //                   <Link to="/home" className="hover:text-black">Home</Link>
@@ -257,7 +257,7 @@ export default OPNavBar;
 //             <div>
 //               <ul className='uppercase p-2'>
 //                 <li className='p-2 whitespace-nowrap border-b'>
-//                   <Link to="/LandingPage" className="hover:text-black">Landing Page</Link>
+//                   <Link to="/LP" className="hover:text-black">Landing Page</Link>
 //                 </li>
 //                 <li className='p-2 whitespace-nowrap border-b'>
 //                   <Link to="/home" className="hover:text-black">Home</Link>
