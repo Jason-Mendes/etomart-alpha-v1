@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Img, Text } from "..";
 import { useNavigate } from "react-router-dom";
 import LPNavBar from "../LPNavBar";
-function KhomasHome () {
+function RegionsHome () {
 
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   //Location buttons stuff
@@ -22,13 +22,13 @@ function KhomasHome () {
       code: "ALB",
       name: "Khomas",
       flagPath: "/images/regions/khomas2.jpeg",
-      path: "/LP/Khomas",
+      path: "/LP/Regions",
     }
   ];
 
   const handleregionClick = (path) => {
     if (path === "src/components/Regions/Towns/KhomasTowns.js") {
-      navigate("/LP/Khomas"); // Replace '/khomas' with the appropriate route path
+      navigate("/LP/Regions"); // Replace '/khomas' with the appropriate route path
     } else {
       navigate(path);
     }
@@ -39,7 +39,7 @@ function KhomasHome () {
   const towns = [
     { code: "ALB", name: "Windhoek", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "BUK", name: "Brakwater", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "DOE", name: "Dordabis", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "DOE", name: "Dordabis", flagPath: "/images/regions/khomas2.jpeg", path:"/LP/Khomas/Towns" },
     { code: "GBN", name: "Gobabis", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "GRS", name: "Groendrift", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "HCH", name: "Hochfeld", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
@@ -52,7 +52,7 @@ function KhomasHome () {
 
   const handletownsClick = (path) => {
     if (path === "src/components/Regions/Towns/KhomasTowns.js") {
-      navigate("/LP/Khomas/Towns"); // Replace '/khomas' with the appropriate route path
+      navigate("/LP/Khomas/Towns"); // Replace '/Regions' with the appropriate route path
     } else {
       navigate(path);
     }
@@ -372,7 +372,7 @@ function KhomasHome () {
                   </div>
                 </Button>
                 <Button
-  className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 min-w-[150px] h-14 overflow-hidden`}
+  className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans  hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden`}
   onClick={() => handleregionClick(region.path)}
 >
   <div className="flex items-center justify-between w-full ">
@@ -413,18 +413,18 @@ function KhomasHome () {
             >
               {towns.map((towns, index) => (
                 <div key={towns.code} className="flex justify-center w-full">
-                  <div className="button-row flex flex-col gap-4 mb-4">
+                  <div className="button-row flex flex-col gap-4 mb-4 ">
                     <Button
-                      className={`flex flex-shrink-0 justify-between items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 min-w-[280px] overflow-hidden`}
+                      className={`flex flex-shrink-0 justify-between items-center bg-white  hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans  min-w-[220px] overflow-hidden`}
                       onClick={() => handletownsClick(towns.path)}
                     >
                       <div className="flex items-center flex-grow">
-                        <img
+                        {/* <img
                           className="rounded-[36px] h-10 mr-2 flex-shrink-0"
                           src={towns.flagPath}
                           alt={`${towns.name} flag`}
                           loading="lazy"
-                        />
+                        /> */}
                         <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
                           {towns.name}
                         </p>
@@ -499,7 +499,7 @@ function KhomasHome () {
                   reliably and affordably.
                 </p>
                 <button
-                  className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md hover:bg-slate-300 transition-colors duration-300"
+                  className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md  transition-all duration-300  hover:bg-orange-300"
                   onClick={handleWatchVideo}
                   style={{ position: 'relative', zIndex: '999' }}>
                   <span>Watch Video</span>
@@ -1108,4 +1108,4 @@ function KhomasHome () {
 }
 
 
-export default KhomasHome;
+export default RegionsHome;

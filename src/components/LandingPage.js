@@ -27,59 +27,59 @@ function LandingPage() {
       code: "ALB",
       name: "Khomas",
       flagPath: "/images/regions/khomas2.jpeg",
-      path: "/LP/Khomas"
+      path: "/LP/Regions"
     },
     { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg",
-      path: "/LP/Khomas" },
+      path: "/LP/Regions" },
     { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg",
-      path: "/LP/Khomas" },
+      path: "/LP/Regions" },
     { code: "ALB", name: "Omusati ", flagPath: "/images/regions/omusati.jpeg",
-      path: "/LP/Khomas" },
+      path: "/LP/Regions" },
     { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg",
-      path: "/LP/Khomas" },
+      path: "/LP/Regions" },
     {
       code: "CYP",
       name: "Ohangwena",
       flagPath: "/images/regions/ohangwena.jpeg",
-      path: "/LP/Khomas"
+      path: "/LP/Regions"
     },
     { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg",
-      path: "/LP/Khomas" },
+      path: "/LP/Regions" },
     {
       code: "HRV",
       name: "Oshikoto",
       flagPath: "/images/regions/oshikoto.jpeg",
-      path: "/LP/Khomas"
+      path: "/LP/Regions"
     },
     { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg",
-      path: "/LP/Khomas" },
+      path: "/LP/Regions" },
     { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg",
-      path: "/LP/Khomas" },
+      path: "/LP/Regions" },
     {
       code: "HRV",
       name: "Otjozondjupa",
       flagPath: "/images/regions/otjozondjupa.jpeg",
-      path: "/LP/Khomas"
+      path: "/LP/Regions"
     },
     { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg",
-      path: "/LP/Khomas" },
+      path: "/LP/Regions" },
     {
       code: "ALB",
       name: "Kavango East",
       flagPath: "/images/regions/kavango_east.jpeg",
-      path: "/LP/Khomas"
+      path: "/LP/Regions"
     },
     {
       code: "HRV",
       name: "Kavango West",
       flagPath: "/images/regions/kavango_west.jpeg",
-      path: "/LP/Khomas"
+      path: "/LP/Regions"
     },
   ];
 
   // const handleregionsClick = (path) => {
   //   if (path === "src/components/Regions/KhomasHome.js") {
-  //     navigate("/LP/Khomas"); // Replace '/Khomas' with the appropriate route path
+  //     navigate("/LP/Regions"); // Replace '/Khomas' with the appropriate route path
   //   } else {
   //     navigate(path);
   //   }
@@ -384,7 +384,7 @@ function LandingPage() {
                   <div key={region.code} className="flex justify-start">
                     <div className="button-row flex flex-col gap-4 mb-4 w-full">
                       <Button
-                        className="flex flex-shrink-0 justify-between items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans border border-slate-200 min-w-[280px] overflow-hidden"
+                        className="flex flex-shrink-0 justify-between items-center bg-white  hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans  min-w-[280px] overflow-hidden"
                         onClick={() => handleRegionClick(region)}
                       >
                         <div className="flex items-center flex-grow">
@@ -472,7 +472,7 @@ function LandingPage() {
                   reliably and affordably.
                 </p>
                 <button
-                  className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md hover:bg-slate-300 transition-colors duration-300"
+                  className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md  transition-all duration-300  hover:bg-orange-300"
                   onClick={handleWatchVideo}
                   style={{ position: 'relative', zIndex: '999' }}>
                   <span>Watch Video</span>

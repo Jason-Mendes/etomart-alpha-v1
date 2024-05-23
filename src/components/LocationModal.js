@@ -100,7 +100,7 @@ const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
           <div className="w-10/12 bg-white rounded-lg p-4 pt-8 m-8 z-50">
             <div className="relative">
               <img
-                src="/imagess/Mais_reverse.jpg"
+                src="/images/Mais_rdedeverse.jpg"
                 alt="img"
                 className="w-full max-h-[30vh] object-cover rounded-b-lg"
               />

@@ -56,7 +56,7 @@ function KhomasTowns() {
             <a
               role="tab"
               aria-selected="false"
-              className=" flex items-center space-x-2 gap-2 px-4 py-2 rounded-full bg-white shadow-md hover:bg-gray-200 transition duration-150"
+              className=" flex items-center space-x-2 gap-2 px-4 py-2 rounded-full bg-white shadow-md  transition-all duration-300  hover:bg-orange-300 transition duration-150"
               href="/en/discovery"
             >
               <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current text-Black">
@@ -78,7 +78,7 @@ function KhomasTowns() {
             <a
               role="tab"
               aria-selected="false"
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md hover:bg-gray-200 transition duration-150"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md  transition-all duration-300  hover:bg-orange-300 transition duration-150"
               href="/en/discovery/restaurants"
             >
               <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current text-black">

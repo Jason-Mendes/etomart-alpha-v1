@@ -9,7 +9,7 @@ import Products from './components/Products';
 // import CartIcon from './components/CartIcon';
 import UserProfile from './components/UserProfile';
 // import KhomasLandingPage from './components/Regions/khomasLandingPage';
-import KhomasHome from './components/Regions/KhomasHome';
+import RegionsHome from './components/Regions/RegionsHome';
 import KhomasTowns from './components/Regions/Towns/KhomasTowns';
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
             <Route path="/products" element={<Products />} /> */}
             {/* <Route path="/cart" element={<CartIcon/>} /> */}
             {/* <Route path="/LandingPage-khomas" element={<KhomasLandingPage />} /> */}
-            <Route path="/LP/Khomas" element={<KhomasHome />} />
+            <Route path="/LP/Regions" element={<RegionsHome />} />
             <Route path="/LP/Khomas/Towns" element={<KhomasTowns />} />
           </Routes>
         </div>
