@@ -1,0 +1,561 @@
+hey please teach me how to : pass the region data from the LandingPage.js component to the RegionsHome.js component as a prop when navigating to the RegionsHome.js page. This way, I can dynamically update the region button and the towns buttons in the RegionsHome.js based on the selected region from the LandingPage.js as you can see below theres all these regions righ(
+  const regions = [
+    {
+      code: "ALB",
+      name: "Khomas",
+      flagPath: "/images/regions/khomas2.jpeg",
+      path: "/LP/Regions"
+    },
+    { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg",
+      path: "/LP/Regions" },
+    { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg",
+      path: "/LP/Regions" },
+    { code: "ALB", name: "Omusati ", flagPath: "/images/regions/omusati.jpeg",
+      path: "/LP/Regions" },
+    { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg",
+      path: "/LP/Regions" },
+    {
+      code: "CYP",
+      name: "Ohangwena",
+      flagPath: "/images/regions/ohangwena.jpeg",
+      path: "/LP/Regions"
+    },
+    { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg",
+      path: "/LP/Regions" },
+    {
+      code: "HRV",
+      name: "Oshikoto",
+      flagPath: "/images/regions/oshikoto.jpeg",
+      path: "/LP/Regions"
+    },
+    { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg",
+      path: "/LP/Regions" },
+    { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg",
+      path: "/LP/Regions" },
+    {
+      code: "HRV",
+      name: "Otjozondjupa",
+      flagPath: "/images/regions/otjozondjupa.jpeg",
+      path: "/LP/Regions"
+    },
+    { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg",
+      path: "/LP/Regions" },
+    {
+      code: "ALB",
+      name: "Kavango East",
+      flagPath: "/images/regions/kavango_east.jpeg",
+      path: "/LP/Regions"
+    },
+    {
+      code: "HRV",
+      name: "Kavango West",
+      flagPath: "/images/regions/kavango_west.jpeg",
+      path: "/LP/Regions"
+    },
+  ];) now if I click lets say khomas it should be passed as a prop to the regionshome.js page or if I click erongo or Oshana. then in the RegionsHome.js based on what region was clicked it should choose what to render so if I choose khomas button in LandingPage.js the region button in RegionHome.js should update with that information, it should remain Khomas based on the snippet I will provide below:
+
+Snippet from the LandingPage.js: 
+import React, { useState, useEffect } from "react";
+import { Button, Img, Text } from "../components";
+import { useNavigate } from "react-router-dom";
+import RegionsBanner from "./RegionsBanner";
+import LPNavBar from "./LPNavBar"
+
+function LandingPage() {
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+  //Location buttons stuff
+  const [isEditing, setIsEditing] = useState(false);
+  const [location, setLocation] = useState("");
+  const [numStars] = useState(5); // State for the number of stars
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
+
+  // JavaScript
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
+
+
+  //Regions stuff
+
+  const [bannerState, setBannerState] = useState({ isVisible: false, imageSrc: '', nextPage: '' });
+
+
+  const regions = [
+    {
+      code: "ALB",
+      name: "Khomas",
+      flagPath: "/images/regions/khomas2.jpeg",
+      path: "/LP/Regions"
+    },
+    { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg",
+      path: "/LP/Regions" },
+    { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg",
+      path: "/LP/Regions" },
+    { code: "ALB", name: "Omusati ", flagPath: "/images/regions/omusati.jpeg",
+      path: "/LP/Regions" },
+    { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg",
+      path: "/LP/Regions" },
+    {
+      code: "CYP",
+      name: "Ohangwena",
+      flagPath: "/images/regions/ohangwena.jpeg",
+      path: "/LP/Regions"
+    },
+    { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg",
+      path: "/LP/Regions" },
+    {
+      code: "HRV",
+      name: "Oshikoto",
+      flagPath: "/images/regions/oshikoto.jpeg",
+      path: "/LP/Regions"
+    },
+    { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg",
+      path: "/LP/Regions" },
+    { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg",
+      path: "/LP/Regions" },
+    {
+      code: "HRV",
+      name: "Otjozondjupa",
+      flagPath: "/images/regions/otjozondjupa.jpeg",
+      path: "/LP/Regions"
+    },
+    { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg",
+      path: "/LP/Regions" },
+    {
+      code: "ALB",
+      name: "Kavango East",
+      flagPath: "/images/regions/kavango_east.jpeg",
+      path: "/LP/Regions"
+    },
+    {
+      code: "HRV",
+      name: "Kavango West",
+      flagPath: "/images/regions/kavango_west.jpeg",
+      path: "/LP/Regions"
+    },
+  ];
+
+  const handleRegionClick = (region) => {
+    setBannerState({
+      isVisible: true,
+      imageSrc: region.flagPath,
+      nextPage: region.path,
+    });
+  };
+
+//Footer stuff
+  const companyLinks = [
+    { label: 'Jobs', url: 'https://careers.wolt.com' },
+    { label: 'Security', url: '/en/alb/security' },
+    { label: 'Investors', url: 'https://ir.doordash.com/overview/default.aspx', target: '_blank' },
+    { label: 'Wolt Market', url: '/en/alb/wolt-market' },
+    { label: 'Developers', url: 'https://developer.wolt.com' },
+  ];
+
+  const GetToKnowUs = [
+    { label: 'About us', url: '/en/alb/about' },
+    { label: 'What we stand for', url: '/en/alb/about/wolt-values' },
+    { label: 'Support', url: 'https://wolt.com/help' },
+    { label: 'Contact', url: '/en/alb/contact' },
+    { label: 'Sustainability', url: '/en/alb/about/better-cities' },
+  ];
+
+  const usefulLinks = [
+    { label: "For couriers", url: "/en/alb/couriers" },
+    { label: "For merchants", url: "/en/alb/merchant" },
+    { label: "For affiliates", url: "/en/alb/affiliates" },
+    { label: 'Promo codes', url: 'https://life.wolt.com/en/alb/howto/wolt-promo-codes' },
+    { label: 'Wolt Ads', url: '/en/alb/wolt-ads' },
+  ];
+
+  const followLinks = [
+    { label: 'Blog', url: 'https://blog.wolt.com/' },
+    { label: 'Instagram', url: 'https://instagram.com/woltapp', target: '_blank' },
+    { label: 'Facebook', url: 'https://www.facebook.com/woltapp/', target: '_blank' },
+    { label: 'Twitter', url: 'https://twitter.com/woltapp', target: '_blank' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/company/wolt-oy/', target: '_blank' },
+  ];
+
+  const testimonials = [
+    {
+      imageSrc: "/images/img_ellipse1.png",
+      textBelowImage: "Lorem ipsum dolor sit amet consectetur.",
+      numStars: 1,
+      testimonialAuthor: "John Doe",
+    },
+    {
+      imageSrc: "/images/img_ellipse1.png",
+      textBelowImage:
+        "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
+      numStars: 5,
+      testimonialAuthor: "John Doe",
+    },
+    {
+      imageSrc: "/images/img_ellipse1.png",
+      textBelowImage:
+        "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
+      numStars: 3,
+      testimonialAuthor: "John Doe",
+    },
+    // Add more testimonials as needed
+  ];
+
+  const handleClick = (url) => {
+    // Handle the click event here
+    // You can navigate to the URL or perform any other action
+    console.log("Clicked URL:", url);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 640);
+    };
+
+    // Initial call to set screen size
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  //Location buttons stuff
+
+  const handleInputChange = (e) => {
+    setLocation(e.target.value);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    // Save the location data here
+    setIsEditing(false);
+  };
+
+  // // render starts testimonials container
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) =>
+        prevSlide === testimonials.length - 1 ? 0 : prevSlide + 1
+      );
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide === 0 ? testimonials.length - 1 : prevSlide - 1
+    );
+  };
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide === testimonials.length - 1 ? 0 : prevSlide + 1
+    );
+  };
+
+  const handleLanguageChange = () => {
+    // Handle language change logic here
+  };
+
+  const handleAccessibilitySettingsOpen = () => {
+    // Handle accessibility settings opening logic here
+  };
+
+  const handleWatchVideo = () => {
+    setIsVideoVisible(true);
+  };
+
+  const handleVideoEnded = () => {
+    setIsVideoVisible(false);
+  };
+
+  return (
+    <div><div>
+      <LPNavBar />
+    </div>
+      {/* Other code below */} 
+  {/* Regions Buttons */}
+              <div
+                id="button sizing"
+                className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-2 px-16"
+              >
+                {regions.map((region) => (
+                  <div key={region.code} className="flex justify-start">
+                    <div className="button-row flex flex-col gap-4 mb-4 w-full">
+                      <Button
+                        className="flex flex-shrink-0 justify-between items-center bg-white  hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans  min-w-[280px] overflow-hidden"
+                        onClick={() => handleRegionClick(region)}
+                      >
+                        <div className="flex items-center flex-grow">
+                          <img
+                            className="rounded-[36px] h-10 mr-2 flex-shrink-0"
+                            src={region.flagPath}
+                            alt={`${region.name} flag`}
+                            loading="lazy" />
+                          <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
+                            {region.name}
+                          </p>
+                        </div>
+                        <div className="ml-auto pr-2 flex-shrink-0">
+                          <svg
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-4 h-6 fill-current text-zinc-950"
+                          >
+                            <g fill="none" fillRule="evenodd">
+                              <path fill="none" d="M0 0h24v24H0z" />
+                              <path
+                                d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
+                                fill="#202125" />
+                            </g>
+                          </svg>
+                        </div>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Banner */}
+              <RegionsBanner
+                isVisible={bannerState.isVisible}
+                imageSrc={bannerState.imageSrc}
+                closeBanner={() => setBannerState({ isVisible: false, imageSrc: '', nextPage: '' })}
+                nextPage={bannerState.nextPage} />
+            </div>
+            {/* Regions Buttons ends*/}
+                {/* Other code Below */}
+  );
+}
+
+export default LandingPage;
+Snippet for RegionsHome.js page:
+import React, { useState, useEffect } from "react";
+import { Button, Img, Text } from "..";
+import { useNavigate } from "react-router-dom";
+import LPNavBar from "../LPNavBar";
+function RegionsHome () {
+
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+  //Location buttons stuff
+  const [isEditing, setIsEditing] = useState(false);
+  const [location, setLocation] = useState("");
+  const [numStars] = useState(5); // State for the number of stars
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
+
+  // JavaScript
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
+
+  //Region for Town stuff
+
+  const region = [
+    {
+      code: "ALB",
+      name: "Khomas",
+      flagPath: "/images/regions/khomas2.jpeg",
+      path: "/LP/Regions",
+    }
+  ];
+
+  const handleregionClick = (path) => {
+    if (path === "src/components/Regions/Towns/KhomasTowns.js") {
+      navigate("/LP/Regions"); // Replace '/khomas' with the appropriate route path
+    } else {
+      navigate(path);
+    }
+  };
+
+  //Towns Stuff
+
+  const towns = [
+    { code: "ALB", name: "Windhoek", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "BUK", name: "Brakwater", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "DOE", name: "Dordabis", flagPath: "/images/regions/khomas2.jpeg", path:"/LP/Khomas/Towns" },
+    { code: "GBN", name: "Gobabis", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "GRS", name: "Groendrift", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "HCH", name: "Hochfeld", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "KHR", name: "Khorixas", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    // { code: "KLN", name: "Klein Windhoek", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "OJO", name: "Ojozondjupa", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "RHN", name: "Rehoboth", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
+    { code: "WSN", name: "Witvlei", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" }
+  ];
+
+  const handletownsClick = (path) => {
+    if (path === "src/components/Regions/Towns/KhomasTowns.js") {
+      navigate("/LP/Khomas/Towns"); // Replace '/Regions' with the appropriate route path
+    } else {
+      navigate(path);
+    }
+  };
+
+
+  const companyLinks = [
+    { label: 'Jobs', url: 'https://careers.wolt.com' },
+    { label: 'Security', url: '/en/alb/security' },
+    { label: 'Investors', url: 'https://ir.doordash.com/overview/default.aspx', target: '_blank' },
+    { label: 'Wolt Market', url: '/en/alb/wolt-market' },
+    { label: 'Developers', url: 'https://developer.wolt.com' },
+  ];
+
+  const GetToKnowUs = [
+    { label: 'About us', url: '/en/alb/about' },
+    { label: 'What we stand for', url: '/en/alb/about/wolt-values' },
+    { label: 'Support', url: 'https://wolt.com/help' },
+    { label: 'Contact', url: '/en/alb/contact' },
+    { label: 'Sustainability', url: '/en/alb/about/better-cities' },
+  ];
+
+  const usefulLinks = [
+    { label: "For couriers", url: "/en/alb/couriers" },
+    { label: "For merchants", url: "/en/alb/merchant" },
+    { label: "For affiliates", url: "/en/alb/affiliates" },
+    { label: 'Promo codes', url: 'https://life.wolt.com/en/alb/howto/wolt-promo-codes' },
+    { label: 'Wolt Ads', url: '/en/alb/wolt-ads' },
+  ];
+
+  const followLinks = [
+    { label: 'Blog', url: 'https://blog.wolt.com/' },
+    { label: 'Instagram', url: 'https://instagram.com/woltapp', target: '_blank' },
+    { label: 'Facebook', url: 'https://www.facebook.com/woltapp/', target: '_blank' },
+    { label: 'Twitter', url: 'https://twitter.com/woltapp', target: '_blank' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/company/wolt-oy/', target: '_blank' },
+  ];
+
+  const testimonials = [
+    {
+      imageSrc: "/images/img_ellipse1.png",
+      textBelowImage: "Lorem ipsum dolor sit amet consectetur.",
+      numStars: 1,
+      testimonialAuthor: "John Doe",
+    },
+    {
+      imageSrc: "/images/img_ellipse1.png",
+      textBelowImage:
+        "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
+      numStars: 5,
+      testimonialAuthor: "John Doe",
+    },
+    {
+      imageSrc: "/images/img_ellipse1.png",
+      textBelowImage:
+        "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
+      numStars: 3,
+      testimonialAuthor: "John Doe",
+    },
+    // Add more testimonials as needed
+  ];
+
+  const handleClick = (url) => {
+    // Handle the click event here
+    // You can navigate to the URL or perform any other action
+    console.log("Clicked URL:", url);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 640);
+    };
+
+    // Initial call to set screen size
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  //Location buttons stuff
+
+  const handleInputChange = (e) => {
+    setLocation(e.target.value);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    // Save the location data here
+    setIsEditing(false);
+  };
+
+  // // render stars testimonials container
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) =>
+        prevSlide === testimonials.length - 1 ? 0 : prevSlide + 1
+      );
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide === 0 ? testimonials.length - 1 : prevSlide - 1
+    );
+  };
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide === testimonials.length - 1 ? 0 : prevSlide + 1
+    );
+  };
+
+  const handleLanguageChange = () => {
+    // Handle language change logic here
+  };
+
+  const handleAccessibilitySettingsOpen = () => {
+    // Handle accessibility settings opening logic here
+  };
+
+  const handleWatchVideo = () => {
+    setIsVideoVisible(true);
+  };
+
+  const handleVideoEnded = () => {
+    setIsVideoVisible(false);
+  };
+
+  return (
+    <div><div>
+      <LPNavBar />
+    </div>
+  {/* Other code  */}
+      {/* Region */}
+      <div className="flex items-center justify-center">
+        <div className="flex flex-wrap justify-center gap-4 pb-6 pt-6">
+          {region.map((region, index) => (
+            <div key={region.code} className="flex justify-center w-full">
+              <div className="flex flex-row gap-4 w-full">
+                <Button
+                  className={`flex justify-center items-center bg-orange-300 text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans max-w-[240px] h-14 overflow-hidden`}
+                  onClick={() => handleregionClick(region.path)}
+                >
+                  <div className="flex items-center">
+                    <img
+                      className="rounded-[36px] h-8 mr-2"
+                      src={region.flagPath}
+                      alt={`${region.name} flag`}
+                      loading="lazy"
+                    />
+                    <p className="text-center text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl text-gray-700 font-bold">
+                      {region.name}
+                    </p>
+                  </div>
+                </Button>
+  {/* Other code  */}
+   );
+}
+
+
+export default RegionsHome;
