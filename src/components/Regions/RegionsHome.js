@@ -36,7 +36,7 @@ function RegionsHome () {
 
   //Towns Stuff
 
-  const towns = [
+  const townsKhomas = [
     { code: "ALB", name: "Windhoek", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "BUK", name: "Brakwater", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "DOE", name: "Dordabis", flagPath: "/images/regions/khomas2.jpeg", path:"/LP/Khomas/Towns" },
@@ -49,6 +49,18 @@ function RegionsHome () {
     { code: "RHN", name: "Rehoboth", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "WSN", name: "Witvlei", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" }
   ];
+
+  //Towns Stuff for Erongo
+
+const townsErongo = [
+  { code: "ARA", name: "Arandis", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+  { code: "HEN", name: "Henties Bay", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+  { code: "KAR", name: "Karibib", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+  { code: "OMA", name: "Omaruru", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+  { code: "SWA", name: "Swakopmund", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+  { code: "UIS", name: "Uis", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+  { code: "WAL", name: "Walvis Bay", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" }
+];
 
   const handletownsClick = (path) => {
     if (path === "src/components/Regions/Towns/KhomasTowns.js") {
@@ -348,8 +360,9 @@ function RegionsHome () {
         )}
       </div>
     </div>
+     {/* Region selected from Landing Page*/}
     <div className="md:w-1/2 md:pl-4 mt-6 md:mt-0">
-      {/* Region */}
+     
       <div className="flex items-center justify-center">
         <div className="flex flex-wrap justify-center gap-4 pb-6 pt-6">
           {region.map((region, index) => (
@@ -371,6 +384,7 @@ function RegionsHome () {
                     </p>
                   </div>
                 </Button>
+                     {/*Select Button to go back to Landing Page*/}
                 <Button
   className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans  hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden`}
   onClick={() => handleregionClick(region.path)}
@@ -406,27 +420,27 @@ function RegionsHome () {
     </div>
   </div>
 
-            {/* Towns Buttons */}
+            {/* Towns Buttons meant to be based on the region selcted in the landing Page */}
             <div
               id="button sizing"
               className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-0 px-16"
             >
-              {towns.map((towns, index) => (
-                <div key={towns.code} className="flex justify-center w-full">
+              {townsKhomas.map((townsKhomas, index) => (
+                <div key={townsKhomas.code} className="flex justify-center w-full">
                   <div className="button-row flex flex-col gap-4 mb-4 ">
                     <Button
                       className={`flex flex-shrink-0 justify-between items-center bg-white  hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans  min-w-[220px] overflow-hidden`}
-                      onClick={() => handletownsClick(towns.path)}
+                      onClick={() => handletownsClick(townsKhomas.path)}
                     >
                       <div className="flex items-center flex-grow">
                         {/* <img
                           className="rounded-[36px] h-10 mr-2 flex-shrink-0"
-                          src={towns.flagPath}
-                          alt={`${towns.name} flag`}
+                          src={townsKhomas.flagPath}
+                          alt={`${townsKhomas.name} flag`}
                           loading="lazy"
                         /> */}
                         <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
-                          {towns.name}
+                          {townsKhomas.name}
                         </p>
                       </div>
                       <div className="ml-auto pr-2 flex-shrink-0">
@@ -450,8 +464,9 @@ function RegionsHome () {
               ))}
             
 
-            {/* Towns Buttons ends*/}
           </div>
+          
+            {/* Towns Buttons ends*/}
         </div>
         <div
           id="LP_location_buttons_container_2"
