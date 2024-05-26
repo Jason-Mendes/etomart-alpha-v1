@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Img, Text } from "../components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
 import RegionsBanner from "./RegionsBanner";
 import LPNavBar from "./LPNavBar"
 
@@ -11,7 +11,7 @@ function LandingPage() {
   const [location, setLocation] = useState("");
   const [numStars] = useState(5); // State for the number of stars
   const [currentSlide, setCurrentSlide] = useState(0);
-  const navigate = useNavigate();
+
 
   // JavaScript
   const [isVideoVisible, setIsVideoVisible] = useState(false);
@@ -20,8 +20,8 @@ function LandingPage() {
   //Regions stuff
 
   const [bannerState, setBannerState] = useState({ isVisible: false, imageSrc: '', nextPage: '' });
-
-
+  const navigate = useNavigate();
+  
   const regions = [
     {
       code: "ALB",
@@ -29,40 +29,72 @@ function LandingPage() {
       flagPath: "/images/regions/khomas2.jpeg",
       path: "/LP/Regions"
     },
-    { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg",
-      path: "/LP/Regions" },
-    { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg",
-      path: "/LP/Regions" },
-    { code: "ALB", name: "Omusati ", flagPath: "/images/regions/omusati.jpeg",
-      path: "/LP/Regions" },
-    { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg",
-      path: "/LP/Regions" },
+    {
+      code: "HRV",
+      name: "Erongo",
+      flagPath: "/images/regions/erongo.jpeg",
+      path: "/LP/Regions"
+    },
+    {
+      code: "CYP",
+      name: "Oshana",
+      flagPath: "/images/regions/oshana.jpeg",
+      path: "/LP/Regions"
+    },
+    {
+      code: "ALB",
+      name: "Omusati",
+      flagPath: "/images/regions/omusati.jpeg",
+      path: "/LP/Regions"
+    },
+    {
+      code: "HRV",
+      name: "Karas",
+      flagPath: "/images/regions/kharas2.jpeg",
+      path: "/LP/Regions"
+    },
     {
       code: "CYP",
       name: "Ohangwena",
       flagPath: "/images/regions/ohangwena.jpeg",
       path: "/LP/Regions"
     },
-    { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg",
-      path: "/LP/Regions" },
+    {
+      code: "ALB",
+      name: "Zambezi",
+      flagPath: "/images/regions/zambezi.jpeg",
+      path: "/LP/Regions"
+    },
     {
       code: "HRV",
       name: "Oshikoto",
       flagPath: "/images/regions/oshikoto.jpeg",
       path: "/LP/Regions"
     },
-    { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg",
-      path: "/LP/Regions" },
-    { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg",
-      path: "/LP/Regions" },
+    {
+      code: "CYP",
+      name: "Omaheke",
+      flagPath: "/images/regions/omaheke.jpeg",
+      path: "/LP/Regions"
+    },
+    {
+      code: "ALB",
+      name: "Hardap",
+      flagPath: "/images/regions/hardap.jpeg",
+      path: "/LP/Regions"
+    },
     {
       code: "HRV",
       name: "Otjozondjupa",
       flagPath: "/images/regions/otjozondjupa.jpeg",
       path: "/LP/Regions"
     },
-    { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg",
-      path: "/LP/Regions" },
+    {
+      code: "CYP",
+      name: "Kunene",
+      flagPath: "/images/regions/kunene2.jpeg",
+      path: "/LP/Regions"
+    },
     {
       code: "ALB",
       name: "Kavango East",
@@ -76,7 +108,7 @@ function LandingPage() {
       path: "/LP/Regions"
     },
   ];
-
+  
   // const handleregionsClick = (path) => {
   //   if (path === "src/components/Regions/KhomasHome.js") {
   //     navigate("/LP/Regions"); // Replace '/Khomas' with the appropriate route path
@@ -85,13 +117,17 @@ function LandingPage() {
   //   }
   // };
 
-  const handleRegionClick = (region) => {
-    setBannerState({
-      isVisible: true,
-      imageSrc: region.flagPath,
-      nextPage: region.path,
-    });
-  };
+const handleRegionClick = (region, shouldNavigate) => {
+  setBannerState({
+    isVisible: true,
+    imageSrc: region.flagPath,
+    nextPage: region.path,
+  });
+
+  if (shouldNavigate) {
+    navigate('/LP/Regions', { state: { selectedRegion: region } });
+  }
+};
 
 //Footer stuff
   const companyLinks = [
@@ -375,56 +411,60 @@ function LandingPage() {
                   Delivered to you at your convenience!
                 </Text>
               )}
-              {/* Regions Buttons */}
-              <div
-                id="button sizing"
-                className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-2 px-16"
-              >
-                {regions.map((region) => (
-                  <div key={region.code} className="flex justify-start">
-                    <div className="button-row flex flex-col gap-4 mb-4 w-full">
-                      <Button
-                        className="flex flex-shrink-0 justify-between items-center bg-white  hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans  min-w-[280px] overflow-hidden"
-                        onClick={() => handleRegionClick(region)}
-                      >
-                        <div className="flex items-center flex-grow">
-                          <img
-                            className="rounded-[36px] h-10 mr-2 flex-shrink-0"
-                            src={region.flagPath}
-                            alt={`${region.name} flag`}
-                            loading="lazy" />
-                          <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
-                            {region.name}
-                          </p>
-                        </div>
-                        <div className="ml-auto pr-2 flex-shrink-0">
-                          <svg
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-4 h-6 fill-current text-zinc-950"
-                          >
-                            <g fill="none" fillRule="evenodd">
-                              <path fill="none" d="M0 0h24v24H0z" />
-                              <path
-                                d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
-                                fill="#202125" />
-                            </g>
-                          </svg>
-                        </div>
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              {/* Banner */}
-              <RegionsBanner
-                isVisible={bannerState.isVisible}
-                imageSrc={bannerState.imageSrc}
-                closeBanner={() => setBannerState({ isVisible: false, imageSrc: '', nextPage: '' })}
-                nextPage={bannerState.nextPage} />
-            </div>
-            {/* Regions Buttons ends*/}
+             {/* Regions Buttons */}
+<div
+  id="button sizing"
+  className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-2 px-16"
+>
+  {regions.map((region) => (
+    <div key={region.code} className="flex justify-start">
+      <div className="button-row flex flex-col gap-4 mb-4 w-full">
+        <Button
+          className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[280px] overflow-hidden"
+          onClick={() => handleRegionClick(region, true)} // Pass `true` to navigate
+        >
+          <div className="flex items-center flex-grow">
+            <img
+              className="rounded-[36px] h-10 mr-2 flex-shrink-0"
+              src={region.flagPath}
+              alt={`${region.name} flag`}
+              loading="lazy"
+            />
+            <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
+              {region.name}
+            </p>
           </div>
+          <div className="ml-auto pr-2 flex-shrink-0">
+            <svg
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-6 fill-current text-zinc-950"
+            >
+              <g fill="none" fillRule="evenodd">
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path
+                  d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
+                  fill="#202125"
+                />
+              </g>
+            </svg>
+          </div>
+        </Button>
+      </div>
+    </div>
+  ))}
+</div>
+{/* Banner */}
+<RegionsBanner
+  isVisible={bannerState.isVisible}
+  imageSrc={bannerState.imageSrc}
+  closeBanner={() =>
+    setBannerState({ isVisible: false, imageSrc: '', nextPage: '' })
+  }
+  nextPage={bannerState.nextPage}
+/>
+{/* Regions Buttons ends*/}
+          </div></div>
         </div>
         <div
           id="LP_location_buttons_container_2"

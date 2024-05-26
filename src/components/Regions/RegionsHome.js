@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Button, Img, Text } from "..";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
 import LPNavBar from "../LPNavBar";
 function RegionsHome () {
 
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   //Location buttons stuff
   const [isEditing, setIsEditing] = useState(false);
-  const [location, setLocation] = useState("");
+  
+  const [inputLocation, setInputLocation] = useState("");
+
   const [numStars] = useState(5); // State for the number of stars
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
@@ -16,7 +18,10 @@ function RegionsHome () {
   const [isVideoVisible, setIsVideoVisible] = useState(false);
 
   //Region for Town stuff
+  const routerLocation = useLocation();
+  const selectedRegion = routerLocation.state?.selectedRegion;
 
+  
   const region = [
     {
       code: "ALB",
@@ -62,6 +67,110 @@ const townsErongo = [
   { code: "WAL", name: "Walvis Bay", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" }
 ];
 
+//Towns Stuff for Oshana
+const townsOshana = [
+  { code: "ONG", name: "Ongwediva", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Oshana/Towns" },
+  { code: "OSH", name: "Oshakati", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Oshana/Towns" },
+  { code: "OND", name: "Ondangwa", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Oshana/Towns" }
+];
+
+//Towns Stuff for Omusati
+const townsOmusati = [
+  { code: "OUT", name: "Outapi", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Omusati/Towns" },
+  { code: "OKA", name: "Okahao", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Omusati/Towns" },
+  { code: "OZO", name: "Oshifo", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Omusati/Towns" }
+];
+
+//Towns Stuff for Karas
+const townsKaras = [
+  { code: "KHB", name: "Keetmanshoop", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" },
+  { code: "LUD", name: "Luderitz", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" },
+  { code: "RSH", name: "Rosh Pinah", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" },
+  { code: "ORM", name: "Oranjemund", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" }
+];
+
+//Towns Stuff for Ohangwena
+const townsOhangwena = [
+  { code: "ENH", name: "Eenhana", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" },
+  { code: "HNM", name: "Helao Nafidi", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" },
+  { code: "OHS", name: "Ohangwena", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" },
+  { code: "OKG", name: "Okongo", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" }
+];
+
+//Towns Stuff for Zambezi
+const townsZambezi = [
+  { code: "KAT", name: "Katima Mulilo", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Zambezi/Towns" },
+  { code: "BUK", name: "Bukalo", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Zambezi/Towns" }
+];
+
+//Towns Stuff for Oshikoto
+const townsOshikoto = [
+  { code: "TSU", name: "Tsumeb", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Oshikoto/Towns" },
+  { code: "ONK", name: "Onankali", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Oshikoto/Towns" },
+  { code: "OMU", name: "Omuthiya", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Oshikoto/Towns" }
+];
+
+//Towns Stuff for Omaheke
+const townsOmaheke = [
+  { code: "GOB", name: "Gobabis", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Omaheke/Towns" },
+  { code: "WIT", name: "Witvlei", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Omaheke/Towns" },
+  { code: "LEO", name: "Leonardville", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Omaheke/Towns" }
+];
+
+//Towns Stuff for Hardap
+const townsHardap = [
+  { code: "MAR", name: "Mariental", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Hardap/Towns" },
+  { code: "REH", name: "Rehoboth", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Hardap/Towns" },
+  { code: "GIB", name: "Gibeon", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Hardap/Towns" }
+];
+
+//Towns Stuff for Otjozondjupa
+const townsOtjozondjupa = [
+  { code: "OKA", name: "Okahandja", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" },
+  { code: "GRD", name: "Grootfontein", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" },
+  { code: "OTJ", name: "Otjiwarongo", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" },
+  { code: "OTV", name: "Otavi", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" }
+];
+
+//Towns Stuff for Kunene
+const townsKunene = [
+  { code: "OPO", name: "Opuwo", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Kunene/Towns" },
+  { code: "KHX", name: "Khorixas", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Kunene/Towns" },
+  { code: "SES", name: "Sesfontein", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Kunene/Towns" }
+];
+
+//Towns Stuff for Kavango East
+const townsKavangoEast = [
+  { code: "RUN", name: "Rundu", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/KavangoEast/Towns" },
+  { code: "DIV", name: "Divundu", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/KavangoEast/Towns" }
+];
+
+//Towns Stuff for Kavango West
+const townsKavangoWest = [
+  { code: "NKU", name: "Nkurenkuru", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/KavangoWest/Towns" },
+  { code: "MPU", name: "Mpungu", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/KavangoWest/Towns" }
+];
+
+
+const townsByRegion = {
+  'Khomas': townsKhomas,
+  'Erongo': townsErongo,
+  'Oshana': townsOshana,
+  'Omusati': townsOmusati,
+  'Karas': townsKaras,
+  'Ohangwena': townsOhangwena,
+  'Zambezi': townsZambezi,
+  'Oshikoto': townsOshikoto,
+  'Omaheke': townsOmaheke,
+  'Hardap': townsHardap,
+  'Otjozondjupa': townsOtjozondjupa,
+  'Kunene': townsKunene,
+  'Kavango East': townsKavangoEast,
+  'Kavango West': townsKavangoWest
+};
+
+const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
+
   const handletownsClick = (path) => {
     if (path === "src/components/Regions/Towns/KhomasTowns.js") {
       navigate("/LP/Khomas/Towns"); // Replace '/Regions' with the appropriate route path
@@ -69,6 +178,10 @@ const townsErongo = [
       navigate(path);
     }
   };
+
+
+
+  
 
 
   const companyLinks = [
@@ -149,9 +262,8 @@ const townsErongo = [
   }, []);
 
   //Location buttons stuff
-
   const handleInputChange = (e) => {
-    setLocation(e.target.value);
+    setInputLocation(e.target.value);
   };
 
   const handleEditClick = () => {
@@ -284,7 +396,7 @@ const townsErongo = [
                   className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${!isEditing ? "hidden" : ""
                     }`}
                   type="text"
-                  value={location}
+                  value={inputLocation}
                   onChange={handleInputChange}
                 />
               </Button>
@@ -421,27 +533,25 @@ const townsErongo = [
   </div>
 
             {/* Towns Buttons meant to be based on the region selcted in the landing Page */}
-            <div
-              id="button sizing"
-              className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-0 px-16"
-            >
-              {townsKhomas.map((townsKhomas, index) => (
-                <div key={townsKhomas.code} className="flex justify-center w-full">
-                  <div className="button-row flex flex-col gap-4 mb-4 ">
-                    <Button
-                      className={`flex flex-shrink-0 justify-between items-center bg-white  hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans  min-w-[220px] overflow-hidden`}
-                      onClick={() => handletownsClick(townsKhomas.path)}
-                    >
-                      <div className="flex items-center flex-grow">
-                        {/* <img
+            <div id="button-sizing" className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-0 px-16">
+        {townsForSelectedRegion.map((town) => (
+          <div key={town.code} className="flex justify-center w-full">
+            <div className="button-row flex flex-col gap-4 mb-4">
+              <Button
+                className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[220px] overflow-hidden"
+                onClick={() => handletownsClick(town.path)}
+              >
+                <div className="flex items-center flex-grow">
+                   {/* <img
                           className="rounded-[36px] h-10 mr-2 flex-shrink-0"
                           src={townsKhomas.flagPath}
                           alt={`${townsKhomas.name} flag`}
                           loading="lazy"
                         /> */}
-                        <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
-                          {townsKhomas.name}
-                        </p>
+                  <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
+                    {town.name}
+                  </p>
+                      
                       </div>
                       <div className="ml-auto pr-2 flex-shrink-0">
                         <svg
