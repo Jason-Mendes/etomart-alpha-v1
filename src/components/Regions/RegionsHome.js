@@ -17,6 +17,158 @@ function RegionsHome () {
   // JavaScript
   const [isVideoVisible, setIsVideoVisible] = useState(false);
 
+  //Region stuff
+//   const routerLocation = useLocation();
+//   const selectedRegionReturn = routerLocation.state?.selectedRegionReturn;
+
+  
+ 
+//   const Khomas = [
+//     {
+//       code: "ALB",
+//       name: "Khomas",
+//       flagPath: "/images/regions/khomas2.jpeg",
+//       path: "/LP/Regions"
+//     }
+//   ];
+  
+//   const Erongo = [
+//     {
+//       code: "HRV",
+//       name: "Erongo",
+//       flagPath: "/images/regions/erongo.jpeg",
+//       path: "/LP/Regions"
+//     }
+//   ];
+  
+//   const Oshana = [
+//     {
+//       code: "CYP",
+//       name: "Oshana",
+//       flagPath: "/images/regions/oshana.jpeg",
+//       path: "/LP/Regions"
+//     }
+//   ];
+  
+//   const Omusati = [
+//     {
+//       code: "ALB",
+//       name: "Omusati",
+//       flagPath: "/images/regions/omusati.jpeg",
+//       path: "/LP/Regions"
+//     }
+//   ];
+  
+//   const Karas = [
+//     {
+//       code: "HRV",
+//       name: "Karas",
+//       flagPath: "/images/regions/kharas2.jpeg",
+//       path: "/LP/Regions"
+//     }
+//   ];
+  
+//   const Ohangwena = [
+//     {
+//       code: "CYP",
+//       name: "Ohangwena",
+//       flagPath: "/images/regions/ohangwena.jpeg",
+//       path: "/LP/Regions"
+//     }
+//   ];
+  
+//   const Zambezi = [
+//     {
+//       code: "ALB",
+//       name: "Zambezi",
+//       flagPath: "/images/regions/zambezi.jpeg",
+//       path: "/LP/Regions"
+//     },
+//   ];
+//   const Oshikoto = [
+//     {
+//       code: "HRV",
+//       name: "Oshikoto",
+//       flagPath: "/images/regions/oshikoto.jpeg",
+//       path: "/LP/Regions"
+//     },
+//   ];
+//   const Omaheke = [
+//     {
+//       code: "CYP",
+//       name: "Omaheke",
+//       flagPath: "/images/regions/omaheke.jpeg",
+//       path: "/LP/Regions"
+//     },
+//   ];
+//   const Hardap = [
+//     {
+//       code: "ALB",
+//       name: "Hardap",
+//       flagPath: "/images/regions/hardap.jpeg",
+//       path: "/LP/Regions"
+//     },
+//   ];
+//   const Otjozondjupa = [
+//     {
+//       code: "HRV",
+//       name: "Otjozondjupa",
+//       flagPath: "/images/regions/otjozondjupa.jpeg",
+//       path: "/LP/Regions"
+//     },
+//   ];
+//   const Kunene = [
+//     {
+//       code: "CYP",
+//       name: "Kunene",
+//       flagPath: "/images/regions/kunene2.jpeg",
+//       path: "/LP/Regions"
+//     },
+//   ];
+//   const KavangoEast = [
+//     {
+//       code: "ALB",
+//       name: "Kavango East",
+//       flagPath: "/images/regions/kavango_east.jpeg",
+//       path: "/LP/Regions"
+//     },
+//   ];
+//   const KavangoWest = [
+//     {
+//       code: "HRV",
+//       name: "Kavango West",
+//       flagPath: "/images/regions/kavango_west.jpeg",
+//       path: "/LP/Regions"
+//     }
+//   ];
+
+//   const regionsByRegion = {
+//     'Khomas': Khomas,
+//     'Erongo': Erongo,
+//     'Oshana': Oshana,
+//     'Omusati': Omusati,
+//     'Karas': Karas,
+//     'Ohangwena': Ohangwena,
+//     'Zambezi': Zambezi,
+//     'Oshikoto': Oshikoto,
+//     'Omaheke': Omaheke,
+//     'Hardap': Hardap,
+//     'Otjozondjupa': Otjozondjupa,
+//     'Kunene': Kunene,
+//     'Kavango East': KavangoEast,
+//     'Kavango West': KavangoWest
+//   };
+  
+// const regionsForSelectedRegion = selectedRegionReturn ? [selectedRegionReturn] : [];
+
+//   const handleReturnRegionClick = (path) => {
+//     if (path === "src/components/Regions.js") {
+//       navigate("/LP/Regions"); // Replace '/Regions' with the appropriate route path
+//     } else {
+//       navigate(path);
+//     }
+//   };
+
   //Region for Town stuff
   const routerLocation = useLocation();
   const selectedRegion = routerLocation.state?.selectedRegion;
@@ -31,7 +183,7 @@ function RegionsHome () {
     }
   ];
 
-  const handleregionClick = (path) => {
+  const handleReturnRegionClick = (path) => {
     if (path === "src/components/Regions/Towns/KhomasTowns.js") {
       navigate("/LP/Regions"); // Replace '/khomas' with the appropriate route path
     } else {
@@ -482,7 +634,7 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
               <div className="flex flex-row gap-4 w-full">
                 <Button
                   className={`flex justify-center items-center bg-orange-300 text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans max-w-[240px] h-14 overflow-hidden`}
-                  onClick={() => handleregionClick(region.path)}
+                  onClick={() => handleReturnRegionClick(region.path)}
                 >
                   <div className="flex items-center">
                     <img
@@ -499,7 +651,7 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
                      {/*Select Button to go back to Landing Page*/}
                 <Button
   className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans  hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden`}
-  onClick={() => handleregionClick(region.path)}
+  onClick={() => handleReturnRegionClick(region.path)}
 >
   <div className="flex items-center justify-between w-full ">
   <a

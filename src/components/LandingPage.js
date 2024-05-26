@@ -21,6 +21,22 @@ function LandingPage() {
 
   const [bannerState, setBannerState] = useState({ isVisible: false, imageSrc: '', nextPage: '' });
   const navigate = useNavigate();
+
+  // const returnNavigate = useNavigate();
+  // const handleRegionClick = (region, shouldNavigate) => {
+  //   setBannerState({
+  //     isVisible: true,
+  //     imageSrc: region.flagPath,
+  //     nextPage: region.path,
+  //   });
+  
+  //   shouldNavigate &&
+  //     navigate('/LP/Regions', { state: { selectedRegion: region } });
+  
+  //   !shouldNavigate &&
+  //     returnNavigate(`/LP/Regions`, { state: { selectedRegionReturn: region } });
+  // };
+
   
   const regions = [
     {
