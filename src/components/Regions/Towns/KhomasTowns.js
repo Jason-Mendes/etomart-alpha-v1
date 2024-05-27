@@ -5,6 +5,24 @@ import OPNavBar from '../../OPNavBar'; //or import OPNavBar from '../../componen
 
 function KhomasTowns() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const categories = [
+    { name: "Grocery", imgSrc: "" },
+    { name: "Bakery", imgSrc: "" },
+    { name: "Healthy", imgSrc: "" },
+    { name: "Desserts", imgSrc: "" },
+    { name: "Fruits & Vegetables", imgSrc: "" },
+    { name: "Dairy & Eggs", imgSrc: "" },
+    { name: "Meat & Seafood", imgSrc: "" },
+    { name: "Beverages", imgSrc: "" },
+    { name: "Snacks & Sweets", imgSrc: "" },
+    { name: "Household Essentials", imgSrc: "" },
+    { name: "Baby & Kids", imgSrc: "" },
+    { name: "Pet Supplies", imgSrc: "" },
+    { name: "Frozen Foods", imgSrc: "" },
+    { name: "Deli & Prepared Foods", imgSrc: "" },
+    { name: "International Foods", imgSrc: "" },
+    { name: "Alcohol", imgSrc: "" }
+  ];
 
   const testimonials = [
     {
@@ -98,7 +116,22 @@ function KhomasTowns() {
  
   
         </div>
-
+{/* Carousell */}
+<div className="flex overflow-x-scroll space-x-4 p-4">
+      {categories.map((category, index) => (
+        <div key={index} className="min-w-[100px] flex-shrink-0">
+          <div className="w-24 h-24 bg-gray-200 flex items-center justify-center">
+            {category.imgSrc ? (
+              <img src={category.imgSrc} alt={category.name} className="w-full h-full object-cover rounded-full" />
+            ) : (
+              <span className="text-gray-500">{category.name}</span>
+            )}
+          </div>
+          <p className="text-center mt-2">{category.name}</p>
+        </div>
+      ))}
+    </div>
+{/* Carrousel */}
         <div
             id="LP_Did_you_know_container_4"
             class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6"
