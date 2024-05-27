@@ -18,156 +18,127 @@ function RegionsHome() {
   const [isVideoVisible, setIsVideoVisible] = useState(false);
 
   // Region stuff
-  //   const showButtonLocation = useLocation();
-  //   const selectedRegionShowButton = showButtonLocation.state?.selectedRegionShowButton;
 
+  const showButtonLocation = useLocation();
+  const selectedRegionButton = showButtonLocation.state?.selectedRegion;
 
-
-  //   const Khomas = [
-  //     {
-  //       code: "ALB",
-  //       name: "Khomas",
-  //       flagPath: "/images/regions/khomas2.jpeg",
-  //       path: "/LP/Regions"
-  //     }
-  //   ];
-
-  //   const Erongo = [
-  //     {
-  //       code: "HRV",
-  //       name: "Erongo",
-  //       flagPath: "/images/regions/erongo.jpeg",
-  //       path: "/LP/Regions"
-  //     }
-  //   ];
-
-  //   const Oshana = [
-  //     {
-  //       code: "CYP",
-  //       name: "Oshana",
-  //       flagPath: "/images/regions/oshana.jpeg",
-  //       path: "/LP/Regions"
-  //     }
-  //   ];
-
-  //   const Omusati = [
-  //     {
-  //       code: "ALB",
-  //       name: "Omusati",
-  //       flagPath: "/images/regions/omusati.jpeg",
-  //       path: "/LP/Regions"
-  //     }
-  //   ];
-
-  //   const Karas = [
-  //     {
-  //       code: "HRV",
-  //       name: "Karas",
-  //       flagPath: "/images/regions/kharas2.jpeg",
-  //       path: "/LP/Regions"
-  //     }
-  //   ];
-
-  //   const Ohangwena = [
-  //     {
-  //       code: "CYP",
-  //       name: "Ohangwena",
-  //       flagPath: "/images/regions/ohangwena.jpeg",
-  //       path: "/LP/Regions"
-  //     }
-  //   ];
-
-  //   const Zambezi = [
-  //     {
-  //       code: "ALB",
-  //       name: "Zambezi",
-  //       flagPath: "/images/regions/zambezi.jpeg",
-  //       path: "/LP/Regions"
-  //     },
-  //   ];
-  //   const Oshikoto = [
-  //     {
-  //       code: "HRV",
-  //       name: "Oshikoto",
-  //       flagPath: "/images/regions/oshikoto.jpeg",
-  //       path: "/LP/Regions"
-  //     },
-  //   ];
-  //   const Omaheke = [
-  //     {
-  //       code: "CYP",
-  //       name: "Omaheke",
-  //       flagPath: "/images/regions/omaheke.jpeg",
-  //       path: "/LP/Regions"
-  //     },
-  //   ];
-  //   const Hardap = [
-  //     {
-  //       code: "ALB",
-  //       name: "Hardap",
-  //       flagPath: "/images/regions/hardap.jpeg",
-  //       path: "/LP/Regions"
-  //     },
-  //   ];
-  //   const Otjozondjupa = [
-  //     {
-  //       code: "HRV",
-  //       name: "Otjozondjupa",
-  //       flagPath: "/images/regions/otjozondjupa.jpeg",
-  //       path: "/LP/Regions"
-  //     },
-  //   ];
-  //   const Kunene = [
-  //     {
-  //       code: "CYP",
-  //       name: "Kunene",
-  //       flagPath: "/images/regions/kunene2.jpeg",
-  //       path: "/LP/Regions"
-  //     },
-  //   ];
-  //   const KavangoEast = [
-  //     {
-  //       code: "ALB",
-  //       name: "Kavango East",
-  //       flagPath: "/images/regions/kavango_east.jpeg",
-  //       path: "/LP/Regions"
-  //     },
-  //   ];
-  //   const KavangoWest = [
-  //     {
-  //       code: "HRV",
-  //       name: "Kavango West",
-  //       flagPath: "/images/regions/kavango_west.jpeg",
-  //       path: "/LP/Regions"
-  //     }
-  //   ];
-
-  //   const regionsByRegion = {
-  //     'Khomas': Khomas,
-  //     'Erongo': Erongo,
-  //     'Oshana': Oshana,
-  //     'Omusati': Omusati,
-  //     'Karas': Karas,
-  //     'Ohangwena': Ohangwena,
-  //     'Zambezi': Zambezi,
-  //     'Oshikoto': Oshikoto,
-  //     'Omaheke': Omaheke,
-  //     'Hardap': Hardap,
-  //     'Otjozondjupa': Otjozondjupa,
-  //     'Kunene': Kunene,
-  //     'Kavango East': KavangoEast,
-  //     'Kavango West': KavangoWest
-  //   };
-
-  // const handleRegionShowButton = (path) => {
-   
-  // };
-  // const regionsForSelectedRegion = selectedRegionShowButton ? [selectedRegionShowButton] : [];
-
-
-
-
-
+  const regionsData = {
+    Khomas: [
+      {
+        code: "ALB",
+        name: "Khomas",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Erongo: [
+      {
+        code: "HRV",
+        name: "Erongo",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Oshana: [
+      {
+        code: "CYP",
+        name: "Oshana",
+        flagPath: "/images/regions/oshana.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Omusati: [
+      {
+        code: "ALB",
+        name: "Omusati",
+        flagPath: "/images/regions/omusati.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Karas: [
+      {
+        code: "HRV",
+        name: "Karas",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Ohangwena: [
+      {
+        code: "CYP",
+        name: "Ohangwena",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Zambezi: [
+      {
+        code: "ALB",
+        name: "Zambezi",
+        flagPath: "/images/regions/zambezi.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Oshikoto: [
+      {
+        code: "HRV",
+        name: "Oshikoto",
+        flagPath: "/images/regions/oshikoto.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Omaheke: [
+      {
+        code: "CYP",
+        name: "Omaheke",
+        flagPath: "/images/regions/omaheke.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Hardap: [
+      {
+        code: "ALB",
+        name: "Hardap",
+        flagPath: "/images/regions/hardap.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Otjozondjupa: [
+      {
+        code: "HRV",
+        name: "Otjozondjupa",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    Kunene: [
+      {
+        code: "CYP",
+        name: "Kunene",
+        flagPath: "/images/regions/kunene2.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    KavangoEast: [
+      {
+        code: "ALB",
+        name: "Kavango East",
+        flagPath: "/images/regions/kavango_east.jpeg",
+        path: "/LP/Regions"
+      }
+    ],
+    KavangoWest: [
+      {
+        code: "HRV",
+        name: "Kavango West",
+        flagPath: "/images/regions/kavango_west.jpeg",
+        path: "/LP/Regions"
+      }
+    ]
+  };
+  
+  const buttonForSelectedRegion = regionsData[selectedRegionButton.name] || [];
+  const regionDetails = buttonForSelectedRegion[0];
 
   //Region for Town stuff
   //Towns Stuff
@@ -612,11 +583,11 @@ function RegionsHome() {
       <div className="flex justify-center w-full">
         <div className="flex flex-row gap-4 w-full">
         <Button className="flex justify-center items-center bg-orange-300 text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans max-w-[240px] h-14 overflow-hidden">
-            <div className="flex items-center">
-              <img className="rounded-[36px] h-8 mr-2" src="path/to/flag" alt="Region flag" loading="lazy" />
-              <p className="text-center text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl text-gray-700 font-bold">Region Name</p>
-            </div>
-            </Button>
+        <div className="flex items-center">
+          <img className="rounded-[36px] h-8 mr-2" src={regionDetails.flagPath} alt={`${regionDetails.name} flag`} loading="lazy" />
+          <p className="text-center text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl text-gray-700 font-bold">{regionDetails.name}</p>
+        </div>
+      </Button>
           <Button className="flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden">
             <div className="flex items-center justify-between w-full">
               <a href="/LP" className="text-center text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-xl text-gray-700 font-bold">All Regions</a>
@@ -647,7 +618,8 @@ function RegionsHome() {
         className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[220px] overflow-hidden"
         onClick={() => handleTownsClick(town.path)}
       >
-        <div className="flex items-center flex-grow">
+         <div className="flex items-center flex-grow">
+            
           <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
             {town.name}
           </p>

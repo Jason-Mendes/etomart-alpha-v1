@@ -22,24 +22,9 @@ function LandingPage() {
 
   const [isBannerVisible, setBannerVisible] = useState(false);
   const [nextPage, setNextPage] = useState('');
-  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [selectedRegion, setSelectedRegion] = React.useState(null);
   const [bannerImage, setBannerImage] = useState('');
   const navigate = useNavigate();
-  // const returnNavigate = useNavigate();
-  // const handleRegionClick = (region, shouldNavigate) => {
-  //   setBannerState({
-  //     isVisible: true,
-  //     imageSrc: region.flagPath,
-  //     nextPage: region.path,
-  //   });
-  
-  //   shouldNavigate &&
-  //     navigate('/LP/Regions', { state: { selectedRegion: region } });
-  
-  //   !shouldNavigate &&
-  //     returnNavigate(`/LP/Regions`, { state: { selectedRegionReturn: region } });
-  // };
-
   
   const regions = [
     {
@@ -128,13 +113,7 @@ function LandingPage() {
     },
   ];
   
-  // const handleregionsClick = (path) => {
-  //   if (path === "src/components/Regions/KhomasHome.js") {
-  //     navigate("/LP/Regions"); // Replace '/Khomas' with the appropriate route path
-  //   } else {
-  //     navigate(path);
-  //   }
-  // };
+ 
 
   const handleRegionClick = (region, shouldNavigate) => {
     setSelectedRegion(region); // set the selected region
@@ -150,8 +129,10 @@ function LandingPage() {
     navigate(nextPage, { state: { selectedRegion } });
   };
 
+  console.log('Selected Region:', selectedRegion); 
+//Objectcode:"ALB" flagPath:"/images/regions/khomas2.jpeg" name:"Khomas" path:"/LP/Regions"
 
-//Footer stuff
+  //Footer stuff
   const companyLinks = [
     { label: 'Jobs', url: 'https://careers.wolt.com' },
     { label: 'Security', url: '/en/alb/security' },
@@ -444,6 +425,8 @@ function LandingPage() {
         <Button
           className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[280px] overflow-hidden"
           onClick={() => handleRegionClick(region, true)} // Pass `true` to navigate
+          name={region.name}
+          flagPath={region.flagPath}
         >
           <div className="flex items-center flex-grow">
             <img
