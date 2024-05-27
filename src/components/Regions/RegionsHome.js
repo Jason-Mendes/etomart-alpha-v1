@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Button, Img, Text } from "..";
 import { useNavigate, useLocation } from 'react-router-dom';
 import LPNavBar from "../LPNavBar";
-function RegionsHome () {
+function RegionsHome() {
 
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   //Location buttons stuff
   const [isEditing, setIsEditing] = useState(false);
-  
+
   const [inputLocation, setInputLocation] = useState("");
 
   const [numStars] = useState(5); // State for the number of stars
@@ -17,186 +17,167 @@ function RegionsHome () {
   // JavaScript
   const [isVideoVisible, setIsVideoVisible] = useState(false);
 
-  //Region stuff
-//   const routerLocation = useLocation();
-//   const selectedRegionReturn = routerLocation.state?.selectedRegionReturn;
+  // Region stuff
+  //   const showButtonLocation = useLocation();
+  //   const selectedRegionShowButton = showButtonLocation.state?.selectedRegionShowButton;
 
-  
- 
-//   const Khomas = [
-//     {
-//       code: "ALB",
-//       name: "Khomas",
-//       flagPath: "/images/regions/khomas2.jpeg",
-//       path: "/LP/Regions"
-//     }
-//   ];
-  
-//   const Erongo = [
-//     {
-//       code: "HRV",
-//       name: "Erongo",
-//       flagPath: "/images/regions/erongo.jpeg",
-//       path: "/LP/Regions"
-//     }
-//   ];
-  
-//   const Oshana = [
-//     {
-//       code: "CYP",
-//       name: "Oshana",
-//       flagPath: "/images/regions/oshana.jpeg",
-//       path: "/LP/Regions"
-//     }
-//   ];
-  
-//   const Omusati = [
-//     {
-//       code: "ALB",
-//       name: "Omusati",
-//       flagPath: "/images/regions/omusati.jpeg",
-//       path: "/LP/Regions"
-//     }
-//   ];
-  
-//   const Karas = [
-//     {
-//       code: "HRV",
-//       name: "Karas",
-//       flagPath: "/images/regions/kharas2.jpeg",
-//       path: "/LP/Regions"
-//     }
-//   ];
-  
-//   const Ohangwena = [
-//     {
-//       code: "CYP",
-//       name: "Ohangwena",
-//       flagPath: "/images/regions/ohangwena.jpeg",
-//       path: "/LP/Regions"
-//     }
-//   ];
-  
-//   const Zambezi = [
-//     {
-//       code: "ALB",
-//       name: "Zambezi",
-//       flagPath: "/images/regions/zambezi.jpeg",
-//       path: "/LP/Regions"
-//     },
-//   ];
-//   const Oshikoto = [
-//     {
-//       code: "HRV",
-//       name: "Oshikoto",
-//       flagPath: "/images/regions/oshikoto.jpeg",
-//       path: "/LP/Regions"
-//     },
-//   ];
-//   const Omaheke = [
-//     {
-//       code: "CYP",
-//       name: "Omaheke",
-//       flagPath: "/images/regions/omaheke.jpeg",
-//       path: "/LP/Regions"
-//     },
-//   ];
-//   const Hardap = [
-//     {
-//       code: "ALB",
-//       name: "Hardap",
-//       flagPath: "/images/regions/hardap.jpeg",
-//       path: "/LP/Regions"
-//     },
-//   ];
-//   const Otjozondjupa = [
-//     {
-//       code: "HRV",
-//       name: "Otjozondjupa",
-//       flagPath: "/images/regions/otjozondjupa.jpeg",
-//       path: "/LP/Regions"
-//     },
-//   ];
-//   const Kunene = [
-//     {
-//       code: "CYP",
-//       name: "Kunene",
-//       flagPath: "/images/regions/kunene2.jpeg",
-//       path: "/LP/Regions"
-//     },
-//   ];
-//   const KavangoEast = [
-//     {
-//       code: "ALB",
-//       name: "Kavango East",
-//       flagPath: "/images/regions/kavango_east.jpeg",
-//       path: "/LP/Regions"
-//     },
-//   ];
-//   const KavangoWest = [
-//     {
-//       code: "HRV",
-//       name: "Kavango West",
-//       flagPath: "/images/regions/kavango_west.jpeg",
-//       path: "/LP/Regions"
-//     }
-//   ];
 
-//   const regionsByRegion = {
-//     'Khomas': Khomas,
-//     'Erongo': Erongo,
-//     'Oshana': Oshana,
-//     'Omusati': Omusati,
-//     'Karas': Karas,
-//     'Ohangwena': Ohangwena,
-//     'Zambezi': Zambezi,
-//     'Oshikoto': Oshikoto,
-//     'Omaheke': Omaheke,
-//     'Hardap': Hardap,
-//     'Otjozondjupa': Otjozondjupa,
-//     'Kunene': Kunene,
-//     'Kavango East': KavangoEast,
-//     'Kavango West': KavangoWest
-//   };
-  
-// const regionsForSelectedRegion = selectedRegionReturn ? [selectedRegionReturn] : [];
 
-//   const handleReturnRegionClick = (path) => {
-//     if (path === "src/components/Regions.js") {
-//       navigate("/LP/Regions"); // Replace '/Regions' with the appropriate route path
-//     } else {
-//       navigate(path);
-//     }
-//   };
+  //   const Khomas = [
+  //     {
+  //       code: "ALB",
+  //       name: "Khomas",
+  //       flagPath: "/images/regions/khomas2.jpeg",
+  //       path: "/LP/Regions"
+  //     }
+  //   ];
+
+  //   const Erongo = [
+  //     {
+  //       code: "HRV",
+  //       name: "Erongo",
+  //       flagPath: "/images/regions/erongo.jpeg",
+  //       path: "/LP/Regions"
+  //     }
+  //   ];
+
+  //   const Oshana = [
+  //     {
+  //       code: "CYP",
+  //       name: "Oshana",
+  //       flagPath: "/images/regions/oshana.jpeg",
+  //       path: "/LP/Regions"
+  //     }
+  //   ];
+
+  //   const Omusati = [
+  //     {
+  //       code: "ALB",
+  //       name: "Omusati",
+  //       flagPath: "/images/regions/omusati.jpeg",
+  //       path: "/LP/Regions"
+  //     }
+  //   ];
+
+  //   const Karas = [
+  //     {
+  //       code: "HRV",
+  //       name: "Karas",
+  //       flagPath: "/images/regions/kharas2.jpeg",
+  //       path: "/LP/Regions"
+  //     }
+  //   ];
+
+  //   const Ohangwena = [
+  //     {
+  //       code: "CYP",
+  //       name: "Ohangwena",
+  //       flagPath: "/images/regions/ohangwena.jpeg",
+  //       path: "/LP/Regions"
+  //     }
+  //   ];
+
+  //   const Zambezi = [
+  //     {
+  //       code: "ALB",
+  //       name: "Zambezi",
+  //       flagPath: "/images/regions/zambezi.jpeg",
+  //       path: "/LP/Regions"
+  //     },
+  //   ];
+  //   const Oshikoto = [
+  //     {
+  //       code: "HRV",
+  //       name: "Oshikoto",
+  //       flagPath: "/images/regions/oshikoto.jpeg",
+  //       path: "/LP/Regions"
+  //     },
+  //   ];
+  //   const Omaheke = [
+  //     {
+  //       code: "CYP",
+  //       name: "Omaheke",
+  //       flagPath: "/images/regions/omaheke.jpeg",
+  //       path: "/LP/Regions"
+  //     },
+  //   ];
+  //   const Hardap = [
+  //     {
+  //       code: "ALB",
+  //       name: "Hardap",
+  //       flagPath: "/images/regions/hardap.jpeg",
+  //       path: "/LP/Regions"
+  //     },
+  //   ];
+  //   const Otjozondjupa = [
+  //     {
+  //       code: "HRV",
+  //       name: "Otjozondjupa",
+  //       flagPath: "/images/regions/otjozondjupa.jpeg",
+  //       path: "/LP/Regions"
+  //     },
+  //   ];
+  //   const Kunene = [
+  //     {
+  //       code: "CYP",
+  //       name: "Kunene",
+  //       flagPath: "/images/regions/kunene2.jpeg",
+  //       path: "/LP/Regions"
+  //     },
+  //   ];
+  //   const KavangoEast = [
+  //     {
+  //       code: "ALB",
+  //       name: "Kavango East",
+  //       flagPath: "/images/regions/kavango_east.jpeg",
+  //       path: "/LP/Regions"
+  //     },
+  //   ];
+  //   const KavangoWest = [
+  //     {
+  //       code: "HRV",
+  //       name: "Kavango West",
+  //       flagPath: "/images/regions/kavango_west.jpeg",
+  //       path: "/LP/Regions"
+  //     }
+  //   ];
+
+  //   const regionsByRegion = {
+  //     'Khomas': Khomas,
+  //     'Erongo': Erongo,
+  //     'Oshana': Oshana,
+  //     'Omusati': Omusati,
+  //     'Karas': Karas,
+  //     'Ohangwena': Ohangwena,
+  //     'Zambezi': Zambezi,
+  //     'Oshikoto': Oshikoto,
+  //     'Omaheke': Omaheke,
+  //     'Hardap': Hardap,
+  //     'Otjozondjupa': Otjozondjupa,
+  //     'Kunene': Kunene,
+  //     'Kavango East': KavangoEast,
+  //     'Kavango West': KavangoWest
+  //   };
+
+  // const handleRegionShowButton = (path) => {
+   
+  // };
+  // const regionsForSelectedRegion = selectedRegionShowButton ? [selectedRegionShowButton] : [];
+
+
+
+
+
 
   //Region for Town stuff
+  //Towns Stuff
   const routerLocation = useLocation();
   const selectedRegion = routerLocation.state?.selectedRegion;
-
-  
-  const region = [
-    {
-      code: "ALB",
-      name: "Khomas",
-      flagPath: "/images/regions/khomas2.jpeg",
-      path: "/LP/Regions",
-    }
-  ];
-
-  const handleReturnRegionClick = (path) => {
-    if (path === "src/components/Regions/Towns/KhomasTowns.js") {
-      navigate("/LP/Regions"); // Replace '/khomas' with the appropriate route path
-    } else {
-      navigate(path);
-    }
-  };
-
-  //Towns Stuff
 
   const townsKhomas = [
     { code: "ALB", name: "Windhoek", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "BUK", name: "Brakwater", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
-    { code: "DOE", name: "Dordabis", flagPath: "/images/regions/khomas2.jpeg", path:"/LP/Khomas/Towns" },
+    { code: "DOE", name: "Dordabis", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "GBN", name: "Gobabis", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "GRS", name: "Groendrift", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
     { code: "HCH", name: "Hochfeld", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Khomas/Towns" },
@@ -209,121 +190,121 @@ function RegionsHome () {
 
   //Towns Stuff for Erongo
 
-const townsErongo = [
-  { code: "ARA", name: "Arandis", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
-  { code: "HEN", name: "Henties Bay", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
-  { code: "KAR", name: "Karibib", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
-  { code: "OMA", name: "Omaruru", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
-  { code: "SWA", name: "Swakopmund", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
-  { code: "UIS", name: "Uis", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
-  { code: "WAL", name: "Walvis Bay", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" }
-];
+  const townsErongo = [
+    { code: "ARA", name: "Arandis", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+    { code: "HEN", name: "Henties Bay", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+    { code: "KAR", name: "Karibib", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+    { code: "OMA", name: "Omaruru", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+    { code: "SWA", name: "Swakopmund", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+    { code: "UIS", name: "Uis", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" },
+    { code: "WAL", name: "Walvis Bay", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Erongo/Towns" }
+  ];
 
-//Towns Stuff for Oshana
-const townsOshana = [
-  { code: "ONG", name: "Ongwediva", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Oshana/Towns" },
-  { code: "OSH", name: "Oshakati", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Oshana/Towns" },
-  { code: "OND", name: "Ondangwa", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Oshana/Towns" }
-];
+  //Towns Stuff for Oshana
+  const townsOshana = [
+    { code: "ONG", name: "Ongwediva", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Oshana/Towns" },
+    { code: "OSH", name: "Oshakati", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Oshana/Towns" },
+    { code: "OND", name: "Ondangwa", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Oshana/Towns" }
+  ];
 
-//Towns Stuff for Omusati
-const townsOmusati = [
-  { code: "OUT", name: "Outapi", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Omusati/Towns" },
-  { code: "OKA", name: "Okahao", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Omusati/Towns" },
-  { code: "OZO", name: "Oshifo", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Omusati/Towns" }
-];
+  //Towns Stuff for Omusati
+  const townsOmusati = [
+    { code: "OUT", name: "Outapi", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Omusati/Towns" },
+    { code: "OKA", name: "Okahao", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Omusati/Towns" },
+    { code: "OZO", name: "Oshifo", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Omusati/Towns" }
+  ];
 
-//Towns Stuff for Karas
-const townsKaras = [
-  { code: "KHB", name: "Keetmanshoop", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" },
-  { code: "LUD", name: "Luderitz", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" },
-  { code: "RSH", name: "Rosh Pinah", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" },
-  { code: "ORM", name: "Oranjemund", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" }
-];
+  //Towns Stuff for Karas
+  const townsKaras = [
+    { code: "KHB", name: "Keetmanshoop", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" },
+    { code: "LUD", name: "Luderitz", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" },
+    { code: "RSH", name: "Rosh Pinah", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" },
+    { code: "ORM", name: "Oranjemund", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Karas/Towns" }
+  ];
 
-//Towns Stuff for Ohangwena
-const townsOhangwena = [
-  { code: "ENH", name: "Eenhana", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" },
-  { code: "HNM", name: "Helao Nafidi", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" },
-  { code: "OHS", name: "Ohangwena", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" },
-  { code: "OKG", name: "Okongo", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" }
-];
+  //Towns Stuff for Ohangwena
+  const townsOhangwena = [
+    { code: "ENH", name: "Eenhana", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" },
+    { code: "HNM", name: "Helao Nafidi", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" },
+    { code: "OHS", name: "Ohangwena", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" },
+    { code: "OKG", name: "Okongo", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Ohangwena/Towns" }
+  ];
 
-//Towns Stuff for Zambezi
-const townsZambezi = [
-  { code: "KAT", name: "Katima Mulilo", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Zambezi/Towns" },
-  { code: "BUK", name: "Bukalo", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Zambezi/Towns" }
-];
+  //Towns Stuff for Zambezi
+  const townsZambezi = [
+    { code: "KAT", name: "Katima Mulilo", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Zambezi/Towns" },
+    { code: "BUK", name: "Bukalo", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Zambezi/Towns" }
+  ];
 
-//Towns Stuff for Oshikoto
-const townsOshikoto = [
-  { code: "TSU", name: "Tsumeb", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Oshikoto/Towns" },
-  { code: "ONK", name: "Onankali", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Oshikoto/Towns" },
-  { code: "OMU", name: "Omuthiya", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Oshikoto/Towns" }
-];
+  //Towns Stuff for Oshikoto
+  const townsOshikoto = [
+    { code: "TSU", name: "Tsumeb", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Oshikoto/Towns" },
+    { code: "ONK", name: "Onankali", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Oshikoto/Towns" },
+    { code: "OMU", name: "Omuthiya", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Oshikoto/Towns" }
+  ];
 
-//Towns Stuff for Omaheke
-const townsOmaheke = [
-  { code: "GOB", name: "Gobabis", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Omaheke/Towns" },
-  { code: "WIT", name: "Witvlei", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Omaheke/Towns" },
-  { code: "LEO", name: "Leonardville", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Omaheke/Towns" }
-];
+  //Towns Stuff for Omaheke
+  const townsOmaheke = [
+    { code: "GOB", name: "Gobabis", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Omaheke/Towns" },
+    { code: "WIT", name: "Witvlei", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Omaheke/Towns" },
+    { code: "LEO", name: "Leonardville", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Omaheke/Towns" }
+  ];
 
-//Towns Stuff for Hardap
-const townsHardap = [
-  { code: "MAR", name: "Mariental", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Hardap/Towns" },
-  { code: "REH", name: "Rehoboth", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Hardap/Towns" },
-  { code: "GIB", name: "Gibeon", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Hardap/Towns" }
-];
+  //Towns Stuff for Hardap
+  const townsHardap = [
+    { code: "MAR", name: "Mariental", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Hardap/Towns" },
+    { code: "REH", name: "Rehoboth", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Hardap/Towns" },
+    { code: "GIB", name: "Gibeon", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Hardap/Towns" }
+  ];
 
-//Towns Stuff for Otjozondjupa
-const townsOtjozondjupa = [
-  { code: "OKA", name: "Okahandja", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" },
-  { code: "GRD", name: "Grootfontein", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" },
-  { code: "OTJ", name: "Otjiwarongo", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" },
-  { code: "OTV", name: "Otavi", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" }
-];
+  //Towns Stuff for Otjozondjupa
+  const townsOtjozondjupa = [
+    { code: "OKA", name: "Okahandja", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" },
+    { code: "GRD", name: "Grootfontein", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" },
+    { code: "OTJ", name: "Otjiwarongo", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" },
+    { code: "OTV", name: "Otavi", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Otjozondjupa/Towns" }
+  ];
 
-//Towns Stuff for Kunene
-const townsKunene = [
-  { code: "OPO", name: "Opuwo", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Kunene/Towns" },
-  { code: "KHX", name: "Khorixas", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Kunene/Towns" },
-  { code: "SES", name: "Sesfontein", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Kunene/Towns" }
-];
+  //Towns Stuff for Kunene
+  const townsKunene = [
+    { code: "OPO", name: "Opuwo", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Kunene/Towns" },
+    { code: "KHX", name: "Khorixas", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Kunene/Towns" },
+    { code: "SES", name: "Sesfontein", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Kunene/Towns" }
+  ];
 
-//Towns Stuff for Kavango East
-const townsKavangoEast = [
-  { code: "RUN", name: "Rundu", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/KavangoEast/Towns" },
-  { code: "DIV", name: "Divundu", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/KavangoEast/Towns" }
-];
+  //Towns Stuff for Kavango East
+  const townsKavangoEast = [
+    { code: "RUN", name: "Rundu", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/KavangoEast/Towns" },
+    { code: "DIV", name: "Divundu", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/KavangoEast/Towns" }
+  ];
 
-//Towns Stuff for Kavango West
-const townsKavangoWest = [
-  { code: "NKU", name: "Nkurenkuru", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/KavangoWest/Towns" },
-  { code: "MPU", name: "Mpungu", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/KavangoWest/Towns" }
-];
+  //Towns Stuff for Kavango West
+  const townsKavangoWest = [
+    { code: "NKU", name: "Nkurenkuru", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/KavangoWest/Towns" },
+    { code: "MPU", name: "Mpungu", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/KavangoWest/Towns" }
+  ];
 
 
-const townsByRegion = {
-  'Khomas': townsKhomas,
-  'Erongo': townsErongo,
-  'Oshana': townsOshana,
-  'Omusati': townsOmusati,
-  'Karas': townsKaras,
-  'Ohangwena': townsOhangwena,
-  'Zambezi': townsZambezi,
-  'Oshikoto': townsOshikoto,
-  'Omaheke': townsOmaheke,
-  'Hardap': townsHardap,
-  'Otjozondjupa': townsOtjozondjupa,
-  'Kunene': townsKunene,
-  'Kavango East': townsKavangoEast,
-  'Kavango West': townsKavangoWest
-};
+  const townsByRegion = {
+    'Khomas': townsKhomas,
+    'Erongo': townsErongo,
+    'Oshana': townsOshana,
+    'Omusati': townsOmusati,
+    'Karas': townsKaras,
+    'Ohangwena': townsOhangwena,
+    'Zambezi': townsZambezi,
+    'Oshikoto': townsOshikoto,
+    'Omaheke': townsOmaheke,
+    'Hardap': townsHardap,
+    'Otjozondjupa': townsOtjozondjupa,
+    'Kunene': townsKunene,
+    'Kavango East': townsKavangoEast,
+    'Kavango West': townsKavangoWest
+  };
 
-const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
+  const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
 
-  const handletownsClick = (path) => {
+  const handleTownsClick = (path) => {
     if (path === "src/components/Regions/Towns/KhomasTowns.js") {
       navigate("/LP/Khomas/Towns"); // Replace '/Regions' with the appropriate route path
     } else {
@@ -333,7 +314,7 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
 
 
 
-  
+
 
 
   const companyLinks = [
@@ -470,23 +451,23 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
     <div><div>
       <LPNavBar />
     </div>
-    <div id="Landing_Page_Main_Body" className="content-wrapper ">
-      <div className="overflow-auto bg-[#fafafa]">
-        {/* Hero Section */}
-        {/* Orange Section */}
-        <div className="bg-[#ee9613] border border-solid border-white-A700_19 rounded-tr-[150px] rounded-bl-[150px] rounded-br-[150px] shadow-xl relative p-4 w-full overflow-auto">
-          <div id="text_1_image_container" className="relative">
-            <div className="container mx-auto rounded-bl-[150px] rounded-br-[150px] flex flex-row md:flex-row items-center px-10">
-              <div
-                id="text_1_container"
-                className="relative flex justify-between items-center p-2 md:pb-20 pb-14"
-                style={{ width: "100%", margin: "0 auto" }}
-              >
-                <p className="relative  sm:text-3xl text-nowrap md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo font-bold lg:ml-24">
-                  Your Daily Food <br /> Delivered <br /> Hot & Fresh
-                </p>
-              </div>
-              <div
+      <div id="Landing_Page_Main_Body" className="content-wrapper ">
+        <div className="overflow-auto bg-[#fafafa]">
+          {/* Hero Section */}
+          {/* Orange Section */}
+          <div className="bg-[#ee9613] border border-solid border-white-A700_19 rounded-tr-[150px] rounded-bl-[150px] rounded-br-[150px] shadow-xl relative p-4 w-full overflow-auto">
+            <div id="text_1_image_container" className="relative">
+              <div className="container mx-auto rounded-bl-[150px] rounded-br-[150px] flex flex-row md:flex-row items-center px-10">
+                <div
+                  id="text_1_container"
+                  className="relative flex justify-between items-center p-2 md:pb-20 pb-14"
+                  style={{ width: "100%", margin: "0 auto" }}
+                >
+                  <p className="relative  sm:text-3xl text-nowrap md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo font-bold lg:ml-24">
+                    Your Daily Food <br /> Delivered <br /> Hot & Fresh
+                  </p>
+                </div>
+                <div
                   id="text_1_image_container"
                   className="flex  flex-row md:flex-row items-center justify-evenly md:gap-0 lg:gap-16 xl:gap-20 2xl:gap-72 md:mr-2 mr-2 md:p-2"
                   style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
@@ -508,74 +489,74 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
                       >
                         Groceries, Meals, Pharmacies, anything!
                       </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        {/* Location stuff */}
-        <div
-          id="LP_location_buttons_container_2"
-          className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
-          style={{
-            maxWidth: "1800px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          {/* different styling method to make it start at the end of the page<div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>*/}
-          <div className="button-group flex items-start ">
-            <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
-              {/* Button 1 */}
-              <Button
-                className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
-                onClick={handleEditClick}
-              >
-                <img
-                  className="h-7 mr-2"
-                  src="/images/img_linkedin.svg"
-                  alt="linkedin"
-                  loading="lazy"
-                />
-                <p
-                  className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${isEditing ? "hidden" : ""
-                    }`}
+          {/* Location stuff */}
+          <div
+            id="LP_location_buttons_container_2"
+            className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
+            style={{
+              maxWidth: "1800px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            {/* different styling method to make it start at the end of the page<div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>*/}
+            <div className="button-group flex items-start ">
+              <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
+                {/* Button 1 */}
+                <Button
+                  className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
+                  onClick={handleEditClick}
                 >
-                  What's your Address?
-                </p>
-                <input
-                  className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${!isEditing ? "hidden" : ""
-                    }`}
-                  type="text"
-                  value={inputLocation}
-                  onChange={handleInputChange}
-                />
-              </Button>
+                  <img
+                    className="h-7 mr-2"
+                    src="/images/img_linkedin.svg"
+                    alt="linkedin"
+                    loading="lazy"
+                  />
+                  <p
+                    className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${isEditing ? "hidden" : ""
+                      }`}
+                  >
+                    What's your Address?
+                  </p>
+                  <input
+                    className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${!isEditing ? "hidden" : ""
+                      }`}
+                    type="text"
+                    value={inputLocation}
+                    onChange={handleInputChange}
+                  />
+                </Button>
 
-              {/* Button 2 */}
-              <Button
-                className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
-                onClick={handleSaveClick}
-              >
-                <img
-                  className="h-5 mr-2"
-                  src="/images/img_save.svg"
-                  alt="save"
-                  loading="lazy"
-                />
-                <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-zinc-950 font-bold">
-                  Use Current Location
-                </p>
-              </Button>
+                {/* Button 2 */}
+                <Button
+                  className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
+                  onClick={handleSaveClick}
+                >
+                  <img
+                    className="h-5 mr-2"
+                    src="/images/img_save.svg"
+                    alt="save"
+                    loading="lazy"
+                  />
+                  <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-zinc-950 font-bold">
+                    Use Current Location
+                  </p>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Location stuff ends */}
+          {/* Location stuff ends */}
 
-        {/* Location stuff*/}
-        {/* <div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
+          {/* Location stuff*/}
+          {/* <div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
           <div className="button-group flex flex-col items-start">
             <div id="location_buttons_1_container" className="button-row flex items-center mb-6">
               <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
@@ -592,143 +573,108 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
             </div>
           </div>
         </div> */}
-        {/* Locations */}
-        {/* Conditional Rendering based on Screen Size */}
-        <div
-  id="LP_section_3_orange"
-  className="flex-col sm:flex-col md:flex-row items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10">
-  {/* Your content goes here */}
+          {/* Locations */}
+          {/* Conditional Rendering based on Screen Size */}
+          <div
+            id="LP_section_3_orange"
+            className="flex-col sm:flex-col md:flex-row items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10">
+            {/* Your content goes here */}
 
-  <div className="flex flex-col md:flex-row w-full">
-    <div className="md:w-1/2 md:pr-4 md:mb-6">
-      <div className="text-container md:flex md:items-end md:justify-end whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 ">
-        {isLargeScreen ? (
-          <Text className="sm:text-3xl md:text-2xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-0 md:ml-0 md:py-0 lg:mt-0 lg:my-0">
-            Explore Etomart Towns
-          </Text>
-        ) : (
-          <Text className="flex justify-center text-xl text-black-900 font-Agbalumo font-bold">
-            Explore Etomart Towns
-          </Text>
-        )}
-      </div>
-      <div className="text-container md:flex md:items-end md:justify-end whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
-        {isLargeScreen ? (
-          <Text className="text-base sm:text-base md:text-base lg:text-2xl xl:text-3xl 2xl:text-4xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-0 md:ml-0">
-            Delivered to you at your convenience!
-          </Text>
-        ) : (
-          <Text className="flex justify-center text-base text-white font-josefin_sans">
-            Delivered to you at your convenience!
-          </Text>
-        )}
-      </div>
-    </div>
-     {/* Region selected from Landing Page*/}
-    <div className="md:w-1/2 md:pl-4 mt-6 md:mt-0">
-     
-      <div className="flex items-center justify-center">
-        <div className="flex flex-wrap justify-center gap-4 pb-6 pt-6">
-          {region.map((region, index) => (
-            <div key={region.code} className="flex justify-center w-full">
-              <div className="flex flex-row gap-4 w-full">
-                <Button
-                  className={`flex justify-center items-center bg-orange-300 text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans max-w-[240px] h-14 overflow-hidden`}
-                  onClick={() => handleReturnRegionClick(region.path)}
-                >
-                  <div className="flex items-center">
-                    <img
-                      className="rounded-[36px] h-8 mr-2"
-                      src={region.flagPath}
-                      alt={`${region.name} flag`}
-                      loading="lazy"
-                    />
-                    <p className="text-center text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl text-gray-700 font-bold">
-                      {region.name}
-                    </p>
-                  </div>
-                </Button>
-                     {/*Select Button to go back to Landing Page*/}
-                <Button
-  className={`flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans  hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden`}
-  onClick={() => handleReturnRegionClick(region.path)}
->
-  <div className="flex items-center justify-between w-full ">
-  <a
-                    href="/LP" className="text-center text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-xl text-gray-700 font-bold">
-     All Regions
-    </a>
-    <div className="flex items-center justify-end -mr-2">
-      <svg
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-4 h-6 fill-current text-zinc-950 transform rotate-180"
-      >
-        <g fill="none" fillRule="evenodd">
-          <path fill="none" d="M0 0h24v24H0z" />
-          <path
-            d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
-            fill="#202125"
-          />
-        </g>
-      </svg>
-    </div>
-  </div>
-</Button>
+            <div className="flex flex-col md:flex-row w-full">
+              <div className="md:w-1/2 md:pr-4 md:mb-6">
+                <div className="text-container md:flex md:items-end md:justify-end whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 ">
+                  {isLargeScreen ? (
+                    <Text className="sm:text-3xl md:text-2xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-0 md:ml-0 md:py-0 lg:mt-0 lg:my-0">
+                      Explore Etomart Towns
+                    </Text>
+                  ) : (
+                    <Text className="flex justify-center text-xl text-black-900 font-Agbalumo font-bold">
+                      Explore Etomart Towns
+                    </Text>
+                  )}
+                </div>
+                <div className="text-container md:flex md:items-end md:justify-end whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
+                  {isLargeScreen ? (
+                    <Text className="text-base sm:text-base md:text-base lg:text-2xl xl:text-3xl 2xl:text-4xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-0 md:ml-0">
+                      Delivered to you at your convenience!
+                    </Text>
+                  ) : (
+                    <Text className="flex justify-center text-base text-white font-josefin_sans">
+                      Delivered to you at your convenience!
+                    </Text>
+                  )}
+                </div>
+              </div>
+              {/* Region selected from Landing Page*/}
+              <div className="md:w-1/2 md:pl-4 mt-6 md:mt-0">
+  <div className="flex items-center justify-center">
+    <div className="flex flex-wrap justify-center gap-4 pb-6 pt-6">
+      <div className="flex justify-center w-full">
+        <div className="flex flex-row gap-4 w-full">
+        <Button className="flex justify-center items-center bg-orange-300 text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans max-w-[240px] h-14 overflow-hidden">
+            <div className="flex items-center">
+              <img className="rounded-[36px] h-8 mr-2" src="path/to/flag" alt="Region flag" loading="lazy" />
+              <p className="text-center text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl text-gray-700 font-bold">Region Name</p>
+            </div>
+            </Button>
+          <Button className="flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden">
+            <div className="flex items-center justify-between w-full">
+              <a href="/LP" className="text-center text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-xl text-gray-700 font-bold">All Regions</a>
+              <div className="flex items-center justify-end -mr-2">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-4 h-6 fill-current text-zinc-950 transform rotate-180">
+                  <g fill="none" fillRule="evenodd">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164" fill="#202125" />
+                  </g>
+                </svg>
               </div>
             </div>
-          ))}
+          </Button>
         </div>
       </div>
-      {/* Region Buttons end*/}
     </div>
   </div>
 
-            {/* Towns Buttons meant to be based on the region selcted in the landing Page */}
-            <div id="button-sizing" className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-0 px-16">
-        {townsForSelectedRegion.map((town) => (
-          <div key={town.code} className="flex justify-center w-full">
-            <div className="button-row flex flex-col gap-4 mb-4">
-              <Button
-                className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[220px] overflow-hidden"
-                onClick={() => handletownsClick(town.path)}
-              >
-                <div className="flex items-center flex-grow">
-                   {/* <img
-                          className="rounded-[36px] h-10 mr-2 flex-shrink-0"
-                          src={townsKhomas.flagPath}
-                          alt={`${townsKhomas.name} flag`}
-                          loading="lazy"
-                        /> */}
-                  <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
-                    {town.name}
-                  </p>
-                      
-                      </div>
-                      <div className="ml-auto pr-2 flex-shrink-0">
-                        <svg
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-4 h-6 fill-current text-zinc-950"
-                        >
-                          <g fill="none" fillRule="evenodd">
-                            <path fill="none" d="M0 0h24v24H0z" />
-                            <path
-                              d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
-                              fill="#202125"
-                            />
-                          </g>
-                        </svg>
-                      </div>
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            
+                {/* Region Buttons end*/}
+              </div>
+
+            </div> {/* Towns Buttons based on the region selected in the landing page */}
+          <div id="button-sizing" className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-0 px-16">
+          {townsForSelectedRegion.map((town) => (
+  <div key={town.code} className="flex justify-center w-full">
+    <div className="button-row flex flex-col gap-4 mb-4">
+      <Button
+        className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[220px] overflow-hidden"
+        onClick={() => handleTownsClick(town.path)}
+      >
+        <div className="flex items-center flex-grow">
+          <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
+            {town.name}
+          </p>
+        </div>
+        <div className="ml-auto pr-2 flex-shrink-0">
+          <svg
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-4 h-6 fill-current text-zinc-950"
+          >
+            <g fill="none" fillRule="evenodd">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path
+                d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
+                fill="#202125"
+              />
+            </g>
+          </svg>
+        </div>
+      </Button>
+    </div>
+  </div>
+))}
 
           </div>
-          
-            {/* Towns Buttons ends*/}
+          {/* Towns Buttons ends */} </div>
+         
         </div>
         <div
           id="LP_location_buttons_container_2"
@@ -1063,100 +1009,100 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
               Hungry for more than food?
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6">
-            <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
-  <div className="p-0 m-2">
-    <div className="p-0 m-4">
-    <div
+              <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
+                <div className="p-0 m-2">
+                  <div className="p-0 m-4">
+                    <div
                       className="h-96 bg-cover bg-center border border-solid rounded-2xl"
                       style={{
                         backgroundImage:
                           "url(https://consumer-static-assets.wolt.com/frontpage-assets/courier-card-image.jpg)",
                       }}
                     ></div>
-      <div className="text-center p-8">
-        <p
-          id="body"
-          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
-          style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
-        >
-          Get paid as a courier partner. 
-        </p>
-      </div>
-    </div>
-  </div>
-  <div className="flex items-center justify-center p-4 m-2">
-    <a
-      href="https://careers.wolt.com"
-      className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
-    >
-      Apply now
-    </a>
-  </div>
-</div>
+                    <div className="text-center p-8">
+                      <p
+                        id="body"
+                        className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
+                        style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
+                      >
+                        Get paid as a courier partner.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center p-4 m-2">
+                  <a
+                    href="https://careers.wolt.com"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
+                  >
+                    Apply now
+                  </a>
+                </div>
+              </div>
 
               <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
-              <div className="p-0 m-2">
-    <div className="p-0 m-4">
-    <div
+                <div className="p-0 m-2">
+                  <div className="p-0 m-4">
+                    <div
                       className="h-96 bg-cover bg-center border border-solid rounded-2xl"
                       style={{
                         backgroundImage:
                           "url(https://consumer-static-assets.wolt.com/frontpage-assets/restaurant-card-image.jpg)",
                       }}
                     ></div>
-      <div className="text-center p-8">
-        <p
-          id="body"
-          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
-          style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
-        >
-          Serve more people as a restaurant partner
-        </p>
-      </div>
-    </div>
-  </div>
-  <div className="flex items-center justify-center p-4 m-2">
-    <a
-      href="https://careers.wolt.com"
-      className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
-    >
-      Apply now
-    </a>
-  </div>
-</div>
+                    <div className="text-center p-8">
+                      <p
+                        id="body"
+                        className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
+                        style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
+                      >
+                        Serve more people as a restaurant partner
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center p-4 m-2">
+                  <a
+                    href="https://careers.wolt.com"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
+                  >
+                    Apply now
+                  </a>
+                </div>
+              </div>
 
               <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
-              <div className="p-0 m-2">
-    <div className="p-0 m-4">
-      <div
-        className="h-96 bg-cover bg-center border border-solid rounded-2xl"
-        style={{
-          backgroundImage:
-            "url(https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg)",
-        }}
-      ></div>
-      <div className="text-center p-8 ">
-        <p
-          id="body"
-          className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
-          style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
-        >
-          Enter a new chapter and find a job at Etomart
-        </p>
-      </div>
-    </div>
-  </div>
-  <div className="flex items-center justify-center p-4 m-2">
-    <a
-      href="https://careers.wolt.com"
-      className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
-    >
-      Apply now
-    </a>
-  </div>
- 
+                <div className="p-0 m-2">
+                  <div className="p-0 m-4">
+                    <div
+                      className="h-96 bg-cover bg-center border border-solid rounded-2xl"
+                      style={{
+                        backgroundImage:
+                          "url(https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg)",
+                      }}
+                    ></div>
+                    <div className="text-center p-8 ">
+                      <p
+                        id="body"
+                        className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
+                        style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
+                      >
+                        Enter a new chapter and find a job at Etomart
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center p-4 m-2">
+                  <a
+                    href="https://careers.wolt.com"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
+                  >
+                    Apply now
+                  </a>
+                </div>
 
-                    </div></div>
+
+              </div></div>
           </div>
         </div>
 
@@ -1252,7 +1198,7 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
                 <div className="flex flex-col items-center">
                   <nav>
                     <div className="flex text-center p-2 mb-0">
-                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
+                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
                         Useful Links
                       </p>
                     </div>
@@ -1276,7 +1222,7 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
                 <div className="flex flex-col items-center">
                   <nav>
                     <div className="flex text-center p-2 mb-0">
-                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
+                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
                         Get to Know US
                       </p>
                     </div>
@@ -1288,7 +1234,7 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
                               href={link.url}
                               target={link.target}
                               className="text-white text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl  font-josefin_sans hover:text-black transition duration-150 ease-in-out"
-                              >
+                            >
                               {link.label}
                             </a>
                           </li>
@@ -1300,7 +1246,7 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
                 <div className="flex flex-col items-center">
                   <nav>
                     <div className="flex text-center p-2 mb-0">
-                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
+                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
                         Follow Links
                       </p>
                     </div>
@@ -1312,7 +1258,7 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
                               href={link.url}
                               target={link.target}
                               className="text-white text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl  font-josefin_sans hover:text-black transition duration-150 ease-in-out"
-                              >
+                            >
                               {link.label}
                             </a>
                           </li>
@@ -1380,7 +1326,7 @@ const townsForSelectedRegion = townsByRegion[selectedRegion.name] || [];
         </footer>
       </div>
     </div>
-    </div>
+
   );
 }
 

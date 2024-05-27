@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Img, Text } from "../components";
+import RegionsBanner from './RegionsBanner';
 import { useNavigate, useLocation } from 'react-router-dom';
-import RegionsBanner from "./RegionsBanner";
+
 import LPNavBar from "./LPNavBar"
 
 function LandingPage() {
@@ -19,9 +20,11 @@ function LandingPage() {
 
   //Regions stuff
 
-  const [bannerState, setBannerState] = useState({ isVisible: false, imageSrc: '', nextPage: '' });
+  const [isBannerVisible, setBannerVisible] = useState(false);
+  const [nextPage, setNextPage] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [bannerImage, setBannerImage] = useState('');
   const navigate = useNavigate();
-
   // const returnNavigate = useNavigate();
   // const handleRegionClick = (region, shouldNavigate) => {
   //   setBannerState({
@@ -133,17 +136,20 @@ function LandingPage() {
   //   }
   // };
 
-const handleRegionClick = (region, shouldNavigate) => {
-  setBannerState({
-    isVisible: true,
-    imageSrc: region.flagPath,
-    nextPage: region.path,
-  });
+  const handleRegionClick = (region, shouldNavigate) => {
+    setSelectedRegion(region); // set the selected region
+    setBannerImage(region.flagPath); // set the banner image
+    if (shouldNavigate) {
+      setBannerVisible(true);
+      setNextPage('/LP/Regions');
+    }
+  };
 
-  if (shouldNavigate) {
-    navigate('/LP/Regions', { state: { selectedRegion: region } });
-  }
-};
+  const closeBanner = () => {
+    setBannerVisible(false);
+    navigate(nextPage, { state: { selectedRegion } });
+  };
+
 
 //Footer stuff
   const companyLinks = [
@@ -469,18 +475,14 @@ const handleRegionClick = (region, shouldNavigate) => {
       </div>
     </div>
   ))}
-</div>
-{/* Banner */}
-<RegionsBanner
-  isVisible={bannerState.isVisible}
-  imageSrc={bannerState.imageSrc}
-  closeBanner={() =>
-    setBannerState({ isVisible: false, imageSrc: '', nextPage: '' })
-  }
-  nextPage={bannerState.nextPage}
-/>
 {/* Regions Buttons ends*/}
-          </div></div>
+ <RegionsBanner
+        isVisible={isBannerVisible}
+        imageSrc={bannerImage}
+        closeBanner={closeBanner}
+        nextPage={nextPage}
+      />
+</div></div></div>
         </div>
         <div
           id="LP_location_buttons_container_2"
