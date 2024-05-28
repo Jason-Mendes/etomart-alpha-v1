@@ -6,23 +6,33 @@ import OPNavBar from '../../OPNavBar'; //or import OPNavBar from '../../componen
 function KhomasTowns() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const categories = [
-    { name: "Grocery", imgSrc: "" },
-    { name: "Bakery", imgSrc: "" },
-    { name: "Healthy", imgSrc: "" },
-    { name: "Desserts", imgSrc: "" },
-    { name: "Fruits & Vegetables", imgSrc: "" },
-    { name: "Dairy & Eggs", imgSrc: "" },
-    { name: "Meat & Seafood", imgSrc: "" },
-    { name: "Beverages", imgSrc: "" },
-    { name: "Snacks & Sweets", imgSrc: "" },
-    { name: "Household Essentials", imgSrc: "" },
-    { name: "Baby & Kids", imgSrc: "" },
-    { name: "Pet Supplies", imgSrc: "" },
-    { name: "Frozen Foods", imgSrc: "" },
-    { name: "Deli & Prepared Foods", imgSrc: "" },
-    { name: "International Foods", imgSrc: "" },
-    { name: "Alcohol", imgSrc: "" }
+    { name: "Grocery", imgSrc: "/images/websiteicons/grocery.png" },
+    { name: "Bakery", imgSrc: "/images/websiteicons/bakery.png" },
+    { name: "Healthy", imgSrc: "/images/websiteicons/healthy-food.png" },
+    { name: "Desserts", imgSrc: "/images/websiteicons/desserts.png" },
+    { name: "Fruits & Vegetables", imgSrc: "/images/websiteicons/fruit-and-vegetables.png" },
+    { name: "Dairy & Eggs", imgSrc: "/images/websiteicons/dairy-and-eggs.png" },
+    { name: "Meat", imgSrc: "/images/websiteicons/meat.png" },
+    { name: "Seafood", imgSrc: "/images/websiteicons/seafood.png" },
+    { name: "Beverages", imgSrc: "/images/websiteicons/beverages.png" },
+    { name: "Snacks & Sweets", imgSrc: "/images/websiteicons/snacks-and-sweets.png" },
+    { name: "Household Essentials", imgSrc: "/images/websiteicons/household-essentials.png" },
+    { name: "Baby", imgSrc: "/images/websiteicons/baby.png" },
+    { name: "Pet Supplies", imgSrc: "/images/websiteicons/pet-food.png" },
+    { name: "Frozen Foods", imgSrc: "/images/websiteicons/frozen-food.png" },
+    { name: "Fast Food", imgSrc: "/images/websiteicons/fast-food.png" },
+    { name: "Restaurant", imgSrc: "/images/websiteicons/restaurant.png" },
+    { name: "International Foods", imgSrc: "/images/websiteicons/international-food.png" },
+    { name: "Alcohol", imgSrc: "/images/websiteicons/alcohol.png" }
   ];
+  const truncateMiddle = (str, maxLength) => {
+    if (str.length <= maxLength) return str;
+    const middleIndex = Math.floor(maxLength / 2);
+    const start = str.substring(0, middleIndex);
+    const end = str.substring(str.length - middleIndex);
+    return `${start}...${end}`;
+  };
+  
 
   const testimonials = [
     {
@@ -115,23 +125,27 @@ function KhomasTowns() {
     
  
   
-        </div>
-{/* Carousell */}
+        </div>{/* Carousel */}
 <div className="flex overflow-x-scroll space-x-4 p-4">
-      {categories.map((category, index) => (
-        <div key={index} className="min-w-[100px] flex-shrink-0">
-          <div className="w-24 h-24 bg-gray-200 flex items-center justify-center">
-            {category.imgSrc ? (
-              <img src={category.imgSrc} alt={category.name} className="w-full h-full object-cover rounded-full" />
-            ) : (
-              <span className="text-gray-500">{category.name}</span>
-            )}
-          </div>
-          <p className="text-center mt-2">{category.name}</p>
-        </div>
-      ))}
+  {categories.map((category, index) => (
+    <div key={index} className="min-w-[100px] flex-shrink-0 flex flex-col items-center">
+      <div className="w-16 h-16 flex items-center justify-center">
+        {category.imgSrc ? (
+          <img src={category.imgSrc} alt={category.name} className="w-full h-full object-cover" />
+        ) : (
+          <span className="text-black">{category.name}</span>
+        )}
+      </div>
+      <div className="w-28 overflow-hidden"> {/* Adjust the width as needed */}
+        <p className="text-center mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+          {truncateMiddle(category.name, 20)} {/* Adjust the maxLength as needed */}
+        </p>
+      </div>
     </div>
-{/* Carrousel */}
+  ))}
+</div>
+{/* Carousel */}
+
         <div
             id="LP_Did_you_know_container_4"
             class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6"
