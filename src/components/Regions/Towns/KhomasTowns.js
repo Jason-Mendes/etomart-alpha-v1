@@ -59,67 +59,81 @@
       ];
 
       const storescards1 = [
-        { name: "Fast Food", imgSrc: "/images/cardcategories/card-fast-food.png", href: "/en/discovery/category/fast-food" },
-        { name: "Restaurant", imgSrc: "/images/cardcategories/cardrestaurant.png", href: "/en/discovery/category/restaurant" },
-        { name: "Baby", imgSrc: "/images/cardcategories/cardbaby.png", href: "/en/discovery/category/baby" },
-        { name: "Pharmaceuticals", imgSrc: "/images/cardcategories/cardpharmaceuticals.png" , href: "/en/discovery/category/household-essentials" },
-        { name: "Pet Supplies", imgSrc: "/images/cardcategories/card-pet-food.png", href: "/en/discovery/category/pet-supplies" },
-        { name: "Frozen Foods", imgSrc: "/images/cardcategories/card-frozen-food.png", href: "/en/discovery/category/frozen-foods" },
-        { name: "International Foods", imgSrc: "/images/cardcategories/card-international-food.png", href: "/en/discovery/category/international-foods" },
-        { name: "Alcohol", imgSrc: "/images/cardcategories/cardalcohol.png", href: "/en/discovery/category/alcohol" }
+        { name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
+        { name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite" },
+        { name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay" },
+        { name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar" },
+        { name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock" },
+        { name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods" },
+        { name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies" },
+        { name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket" },
+        { name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro" },
+        { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
+        { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
+        { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
+        { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
+        { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
+        { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" },
+        { name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem" },
+        { name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/en/discovery/category/clicks" },
+        { name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm" },
+        { name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm" },
+        { name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld" },
+        { name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy" }
       ];
 
       const storescards2 = [
-      { name: "Grocery", imgSrc: "/images/cardcategories/cardgrocery.png", href: "/en/discovery/category/grocery" },
-        { name: "Bakery", imgSrc: "/images/cardcategories/cardbakery.png", href: "/en/discovery/category/bakery" },
-        { name: "Healthy", imgSrc: "/images/cardcategories/card-healthy-food.png", href: "/en/discovery/category/healthy" },
-        { name: "Desserts", imgSrc: "/images/cardcategories/carddesserts.png", href: "/en/discovery/category/desserts" },
-        { name: "Fruits & Vegetables", imgSrc: "/images/cardcategories/card-fruits-and-vegetables.png", href: "/en/discovery/category/fruits-vegetables" },
-        { name: "Dairy & Eggs", imgSrc: "/images/cardcategories/card-dairy-and-eggs.png", href: "/en/discovery/category/dairy-eggs" },
-        { name: "Meat", imgSrc: "/images/cardcategories/cardmeat.png", href: "/en/discovery/category/meat" },
-        { name: "Seafood", imgSrc: "/images/cardcategories/cardseafood.png", href: "/en/discovery/category/seafood" },
-        { name: "Beverages", imgSrc: "/images/cardcategories/cardbeverages.png", href: "/en/discovery/category/beverages" },
-        { name: "Snacks & Sweets", imgSrc: "/images/cardcategories/card-snacks-and-sweets.png", href: "/en/discovery/category/snacks-sweets" },
-        { name: "Household Essentials", imgSrc: "/images/cardcategories/card-household-essentials.png", href: "/en/discovery/category/household-essentials" }
+        { name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem" },
+        { name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/en/discovery/category/clicks" },
+        { name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm" },
+        { name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm" },
+        { name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld" },
+        { name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy" },
+        { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
+        { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
+        { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
+        { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
+        { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
+        { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" },
+        { name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
+        { name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite" },
+        { name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay" },
+        { name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar" },
+        { name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock" },
+        { name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods" },
+        { name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies" },
+        { name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket" },
+        { name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro" }
       ];
 
       const supermarkets = [
-        { name: "Shoprite", imgSrc: "/images/Supermarkets/shoprite.png", href: "/en/discovery/category/shoprite" },
-        { name: "Pick n Pay", imgSrc: "/images/Supermarkets/picknpay.png", href: "/en/discovery/category/picknpay" },
-        { name: "Spar", imgSrc: "/images/Supermarkets/spar.png", href: "/en/discovery/category/spar" },
-        { name: "Woermann Brock", imgSrc: "/images/Supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock" },
-        { name: "Checkers", imgSrc: "/images/Supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
-        { name: "Fruit & Veg City", imgSrc: "/images/Supermarkets/fruitvegcity.png", href: "/en/discovery/category/fruitvegcity" },
-        { name: "OK Foods", imgSrc: "/images/Supermarkets/okfoods.png", href: "/en/discovery/category/okfoods" },
-        { name: "Choppies", imgSrc: "/images/Supermarkets/choppies.png", href: "/en/discovery/category/choppies" },
-        { name: "Food Lover's Market", imgSrc: "/images/Supermarkets/foodloversmarket.png", href: "/en/discovery/category/foodloversmarket" },
-        { name: "Metro", imgSrc: "/images/Supermarkets/metro.png", href: "/en/discovery/category/metro" }
+        { name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
+        { name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite" },
+        { name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay" },
+        { name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar" },
+        { name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock" },
+        { name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods" },
+        { name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies" },
+        { name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket" },
+        { name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro" }
       ];
 
       const restaurants = [
-        { name: "Joe's Beerhouse", imgSrc: "/images/namibiaRestaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
-        { name: "The Stellenbosch Wine Bar", imgSrc: "/images/namibiaRestaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
-        { name: "O Portuga", imgSrc: "/images/namibiaRestaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
-        { name: "The Social", imgSrc: "/images/namibiaRestaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
-        { name: "Sardinia Blue Olive", imgSrc: "/images/namibiaRestaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
-        { name: "The Olive Restaurant", imgSrc: "/images/namibiaRestaurants/theolive.png", href: "/en/discovery/category/theolive" },
-        { name: "Gathemann", imgSrc: "/images/namibiaRestaurants/gathemann.png", href: "/en/discovery/category/gathemann" },
-        { name: "Nyama Restaurant", imgSrc: "/images/namibiaRestaurants/nyama.png", href: "/en/discovery/category/nyama" },
-        { name: "The Tug", imgSrc: "/images/namibiaRestaurants/thetug.png", href: "/en/discovery/category/thetug" },
-        { name: "Slowtown Coffee Roasters", imgSrc: "/images/namibiaRestaurants/slowtown.png", href: "/en/discovery/category/slowtown" }
+        { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
+        { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
+        { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
+        { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
+        { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
+        { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" }
       ];
 
       const pharmacies = [
-        { name: "Dis-Chem", imgSrc: "/images/namibiaPharmacies/dischem.png", href: "/en/discovery/category/dischem" },
-        { name: "Clicks Pharmacy", imgSrc: "/images/namibiaPharmacies/clicks.png", href: "/en/discovery/category/clicks" },
-        { name: "Medirite", imgSrc: "/images/namibiaPharmacies/medirite.png", href: "/en/discovery/category/medirite" },
-        { name: "Nampharm Pharmacy", imgSrc: "/images/namibiaPharmacies/nampharm.png", href: "/en/discovery/category/nampharm" },
-        { name: "Alpha Pharm", imgSrc: "/images/namibiaPharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm" },
-        { name: "Erongo Pharmacy", imgSrc: "/images/namibiaPharmacies/erongo.png", href: "/en/discovery/category/erongo" },
-        { name: "Medicine World", imgSrc: "/images/namibiaPharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld" },
-        { name: "City Pharmacy", imgSrc: "/images/namibiaPharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy" },
-        { name: "Kaiser Pharmacy", imgSrc: "/images/namibiaPharmacies/kaiser.png", href: "/en/discovery/category/kaiser" },
-        { name: "Aloe Pharmacy", imgSrc: "/images/namibiaPharmacies/aloe.png", href: "/en/discovery/category/aloe" }
+        { name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem" },
+        { name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/en/discovery/category/clicks" },
+        { name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm" },
+        { name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm" },
+        { name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld" },
+        { name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy" }
       ];
       
       
@@ -280,12 +294,12 @@
               <div key={iconsindex} className="navigationrefrencelink">
                 <a href={category.href}>
                   <div className="min-w-[100px] flex-shrink-0 flex flex-col items-center">
-                    <div className="w-16 h-16 flex items-center justify-center">
+                    <div className="w-14 h-14 flex items-center justify-center">
                       {category.imgSrc ? (
                         <img
                           src={category.imgSrc}
                           alt={category.name}
-                          className="w-full h-full object-cover"
+                          className="w-14 h-14 object-cover"
                         />
                       ) : (
                         <span className="text-black">{category.name}</span>
@@ -411,7 +425,7 @@
                     href={category.href}
                     className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
                   >
-                    <div className="w-72 h-40 overflow-hidden ">
+                    <div className="w-52 h-48 overflow-hidden ">
                       {/* Adjust the width as needed */}
                       <img
                         src={category.imgSrc}
@@ -441,7 +455,7 @@
         </div>
             {/*  storescards1scroll Container  ends*/}
 
-        
+          
   {/*storescards2scroll Carousel Buttons*/}    
   <div className="relative">
           {/* Left Fade */}
@@ -469,7 +483,7 @@
                     href={category.href}
                     className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
                   >
-                    <div className="w-72 h-40 overflow-hidden ">
+                    <div className="w-52 h-48 overflow-hidden ">
                       {/* Adjust the width as needed */}
                       <img
                         src={category.imgSrc}
@@ -499,7 +513,11 @@
         </div>
             {/*  storescards2scroll Container  ends*/}
 
-        
+            <div id="another_section" className=" bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10 " style={{ width: '35%', maxWidth: '1000px' }}>
+            <p className="flex items-start justify-start text-left md:text-4xl text-5xl text-black w-auto font-bold font-Agbalumo ">
+             Supermarkets Near Me
+            </p>
+          </div>
         
 {/*supermarketsscroll Carousel Buttons*/}   
             <div className="relative">
@@ -528,7 +546,7 @@
                     href={category.href}
                     className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
                   >
-                    <div className="w-72 h-40 overflow-hidden ">
+                    <div className="w-52 h-48  overflow-hidden ">
                       {/* Adjust the width as needed */}
                       <img
                         src={category.imgSrc}
@@ -536,7 +554,7 @@
                         loading="lazy"
                         decoding="async"
                         sizes="(min-width: 1200px) 17vw, (min-width: 1000px) 20vw, (min-width: 640px) 25vw, (min-width: 0px) 30vw, 100vw"
-                        className="w-full h-auto object-cover rounded-t-lg" />
+                        className="w-52 h-48  object-fill rounded-t-lg" />
                     </div>
                     <p className="text-center text-lg mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis font-bold p-4">
                       {truncateMiddle(category.name, 20)}
@@ -559,7 +577,11 @@
          {/*  supermarketsscroll Container  ends*/}
 
         
-               
+         <div id="another_section" className=" bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10 " style={{ width: '35%', maxWidth: '1000px' }}>
+            <p className="flex items-start justify-start text-left md:text-4xl text-5xl text-black w-auto font-bold font-Agbalumo ">
+              Restaurants Near Me
+            </p>
+          </div>
 {/*restaurantsscroll Carousel Buttons*/}   
 <div className="relative">
           {/* Left Fade */}
@@ -587,7 +609,7 @@
                     href={category.href}
                     className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
                   >
-                    <div className="w-72 h-40 overflow-hidden ">
+                    <div className="w-52 h-48 overflow-hidden ">
                       {/* Adjust the width as needed */}
                       <img
                         src={category.imgSrc}
@@ -617,7 +639,11 @@
           </div>
          {/*  restaurantsscroll Container  ends*/}
 
-       
+         <div id="another_section" className=" bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10 " style={{ width: '35%', maxWidth: '1000px' }}>
+            <p className="flex items-start justify-start text-left md:text-4xl text-5xl text-black w-auto font-bold font-Agbalumo ">
+              Pharmacies Near Me
+            </p>
+          </div>
 {/*pharmaciesscroll Carousel Buttons*/}   
 <div className="relative">
           {/* Left Fade */}
@@ -645,7 +671,7 @@
                     href={category.href}
                     className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
                   >
-                    <div className="w-72 h-40 overflow-hidden ">
+                    <div className="w-52 h-48 overflow-hidden ">
                       {/* Adjust the width as needed */}
                       <img
                         src={category.imgSrc}
