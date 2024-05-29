@@ -29,6 +29,7 @@ function App() {
             {/* <Route path="/LandingPage-khomas" element={<KhomasLandingPage />} /> */}
             <Route path="/LP/Regions" element={<RegionsHome />} />
             <Route path="/LP/Khomas/Towns" element={<KhomasTowns />} />
+            <Route path="/LP/Erongo/Towns" element={<KhomasTowns />} />
           </Routes>
         </div>
       </CartProvider>
