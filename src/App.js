@@ -11,7 +11,15 @@ import UserProfile from './components/UserProfile';
 // import KhomasLandingPage from './components/Regions/khomasLandingPage';
 import RegionsHome from './components/Regions/RegionsHome';
 import KhomasTowns from './components/Regions/Towns/KhomasTowns';
-
+import ErongoTowns from './components/Regions/Towns/ErongoTowns';
+import Stores from './components/Regions/Towns/Shops/Stores';
+import Restaurants from './components/Regions/Towns/Shops/Restaurants';
+import Storestest from './components/Regions/Towns/Shops/Xstores/Storestest';
+import Pharmacies from './components/Regions/Towns/Shops/Pharmacies';
+import Pannarotis from './components/Regions/Towns/Shops/Xrestaurants/Pannarotis';
+import Checkers from './components/Regions/Towns/Shops/Xstores/Checkers';
+import Clicks from './components/Regions/Towns/Shops/Xpharmacies/Clicks';
+import JoesBeerhouse from './components/Regions/Towns/Shops/Xrestaurants/JoesBeerhouse';
 function App() {
   return (
     <Router>
@@ -19,17 +27,32 @@ function App() {
         <div>
           {/* <NavbarWrapper /> */}
           <Routes>
-          <Route path="/" element={<LandingPage />} />
+            {/* Same Regions All Landinging Page just different routes */}
+            <Route path="/" element={<LandingPage />} />
             <Route path="/LP" element={<LandingPage />} />
             <Route path="/LandingPage" element={<LandingPage />} />
-            <Route path="/home" element={<Home />} />
-            {/* <Route path="/user-profile" element={<UserProfile />} />
-            <Route path="/products" element={<Products />} /> */}
-            {/* <Route path="/cart" element={<CartIcon/>} /> */}
-            {/* <Route path="/LandingPage-khomas" element={<KhomasLandingPage />} /> */}
+             {/* Same Regions All Landinging Page just different routes ends*/}
+             {/* Towns Per Region All */}
             <Route path="/LP/Regions" element={<RegionsHome />} />
+            {/* Towns Per Region All ends*/}
+            {/* Town */}
             <Route path="/LP/Khomas/Towns" element={<KhomasTowns />} />
-            <Route path="/LP/Erongo/Towns" element={<KhomasTowns />} />
+            <Route path="/LP/Erongo/Towns" element={<ErongoTowns />} />
+            {/* Town ends*/}
+            {/* All Stores and Specifics*/}
+            <Route path="/LP/Khomas/Towns/Stores" element={<Stores />} />
+            <Route path="/LP/Khomas/Towns/Store/Checkers" element={<Checkers />} />
+            <Route path="/LP/Khomas/Towns/Store/Storestest" element={<Storestest />} />
+            {/* All Stores and Specifics ends*/}
+            {/* All Restaurants and Specifics*/}
+            <Route path="/LP/Khomas/Towns/Restaurants" element={<Restaurants />} />
+            <Route path="/LP/Khomas/Towns/Restaurant/Pannarotis" element={<Pannarotis />} />
+            <Route path="/LP/Khomas/Towns/Restaurant/JoesBeerhouse" element={<JoesBeerhouse />} />
+             {/* All Restaurants and Specifics ends*/}
+              {/* All Pharmacies and Specifics*/}
+            <Route path="/LP/Khomas/Towns/Pharmacies" element={<Pharmacies />} />
+            <Route path="/LP/Khomas/Towns/Pharmacie/Clicks" element={<Clicks />} />
+             {/* All Pharmacies and Specifics*/}
           </Routes>
         </div>
       </CartProvider>

@@ -59,81 +59,643 @@
       ];
 
       const storescards1 = [
-        { name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
-        { name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite" },
-        { name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay" },
-        { name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar" },
-        { name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock" },
-        { name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods" },
-        { name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies" },
-        { name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket" },
-        { name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro" },
-        { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
-        { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
-        { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
-        { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
-        { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
-        { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" },
-        { name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem" },
-        { name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/en/discovery/category/clicks" },
-        { name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm" },
-        { name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm" },
-        { name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld" },
-        { name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy" }
-      ];
+        {
+            name: "Checkers",
+            imgSrc: "/images/supermarkets/checkers.png",
+            href: "/en/discovery/category/checkers",
+            storetype: "Supermarket",
+            isEtomartStore: false,
+            priceRange: "N$$",
+            cuisine: "Supermarket",
+            pickupTime: "15–30 min"
+        },
+        {
+            name: "Shoprite",
+            imgSrc: "/images/supermarkets/shoprite.png",
+            href: "/en/discovery/category/shoprite",
+            storetype: "Supermarket",
+            isEtomartStore: false,
+            priceRange: "N$$",
+            cuisine: "Supermarket",
+            pickupTime: "15–30 min"
+        },
+        {
+            name: "Pick n Pay",
+            imgSrc: "/images/supermarkets/picknpay.png",
+            href: "/en/discovery/category/picknpay",
+            storetype: "Supermarket",
+            isEtomartStore: true,
+            priceRange: "N$$",
+            cuisine: "Supermarket",
+            pickupTime: "15–30 min"
+        },
+        {
+            name: "Spar",
+            imgSrc: "/images/supermarkets/spar.png",
+            href: "/en/discovery/category/spar",
+            storetype: "Supermarket",
+            isEtomartStore: true,
+            priceRange: "N$$",
+            cuisine: "Supermarket",
+            pickupTime: "15–30 min"
+        },
+        {
+            name: "Woermann Brock",
+            imgSrc: "/images/supermarkets/woermannbrock.png",
+            href: "/en/discovery/category/woermannbrock",
+            storetype: "Supermarket",
+            isEtomartStore: true,
+            priceRange: "N$$",
+            cuisine: "Supermarket",
+            pickupTime: "15–30 min"
+        },
+        {
+            name: "OK Foods",
+            imgSrc: "/images/supermarkets/okfoods.png",
+            href: "/en/discovery/category/okfoods",
+            storetype: "Supermarket",
+            isEtomartStore: false,
+            priceRange: "N$$",
+            cuisine: "Supermarket",
+            pickupTime: "15–30 min"
+        },
+        {
+            name: "Choppies",
+            imgSrc: "/images/supermarkets/choppies.png",
+            href: "/en/discovery/category/choppies",
+            storetype: "Supermarket",
+            isEtomartStore: true,
+            priceRange: "N$$",
+            cuisine: "Supermarket",
+            pickupTime: "15–30 min"
+        },
+        {
+            name: "Food Lover's Market",
+            imgSrc: "/images/supermarkets/foodlovers.png",
+            href: "/en/discovery/category/foodloversmarket",
+            storetype: "Supermarket",
+            isEtomartStore: false,
+            priceRange: "N$$",
+            cuisine: "Supermarket",
+            pickupTime: "15–30 min"
+        },
+        {
+            name: "Metro",
+            imgSrc: "/images/supermarkets/metro.png",
+            href: "/en/discovery/category/metro",
+            storetype: "Supermarket",
+            isEtomartStore: false,
+            priceRange: "N$$",
+            cuisine: "Supermarket",
+            pickupTime: "15–30 min"
+        },
+        {
+            name: "Joe's Beerhouse",
+            imgSrc: "/images/restaurants/joesbeerhouse.png",
+            href: "/en/discovery/category/joesbeerhouse",
+            storetype: "Restaurant",
+            isEtomartStore: true,
+            priceRange: "N$$$",
+            cuisine: "German",
+            pickupTime: "20–40 min"
+        },
+        {
+            name: "The Stellenbosch Wine Bar",
+            imgSrc: "/images/restaurants/stellenbosch.png",
+            href: "/en/discovery/category/stellenbosch",
+            storetype: "Restaurant",
+            isEtomartStore: false,
+            priceRange: "N$$$",
+            cuisine: "International",
+            pickupTime: "20–40 min"
+        },
+        {
+            name: "O Portuga",
+            imgSrc: "/images/restaurants/oportuga.png",
+            href: "/en/discovery/category/oportuga",
+            storetype: "Restaurant",
+            isEtomartStore: false,
+            priceRange: "N$$$",
+            cuisine: "Portuguese",
+            pickupTime: "20–40 min"
+        },
+        {
+            name: "The Social",
+            imgSrc: "/images/restaurants/thesocial.png",
+            href: "/en/discovery/category/thesocial",
+            storetype: "Restaurant",
+            isEtomartStore: true,
+            priceRange: "N$$$",
+            cuisine: "Bar & Grill",
+            pickupTime: "20–40 min"
+        },
+        {
+            name: "Sardinia Blue Olive",
+            imgSrc: "/images/restaurants/sardiniablueolive.png",
+            href: "/en/discovery/category/sardiniablueolive",
+            storetype: "Restaurant",
+            isEtomartStore: false,
+            priceRange: "N$$$",
+            cuisine: "Mediterranean",
+            pickupTime: "20–40 min"
+        },
+        {
+            name: "Slowtown Coffee Roasters",
+            imgSrc: "/images/restaurants/slowtown.png",
+            href: "/en/discovery/category/slowtown",
+            storetype: "Café",
+            isEtomartStore: false,
+            priceRange: "N$$",
+            cuisine: "Coffee",
+            pickupTime: "10–20 min"
+        },
+        {
+            name: "Dis-Chem",
+            imgSrc: "/images/pharmacies/dischem.png",
+            href: "/en/discovery/category/dischem",
+            storetype: "Pharmacy",
+            isEtomartStore: true,
+            priceRange: "N$$",
+            cuisine: "Health & Wellness",
+            pickupTime: "10–20 min"
+        },
+        {
+            name: "Clicks Pharmacy",
+            imgSrc: "/images/pharmacies/clicks.png",
+            href: "/en/discovery/category/clicks",
+            storetype: "Pharmacy",
+            isEtomartStore: false,
+            priceRange: "N$$",
+            cuisine: "Health & Wellness",
+            pickupTime: "10–20 min"
+        },
+        {
+            name: "Nampharm Pharmacy",
+            imgSrc: "/images/pharmacies/nampharm.png",
+            href: "/en/discovery/category/nampharm",
+            storetype: "Pharmacy",
+            isEtomartStore: false,
+            priceRange: "N$$",
+            cuisine: "Health & Wellness",
+            pickupTime: "10–20 min"
+        },
+        {
+            name: "Alpha Pharm",
+            imgSrc: "/images/pharmacies/alphapharm.png",
+            href: "/en/discovery/category/alphapharm",
+            storetype: "Pharmacy",
+            isEtomartStore: true,
+            priceRange: "N$$",
+            cuisine: "Health & Wellness",
+            pickupTime: "10–20 min"
+        },
+        {
+            name: "Medicine World",
+            imgSrc: "/images/pharmacies/medicineworld.png",
+            href: "/en/discovery/category/medicineworld",
+            storetype: "Pharmacy",
+            isEtomartStore: false,
+            priceRange: "N$$",
+            cuisine: "Health & Wellness",
+            pickupTime: "10–20 min"
+        },
+        {
+            name: "City Pharmacy",
+            imgSrc: "/images/pharmacies/citypharmacy.png",
+            href: "/en/discovery/category/citypharmacy",
+            storetype: "Pharmacy",
+            isEtomartStore: true,
+            priceRange: "N$$",
+            cuisine: "Health & Wellness",
+            pickupTime: "10–20 min"
+        }
+    ];
+    
+    
+    
+    
+    
 
       const storescards2 = [
-        { name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem" },
-        { name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/en/discovery/category/clicks" },
-        { name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm" },
-        { name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm" },
-        { name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld" },
-        { name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy" },
-        { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
-        { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
-        { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
-        { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
-        { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
-        { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" },
-        { name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
-        { name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite" },
-        { name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay" },
-        { name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar" },
-        { name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock" },
-        { name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods" },
-        { name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies" },
-        { name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket" },
-        { name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro" }
+        {
+          name: "Dis-Chem",
+          imgSrc: "/images/pharmacies/dischem.png",
+          href: "/en/discovery/category/dischem",
+          storetype: "Pharmacy",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "Clicks Pharmacy",
+          imgSrc: "/images/pharmacies/clicks.png",
+          href: "/en/discovery/category/clicks",
+          storetype: "Pharmacy",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "Nampharm Pharmacy",
+          imgSrc: "/images/pharmacies/nampharm.png",
+          href: "/en/discovery/category/nampharm",
+          storetype: "Pharmacy",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "Alpha Pharm",
+          imgSrc: "/images/pharmacies/alphapharm.png",
+          href: "/en/discovery/category/alphapharm",
+          storetype: "Pharmacy",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "Medicine World",
+          imgSrc: "/images/pharmacies/medicineworld.png",
+          href: "/en/discovery/category/medicineworld",
+          storetype: "Pharmacy",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "City Pharmacy",
+          imgSrc: "/images/pharmacies/citypharmacy.png",
+          href: "/en/discovery/category/citypharmacy",
+          storetype: "Pharmacy",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "Joe's Beerhouse",
+          imgSrc: "/images/restaurants/joesbeerhouse.png",
+          href: "/en/discovery/category/joesbeerhouse",
+          storetype: "Restaurant",
+          isEtomartStore: true,
+          priceRange: "N$$$",
+          cuisine: "German",
+          pickupTime: "20–40 min"
+      },
+      {
+          name: "The Stellenbosch Wine Bar",
+          imgSrc: "/images/restaurants/stellenbosch.png",
+          href: "/en/discovery/category/stellenbosch",
+          storetype: "Restaurant",
+          isEtomartStore: false,
+          priceRange: "N$$$",
+          cuisine: "International",
+          pickupTime: "20–40 min"
+      },
+      {
+          name: "O Portuga",
+          imgSrc: "/images/restaurants/oportuga.png",
+          href: "/en/discovery/category/oportuga",
+          storetype: "Restaurant",
+          isEtomartStore: false,
+          priceRange: "N$$$",
+          cuisine: "Portuguese",
+          pickupTime: "20–40 min"
+      },
+      {
+          name: "The Social",
+          imgSrc: "/images/restaurants/thesocial.png",
+          href: "/en/discovery/category/thesocial",
+          storetype: "Restaurant",
+          isEtomartStore: true,
+          priceRange: "N$$$",
+          cuisine: "Bar & Grill",
+          pickupTime: "20–40 min"
+      },
+      {
+          name: "Sardinia Blue Olive",
+          imgSrc: "/images/restaurants/sardiniablueolive.png",
+          href: "/en/discovery/category/sardiniablueolive",
+          storetype: "Restaurant",
+          isEtomartStore: false,
+          priceRange: "N$$$",
+          cuisine: "Mediterranean",
+          pickupTime: "20–40 min"
+      },
+      {
+          name: "Slowtown Coffee Roasters",
+          imgSrc: "/images/restaurants/slowtown.png",
+          href: "/en/discovery/category/slowtown",
+          storetype: "Café",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Coffee",
+          pickupTime: "10–20 min"
+      },
+      {
+        name: "Checkers",
+        imgSrc: "/images/supermarkets/checkers.png",
+        href: "/en/discovery/category/checkers",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min"
+    },
+    {
+        name: "Shoprite",
+        imgSrc: "/images/supermarkets/shoprite.png",
+        href: "/en/discovery/category/shoprite",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min"
+    },
+    {
+        name: "Pick n Pay",
+        imgSrc: "/images/supermarkets/picknpay.png",
+        href: "/en/discovery/category/picknpay",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min"
+    },
+    {
+        name: "Spar",
+        imgSrc: "/images/supermarkets/spar.png",
+        href: "/en/discovery/category/spar",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min"
+    },
+    {
+        name: "Woermann Brock",
+        imgSrc: "/images/supermarkets/woermannbrock.png",
+        href: "/en/discovery/category/woermannbrock",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min"
+    },
+    {
+        name: "OK Foods",
+        imgSrc: "/images/supermarkets/okfoods.png",
+        href: "/en/discovery/category/okfoods",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min"
+    },
+    {
+        name: "Choppies",
+        imgSrc: "/images/supermarkets/choppies.png",
+        href: "/en/discovery/category/choppies",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min"
+    },
+    {
+        name: "Food Lover's Market",
+        imgSrc: "/images/supermarkets/foodlovers.png",
+        href: "/en/discovery/category/foodloversmarket",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min"
+    },
+    {
+        name: "Metro",
+        imgSrc: "/images/supermarkets/metro.png",
+        href: "/en/discovery/category/metro",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min"
+    }
       ];
 
       const supermarkets = [
-        { name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
-        { name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite" },
-        { name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay" },
-        { name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar" },
-        { name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock" },
-        { name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods" },
-        { name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies" },
-        { name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket" },
-        { name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro" }
+        {
+          name: "Checkers",
+          imgSrc: "/images/supermarkets/checkers.png",
+          href: "/en/discovery/category/checkers",
+          storetype: "Supermarket",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Supermarket",
+          pickupTime: "15–30 min"
+      },
+      {
+          name: "Shoprite",
+          imgSrc: "/images/supermarkets/shoprite.png",
+          href: "/en/discovery/category/shoprite",
+          storetype: "Supermarket",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Supermarket",
+          pickupTime: "15–30 min"
+      },
+      {
+          name: "Pick n Pay",
+          imgSrc: "/images/supermarkets/picknpay.png",
+          href: "/en/discovery/category/picknpay",
+          storetype: "Supermarket",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Supermarket",
+          pickupTime: "15–30 min"
+      },
+      {
+          name: "Spar",
+          imgSrc: "/images/supermarkets/spar.png",
+          href: "/en/discovery/category/spar",
+          storetype: "Supermarket",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Supermarket",
+          pickupTime: "15–30 min"
+      },
+      {
+          name: "Woermann Brock",
+          imgSrc: "/images/supermarkets/woermannbrock.png",
+          href: "/en/discovery/category/woermannbrock",
+          storetype: "Supermarket",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Supermarket",
+          pickupTime: "15–30 min"
+      },
+      {
+          name: "OK Foods",
+          imgSrc: "/images/supermarkets/okfoods.png",
+          href: "/en/discovery/category/okfoods",
+          storetype: "Supermarket",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Supermarket",
+          pickupTime: "15–30 min"
+      },
+      {
+          name: "Choppies",
+          imgSrc: "/images/supermarkets/choppies.png",
+          href: "/en/discovery/category/choppies",
+          storetype: "Supermarket",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Supermarket",
+          pickupTime: "15–30 min"
+      },
+      {
+          name: "Food Lover's Market",
+          imgSrc: "/images/supermarkets/foodlovers.png",
+          href: "/en/discovery/category/foodloversmarket",
+          storetype: "Supermarket",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Supermarket",
+          pickupTime: "15–30 min"
+      },
+      {
+          name: "Metro",
+          imgSrc: "/images/supermarkets/metro.png",
+          href: "/en/discovery/category/metro",
+          storetype: "Supermarket",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Supermarket",
+          pickupTime: "15–30 min"
+      }
       ];
 
       const restaurants = [
-        { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
-        { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
-        { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
-        { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
-        { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
-        { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" }
+        {
+          name: "The Stellenbosch Wine Bar",
+          imgSrc: "/images/restaurants/stellenbosch.png",
+          href: "/en/discovery/category/stellenbosch",
+          storetype: "Restaurant",
+          isEtomartStore: false,
+          priceRange: "N$$$",
+          cuisine: "International",
+          pickupTime: "20–40 min"
+      },
+      {
+          name: "O Portuga",
+          imgSrc: "/images/restaurants/oportuga.png",
+          href: "/en/discovery/category/oportuga",
+          storetype: "Restaurant",
+          isEtomartStore: false,
+          priceRange: "N$$$",
+          cuisine: "Portuguese",
+          pickupTime: "20–40 min"
+      },
+      {
+          name: "The Social",
+          imgSrc: "/images/restaurants/thesocial.png",
+          href: "/en/discovery/category/thesocial",
+          storetype: "Restaurant",
+          isEtomartStore: true,
+          priceRange: "N$$$",
+          cuisine: "Bar & Grill",
+          pickupTime: "20–40 min"
+      },
+      {
+          name: "Sardinia Blue Olive",
+          imgSrc: "/images/restaurants/sardiniablueolive.png",
+          href: "/en/discovery/category/sardiniablueolive",
+          storetype: "Restaurant",
+          isEtomartStore: false,
+          priceRange: "N$$$",
+          cuisine: "Mediterranean",
+          pickupTime: "20–40 min"
+      },
+      {
+          name: "Slowtown Coffee Roasters",
+          imgSrc: "/images/restaurants/slowtown.png",
+          href: "/en/discovery/category/slowtown",
+          storetype: "Café",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Coffee",
+          pickupTime: "10–20 min"
+      }
       ];
 
       const pharmacies = [
-        { name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem" },
-        { name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/en/discovery/category/clicks" },
-        { name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm" },
-        { name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm" },
-        { name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld" },
-        { name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy" }
+        {
+          name: "Dis-Chem",
+          imgSrc: "/images/pharmacies/dischem.png",
+          href: "/en/discovery/category/dischem",
+          storetype: "Pharmacy",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "Clicks Pharmacy",
+          imgSrc: "/images/pharmacies/clicks.png",
+          href: "/en/discovery/category/clicks",
+          storetype: "Pharmacy",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "Nampharm Pharmacy",
+          imgSrc: "/images/pharmacies/nampharm.png",
+          href: "/en/discovery/category/nampharm",
+          storetype: "Pharmacy",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "Alpha Pharm",
+          imgSrc: "/images/pharmacies/alphapharm.png",
+          href: "/en/discovery/category/alphapharm",
+          storetype: "Pharmacy",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "Medicine World",
+          imgSrc: "/images/pharmacies/medicineworld.png",
+          href: "/en/discovery/category/medicineworld",
+          storetype: "Pharmacy",
+          isEtomartStore: false,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      },
+      {
+          name: "City Pharmacy",
+          imgSrc: "/images/pharmacies/citypharmacy.png",
+          href: "/en/discovery/category/citypharmacy",
+          storetype: "Pharmacy",
+          isEtomartStore: true,
+          priceRange: "N$$",
+          cuisine: "Health & Wellness",
+          pickupTime: "10–20 min"
+      }
       ];
       
       
@@ -234,7 +796,7 @@
                       role="tab"
                       aria-selected="false"
                       className=" flex items-center space-x-2 gap-2 px-4 py-2 rounded-full bg-white shadow-md    hover:bg-orange-300 transition duration-150"
-                      href="/en/discovery"
+                      href="/LP/Khomas/Towns/Stores"
                     >
                       <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current text-Black">
                         {/* Store SVG icon */}
@@ -254,7 +816,7 @@
                       role="tab"
                       aria-selected="false"
                       className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md  transition-all   hover:bg-orange-300  duration-150"
-                      href="/en/discovery/restaurants"
+                      href="/LP/Khomas/Towns/Restaurants"
                     >
                       <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current text-black">
                         {/* Restaurant SVG icon */}
@@ -265,6 +827,26 @@
                       </svg>
                       <span className="text-black">Restaurants</span>
                     </a>
+                    <a
+                                    role="tab"
+                                    aria-selected="false"
+                                    className=" flex items-center space-x-2 gap-2 px-4 py-2 rounded-full shadow-md    bg-white   hover:bg-orange-300 transition duration-150"
+                                    href="/LP/Khomas/Towns/Pharmacies"
+                                >
+                                 <svg
+  viewBox="0 0 24 24"
+  className="w-6 h-6 fill-current text-black"
+>
+  {/* Pharmacy-specific briefcase with a plus icon */}
+  <path
+    fillRule="evenodd"
+    clipRule="evenodd"
+    d="M9 2a1 1 0 0 0-1 1v1H4a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h16a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3h-4V3a1 1 0 0 0-1-1H9zm0 2h6v1H9V4zM4 7h16v12H4V7zm7 3a1 1 0 0 0-1 1v1H9a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1a1 1 0 0 0-1-1z"
+  />
+</svg>
+
+<span className="text-black">Pharmacies</span>
+                                    </a>
                   </div>
                 </div>
               </div>
@@ -372,15 +954,14 @@
 
                         className="w-full h-auto object-cover rounded-t-lg" />
                     </div>
-                    <p className="text-center text-lg mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis font-bold p-4">
-                      {truncateMiddle(category.name, 20)}
-                      {/* Adjust the maxLength as needed */}
-                    </p>
-                  </div>
-                </a>
-              </div>
-            ))}
-          </div>
+                    <div className="max-w-52 overflow-hidden"><p className="text-center text-lg mt-2 mb-2 whitespace-nowrap overflow-hidden overflow-ellipsis font-bold p-4">
+            {truncateMiddle(category.name, 30)}
+          </p> </div>
+        </div>
+      </a>
+    </div>
+  ))}
+</div>
     
           {/* Right Button */}
           <button
@@ -398,62 +979,83 @@
             </p>
           </div>
 
-
-  {/*storescards1scroll Carousel Buttons*/}    
-  <div className="relative">
-          {/* Left Fade */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+{/* Storescards1scroll Carousel Buttons */}    
+<div className="relative">
+  {/* Left Fade */}
+  <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
           
-          {/* Right Fade */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-  {/*storescards1scroll Carousel Buttons*/}    
-          {/* Left Button */}
-          <button
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-2 rounded-br-[150px] rounded-tr-[150px] z-20"
-            onClick={() => scrollLeft(storescards1scroll)}
-          >
-            &#9664; {/* Left Arrow */}
-          </button>
-    {/* storescards1scroll Container  */}
-          <div  ref={storescards1scroll} className="flex overflow-hidden custom-scrollbar  space-x-4 m-4 p-10 ">
-            {storescards1.map((category, shopsindex) => (
-              <div className="navigationrefrencelink">
-                <a href={category.href}>
+  {/* Right Fade */}
+  <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-                  <div
-                    key={shopsindex}
-                    href={category.href}
-                    className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="w-52 h-48 overflow-hidden ">
-                      {/* Adjust the width as needed */}
-                      <img
-                        src={category.imgSrc}
-                        alt={category.name}
-                        loading="lazy"
-                        decoding="async"
-                        sizes="(min-width: 1200px) 17vw, (min-width: 1000px) 20vw, (min-width: 640px) 25vw, (min-width: 0px) 30vw, 100vw"
-                        className="w-full h-auto object-cover rounded-t-lg" />
-                    </div>
-                    <p className="text-center text-lg mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis font-bold p-4">
-                      {truncateMiddle(category.name, 20)}
-                      {/* Adjust the maxLength as needed */}
-                    </p>
-                  </div>
-                </a>
-              </div>
-            ))}
-          </div>
-
-          {/* Right Button */}
-          <button
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] rounded-bl-[150px] rounded-tl-[150px] p-2 z-20"
-            onClick={() => scrollRight(storescards1scroll)}
-          >
-            &#9654; {/* Right Arrow */}
-          </button>
+  {/* Left Button */}
+  <button
+    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-2 rounded-br-[150px] rounded-tr-[150px] z-20"
+    onClick={() => scrollLeft(storescards1scroll)}
+  >
+    &#9664; {/* Left Arrow */}
+  </button>
+{/* Storescards1scroll Container */}
+<div ref={storescards1scroll} className="flex overflow-hidden custom-scrollbar space-x-4 m-4 p-10">
+  {storescards1.map((category, shopsindex) => (
+    <div key={shopsindex} className="navigationrefrencelink w-52 h-60 flex-shrink-0"> {/* Adjusted width and height */}
+      <a href={category.href} className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <div className="relative w-full h-full overflow-hidden">
+            <img
+              src={category.imgSrc}
+              alt={category.name}
+              loading="lazy"
+              decoding="async"
+              className="object-fill w-full h-full rounded-t-lg" // Changed to object-cover
+                fetchPriority="high"
+          />
+        {category.storetype && (
+            <div
+                data-testid="venue-storetype-label"
+                className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-2 
+                rounded-tr-full rounded-br-full "
+            >
+                {category.storetype}
+            </div>
+        )}
+          {category.isEtomartStore && (
+            <div
+              data-test-id="venue-badges"
+              className="absolute bottom-0 left-0 ml-2 mb-2 bg-slate-100 text-black text-xs px-2 py-1 rounded"
+            >
+              <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span>
+            </div>
+          )}
         </div>
-            {/*  storescards1scroll Container  ends*/}
+        <div className="p-2"><p className="text-center  whitespace-nowrap overflow-hidden overflow-ellipsis font-bold">
+            {truncateMiddle(category.name, 30)}
+          </p>
+          <div className="flex items-center  text-sm">
+          <div className="text-[#ee9613] text-sm font-bold">
+            <span>{category.priceRange}</span>
+            </div>
+            <span className="mx-1">•</span>
+            <span>{category.cuisine}</span>
+          </div>
+          <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
+          </div></div>
+      </a>
+    </div>
+  ))}
+</div>
+{/* Storescards1scroll Container */}
+
+  {/* Right Button */}
+  <button
+    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-2 rounded-bl-[150px] rounded-tl-[150px] z-20"
+    onClick={() => scrollRight(storescards1scroll)}
+  >
+    &#9654; {/* Right Arrow */}
+  </button>
+</div>
+{/* Storescards1scroll Container ends */}
+
+
 
           
   {/*storescards2scroll Carousel Buttons*/}    
@@ -472,36 +1074,56 @@
             &#9664; {/* Left Arrow */}
           </button>   
          
-    {/* storescards2scroll Container  */}
-          <div  ref={storescards2scroll} className="flex overflow-hidden custom-scrollbar  space-x-4 m-4 p-10 ">
-            {storescards2.map((category, shopsindex) => (
-              <div className="navigationrefrencelink">
-                <a href={category.href}>
-
-                  <div
-                    key={shopsindex}
-                    href={category.href}
-                    className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="w-52 h-48 overflow-hidden ">
-                      {/* Adjust the width as needed */}
-                      <img
-                        src={category.imgSrc}
-                        alt={category.name}
-                        loading="lazy"
-                        decoding="async"
-                        sizes="(min-width: 1200px) 17vw, (min-width: 1000px) 20vw, (min-width: 640px) 25vw, (min-width: 0px) 30vw, 100vw"
-                        className="w-full h-auto object-cover rounded-t-lg" />
-                    </div>
-                    <p className="text-center text-lg mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis font-bold p-4">
-                      {truncateMiddle(category.name, 20)}
-                      {/* Adjust the maxLength as needed */}
-                    </p>
-                  </div>
-                </a>
-              </div>
-            ))}
+ {/* Storescards2scroll Container */}
+<div ref={storescards2scroll} className="flex overflow-hidden custom-scrollbar space-x-4 m-4 p-10">
+  {storescards2.map((category, shopsindex) => (
+    <div key={shopsindex} className="navigationrefrencelink w-52 h-60 flex-shrink-0"> {/* Adjusted width and height */}
+      <a href={category.href} className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <div className="relative w-full h-full overflow-hidden">
+            <img
+              src={category.imgSrc}
+              alt={category.name}
+              loading="lazy"
+              decoding="async"
+              className="object-fill w-full h-full rounded-t-lg" // Changed to object-cover
+                fetchPriority="high"
+          />
+        {category.storetype && (
+            <div
+                data-testid="venue-storetype-label"
+                className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-2 
+                rounded-tr-full rounded-br-full "
+            >
+                {category.storetype}
+            </div>
+        )}
+          {category.isEtomartStore && (
+            <div
+              data-test-id="venue-badges"
+              className="absolute bottom-0 left-0 ml-2 mb-2 bg-slate-100 text-black text-xs px-2 py-1 rounded"
+            >
+              <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span>
+            </div>
+          )}
+        </div>
+        <div className="p-2"><p className="text-center  whitespace-nowrap overflow-hidden overflow-ellipsis font-bold">
+            {truncateMiddle(category.name, 30)}
+          </p>
+          <div className="flex items-center  text-sm">
+          <div className="text-[#ee9613] text-sm font-bold">
+            <span>{category.priceRange}</span>
+            </div>
+            <span className="mx-1">•</span>
+            <span>{category.cuisine}</span>
           </div>
+          <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
+        </div></div>
+      </a>
+    </div>
+  ))}
+</div>
+{/* Storescards2scroll Container */}
 
           {/* Right Button */}
           <button
@@ -535,36 +1157,56 @@
             &#9664; {/* Left Arrow */}
           </button>   
          
-        {/* supermarketsscroll Container  */}
-        <div  ref={supermarketsscroll} className="flex overflow-hidden custom-scrollbar  space-x-4 m-4 p-10 ">
-            {supermarkets.map((category, shopsindex) => (
-              <div className="navigationrefrencelink">
-                <a href={category.href}>
-
-                  <div
-                    key={shopsindex}
-                    href={category.href}
-                    className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="w-52 h-48  overflow-hidden ">
-                      {/* Adjust the width as needed */}
-                      <img
-                        src={category.imgSrc}
-                        alt={category.name}
-                        loading="lazy"
-                        decoding="async"
-                        sizes="(min-width: 1200px) 17vw, (min-width: 1000px) 20vw, (min-width: 640px) 25vw, (min-width: 0px) 30vw, 100vw"
-                        className="w-52 h-48  object-fill rounded-t-lg" />
-                    </div>
-                    <p className="text-center text-lg mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis font-bold p-4">
-                      {truncateMiddle(category.name, 20)}
-                      {/* Adjust the maxLength as needed */}
-                    </p>
-                  </div>
-                </a>
-              </div>
-            ))}
+      {/* supermarketsscroll Container */}
+<div ref={supermarketsscroll} className="flex overflow-hidden custom-scrollbar space-x-4 m-4 p-10">
+  {supermarkets.map((category, shopsindex) => (
+    <div key={shopsindex} className="navigationrefrencelink w-52 h-60 flex-shrink-0"> {/* Adjusted width and height */}
+      <a href={category.href} className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <div className="relative w-full h-full overflow-hidden">
+            <img
+              src={category.imgSrc}
+              alt={category.name}
+              loading="lazy"
+              decoding="async"
+              className="object-fill w-full h-full rounded-t-lg" // Changed to object-cover
+                fetchPriority="high"
+          />
+        {category.storetype && (
+            <div
+                data-testid="venue-storetype-label"
+                className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-2 
+                rounded-tr-full rounded-br-full "
+            >
+                {category.storetype}
+            </div>
+        )}
+          {category.isEtomartStore && (
+            <div
+              data-test-id="venue-badges"
+              className="absolute bottom-0 left-0 ml-2 mb-2 bg-slate-100 text-black text-xs px-2 py-1 rounded"
+            >
+              <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span>
+            </div>
+          )}
+        </div>
+        <div className="p-2"><p className="text-center  whitespace-nowrap overflow-hidden overflow-ellipsis font-bold">
+            {truncateMiddle(category.name, 30)}
+          </p>
+          <div className="flex items-center  text-sm">
+          <div className="text-[#ee9613] text-sm font-bold">
+            <span>{category.priceRange}</span>
+            </div>
+            <span className="mx-1">•</span>
+            <span>{category.cuisine}</span>
           </div>
+          <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
+        </div></div>
+      </a>
+    </div>
+  ))}
+</div>
+{/* supermarketsscroll Container */}
 
           {/* Right Button */}
           <button
@@ -598,37 +1240,56 @@
             &#9664; {/* Left Arrow */}
           </button>   
          
-        {/* restaurantsscroll Container  */}
-        <div  ref={restaurantsscroll} className="flex overflow-hidden custom-scrollbar  space-x-4 m-4 p-10 ">
-            {restaurants.map((category, shopsindex) => (
-              <div className="navigationrefrencelink">
-                <a href={category.href}>
-
-                  <div
-                    key={shopsindex}
-                    href={category.href}
-                    className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="w-52 h-48 overflow-hidden ">
-                      {/* Adjust the width as needed */}
-                      <img
-                        src={category.imgSrc}
-                        alt={category.name}
-                        loading="lazy"
-                        decoding="async"
-                        sizes="(min-width: 1200px) 17vw, (min-width: 1000px) 20vw, (min-width: 640px) 25vw, (min-width: 0px) 30vw, 100vw"
-                        className="w-full h-auto object-cover rounded-t-lg" />
-                    </div>
-                    <p className="text-center text-lg mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis font-bold p-4">
-                      {truncateMiddle(category.name, 20)}
-                      {/* Adjust the maxLength as needed */}
-                    </p>
-                  </div>
-                </a>
-              </div>
-            ))}
+       {/* restaurantsscroll Container */}
+<div ref={restaurantsscroll} className="flex overflow-hidden custom-scrollbar space-x-4 m-4 p-10">
+  {restaurants.map((category, shopsindex) => (
+    <div key={shopsindex} className="navigationrefrencelink w-52 h-60 flex-shrink-0"> {/* Adjusted width and height */}
+      <a href={category.href} className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <div className="relative w-full h-full overflow-hidden">
+            <img
+              src={category.imgSrc}
+              alt={category.name}
+              loading="lazy"
+              decoding="async"
+              className="object-fill w-full h-full rounded-t-lg" // Changed to object-cover
+                fetchPriority="high"
+          />
+        {category.storetype && (
+            <div
+                data-testid="venue-storetype-label"
+                className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-2 
+                rounded-tr-full rounded-br-full "
+            >
+                {category.storetype}
+            </div>
+        )}
+          {category.isEtomartStore && (
+            <div
+              data-test-id="venue-badges"
+              className="absolute bottom-0 left-0 ml-2 mb-2 bg-slate-100 text-black text-xs px-2 py-1 rounded"
+            >
+              <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span>
+            </div>
+          )}
+        </div>
+        <div className="p-2"><p className="text-center  whitespace-nowrap overflow-hidden overflow-ellipsis font-bold">
+            {truncateMiddle(category.name, 30)}
+          </p>
+          <div className="flex items-center  text-sm">
+          <div className="text-[#ee9613] text-sm font-bold">
+            <span>{category.priceRange}</span>
+            </div>
+            <span className="mx-1">•</span>
+            <span>{category.cuisine}</span>
           </div>
-
+          <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
+        </div></div>
+      </a>
+    </div>
+  ))}
+</div>
+{/* restaurantsscroll Container */}
           {/* Right Button */}
           <button
             className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] rounded-bl-[150px] rounded-tl-[150px] p-2 z-20"
@@ -659,37 +1320,56 @@
           >
             &#9664; {/* Left Arrow */}
           </button>   
-         
-        {/* pharmaciesscroll Container  */}
-        <div  ref={pharmaciesscroll} className="flex overflow-hidden custom-scrollbar  space-x-4 m-4 p-10 ">
-            {pharmacies.map((category, shopsindex) => (
-              <div className="navigationrefrencelink">
-                <a href={category.href}>
-
-                  <div
-                    key={shopsindex}
-                    href={category.href}
-                    className="flex-col  items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="w-52 h-48 overflow-hidden ">
-                      {/* Adjust the width as needed */}
-                      <img
-                        src={category.imgSrc}
-                        alt={category.name}
-                        loading="lazy"
-                        decoding="async"
-                        sizes="(min-width: 1200px) 17vw, (min-width: 1000px) 20vw, (min-width: 640px) 25vw, (min-width: 0px) 30vw, 100vw"
-                        className="w-full h-auto object-cover rounded-t-lg" />
-                    </div>
-                    <p className="text-center text-lg mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis font-bold p-4">
-                      {truncateMiddle(category.name, 20)}
-                      {/* Adjust the maxLength as needed */}
-                    </p>
-                  </div>
-                </a>
-              </div>
-            ))}
+     {/* pharmaciesscroll Container */}
+<div ref={pharmaciesscroll} className="flex overflow-hidden custom-scrollbar space-x-4 m-4 p-10">
+  {pharmacies.map((category, shopsindex) => (
+    <div key={shopsindex} className="navigationrefrencelink w-52 h-60 flex-shrink-0"> {/* Adjusted width and height */}
+      <a href={category.href} className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <div className="relative w-full h-full overflow-hidden">
+            <img
+              src={category.imgSrc}
+              alt={category.name}
+              loading="lazy"
+              decoding="async"
+              className="object-fill w-full h-full rounded-t-lg" // Changed to object-cover
+                fetchPriority="high"
+          />
+        {category.storetype && (
+            <div
+                data-testid="venue-storetype-label"
+                className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-2 
+                rounded-tr-full rounded-br-full "
+            >
+                {category.storetype}
+            </div>
+        )}
+          {category.isEtomartStore && (
+            <div
+              data-test-id="venue-badges"
+              className="absolute bottom-0 left-0 ml-2 mb-2 bg-slate-100 text-black text-xs px-2 py-1 rounded"
+            >
+              <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span>
+            </div>
+          )}
+        </div>
+        <div className="p-2"><p className="text-center  whitespace-nowrap overflow-hidden overflow-ellipsis font-bold">
+            {truncateMiddle(category.name, 30)}
+          </p>
+          <div className="flex items-center  text-sm">
+          <div className="text-[#ee9613] text-sm font-bold">
+            <span>{category.priceRange}</span>
+            </div>
+            <span className="mx-1">•</span>
+            <span>{category.cuisine}</span>
           </div>
+          <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
+        </div></div>
+      </a>
+    </div>
+  ))}
+</div>
+{/* pharmaciesscroll Container */}
 
           {/* Right Button */}
           <button
