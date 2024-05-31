@@ -238,19 +238,19 @@ function Storestest() {
 
     return truncatedText;
   };
-  
-    // Load Mapbox script
-  useEffect(() => {
-  // Load Mapbox script
-  mapboxgl.accessToken = 'pk.eyJ1IjoiZXRvbWFydG5hIiwiYSI6ImNsd3VuN3k5ZTBmdTkybXIxbG04d2IzYzkifQ.l840oaKK2b0xmUNQ1RjUSQ';
 
-  new mapboxgl.Map({
-    container: 'map1',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [17.08074939986564, -22.566979439957436],  //wernhil coordinates (-22.566979439957436, 17.08074939986564)
-    zoom: 9,
-  });
-}, []);
+  // Load Mapbox script
+  useEffect(() => {
+    // Load Mapbox script
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZXRvbWFydG5hIiwiYSI6ImNsd3VuN3k5ZTBmdTkybXIxbG04d2IzYzkifQ.l840oaKK2b0xmUNQ1RjUSQ';
+
+    new mapboxgl.Map({
+      container: 'map1',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [17.08074939986564, -22.566979439957436],  //wernhil coordinates (-22.566979439957436, 17.08074939986564)
+      zoom: 9,
+    });
+  }, []);
   return (
     <div>
       <div lang="en">
@@ -634,95 +634,98 @@ Pickup: {store.pickupTime}
 </div>
 </div>
 </div> */}
-<div className="flex flex-row p-4 space-x-56">
-  <div className="flex flex-col space-y-4">
-    <div>
-      <p className="text-lg font-bold">Liquor Store</p>
-      <div>
-        <h3 className="text-md font-semibold">See similar stores</h3>
-        <ul className="list-none space-y-1">
-          <li>
-            <a href="/en/isr/eilat/category/alcohol" className="text-[#ee9613] font-bold hover:underline">
-              Alcohol
-            </a>
-          </li>
-          <li>
-            <a href="/en/isr/eilat/brand/123-alcohol" className="text-[#ee9613] font-bold hover:underline">
-              123 Alcohol
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+                <div className="flex flex-row p-4 space-x-56">
+                  <div className="flex flex-col space-y-4">
+                    <div>
+                      <p className="text-lg font-bold">Liquor Store</p>
+                      <div>
+                        <h3 className="text-md font-semibold">See similar stores</h3>
+                        <ul className="list-none space-y-1">
+                          <li>
+                            <a href="/en/isr/eilat/category/alcohol" className="text-[#ee9613] font-bold hover:underline">
+                              Alcohol
+                            </a>
+                          </li>
+                          <li>
+                            <a href="/en/isr/eilat/brand/123-alcohol" className="text-[#ee9613] font-bold hover:underline">
+                              123 Alcohol
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
 
-  <div className="flex flex-col space-y-4">
-    <div>
-      <h3 className="text-md font-semibold">Address</h3>
-      <div>
-        <p>Windhoek West</p>
-        <p>8850603 Eilat</p>
-        <a
-          href="https://maps.google.com/?q=29.56134350459979,34.95609347009179"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#ee9613] font-bold hover:underline"
-        >
-          See map
-        </a>
-      </div>
-    </div>
-  </div>
+                  <div className="flex flex-col space-y-4">
+                    <div>
+                      <h3 className="text-md font-semibold">Address</h3>
+                      <div>
+                        <p>Windhoek West</p>
+                        <p>8850603 Eilat</p>
+                        <a
+                          href="https://maps.google.com/?q=29.56134350459979,34.95609347009179"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#ee9613] font-bold hover:underline"
+                        >
+                          See map
+                        </a>
+                      </div>
+                    </div>
+                  </div>
 
-  <div className="flex flex-col space-y-4">
-    <div>
-      <h3 className="text-md font-semibold">Delivery times</h3>
-      <table className="table-auto">
-        <tbody>
-          <tr>
-            <td className="pr-4">Monday</td>
-            <td>13:00–22:30</td>
-          </tr>
-          <tr>
-            <td className="pr-4">Tuesday</td>
-            <td>13:00–22:30</td>
-          </tr>
-          <tr>
-            <td className="pr-4">Wednesday</td>
-            <td>11:00–22:30</td>
-          </tr>
-          <tr>
-            <td className="pr-4">Thursday</td>
-            <td>11:00–22:30</td>
-          </tr>
-          <tr>
-            <td className="pr-4">Friday</td>
-            <td>10:00–22:30</td>
-          </tr>
-          <tr>
-            <td className="pr-4">Saturday</td>
-            <td>12:00–22:30</td>
-          </tr>
-          <tr>
-            <td className="pr-4">Sunday</td>
-            <td>13:00–22:30</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+                  <div className="flex flex-col space-y-4 ">
+                    <div>
+                      <h3 className="text-md font-semibold">Delivery times</h3>
+                      <table className="table-auto">
+                        <tbody>
+                          <tr>
+                            <td className="pr-4">Monday</td>
+                            <td>13:00–22:30</td>
+                          </tr>
+                          <tr>
+                            <td className="pr-4">Tuesday</td>
+                            <td>13:00–22:30</td>
+                          </tr>
+                          <tr>
+                            <td className="pr-4">Wednesday</td>
+                            <td>11:00–22:30</td>
+                          </tr>
+                          <tr>
+                            <td className="pr-4">Thursday</td>
+                            <td>11:00–22:30</td>
+                          </tr>
+                          <tr>
+                            <td className="pr-4">Friday</td>
+                            <td>10:00–22:30</td>
+                          </tr>
+                          <tr>
+                            <td className="pr-4">Saturday</td>
+                            <td>12:00–22:30</td>
+                          </tr>
+                          <tr>
+                            <td className="pr-4">Sunday</td>
+                            <td>13:00–22:30</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
 
-  <div className="flex flex-col space-y-4">
-    <div>
-      <h3 className="text-md font-semibold">More information</h3>
-      <a href="tel:+972543131665" className="text-[#ee9613] font-bold hover:underline">
-        +972543131665
-      </a>
-    </div>
-  </div>
-</div>
+                  <div className="flex flex-col space-y-4">
+                    <div>
+                      <h3 className="text-md font-semibold">More information</h3>
+                      <a href="tel:+972543131665" className="text-[#ee9613] font-bold hover:underline">
+                        +972543131665
+                      </a>
+                    </div>
+                  </div>
+                </div>
 
-<div aria-hidden="true" className="relative overflow-hidden">
+
+
+                {/*  */}
+                <div aria-hidden="true" className="relative overflow-hidden border-4 p-4">
   <div className="w-full h-48">
     <div className="hidden"></div>
     <div className="mapboxgl-canvas-container mapboxgl-interactive mapboxgl-touch-drag-pan">
@@ -746,7 +749,9 @@ Pickup: {store.pickupTime}
     </div>
     <div
       className="mapboxgl-marker"
-      style={{ zIndex: 0, height: '40px', transform: 'translate(1000%, 150%)' }}
+      style={{ zIndex: 0, height: '40px', transform: 'translate(1000%, 110%)' }}
+      data-lng="17.0832" 
+      data-lat="-22.5700"
     >
       <svg viewBox="0 0 56 56" fill="rgba(31, 199, 10, 1)" width="56">
         <ellipse cx="28" cy="48" rx="4" ry="1" fill="rgba(32, 33, 37, 1)" fillOpacity="0.24"></ellipse>
@@ -791,7 +796,7 @@ Pickup: {store.pickupTime}
     </div>
   </div>
   <div className="relative overflow-hidden">
-    <div className="absolute top-0 left-0 w-full h-full bg-gray-200">
+    <div className="absolute top-0 left-0 w-full h-full bg-black">
       <div>
         <button
           draggable="false"
@@ -882,6 +887,7 @@ Pickup: {store.pickupTime}
     </div>
   </div>
 </div>
+
 
                 {/*  */}
 
