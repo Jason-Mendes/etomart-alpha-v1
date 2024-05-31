@@ -628,18 +628,10 @@ function Pharmacies() {
               <span>{category.cuisine}</span>
             </div>
             <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-            {category.storetype && (
-  <div
-    data-testid="venue-storetype-label"
-    className=" bg-[#ee9613] text-black text-xs rounded-tr-full rounded-br-full"
-  >
-    {category.storetype}
-  </div>
-)}
-<div
-  data-test-id="venue-badges"
+            <div
+  data-test-id="delivery-badges"
   className=" text-black text-xs py-1 rounded"
->
+  >
   <span className="text-black">Etomart </span>
   {category.deliveryTime ? (
     <span className="text-[#ee9613] font-bold"> Delivery Available</span>

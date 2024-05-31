@@ -67,7 +67,8 @@
             isEtomartStore: false,
             priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
+            pickupTime: "15–30 min",
+deliveryTime: false
         },
         {
             name: "Shoprite",
@@ -77,7 +78,8 @@
             isEtomartStore: false,
             priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
+            pickupTime: "15–30 min",
+deliveryTime: false
         },
         {
             name: "Pick n Pay",
@@ -87,7 +89,8 @@
             isEtomartStore: true,
             priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
+            pickupTime: "15–30 min",
+deliveryTime: false
         },
         {
             name: "Spar",
@@ -97,7 +100,8 @@
             isEtomartStore: true,
             priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
+            pickupTime: "15–30 min",
+deliveryTime: false
         },
         {
             name: "Woermann Brock",
@@ -107,7 +111,8 @@
             isEtomartStore: true,
             priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
+            pickupTime: "15–30 min",
+deliveryTime: false
         },
         {
             name: "OK Foods",
@@ -117,7 +122,8 @@
             isEtomartStore: false,
             priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
+            pickupTime: "15–30 min",
+deliveryTime: false
         },
         {
             name: "Choppies",
@@ -127,7 +133,8 @@
             isEtomartStore: true,
             priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
+            pickupTime: "15–30 min",
+deliveryTime: true
         },
         {
             name: "Food Lover's Market",
@@ -137,7 +144,8 @@
             isEtomartStore: false,
             priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
+            pickupTime: "15–30 min",
+deliveryTime: true
         },
         {
             name: "Metro",
@@ -147,7 +155,8 @@
             isEtomartStore: false,
             priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
+            pickupTime: "15–30 min",
+deliveryTime: true
         },
         {
             name: "Joe's Beerhouse",
@@ -157,7 +166,8 @@
             isEtomartStore: true,
             priceRange: "N$$$",
             cuisine: "German",
-            pickupTime: "20–40 min"
+            pickupTime: "20–40 min",
+deliveryTime: false
         },
         {
             name: "The Stellenbosch Wine Bar",
@@ -167,7 +177,8 @@
             isEtomartStore: false,
             priceRange: "N$$$",
             cuisine: "International",
-            pickupTime: "20–40 min"
+            pickupTime: "20–40 min",
+deliveryTime: false
         },
         {
             name: "O Portuga",
@@ -177,7 +188,8 @@
             isEtomartStore: false,
             priceRange: "N$$$",
             cuisine: "Portuguese",
-            pickupTime: "20–40 min"
+            pickupTime: "20–40 min",
+deliveryTime: false
         },
         {
             name: "The Social",
@@ -187,7 +199,8 @@
             isEtomartStore: true,
             priceRange: "N$$$",
             cuisine: "Bar & Grill",
-            pickupTime: "20–40 min"
+            pickupTime: "20–40 min",
+deliveryTime: true
         },
         {
             name: "Sardinia Blue Olive",
@@ -197,7 +210,8 @@
             isEtomartStore: false,
             priceRange: "N$$$",
             cuisine: "Mediterranean",
-            pickupTime: "20–40 min"
+            pickupTime: "20–40 min",
+deliveryTime: true
         },
         {
             name: "Slowtown Coffee Roasters",
@@ -207,7 +221,8 @@
             isEtomartStore: false,
             priceRange: "N$$",
             cuisine: "Coffee",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+deliveryTime: false
         },
         {
             name: "Dis-Chem",
@@ -217,7 +232,8 @@
             isEtomartStore: true,
             priceRange: "N$$",
             cuisine: "Health & Wellness",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+deliveryTime: false
         },
         {
             name: "Clicks Pharmacy",
@@ -227,7 +243,8 @@
             isEtomartStore: false,
             priceRange: "N$$",
             cuisine: "Health & Wellness",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+deliveryTime: true
         },
         {
             name: "Nampharm Pharmacy",
@@ -237,7 +254,8 @@
             isEtomartStore: false,
             priceRange: "N$$",
             cuisine: "Health & Wellness",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+deliveryTime: true
         },
         {
             name: "Alpha Pharm",
@@ -247,7 +265,8 @@
             isEtomartStore: true,
             priceRange: "N$$",
             cuisine: "Health & Wellness",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+deliveryTime: true
         },
         {
             name: "Medicine World",
@@ -257,7 +276,8 @@
             isEtomartStore: false,
             priceRange: "N$$",
             cuisine: "Health & Wellness",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+deliveryTime: true
         },
         {
             name: "City Pharmacy",
@@ -267,7 +287,8 @@
             isEtomartStore: true,
             priceRange: "N$$",
             cuisine: "Health & Wellness",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+deliveryTime: false
         }
     ];
     
@@ -285,7 +306,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: false
       },
       {
           name: "Clicks Pharmacy",
@@ -295,7 +317,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
           name: "Nampharm Pharmacy",
@@ -305,7 +328,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
           name: "Alpha Pharm",
@@ -315,7 +339,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
           name: "Medicine World",
@@ -325,7 +350,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
           name: "City Pharmacy",
@@ -335,7 +361,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
           name: "Joe's Beerhouse",
@@ -345,7 +372,8 @@
           isEtomartStore: true,
           priceRange: "N$$$",
           cuisine: "German",
-          pickupTime: "20–40 min"
+          pickupTime: "20–40 min",
+deliveryTime: true
       },
       {
           name: "The Stellenbosch Wine Bar",
@@ -355,7 +383,8 @@
           isEtomartStore: false,
           priceRange: "N$$$",
           cuisine: "International",
-          pickupTime: "20–40 min"
+          pickupTime: "20–40 min",
+deliveryTime: false
       },
       {
           name: "O Portuga",
@@ -365,7 +394,8 @@
           isEtomartStore: false,
           priceRange: "N$$$",
           cuisine: "Portuguese",
-          pickupTime: "20–40 min"
+          pickupTime: "20–40 min",
+deliveryTime: false
       },
       {
           name: "The Social",
@@ -375,7 +405,8 @@
           isEtomartStore: true,
           priceRange: "N$$$",
           cuisine: "Bar & Grill",
-          pickupTime: "20–40 min"
+          pickupTime: "20–40 min",
+deliveryTime: false
       },
       {
           name: "Sardinia Blue Olive",
@@ -385,7 +416,8 @@
           isEtomartStore: false,
           priceRange: "N$$$",
           cuisine: "Mediterranean",
-          pickupTime: "20–40 min"
+          pickupTime: "20–40 min",
+deliveryTime: true
       },
       {
           name: "Slowtown Coffee Roasters",
@@ -395,7 +427,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Coffee",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
         name: "Checkers",
@@ -405,7 +438,8 @@
         isEtomartStore: false,
         priceRange: "N$$",
         cuisine: "Supermarket",
-        pickupTime: "15–30 min"
+        pickupTime: "15–30 min",
+deliveryTime: false
     },
     {
         name: "Shoprite",
@@ -415,7 +449,8 @@
         isEtomartStore: false,
         priceRange: "N$$",
         cuisine: "Supermarket",
-        pickupTime: "15–30 min"
+        pickupTime: "15–30 min",
+deliveryTime: false
     },
     {
         name: "Pick n Pay",
@@ -425,7 +460,8 @@
         isEtomartStore: true,
         priceRange: "N$$",
         cuisine: "Supermarket",
-        pickupTime: "15–30 min"
+        pickupTime: "15–30 min",
+deliveryTime: true
     },
     {
         name: "Spar",
@@ -435,7 +471,8 @@
         isEtomartStore: true,
         priceRange: "N$$",
         cuisine: "Supermarket",
-        pickupTime: "15–30 min"
+        pickupTime: "15–30 min",
+deliveryTime: true
     },
     {
         name: "Woermann Brock",
@@ -445,7 +482,8 @@
         isEtomartStore: true,
         priceRange: "N$$",
         cuisine: "Supermarket",
-        pickupTime: "15–30 min"
+        pickupTime: "15–30 min",
+deliveryTime: false
     },
     {
         name: "OK Foods",
@@ -455,7 +493,8 @@
         isEtomartStore: false,
         priceRange: "N$$",
         cuisine: "Supermarket",
-        pickupTime: "15–30 min"
+        pickupTime: "15–30 min",
+deliveryTime: false
     },
     {
         name: "Choppies",
@@ -465,7 +504,8 @@
         isEtomartStore: true,
         priceRange: "N$$",
         cuisine: "Supermarket",
-        pickupTime: "15–30 min"
+        pickupTime: "15–30 min",
+deliveryTime: false
     },
     {
         name: "Food Lover's Market",
@@ -475,7 +515,8 @@
         isEtomartStore: false,
         priceRange: "N$$",
         cuisine: "Supermarket",
-        pickupTime: "15–30 min"
+        pickupTime: "15–30 min",
+deliveryTime: true
     },
     {
         name: "Metro",
@@ -485,7 +526,8 @@
         isEtomartStore: false,
         priceRange: "N$$",
         cuisine: "Supermarket",
-        pickupTime: "15–30 min"
+        pickupTime: "15–30 min",
+deliveryTime: true
     }
       ];
 
@@ -498,7 +540,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Supermarket",
-          pickupTime: "15–30 min"
+          pickupTime: "15–30 min",
+deliveryTime: true
       },
       {
           name: "Shoprite",
@@ -508,7 +551,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Supermarket",
-          pickupTime: "15–30 min"
+          pickupTime: "15–30 min",
+deliveryTime: true
       },
       {
           name: "Pick n Pay",
@@ -518,7 +562,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Supermarket",
-          pickupTime: "15–30 min"
+          pickupTime: "15–30 min",
+deliveryTime: true
       },
       {
           name: "Spar",
@@ -528,7 +573,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Supermarket",
-          pickupTime: "15–30 min"
+          pickupTime: "15–30 min",
+deliveryTime: true
       },
       {
           name: "Woermann Brock",
@@ -538,7 +584,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Supermarket",
-          pickupTime: "15–30 min"
+          pickupTime: "15–30 min",
+deliveryTime: true
       },
       {
           name: "OK Foods",
@@ -548,7 +595,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Supermarket",
-          pickupTime: "15–30 min"
+          pickupTime: "15–30 min",
+deliveryTime: true
       },
       {
           name: "Choppies",
@@ -558,7 +606,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Supermarket",
-          pickupTime: "15–30 min"
+          pickupTime: "15–30 min",
+deliveryTime: true
       },
       {
           name: "Food Lover's Market",
@@ -568,7 +617,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Supermarket",
-          pickupTime: "15–30 min"
+          pickupTime: "15–30 min",
+deliveryTime: true
       },
       {
           name: "Metro",
@@ -578,7 +628,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Supermarket",
-          pickupTime: "15–30 min"
+          pickupTime: "15–30 min",
+deliveryTime: false
       }
       ];
 
@@ -591,7 +642,8 @@
           isEtomartStore: false,
           priceRange: "N$$$",
           cuisine: "International",
-          pickupTime: "20–40 min"
+          pickupTime: "20–40 min",
+deliveryTime: false
       },
       {
           name: "O Portuga",
@@ -601,7 +653,8 @@
           isEtomartStore: false,
           priceRange: "N$$$",
           cuisine: "Portuguese",
-          pickupTime: "20–40 min"
+          pickupTime: "20–40 min",
+deliveryTime: false
       },
       {
           name: "The Social",
@@ -611,7 +664,8 @@
           isEtomartStore: true,
           priceRange: "N$$$",
           cuisine: "Bar & Grill",
-          pickupTime: "20–40 min"
+          pickupTime: "20–40 min",
+deliveryTime: false
       },
       {
           name: "Sardinia Blue Olive",
@@ -621,7 +675,8 @@
           isEtomartStore: false,
           priceRange: "N$$$",
           cuisine: "Mediterranean",
-          pickupTime: "20–40 min"
+          pickupTime: "20–40 min",
+deliveryTime: true
       },
       {
           name: "Slowtown Coffee Roasters",
@@ -631,7 +686,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Coffee",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       }
       ];
 
@@ -644,7 +700,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
           name: "Clicks Pharmacy",
@@ -654,7 +711,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
           name: "Nampharm Pharmacy",
@@ -664,7 +722,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
           name: "Alpha Pharm",
@@ -674,7 +733,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: false
       },
       {
           name: "Medicine World",
@@ -684,7 +744,8 @@
           isEtomartStore: false,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       },
       {
           name: "City Pharmacy",
@@ -694,7 +755,8 @@
           isEtomartStore: true,
           priceRange: "N$$",
           cuisine: "Health & Wellness",
-          pickupTime: "10–20 min"
+          pickupTime: "10–20 min",
+deliveryTime: true
       }
       ];
       
@@ -1038,7 +1100,19 @@
             <span>{category.cuisine}</span>
           </div>
           <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-          </div></div>
+          
+<div
+  data-test-id="venue-badges"
+  className=" text-black text-xs py-1 rounded"
+>
+  <span className="text-black">Etomart </span>
+  {category.deliveryTime ? (
+    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
+  ) : (
+    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
+  )}
+</div></div>
+        </div>
       </a>
     </div>
   ))}
@@ -1118,7 +1192,19 @@
             <span>{category.cuisine}</span>
           </div>
           <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-        </div></div>
+                
+<div
+  data-test-id="venue-badges"
+  className=" text-black text-xs py-1 rounded"
+>
+  <span className="text-black">Etomart </span>
+  {category.deliveryTime ? (
+    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
+  ) : (
+    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
+  )}
+</div></div>
+        </div>
       </a>
     </div>
   ))}
@@ -1201,7 +1287,19 @@
             <span>{category.cuisine}</span>
           </div>
           <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-        </div></div>
+                
+<div
+  data-test-id="venue-badges"
+  className=" text-black text-xs py-1 rounded"
+>
+  <span className="text-black">Etomart </span>
+  {category.deliveryTime ? (
+    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
+  ) : (
+    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
+  )}
+</div></div>
+        </div>
       </a>
     </div>
   ))}
@@ -1284,7 +1382,19 @@
             <span>{category.cuisine}</span>
           </div>
           <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-        </div></div>
+                 
+<div
+  data-test-id="venue-badges"
+  className=" text-black text-xs py-1 rounded"
+>
+  <span className="text-black">Etomart </span>
+  {category.deliveryTime ? (
+    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
+  ) : (
+    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
+  )}
+</div></div>
+        </div>
       </a>
     </div>
   ))}
@@ -1364,7 +1474,19 @@
             <span>{category.cuisine}</span>
           </div>
           <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-        </div></div>
+                 
+<div
+  data-test-id="venue-badges"
+  className=" text-black text-xs py-1 rounded"
+>
+  <span className="text-black">Etomart </span>
+  {category.deliveryTime ? (
+    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
+  ) : (
+    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
+  )}
+</div></div>
+        </div>
       </a>
     </div>
   ))}
