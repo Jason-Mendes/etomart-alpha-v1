@@ -42,7 +42,8 @@ const Restaurants = () => {
                 isEtomartStore: true, // Assuming it's a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
                 priceRange: "N$$",
                 cuisine: "Wine Bar",
-                pickupTime: "25–45 min"
+                pickupTime: "25–45 min",
+                deliveryTime: true
             },
             {
                 name: "O Portuga",
@@ -52,7 +53,8 @@ const Restaurants = () => {
                 isEtomartStore: false,
                 priceRange: "N$$$",
                 cuisine: "Portuguese",
-                pickupTime: "20–40 min"
+                pickupTime: "20–40 min",
+                deliveryTime: true
             },
             {
                 name: "The Social",
@@ -62,7 +64,8 @@ const Restaurants = () => {
                 isEtomartStore: true,
                 priceRange: "N$$$",
                 cuisine: "Bar & Grill",
-                pickupTime: "20–40 min"
+                pickupTime: "20–40 min",
+                deliveryTime: true
             },
             {
                 name: "Sardinia Blue Olive",
@@ -72,7 +75,8 @@ const Restaurants = () => {
                 isEtomartStore: false,
                 priceRange: "N$$$",
                 cuisine: "Mediterranean",
-                pickupTime: "20–40 min"
+                pickupTime: "20–40 min",
+                deliveryTime: true
             },
             {
                 name: "Slowtown Coffee Roasters",
@@ -82,7 +86,8 @@ const Restaurants = () => {
                 isEtomartStore: false,
                 priceRange: "N$$",
                 cuisine: "Coffee",
-                pickupTime: "10–20 min"
+                pickupTime: "10–20 min",
+                deliveryTime: true
             },
         ];
     
@@ -473,13 +478,30 @@ const Restaurants = () => {
                   <span>{category.cuisine}</span>
                 </div>
                 <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-              </div>
-            </div>
-          </a>
+                {category.storetype && (
+  <div
+    data-testid="venue-storetype-label"
+    className=" bg-[#ee9613] text-black text-xs rounded-tr-full rounded-br-full"
+  >
+    {category.storetype}
+  </div>
+)}
+<div
+  data-test-id="venue-badges"
+  className=" text-black text-xs py-1 rounded"
+>
+  <span className="text-black">Etomart </span>
+  {category.deliveryTime ? (
+    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
+  ) : (
+    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
+  )}
+</div></div>
         </div>
-      ))}
+      </a>
     </div>
-    
+  ))}
+</div>
                     {/*  storescards1scroll Container  ends*/}
                  
                   

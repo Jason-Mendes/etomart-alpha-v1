@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import OPNavBar from '../../../OPNavBar'; //or import OPNavBar from '../../components/OPNavBar';
-import { useRef } from 'react';
+
 
 function Pharmacies() {
     const iconscategories = [
@@ -53,7 +53,8 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+            deliveryTime: true
         },
         {
             name: "Nampharm Pharmacy",
@@ -63,7 +64,8 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+            deliveryTime: true
         },
         {
             name: "Alpha Pharm",
@@ -73,7 +75,8 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+            deliveryTime: true
         },
         {
             name: "Medicine World",
@@ -83,7 +86,8 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+            deliveryTime: true
         }, 
         {
             name: "City Pharmacy",
@@ -93,34 +97,35 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min"
+            pickupTime: "10–20 min",
+            deliveryTime: true
         }
         ];
 
 
-    const storescards2 = [
-        { name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem" },
-        { name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/en/discovery/category/clicks" },
-        { name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm" },
-        { name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm" },
-        { name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld" },
-        { name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy" },
-        { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
-        { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
-        { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
-        { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
-        { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
-        { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" },
-        { name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
-        { name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite" },
-        { name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay" },
-        { name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar" },
-        { name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock" },
-        { name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods" },
-        { name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies" },
-        { name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket" },
-        { name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro" }
-    ];
+    // const storescards2 = [
+    //     { name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem" },
+    //     { name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/en/discovery/category/clicks" },
+    //     { name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm" },
+    //     { name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm" },
+    //     { name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld" },
+    //     { name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy" },
+    //     { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
+    //     { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
+    //     { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
+    //     { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
+    //     { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
+    //     { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" },
+    //     { name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
+    //     { name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite" },
+    //     { name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay" },
+    //     { name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar" },
+    //     { name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock" },
+    //     { name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods" },
+    //     { name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies" },
+    //     { name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket" },
+    //     { name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro" }
+    // ];
 
     // const supermarkets = [
     //     { name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/en/discovery/category/checkers" },
@@ -134,14 +139,14 @@ function Pharmacies() {
     //     { name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro" }
     // ];
 
-    const restaurants = [
-        { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
-        { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
-        { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
-        { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
-        { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
-        { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" }
-    ];
+    // const restaurants = [
+    //     { name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/en/discovery/category/joesbeerhouse" },
+    //     { name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch" },
+    //     { name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga" },
+    //     { name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial" },
+    //     { name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive" },
+    //     { name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown" }
+    // ];
 
     const pharmacies = [
         { name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem" },
@@ -239,114 +244,145 @@ function Pharmacies() {
     };
 
     // Drop down menu
-function toggleDropdown() {
-    const dropdownMenu = document.getElementById('dropdown-menu');
-    dropdownMenu.classList.toggle('hidden');
-  }
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
   
-  function addToFavorites() {
-    // Function to add the store to favorites
-    alert('Store added to favorites');
-  }
+    const toggleDropdown = () => {
+      if (isDropdownOpen) {
+        setDropdownOpen(false);
+      } else {
+        setDropdownOpen(true);
+      }
+    };
   
-  function getMoreInfo() {
-    // Function to get more information about the store
-    alert('More information about the store');
-  }
-    
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+  
+    useEffect(() => {
+      if (isDropdownOpen) {
+        document.addEventListener('mousedown', handleClickOutside);
+      } else {
+        document.removeEventListener('mousedown', handleClickOutside);
+      }
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [isDropdownOpen]);
+  
+    const addToFavorites = () => {
+      // Function to add the store to favorites
+      alert('Store added to favorites');
+    };
+  
+    const getMoreInfo = () => {
+      // Function to get more information about the store
+      alert('More information about the store');
+    };  
     return (
  
         <div>
-      <div>
         <div>
-          <OPNavBar />
-        </div>
-        <div data-test-id="venue-content-header.root" className="relative">
-  <header className="relative">
-    <div className="relative">
-      <img
-        loading="eager"
-        decoding="auto"
-        fetchPriority="high"
-        sizes="100vw"
-        srcSet="
-          https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=200 200w,
-          https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=300 300w,
-          https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=600 600w,
-          https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=960 960w,
-          https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg 1200w,
-          https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=1600 1600w,
-          https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=1920 1920w
-        "
-        src="https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg"
-        alt=""
-        className="w-full h-[510px] object-cover" 
-      />
-      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
-    </div>
-    <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
       <div>
-        <h1 className="text-white text-4xl font-bold">Burger Room</h1>
-        <p className="text-white text-lg">Burgers Restaurant</p>
-        <div className="mt-2 flex items-center">
-          <button
-            data-test-id="venue-favorite"
-            aria-label="Favorite"
-            className="text-white p-2 rounded-full hover:bg-white hover:text-black transition duration-200"
-          >
-            <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-              <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498ZM20.657 11.151L12.357 19.696C12.2628 19.7928 12.1335 19.8474 11.9985 19.8474C11.8634 19.8474 11.7341 19.7928 11.64 19.696L3.32699 11.136C1.94998 9.78618 1.60717 7.69937 2.47999 5.97998C3.13326 4.68428 4.37197 3.78375 5.80599 3.56198C7.26664 3.31621 8.75572 3.79456 9.79999 4.84498L11.33 6.24498C11.7117 6.59273 12.2953 6.59273 12.677 6.24498L14.238 4.82198C15.278 3.7873 16.7534 3.3181 18.2 3.56198C19.6323 3.78494 20.869 4.68536 21.521 5.97998C22.3943 7.7072 22.0444 9.8015 20.657 11.151Z"></path>
-            </svg>
-          </button>
-        </div>
+        <OPNavBar />
       </div>
-      <div className="flex items-center">
-        <button
-          aria-label="More options"
-          className="text-white p-2  "
-          onClick={toggleDropdown}
-        >
-          <svg viewBox="0 0 24 24" className="w-8 h-8 text-white fill-current rounded-full hover:bg-white hover:text-black transition duration-200"  transform="translate(4, 36)">
-            <circle cx="12" cy="5" r="2"></circle>
-            <circle cx="12" cy="12" r="2"></circle>
-            <circle cx="12" cy="19" r="2"></circle>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div className="relative">
-      <div
-        id="dropdown-menu"
-        className="hidden absolute -top-44 right-4 z-20 w-56 bg-[#fdfdfd] rounded-lg shadow-lg transition-opacity duration-200"
-        role="dialog"
-      >
-        <div className="relative">
-        <div className="absolute top-28 right-3 z-20">
-  <svg viewBox="0 0 32 32" className="w-5 h-5 text-white">
-    <path className="fill-white" d="M16,16 L0,0 H32 Z"></path>
-    <path fill="#fdfdfd" d="M16,15 L1,0 H31 Z"></path>
-  </svg>
-</div>
-          <div className="p-4">
-            <button
-              className="w-full py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md"
-              onClick={addToFavorites}
-            >
-              Add to Favorites
-            </button>
-            <button
-              className="w-full py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md"
-              onClick={getMoreInfo}
-            >
-              More Information
-            </button>
+      <div data-test-id="venue-content-header.root" className="relative">
+        <header className="relative">
+          <div className="relative">
+            <img
+              loading="eager"
+              decoding="auto"
+              fetchPriority="high"
+              sizes="100vw"
+              srcSet="
+                https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=200 200w,
+                https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=300 300w,
+                https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=600 600w,
+                https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=960 960w,
+                https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg 1200w,
+                https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=1600 1600w,
+                https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=1920 1920w
+              "
+              src="https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg"
+              alt=""
+              className="w-full h-[510px] object-cover"
+            />
+            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
           </div>
-        </div>
+          <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
+            <div>
+              <h1 className="text-white text-4xl font-bold">Burger Room</h1>
+              <p className="text-white text-lg">Burgers Restaurant</p>
+              <div className="mt-2 flex items-center">
+                <button
+                  data-test-id="venue-favorite"
+                  aria-label="Favorite"
+                  className="text-white p-2 rounded-full hover:bg-white hover:text-black transition duration-200"
+                >
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                    <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498ZM20.657 11.151L12.357 19.696C12.2628 19.7928 12.1335 19.8474 11.9985 19.8474C11.8634 19.8474 11.7341 19.7928 11.64 19.696L3.32699 11.136C1.94998 9.78618 1.60717 7.69937 2.47999 5.97998C3.13326 4.68428 4.37197 3.78375 5.80599 3.56198C7.26664 3.31621 8.75572 3.79456 9.79999 4.84498L11.33 6.24498C11.7117 6.59273 12.2953 6.59273 12.677 6.24498L14.238 4.82198C15.278 3.7873 16.7534 3.3181 18.2 3.56198C19.6323 3.78494 20.869 4.68536 21.521 5.97998C22.3943 7.7072 22.0444 9.8015 20.657 11.151Z"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <button
+                aria-label="More options"
+                className="text-white p-2"
+                onClick={toggleDropdown}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-8 h-8 text-white fill-current rounded-full hover:bg-white hover:text-black transition duration-200"
+                  transform="translate(4, 36)"
+                >
+                  <circle cx="12" cy="5" r="2"></circle>
+                  <circle cx="12" cy="12" r="2"></circle>
+                  <circle cx="12" cy="19" r="2"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div className="relative" ref={dropdownRef}>
+            <div
+              id="dropdown-menu"
+              className={`${
+                isDropdownOpen ? 'block' : 'hidden'
+              } absolute -top-44 right-4 z-20 w-56 bg-[#fdfdfd] rounded-lg shadow-lg transition-opacity duration-200`}
+              role="dialog"
+            >
+              <div className="relative">
+                <div className="absolute top-28 right-3 z-20">
+                  <svg viewBox="0 0 32 32" className="w-5 h-5 text-white">
+                    <path
+                      className="fill-white"
+                      d="M16,16 L0,0 H32 Z"
+                    ></path>
+                    <path fill="#fdfdfd" d="M16,15 L1,0 H31 Z"></path>
+                  </svg>
+                </div>
+                <div className="p-4">
+                  <button
+                    className="w-full py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md"
+                    onClick={addToFavorites}
+                  >
+                    Add to Favorites
+                  </button>
+                  <button
+                    className="w-full py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md"
+                    onClick={getMoreInfo}
+                  >
+                    More Information
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
       </div>
     </div>
-  </header>
-</div>
-
             <div className="relative z-10">
                 <div id="LP_section_5_orange" className="relative z-10 flex justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl md:h-auto md:p-10 h-auto p-10" style={{ width: '65%', maxWidth: '100vw', margin: '0 auto' }}>
                     <div className="relative z-10 flex items-center justify-center w-full mb-0">
@@ -592,12 +628,31 @@ function toggleDropdown() {
               <span>{category.cuisine}</span>
             </div>
             <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-          </div>
+            {category.storetype && (
+  <div
+    data-testid="venue-storetype-label"
+    className=" bg-[#ee9613] text-black text-xs rounded-tr-full rounded-br-full"
+  >
+    {category.storetype}
+  </div>
+)}
+<div
+  data-test-id="venue-badges"
+  className=" text-black text-xs py-1 rounded"
+>
+  <span className="text-black">Etomart </span>
+  {category.deliveryTime ? (
+    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
+  ) : (
+    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
+  )}
+</div></div>
         </div>
       </a>
     </div>
   ))}
 </div>
+
 
                 {/*  storescards1scroll Container  ends*/}
 
@@ -815,7 +870,7 @@ function toggleDropdown() {
                 </footer>
             </div>
         </div>
-        </div>
+     
 
 
 

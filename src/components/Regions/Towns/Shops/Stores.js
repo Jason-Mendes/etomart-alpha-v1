@@ -44,7 +44,9 @@ function Stores() {
            priceRange: "N$$",
             cuisine: "Supermarket",
             pickupTime: "15–30 min"
-        },
+        ,
+deliveryTime: true
+},
         {
             name: "Shoprite",
             imgSrc: "/images/supermarkets/shoprite.png",
@@ -54,7 +56,9 @@ function Stores() {
            priceRange: "N$",
             cuisine: "Supermarket",
             pickupTime: "10–25 min"
-        },
+        ,
+deliveryTime: true
+},
         {
             name: "Pick n Pay",
             imgSrc: "/images/supermarkets/picknpay.png",
@@ -64,7 +68,9 @@ function Stores() {
            priceRange: "N$$",
             cuisine: "Supermarket",
             pickupTime: "20–35 min"
-        },
+        ,
+deliveryTime: false
+},
         {
             name: "Spar",
             imgSrc: "/images/supermarkets/spar.png",
@@ -73,8 +79,10 @@ function Stores() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
-        },
+            pickupTime: "15–30 min",
+        
+deliveryTime: false
+},
         {
             name: "Woermann Brock",
             imgSrc: "/images/supermarkets/woermannbrock.png",
@@ -84,7 +92,9 @@ function Stores() {
            priceRange: "N$",
             cuisine: "Supermarket",
             pickupTime: "10–25 min"
-        },
+        ,
+deliveryTime: true
+},
         {
             name: "OK Foods",
             imgSrc: "/images/supermarkets/okfoods.png",
@@ -93,8 +103,10 @@ function Stores() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
-        },
+            pickupTime: "15–30 min",
+        
+deliveryTime: false
+},
         {
             name: "Choppies",
             imgSrc: "/images/supermarkets/choppies.png",
@@ -104,7 +116,9 @@ function Stores() {
            priceRange: "N$",
             cuisine: "Supermarket",
             pickupTime: "10–25 min"
-        },
+        ,
+deliveryTime: true
+},
         {
             name: "Food Lover's Market",
             imgSrc: "/images/supermarkets/foodlovers.png",
@@ -114,7 +128,9 @@ function Stores() {
            priceRange: "N$$",
             cuisine: "Supermarket",
             pickupTime: "20–35 min"
-        },
+        ,
+deliveryTime: true
+},
         {
             name: "Metro",
             imgSrc: "/images/supermarkets/metro.png",
@@ -123,8 +139,9 @@ function Stores() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Supermarket",
-            pickupTime: "15–30 min"
-        }
+            pickupTime: "15–30 min",
+            deliveryTime: false
+            }
         ];
 
 
@@ -514,7 +531,25 @@ function Stores() {
               <span>{category.cuisine}</span>
             </div>
             <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-          </div>
+            {category.storetype && (
+  <div
+    data-testid="venue-storetype-label"
+    className=" bg-[#ee9613] text-black text-xs rounded-tr-full rounded-br-full"
+  >
+    {category.storetype}
+  </div>
+)}
+<div
+  data-test-id="venue-badges"
+  className=" text-black text-xs py-1 rounded"
+>
+  <span className="text-black">Etomart </span>
+  {category.deliveryTime ? (
+    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
+  ) : (
+    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
+  )}
+</div></div>
         </div>
       </a>
     </div>
