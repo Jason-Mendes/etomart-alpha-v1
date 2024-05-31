@@ -53,8 +53,7 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min",
-            deliveryTime: true
+            pickupTime: "10–20 min"
         },
         {
             name: "Nampharm Pharmacy",
@@ -64,8 +63,7 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min",
-            deliveryTime: true
+            pickupTime: "10–20 min"
         },
         {
             name: "Alpha Pharm",
@@ -75,8 +73,7 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min",
-            deliveryTime: true
+            pickupTime: "10–20 min"
         },
         {
             name: "Medicine World",
@@ -86,8 +83,7 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min",
-            deliveryTime: true
+            pickupTime: "10–20 min"
         }, 
         {
             name: "City Pharmacy",
@@ -97,8 +93,7 @@ function Pharmacies() {
             isEtomartStore: false, // Assuming it's not a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
            priceRange: "N$$",
             cuisine: "Pharmacy",
-            pickupTime: "10–20 min",
-            deliveryTime: true
+            pickupTime: "10–20 min"
         }
         ];
 
@@ -497,17 +492,7 @@ function Pharmacies() {
               <span>{category.cuisine}</span>
             </div>
             <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-            <div
-  data-test-id="delivery-badges"
-  className=" text-black text-xs py-1 rounded"
-  >
-  <span className="text-black">Etomart </span>
-  {category.deliveryTime ? (
-    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
-  ) : (
-    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
-  )}
-</div></div>
+            </div>
         </div>
       </a>
     </div>

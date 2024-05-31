@@ -42,8 +42,7 @@ const Restaurants = () => {
                 isEtomartStore: true, // Assuming it's a <span className="text-black">Etomart</span> <span className="text-orange-500 font-bold">'~'</span> store
                 priceRange: "N$$",
                 cuisine: "Wine Bar",
-                pickupTime: "25–45 min",
-                deliveryTime: true
+                pickupTime: "25–45 min"
             },
             {
                 name: "O Portuga",
@@ -53,8 +52,7 @@ const Restaurants = () => {
                 isEtomartStore: false,
                 priceRange: "N$$$",
                 cuisine: "Portuguese",
-                pickupTime: "20–40 min",
-                deliveryTime: true
+                pickupTime: "20–40 min"
             },
             {
                 name: "The Social",
@@ -64,8 +62,7 @@ const Restaurants = () => {
                 isEtomartStore: true,
                 priceRange: "N$$$",
                 cuisine: "Bar & Grill",
-                pickupTime: "20–40 min",
-                deliveryTime: true
+                pickupTime: "20–40 min"
             },
             {
                 name: "Sardinia Blue Olive",
@@ -75,8 +72,7 @@ const Restaurants = () => {
                 isEtomartStore: false,
                 priceRange: "N$$$",
                 cuisine: "Mediterranean",
-                pickupTime: "20–40 min",
-                deliveryTime: true
+                pickupTime: "20–40 min"
             },
             {
                 name: "Slowtown Coffee Roasters",
@@ -86,8 +82,7 @@ const Restaurants = () => {
                 isEtomartStore: false,
                 priceRange: "N$$",
                 cuisine: "Coffee",
-                pickupTime: "10–20 min",
-                deliveryTime: true
+                pickupTime: "10–20 min"
             },
         ];
     
@@ -478,17 +473,7 @@ const Restaurants = () => {
                   <span>{category.cuisine}</span>
                 </div>
                 <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-                <div
-  data-test-id="delivery-badges"
-  className=" text-black text-xs py-1 rounded"
-  >
-  <span className="text-black">Etomart </span>
-  {category.deliveryTime ? (
-    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
-  ) : (
-    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
-  )}
-</div></div>
+               </div>
         </div>
       </a>
     </div>

@@ -44,8 +44,7 @@ function Stores() {
            priceRange: "N$$",
             cuisine: "Supermarket",
             pickupTime: "15–30 min"
-        ,
-deliveryTime: true
+        
 },
         {
             name: "Shoprite",
@@ -56,8 +55,7 @@ deliveryTime: true
            priceRange: "N$",
             cuisine: "Supermarket",
             pickupTime: "10–25 min"
-        ,
-deliveryTime: true
+        
 },
         {
             name: "Pick n Pay",
@@ -69,7 +67,7 @@ deliveryTime: true
             cuisine: "Supermarket",
             pickupTime: "20–35 min"
         ,
-deliveryTime: false
+
 },
         {
             name: "Spar",
@@ -81,7 +79,7 @@ deliveryTime: false
             cuisine: "Supermarket",
             pickupTime: "15–30 min",
         
-deliveryTime: false
+
 },
         {
             name: "Woermann Brock",
@@ -92,8 +90,7 @@ deliveryTime: false
            priceRange: "N$",
             cuisine: "Supermarket",
             pickupTime: "10–25 min"
-        ,
-deliveryTime: true
+        
 },
         {
             name: "OK Foods",
@@ -105,7 +102,7 @@ deliveryTime: true
             cuisine: "Supermarket",
             pickupTime: "15–30 min",
         
-deliveryTime: false
+
 },
         {
             name: "Choppies",
@@ -116,8 +113,7 @@ deliveryTime: false
            priceRange: "N$",
             cuisine: "Supermarket",
             pickupTime: "10–25 min"
-        ,
-deliveryTime: true
+        
 },
         {
             name: "Food Lover's Market",
@@ -128,8 +124,7 @@ deliveryTime: true
            priceRange: "N$$",
             cuisine: "Supermarket",
             pickupTime: "20–35 min"
-        ,
-deliveryTime: true
+        
 },
         {
             name: "Metro",
@@ -140,7 +135,7 @@ deliveryTime: true
            priceRange: "N$$",
             cuisine: "Supermarket",
             pickupTime: "15–30 min",
-            deliveryTime: false
+            
             }
         ];
 
@@ -531,17 +526,7 @@ deliveryTime: true
               <span>{category.cuisine}</span>
             </div>
             <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-            <div
-  data-test-id="delivery-badges"
-  className=" text-black text-xs py-1 rounded"
-  >
-  <span className="text-black">Etomart </span>
-  {category.deliveryTime ? (
-    <span className="text-[#ee9613] font-bold"> Delivery Available</span>
-  ) : (
-    <span className="text-[#ee1313] font-bold"> Delivery Not Available</span>
-  )}
-</div></div></div>
+           </div></div>
         </a>
         </div>
   ))}
