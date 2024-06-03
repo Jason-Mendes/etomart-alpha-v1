@@ -106,6 +106,87 @@ function Clicks () {
     // Add more categories as needed
   ];
 
+  const cards = [
+    {
+        title: "Fresh Produce",
+        description: "Get farm-fresh fruits and vegetables delivered to your doorstep. Quality you can trust, convenience you will love.",
+        image: "/images/1.webp"
+    },
+    {
+        title: "Dairy Products",
+        description: "Order fresh milk, cheese, yogurt, and more. Fast delivery and reliable service at your fingertips.",
+        image: "/images/2.webp"
+    },
+    {
+        title: "Bakery Goods",
+        description: "Craving fresh bread and pastries? Get delicious bakery items delivered from local bakers. Quick and easy.",
+        image: "/images/3.webp"
+    },
+    {
+        title: "Pantry Staples",
+        description: "Stock up on pantry essentials with our fast and convenient delivery service. Everything you need in one place.",
+        image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+    },
+    {
+        title: "Beverages",
+        description: "Shop a wide range of beverages, from juices to sodas. Refresh your day with our top selections.",
+        image: "/images/4.webp"
+    },
+    // Add more cards as needed
+];
+
+const [currentIndex, setCurrentIndex] = useState(0);
+const containerRef = useRef(null);
+const extendedCards = [...cards, ...cards, ...cards];
+const [isPaused, setIsPaused] = useState(false);
+
+useEffect(() => {
+  if (!isPaused) {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000);
+    return () => clearInterval(interval);
+  }
+}, [isPaused, currentIndex]);
+
+const handleNext = () => {
+  setCurrentIndex((prevIndex) => prevIndex + 1);
+};
+
+const handlePrev = () => {
+  setCurrentIndex((prevIndex) => prevIndex - 1);
+};
+
+const handleTransitionEnd = () => {
+  if (currentIndex >= extendedCards.length - cards.length) {
+    setCurrentIndex(cards.length);
+    containerRef.current.style.transition = 'none';
+    containerRef.current.style.transform = `translateX(-${cards.length * 576}px)`;
+    setTimeout(() => {
+      containerRef.current.style.transition = 'transform 0.5s ease-in-out';
+    }, 50);
+  }
+  if (currentIndex <= 0) {
+    setCurrentIndex(extendedCards.length - 2 * cards.length);
+    containerRef.current.style.transition = 'none';
+    containerRef.current.style.transform = `translateX(-${(extendedCards.length - 2 * cards.length) * 576}px)`;
+    setTimeout(() => {
+      containerRef.current.style.transition = 'transform 0.5s ease-in-out';
+    }, 50);
+  }
+};
+
+const pauseScroll = () => {
+  setIsPaused(true);
+  setTimeout(() => {
+    setIsPaused(false);
+  }, 5000);
+};
+
+const handleDotClick = (index) => {
+  setCurrentIndex(index);
+  pauseScroll();
+};
 
   const filteredCategories = navcategories.filter((category) =>
     category.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -355,6 +436,9 @@ https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f
                           <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
                         </div>
                         <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
+                          
+                          
+                          
                           <div className="px-4">
                             <h1 className="text-white text-4xl font-bold">Burger Room</h1>
                             <p className="text-white text-lg">Burgers Restaurant</p>
@@ -423,6 +507,63 @@ https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f
                         </div>
                       </header>
                     </div>
+
+                    {/* storescards1scroll Container */} 
+       <div>
+      <main className="my-2">
+        <div className="container mx-auto px-4">
+          {/* Carousel Container */}
+          <div className="relative mt-8 overflow-hidden">
+            <div
+              ref={containerRef}
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                transform: `translateX(-${currentIndex * 576}px)`,
+                width: `${extendedCards.length * 576}px`
+              }}
+              onTransitionEnd={handleTransitionEnd}
+            >
+              {extendedCards.map((card, index) => (
+                <div key={index} className="p-2 flex-shrink-0" style={{ width: '576px', height: '276px' }}>
+                  <div className="h-full w-full rounded-md overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${card.image})` }}>
+                    <div className="bg-gray-900 bg-opacity-50 flex items-center h-full">
+                      <div className="px-10 max-w-xl">
+                        <h2 className="text-2xl text-white font-semibold">{card.title}</h2>
+                        <p className="mt-2 text-gray-400">{card.description}</p>
+                        <button className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
+                          <span>Shop Now</span>
+                          <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button className="absolute top-2 right-16 bg-white rounded-full p-2 shadow-md" onClick={handlePrev}>
+              &lt;
+            </button>
+            <button className="absolute top-2 right-4 bg-white rounded-full p-2 shadow-md" onClick={handleNext}>
+              &gt;
+            </button>
+
+            <div className="absolute bottom-4 w-full flex justify-center space-x-2">
+              {cards.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-2 w-2 rounded-full cursor-pointer ${index === currentIndex ? 'bg-white' : 'bg-gray-400'}`}
+                  onClick={() => handleDotClick(index)}
+                ></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+{/* storescards1scroll Container */}
                     <div className="px-4">
 
                       <div className="flex items-center justify-between space-x-28 px-4">

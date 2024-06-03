@@ -116,32 +116,32 @@ function SlowTown() {
 
     const cards = [
         {
-          title: "Back Pack",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
-          image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+            title: "Fresh Produce",
+            description: "Get farm-fresh fruits and vegetables delivered to your doorstep. Quality you can trust, convenience you will love.",
+            image: "/images/1.webp"
         },
         {
-          title: "Games",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
-          image: "https://images.unsplash.com/photo-1486401899868-0e435ed85128?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+            title: "Dairy Products",
+            description: "Order fresh milk, cheese, yogurt, and more. Fast delivery and reliable service at your fingertips.",
+            image: "/images/2.webp"
         },
         {
-          title: "Back Pack",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
-          image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+            title: "Bakery Goods",
+            description: "Craving fresh bread and pastries? Get delicious bakery items delivered from local bakers. Quick and easy.",
+            image: "/images/3.webp"
         },
         {
-          title: "Games",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
-          image: "https://images.unsplash.com/photo-1486401899868-0e435ed85128?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+            title: "Pantry Staples",
+            description: "Stock up on pantry essentials with our fast and convenient delivery service. Everything you need in one place.",
+            image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
         },
         {
-          title: "Back Pack",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
-          image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+            title: "Beverages",
+            description: "Shop a wide range of beverages, from juices to sodas. Refresh your day with our top selections.",
+            image: "/images/4.webp"
         },
         // Add more cards as needed
-      ];
+    ];
     //footer stuff
 
     const handleLanguageChange = () => {
