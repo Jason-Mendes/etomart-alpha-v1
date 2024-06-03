@@ -20,6 +20,7 @@ import Pannarotis from './components/Regions/Towns/Shops/Xrestaurants/Pannarotis
 import Checkers from './components/Regions/Towns/Shops/Xstores/Checkers';
 import Clicks from './components/Regions/Towns/Shops/Xpharmacies/Clicks';
 import JoesBeerhouse from './components/Regions/Towns/Shops/Xrestaurants/JoesBeerhouse';
+import SlowTown from './components/Regions/Towns/Shops/Xrestaurants/SlowTown';
 function App() {
   return (
     <Router>
@@ -48,6 +49,7 @@ function App() {
             <Route path="/LP/Khomas/Towns/Restaurants" element={<Restaurants />} />
             <Route path="/LP/Khomas/Towns/Restaurant/Pannarotis" element={<Pannarotis />} />
             <Route path="/LP/Khomas/Towns/Restaurant/JoesBeerhouse" element={<JoesBeerhouse />} />
+            <Route path="/LP/Khomas/Towns/Restaurant/SlowTown" element={<SlowTown />} />
              {/* All Restaurants and Specifics ends*/}
               {/* All Pharmacies and Specifics*/}
             <Route path="/LP/Khomas/Towns/Pharmacies" element={<Pharmacies />} />

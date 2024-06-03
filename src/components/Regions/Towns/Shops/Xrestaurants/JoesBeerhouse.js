@@ -10,105 +10,93 @@ function JoesBeerhouse() {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-  const navcategories = [
+  
+
+  
+  const cards = [
     {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+      title: "Back Pack",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
+      image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+      title: "Games",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
+      image: "https://images.unsplash.com/photo-1486401899868-0e435ed85128?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+      title: "Back Pack",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
+      image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+      title: "Games",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
+      image: "https://images.unsplash.com/photo-1486401899868-0e435ed85128?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+      title: "Back Pack",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore facere provident molestias ipsam sint voluptatum pariatur.",
+      image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
     },
-    {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
-    },
-    {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
-    },
-    {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
-    },
-    {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
-    },
-    {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
-    },
-    {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    },
-    // Add more categories as needed
+    // Add more cards as needed
   ];
+  
+   const [currentIndex, setCurrentIndex] = useState(0);
+  const containerRef = useRef(null);
+  const extendedCards = [...cards, ...cards, ...cards];
+  const [isPaused, setIsPaused] = useState(false);
 
+  useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        handleNext();
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [isPaused, currentIndex]);
 
-  const filteredCategories = navcategories.filter((category) =>
-    category.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => prevIndex + 1);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => prevIndex - 1);
+  };
+
+  const handleTransitionEnd = () => {
+    if (currentIndex >= extendedCards.length - cards.length) {
+      setCurrentIndex(cards.length);
+      containerRef.current.style.transition = 'none';
+      containerRef.current.style.transform = `translateX(-${cards.length * 576}px)`;
+      setTimeout(() => {
+        containerRef.current.style.transition = 'transform 0.5s ease-in-out';
+      }, 50);
+    }
+    if (currentIndex <= 0) {
+      setCurrentIndex(extendedCards.length - 2 * cards.length);
+      containerRef.current.style.transition = 'none';
+      containerRef.current.style.transform = `translateX(-${(extendedCards.length - 2 * cards.length) * 576}px)`;
+      setTimeout(() => {
+        containerRef.current.style.transition = 'transform 0.5s ease-in-out';
+      }, 50);
+    }
+  };
+
+  const pauseScroll = () => {
+    setIsPaused(true);
+    setTimeout(() => {
+      setIsPaused(false);
+    }, 5000);
+  };
+
+  const handleDotClick = (index) => {
+    setCurrentIndex(index);
+    pauseScroll();
+  };
+
+  // Search Pane
+
   const storescards1 = [
     {
       name: "Vennes Cafe",
@@ -419,6 +407,62 @@ https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f
                         </div>
                       </header>
                     </div>
+                      {/* storescards1scroll Container */} 
+       <div>
+      <main className="my-8">
+        <div className="container mx-auto px-4">
+          {/* Carousel Container */}
+          <div className="relative mt-8 overflow-hidden">
+            <div
+              ref={containerRef}
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                transform: `translateX(-${currentIndex * 576}px)`,
+                width: `${extendedCards.length * 576}px`
+              }}
+              onTransitionEnd={handleTransitionEnd}
+            >
+              {extendedCards.map((card, index) => (
+                <div key={index} className="p-2 flex-shrink-0" style={{ width: '576px', height: '276px' }}>
+                  <div className="h-full w-full rounded-md overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${card.image})` }}>
+                    <div className="bg-gray-900 bg-opacity-50 flex items-center h-full">
+                      <div className="px-10 max-w-xl">
+                        <h2 className="text-2xl text-white font-semibold">{card.title}</h2>
+                        <p className="mt-2 text-gray-400">{card.description}</p>
+                        <button className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
+                          <span>Shop Now</span>
+                          <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button className="absolute top-2 right-16 bg-white rounded-full p-2 shadow-md" onClick={handlePrev}>
+              &lt;
+            </button>
+            <button className="absolute top-2 right-4 bg-white rounded-full p-2 shadow-md" onClick={handleNext}>
+              &gt;
+            </button>
+
+            <div className="absolute bottom-4 w-full flex justify-center space-x-2">
+              {cards.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-2 w-2 rounded-full cursor-pointer ${index === currentIndex ? 'bg-white' : 'bg-gray-400'}`}
+                  onClick={() => handleDotClick(index)}
+                ></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+{/* storescards1scroll Container */}
                     <div className="px-4">
 
                       <div className="flex items-center justify-between space-x-28 px-4">
