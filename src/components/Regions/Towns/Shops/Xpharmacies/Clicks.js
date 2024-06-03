@@ -13,128 +13,136 @@ function Clicks () {
   };
   const navcategories = [
     {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "Prescription Medications",
+        imgSrc: "/images/pharmacies/pm.png",
+        href: "/pharmacy/prescription-medications"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "Over-the-Counter Medications",
+        imgSrc: "/images/pharmacies/ocm.png",
+        href: "/pharmacy/over-the-counter-medications"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "Vitamins & Supplements",
+        imgSrc: "/images/pharmacies/vs.png",
+        href: "/pharmacy/vitamins-supplements"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "Personal Care",
+        imgSrc: "/images/pharmacies/pc.png",
+        href: "/pharmacy/personal-care"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "Health & Wellness",
+        imgSrc: "/images/pharmacies/hw.png",
+        href: "/pharmacy/health-wellness"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "Baby & Child Care",
+        imgSrc: "/images/pharmacies/bcc.png",
+        href: "/pharmacy/baby-child-care"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "Medical Equipment",
+        imgSrc: "/images/pharmacies/me.png",
+        href: "/pharmacy/medical-equipment"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "First Aid",
+        imgSrc: "/images/pharmacies/fa.png",
+        href: "/pharmacy/first-aid"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "Skincare",
+        imgSrc: "/images/pharmacies/sc.png",
+        href: "/pharmacy/skincare"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
-    }, {
-      name: "Welcome to the invitation 💌",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/edaa5498-a37a-11ec-9fec-c6b54fe3d9ba_________________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0"
+        name: "Oral Care",
+        imgSrc: "/images/pharmacies/oc.png",
+        href: "/pharmacy/oral-care"
     },
     {
-      name: "1,2,3 Get started!",
-      imgSrc: "https://imageproxy.wolt.com/menu/menu-images/5e9819863b77a4c553fd9a48/beeff388-7075-11ed-bb5f-f2a40b70dde9___________.jpeg",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1"
+        name: "Hair Care",
+        imgSrc: "/images/pharmacies/hc.png",
+        href: "/pharmacy/hair-care"
     },
+    {
+        name: "Foot Care",
+        imgSrc: "/images/pharmacies/fc.png",
+        href: "/pharmacy/foot-care"
+    },
+    {
+        name: "Allergy & Sinus",
+        imgSrc: "/images/pharmacies/as.png",
+        href: "/pharmacy/allergy-sinus"
+    },
+  //   {
+  //     name: "Eye Care",
+  //     imgSrc: "/images/pharmacies/",
+  //     href: "/pharmacy/eye-care"
+  //  },
+    {
+        name: "Pain Relief",
+        imgSrc: "/images/pharmacies/pr.png",
+        href: "/pharmacy/pain-relief"
+    },
+    {
+        name: "Digestive Health",
+        imgSrc: "/images/pharmacies/dh.png",
+        href: "/pharmacy/digestive-health"
+    },
+    {
+        name: "Cold & Flu",
+        imgSrc: "/images/pharmacies/cf.png",
+        href: "/pharmacy/cold-flu"
+    },
+    {
+        name: "Diabetes Care",
+        imgSrc: "/images/pharmacies/dc.png",
+        href: "/pharmacy/diabetes-care"
+    },
+    {
+        name: "Women's Health",
+        imgSrc: "/images/pharmacies/wh.png",
+        href: "/pharmacy/womens-health"
+    },
+    {
+        name: "Men's Health",
+        imgSrc: "/images/pharmacies/mh.png",
+        href: "/pharmacy/mens-health"
+    }
     // Add more categories as needed
-  ];
-
-  const cards = [
-    {
-        title: "Fresh Produce",
-        description: "Get farm-fresh fruits and vegetables delivered to your doorstep. Quality you can trust, convenience you will love.",
-        image: "/images/1.webp"
-    },
-    {
-        title: "Dairy Products",
-        description: "Order fresh milk, cheese, yogurt, and more. Fast delivery and reliable service at your fingertips.",
-        image: "/images/2.webp"
-    },
-    {
-        title: "Bakery Goods",
-        description: "Craving fresh bread and pastries? Get delicious bakery items delivered from local bakers. Quick and easy.",
-        image: "/images/3.webp"
-    },
-    {
-        title: "Pantry Staples",
-        description: "Stock up on pantry essentials with our fast and convenient delivery service. Everything you need in one place.",
-        image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
-    },
-    {
-        title: "Beverages",
-        description: "Shop a wide range of beverages, from juices to sodas. Refresh your day with our top selections.",
-        image: "/images/4.webp"
-    },
-    // Add more cards as needed
 ];
 
+const cards = [
+  {
+      title: "Aspirin",
+      description: "Effective pain reliever for headaches, muscle pain, and minor arthritis. Trusted relief you can count on.",
+      image: "/images/pharmacies/alphapharm.png",
+  },
+  {
+      title: "Ibuprofen",
+      description: "Powerful anti-inflammatory medication for reducing pain and swelling. Ideal for back pain, toothaches, and menstrual cramps.",
+      image: "/images/pharmacies/Ibuprofen.png"
+  },
+  {
+      title: "Acetaminophen",
+      description: "Safe and effective pain reliever and fever reducer. Perfect for all ages and common ailments.",
+      image: "/images/pharmacies/Acetaminophen.png"
+  },
+  {
+      title: "Antihistamines",
+      description: "Relieve allergy symptoms such as runny nose, sneezing, and itchy eyes. Fast-acting and long-lasting.",
+      image: "/images/pharmacies/Antihistamines.png"
+  },
+  {
+      title: "Cough Syrup",
+      description: "Soothe your throat and ease your cough with our effective cough syrups. Available for both adults and children.",
+      image: "/images/pharmacies/CoughSyrup.png"
+  },
+  // Add more cards as needed
+];
 const [currentIndex, setCurrentIndex] = useState(0);
 const containerRef = useRef(null);
 const extendedCards = [...cards, ...cards, ...cards];
@@ -191,72 +199,73 @@ const handleDotClick = (index) => {
   const filteredCategories = navcategories.filter((category) =>
     category.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+
   const storescards1 = [
     {
-      name: "Vennes Cafe",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
-      href: "/en/stores/vennes-cafe/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Cafe",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "10–30 min",
-      deliveryTime: true
+        name: "Aspirin",
+        imgSrc: "/images/pharmacies/a.png",
+        href: "/en/stores/aspirin/",
+        discount: null,
+        isEtomartStore: false,
+        priceRange: "€",
+        category: "Pain Relief",
+        description: "Effective pain reliever for headaches, muscle pain, and minor arthritis. Trusted relief you can count on.",
+        pickupTime: "10–30 min",
+        deliveryTime: true
     },
     {
-      name: "Istanbul Kebab House",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
-      href: "/en/stores/istanbul-kebab-house/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Kebab",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true
+        name: "Ibuprofen",
+        imgSrc: "/images/pharmacies/Ibuprofen.png",
+        href: "/en/stores/ibuprofen/",
+        discount: null,
+        isEtomartStore: false,
+        priceRange: "€",
+        category: "Anti-inflammatory",
+        description: "Powerful anti-inflammatory medication for reducing pain and swelling. Ideal for back pain, toothaches, and menstrual cramps.",
+        pickupTime: "20–40 min",
+        deliveryTime: true
     },
     {
-      name: "Teater Kvarteret Barista",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
-      href: "/en/stores/teater-kvarteret-barista/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Coffee",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "15–35 min",
-      deliveryTime: false
+        name: "Acetaminophen",
+        imgSrc: "/images/pharmacies/Acetaminophen.png",
+        href: "/en/stores/acetaminophen/",
+        discount: null,
+        isEtomartStore: false,
+        priceRange: "€",
+        category: "Pain Relief",
+        description: "Safe and effective pain reliever and fever reducer. Perfect for all ages and common ailments.",
+        pickupTime: "15–35 min",
+        deliveryTime: false
     },
     {
-      name: "Nordic Food",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
-      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Nordic",
-      description: "Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and onionsTasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true
+        name: "Antihistamines",
+        imgSrc: "/images/pharmacies/Antihistamines.png",
+        href: "/en/stores/antihistamines/",
+        discount: 20,
+        isEtomartStore: false,
+        priceRange: "€",
+        category: "Allergy Relief",
+        description: "Relieve allergy symptoms such as runny nose, sneezing, and itchy eyes. Fast-acting and long-lasting.",
+        pickupTime: "20–40 min",
+        deliveryTime: true
     },
     {
-      name: "Nordic Food",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
-      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Nordic",
-      description: "Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and onionsTasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true
+        name: "Cough Syrup",
+        imgSrc: "/images/pharmacies/CoughSyrup.png",
+        href: "/en/stores/cough-syrup/",
+        discount: null,
+        isEtomartStore: false,
+        priceRange: "€",
+        category: "Cough Relief",
+        description: "Soothe your throat and ease your cough with our effective cough syrups. Available for both adults and children.",
+        pickupTime: "10–30 min",
+        deliveryTime: true
     },
+    // Add more cards as needed
+];
 
-    // Add more items as needed
-  ];
-
-
+   
         //Footer stuff
         const companyLinks = [
             { label: 'Jobs', url: 'https://careers.wolt.com' },
@@ -420,15 +429,7 @@ const handleDotClick = (index) => {
                             decoding="auto"
                             fetchPriority="high"
                             sizes="100vw"
-                            srcSet="
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=200 200w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=300 300w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=600 600w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=960 960w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg 1200w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=1600 1600w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=1920 1920w
-"
+                            srcSet="/images/pharmacies/clicks.png"
                             src="https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg"
                             alt=""
                             className="w-full h-[510px] object-cover "
@@ -440,8 +441,8 @@ https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f
                           
                           
                           <div className="px-4">
-                            <h1 className="text-white text-4xl font-bold">Burger Room</h1>
-                            <p className="text-white text-lg">Burgers Restaurant</p>
+                            <h1 className="text-white text-4xl font-bold">Clicks</h1>
+                            <p className="text-white text-lg">Feel Good Pay Less</p>
                             <div className="mt-2 flex items-center">
                               <button
                                 data-test-id="venue-favorite"

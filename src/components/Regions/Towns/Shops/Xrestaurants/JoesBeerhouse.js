@@ -12,31 +12,57 @@ function JoesBeerhouse() {
   };
   
   const cards = [
-    {
-        title: "Fresh Produce",
-        description: "Get farm-fresh fruits and vegetables delivered to your doorstep. Quality you can trust, convenience you will love.",
-        image: "/images/1.webp"
-    },
-    {
-        title: "Dairy Products",
-        description: "Order fresh milk, cheese, yogurt, and more. Fast delivery and reliable service at your fingertips.",
-        image: "/images/2.webp"
-    },
-    {
-        title: "Bakery Goods",
-        description: "Craving fresh bread and pastries? Get delicious bakery items delivered from local bakers. Quick and easy.",
-        image: "/images/3.webp"
-    },
-    {
-        title: "Pantry Staples",
-        description: "Stock up on pantry essentials with our fast and convenient delivery service. Everything you need in one place.",
-        image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
-    },
-    {
-        title: "Beverages",
-        description: "Shop a wide range of beverages, from juices to sodas. Refresh your day with our top selections.",
-        image: "/images/4.webp"
-    },
+      {
+          title: "Fine Dining",
+          description: "Experience exquisite gourmet meals from top-rated fine dining restaurants. Indulge in luxury and sophistication.",
+          image: "/images/restaurants/fine-dining.webp"
+      },
+      {
+          title: "Fast Food",
+          description: "Get your favorite fast food delivered hot and fresh. Burgers, fries, pizza, and more, just a click away.",
+          image: "/images/restaurants/fast-food.webp"
+      },
+      {
+          title: "Cafes & Coffee Shops",
+          description: "Enjoy a cozy cafe atmosphere with freshly brewed coffee and delicious pastries. Perfect for a relaxing break.",
+          image: "/images/restaurants/cafe-coffee.webp"
+      },
+      {
+          title: "Seafood",
+          description: "Savor the taste of the ocean with fresh seafood dishes from top seafood restaurants. Delivered right to your door.",
+          image: "/images/restaurants/seafood.webp"
+      },
+      // {
+      //     title: "Asian Cuisine",
+      //     description: "Explore the flavors of Asia with a variety of dishes from Chinese, Japanese, Thai, and more. Authentic and delicious.",
+      //     image: "/images/restaurants/asian-cuisine.webp"
+      // },
+    //   {
+    //     title: "Italian Cuisine",
+    //     description: "Delight in classic Italian dishes, from pasta to pizza. Enjoy the rich and hearty flavors of Italy.",
+    //     image: "/images/restaurants/italian-cuisine.webp"
+    // },
+    // {
+    //     title: "Mexican Cuisine",
+    //     description: "Spice up your meal with vibrant and flavorful Mexican cuisine. Tacos, burritos, and more, delivered fast.",
+    //     image: "/images/restaurants/mexican-cuisine.webp"
+    // },
+    // {
+    //     title: "Vegetarian & Vegan",
+    //     description: "Discover delicious vegetarian and vegan options that will satisfy your cravings. Healthy and tasty.",
+    //     image: "/images/restaurants/vegetarian-vegan.webp"
+    // },
+    // {
+    //     title: "Desserts",
+    //     description: "Indulge in sweet treats and desserts from local bakeries and dessert shops. Perfect for any occasion.",
+    //     image: "/images/restaurants/desserts.webp"
+    // },
+    // {
+    //     title: "Healthy Options",
+    //     description: "Choose from a variety of healthy meal options that cater to your dietary needs. Fresh, nutritious, and delicious.",
+    //     image: "/images/restaurants/healthy-options.webp"
+    // },
+  
     // Add more cards as needed
 ];
   
@@ -97,8 +123,8 @@ function JoesBeerhouse() {
 
   const storescards1 = [
     {
-      name: "Vennes Cafe",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
+      name: "Vennes",
+      imgSrc: "/images/restaurants/v.png",
       href: "/en/stores/vennes-cafe/",
       discount: null,
       isEtomartStore: false,
@@ -110,7 +136,7 @@ function JoesBeerhouse() {
     },
     {
       name: "Istanbul Kebab House",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
+      imgSrc: "/images/restaurants/i.png",
       href: "/en/stores/istanbul-kebab-house/",
       discount: null,
       isEtomartStore: false,
@@ -122,7 +148,7 @@ function JoesBeerhouse() {
     },
     {
       name: "Teater Kvarteret Barista",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
+      imgSrc: "/images/restaurants/t.png",
       href: "/en/stores/teater-kvarteret-barista/",
       discount: null,
       isEtomartStore: false,
@@ -134,7 +160,7 @@ function JoesBeerhouse() {
     },
     {
       name: "Nordic Food",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
+      imgSrc: "/images/restaurants/n.png",
       href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
       discount: 20,
       isEtomartStore: false,
@@ -145,8 +171,8 @@ function JoesBeerhouse() {
       deliveryTime: true
     },
     {
-      name: "Nordic Food",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
+      name: "Italian Cuisine",
+      imgSrc: "/images/restaurants/ic.png",
       href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
       discount: 20,
       isEtomartStore: false,
@@ -154,6 +180,18 @@ function JoesBeerhouse() {
       cuisine: "Nordic",
       description: "Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and onionsTasty burger with tomato cheese and onions",
       pickupTime: "20–40 min",
+      deliveryTime: true
+    },
+    {
+      name: "Vennes",
+      imgSrc: "/images/restaurants/v.png",
+      href: "/en/stores/vennes-cafe/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Cafe",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "10–30 min",
       deliveryTime: true
     },
 
@@ -321,25 +359,17 @@ function JoesBeerhouse() {
                             decoding="auto"
                             fetchPriority="high"
                             sizes="100vw"
-                            srcSet="
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=200 200w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=300 300w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=600 600w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=960 960w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg 1200w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=1600 1600w,
-https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg?w=1920 1920w
-"
+                            srcSet="/images/restaurants/joesbeerhouse.png"
                             src="https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg"
                             alt=""
-                            className="w-full h-[510px] object-cover "
+                            className="w-full h-[510px] object-scale-down "
                           />
                           <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
                         </div>
                         <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
                           <div className="px-4">
-                            <h1 className="text-white text-4xl font-bold">Burger Room</h1>
-                            <p className="text-white text-lg">Burgers Restaurant</p>
+                            <h1 className="text-white text-4xl font-bold">Joes Beer House</h1>
+                            <p className="text-white text-lg">Est 1991</p>
                             <div className="mt-2 flex items-center">
                               <button
                                 data-test-id="venue-favorite"

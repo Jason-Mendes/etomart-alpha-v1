@@ -263,239 +263,97 @@ function LandingPage() {
   const handleVideoEnded = () => {
     setIsVideoVisible(false);
   };
-
-  return (
-    <div><div>
-      <LPNavBar />
-    </div>
-    <div id="Landing_Page_Main_Body" className="content-wrapper ">
-        <div className="overflow-auto bg-[#fafafa]">
-          {/* Hero Section */}
-          {/* Orange Section */}
-          <div className="bg-[#ee9613] border border-solid border-white-A700_19 rounded-tr-[150px] rounded-bl-[150px] rounded-br-[150px] shadow-xl relative p-4 w-full overflow-auto">
-            <div id="text_1_image_container" className="relative">
-              <div className="container mx-auto rounded-bl-[150px] rounded-br-[150px] flex flex-row md:flex-row items-center px-10">
-                <div
-                  id="text_1_container"
-                  className="relative flex justify-between items-center p-2 md:pb-20 pb-14"
-                  style={{ width: "100%", margin: "0 auto" }}
-                >
-                  <p className="relative  sm:text-3xl text-nowrap md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo font-bold lg:ml-24">
-                    Your Daily Food <br /> Delivered <br /> Hot & Fresh
-                  </p>
-                </div>
-                <div
-                  id="text_1_image_container"
-                  className="flex  flex-row md:flex-row items-center justify-evenly md:gap-0 lg:gap-16 xl:gap-20 2xl:gap-72 md:mr-2 mr-2 md:p-2"
-                  style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
-                >
-                  <div id="image_container" className="relative px-10 m-2">
-                    {/* p-10 controls the stuff scrolling left to right when the screen is smaller  */}
-                    <img
-                      className="relative object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] w-96 h-auto md:w-screen md:h-60 lg:w-screen lg:h-64 xl:w-screen xl:h-72 2xl:w-screen 2xl:h-80"
-                      src="/images/Main_groceries_reverse.jpg"
-                      loading="lazy"
-                      alt="Groceries" />
-                    <div
-                      id="text_2_container"
-                      className="relative flex flex-col items-center justify-center p-2 w-auto"
-                    >
-                      <p
-                        className="text-xs sm:text-base md:text-2xl lg:text-3xl xl:text-3xl 2xl:text-5xl text-white font-josefin_sans font-bold text-center whitespace-nowrap"
-                        style={{ width: "100%", margin: "0 auto" }}
-                      >
-                        Groceries, Meals, Pharmacies, anything!
-                      </p>
-                    </div>
+// JSX content
+return (
+  <div>
+    <LPNavBar />
+    <div id="Landing_Page_Main_Body" className="content-wrapper">
+      <div className="overflow-auto bg-[#fafafa]">
+        {/* Hero Section */}
+        <div className="bg-[#ee9613] border border-solid border-white-A700_19 rounded-tr-[150px] rounded-bl-[150px] rounded-br-[150px] shadow-xl relative p-4 w-full overflow-auto">
+          <div id="text_1_image_container" className="relative">
+            <div className="container mx-auto rounded-bl-[150px] rounded-br-[150px] flex flex-row md:flex-row items-center px-10">
+              <div id="text_1_container" className="relative flex justify-between items-center p-2 md:pb-20 pb-14" style={{ width: "100%", margin: "0 auto" }}>
+                <p className="relative sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo font-bold lg:ml-24">
+                  Your Daily Food <br /> Delivered <br /> Hot & Fresh
+                </p>
+              </div>
+              <div id="text_1_image_container" className="flex flex-row items-center justify-evenly md:gap-0 lg:gap-16 xl:gap-20 2xl:gap-72 md:mr-2 mr-2 md:p-2" style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}>
+                <div id="image_container" className="relative px-10 m-2">
+                  <img className="relative object-cover rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] w-96 h-auto md:w-screen md:h-60 lg:w-screen lg:h-64 xl:w-screen xl:h-72 2xl:w-screen 2xl:h-80" src="/images/Main_groceries_reverse.jpg" loading="lazy" alt="Groceries" />
+                  <div id="text_2_container" className="relative flex flex-col items-center justify-center p-2 w-auto">
+                    <p className="text-xs sm:text-base md:text-2xl lg:text-3xl xl:text-3xl 2xl:text-5xl text-white font-josefin_sans font-bold text-center whitespace-nowrap" style={{ width: "100%", margin: "0 auto" }}>
+                      Groceries, Meals, Pharmacies, anything!
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {/* Location stuff */}
-          <div
-            id="LP_location_buttons_container_2"
-            className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
-            style={{
-              maxWidth: "1800px",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            {/* different styling method to make it start at the end of the page<div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>*/}
-            <div className="button-group flex items-start ">
-              <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
-                {/* Button 1 */}
-                <Button
-                  className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
-                  onClick={handleEditClick}
-                >
-                  <img
-                    className="h-7 mr-2"
-                    src="/images/img_linkedin.svg"
-                    alt="linkedin"
-                    loading="lazy" />
-                  <p
-                    className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${isEditing ? "hidden" : ""}`}
-                  >
-                    What's your Address?
-                  </p>
-                  <input
-                    className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${!isEditing ? "hidden" : ""}`}
-                    type="text"
-                    value={location}
-                    onChange={handleInputChange} />
-                </Button>
+        </div>
 
-                {/* Button 2 */}
-                <Button
-                  className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
-                  onClick={handleSaveClick}
-                >
-                  <img
-                    className="h-5 mr-2"
-                    src="/images/img_save.svg"
-                    alt="save"
-                    loading="lazy" />
-                  <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-zinc-950 font-bold">
-                    Use Current Location
-                  </p>
-                </Button>
+        {/* Location Buttons Section */}
+        <div id="LP_location_buttons_container_2" className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen" style={{ maxWidth: "1800px", marginLeft: "auto", marginRight: "auto" }}>
+          <div className="button-group flex items-start">
+            <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
+              <Button className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200" onClick={handleEditClick}>
+                <img className="h-7 mr-2" src="/images/img_linkedin.svg" alt="linkedin" loading="lazy" />
+                <p className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${isEditing ? "hidden" : ""}`}>What's your Address?</p>
+                <input className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${!isEditing ? "hidden" : ""}`} type="text" value={location} onChange={handleInputChange} />
+              </Button>
+
+              <Button className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200" onClick={handleSaveClick}>
+                <img className="h-5 mr-2" src="/images/img_save.svg" alt="save" loading="lazy" />
+                <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-zinc-950 font-bold">Use Current Location</p>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Explore Regions Section */}
+        <div id="LP_section_3_orange" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}>
+          <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
+            {isLargeScreen ? (
+              <Text className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">Explore Etomart Regions</Text>
+            ) : (
+              <Text className="flex justify-center text-2xl text-black-900 font-Agbalumo font-bold">Explore Etomart Regions</Text>
+            )}
+          </div>
+          <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
+            {isLargeScreen ? (
+              <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">Delivered to you at your convenience!</Text>
+            ) : (
+              <Text className="flex justify-center text-1xl text-white font-josefin_sans">Delivered to you at your convenience!</Text>
+            )}
+          </div>
+          {/* Regions Buttons */}
+          <div id="button sizing" className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-2 px-16">
+            {regions.map((region) => (
+              <div key={region.code} className="flex justify-start">
+                <div className="button-row flex flex-col gap-4 mb-4 w-full">
+                  <Button className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[280px] overflow-hidden" onClick={() => handleRegionClick(region, true)} name={region.name} flagPath={region.flagPath}>
+                    <div className="flex items-center flex-grow">
+                      <img className="rounded-[36px] h-10 mr-2 flex-shrink-0" src={region.flagPath} alt={`${region.name} flag`} loading="lazy" />
+                      <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">{region.name}</p>
+                    </div>
+                    <div className="ml-auto pr-2 flex-shrink-0">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-4 h-6 fill-current text-zinc-950">
+                        <g fill="none" fillRule="evenodd">
+                          <path fill="none" d="M0 0h24v24H0z" />
+                          <path d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164" fill="#202125" />
+                        </g>
+                      </svg>
+                    </div>
+                  </Button>
+                </div>
               </div>
-            </div>
+            ))}
+            <RegionsBanner isVisible={isBannerVisible} imageSrc={bannerImage} closeBanner={closeBanner} nextPage={nextPage} />
           </div>
-
-          {/* Location stuff ends */}
-
-          {/* Location stuff*/}
-          {/* <div  id="location_buttons_container" className=" bg-white flex items-center p-5 m-8" style={{ width: '100%', maxWidth: '1260px', margin: '0 auto' }}>
-      <div className="button-group flex flex-col items-start">
-        <div id="location_buttons_1_container" className="button-row flex items-center mb-6">
-          <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
-            <img className="h-7 mr-2" src="/images/img_linkedin.svg" alt="linkedin" loading="lazy"></img>
-            <p className="text-left md:text-3xl sm:text-[28px] text-[32px] text-gray-700 font-bold">What's your Address?</p>
-          </Button>
-        </div>
-        {/* current Location stuff
-        <div id="location_buttons_1_container" className="button-row flex mt-2">
-          <Button className="flex items-center bg-white text-black px-4 py-2 ml-4 rounded-[36px] shadow-lg pr-8 font-montserrat border border-slate-100">
-            <img className="h-5 mr-2" src="/images/img_save.svg" alt="save" loading="lazy" />
-            <p className="text-left md:text-lg sm:text-[28px] text-[32px] text-zinc-950 font-bold">Use Current Location</p>
-          </Button>
         </div>
       </div>
-    </div> */}
-          {/* Locations */}
-          {/* Conditional Rendering based on Screen Size */}
 
-          <div
-            id="LP_section_3_orange"
-            className=" flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10"
-            style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
-          >
-            <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
-              {isLargeScreen ? (
-                <Text className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">
-                  Explore Etomart Regions
-                </Text>
-              ) : (
-                <Text className="flex justify-center text-2xl text-black-900 font-Agbalumo font-bold ">
-                  Explore Etomart Regions
-                </Text>
-              )}
-            </div>
-            <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
-              {isLargeScreen ? (
-                <Text className="text-1xl sm:text-1xl md:text-1xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">
-                  Delivered to you at your convenience!
-                </Text>
-              ) : (
-                <Text className="flex justify-center text-1xl text-white font-josefin_sans ">
-                  Delivered to you at your convenience!
-                </Text>
-              )}
-             {/* Regions Buttons */}
-<div
-  id="button sizing"
-  className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-2 px-16"
->
-  {regions.map((region) => (
-    <div key={region.code} className="flex justify-start">
-      <div className="button-row flex flex-col gap-4 mb-4 w-full">
-        <Button
-          className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[280px] overflow-hidden"
-          onClick={() => handleRegionClick(region, true)} // Pass `true` to navigate
-          name={region.name}
-          flagPath={region.flagPath}
-        >
-          <div className="flex items-center flex-grow">
-            <img
-              className="rounded-[36px] h-10 mr-2 flex-shrink-0"
-              src={region.flagPath}
-              alt={`${region.name} flag`}
-              loading="lazy"
-            />
-            <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
-              {region.name}
-            </p>
-          </div>
-          <div className="ml-auto pr-2 flex-shrink-0">
-            <svg
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-6 fill-current text-zinc-950"
-            >
-              <g fill="none" fillRule="evenodd">
-                <path fill="none" d="M0 0h24v24H0z" />
-                <path
-                  d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
-                  fill="#202125"
-                />
-              </g>
-            </svg>
-          </div>
-        </Button>
-      </div>
-    </div>
-  ))}
-{/* Regions Buttons ends*/}
- <RegionsBanner
-        isVisible={isBannerVisible}
-        imageSrc={bannerImage}
-        closeBanner={closeBanner}
-        nextPage={nextPage}
-      />
-</div></div></div>
-        </div>
-        <div
-          id="LP_location_buttons_container_2"
-          className="flex items-center justify-center  p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
-          style={{
-            maxWidth: "1800px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          <div
-            id="LP_Did_you_know_container_4"
-            class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6"
-          >
-            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-              <p class="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
-                Did you Know?
-              </p>
-            </div>
-            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-              <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-zinc-950_01 font-josefin_sans font-semibold">
-                Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non
-                et elit. Dolor turpis molestie dui magnis facilisis at fringilla
-                quam.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div
+      <div
           id="LP_section_3_orange"
           className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
           style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}
@@ -559,554 +417,303 @@ function LandingPage() {
           </div>
         </div>
 
+      {/* Testimonials Section */}
+      <div id="LP_location_Testimonials_container_2" className="flex items-center justify-center p-16 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen" style={{ maxWidth: "1800px", marginLeft: "auto", marginRight: "auto" }}>
+        <div id="Testimonials Card" className="flex flex-col items-center justify-center w-full -mt-16">
+          <div id="LP_testimonials_container_4" className="flex flex-col items-center gap-[35px] justify-start w-full pt-16 pb-16 px-4 md:px-10">
+            <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+              <p className="text-center sm:text-[28px] md:text-[38px] text-[38px] text-orange-500 w-auto font-bold font-shrikhand">Testimonials</p>
+            </div>
+            <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+              <p className="text-center md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">What Others Are Saying</p>
+            </div>
+            <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+              <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-zinc-950_01 font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
+            </div>
 
-
-        <div
-          id="LP_location_Testimonials_container_2"
-          className="flex items-center justify-center  p-16 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
-          style={{
-            maxWidth: "1800px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}>
-          <div id="Testimonials Card" className="flex flex-col items-center justify-center w-full -mt-16">
-            <div
-              id="LP_testimonials_container_4"
-              className="flex flex-col items-center gap-[35px] justify-start w-full pt-16 pb-16 px-4 md:px-10"
-            >
-              <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                <p className="text-center sm:text-[28px] md:text-[38px] text-[38px] text-orange-500 w-auto font-bold font-shrikhand">
-                  Testimonials
-                </p>
-              </div>
-              <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                <p className="text-center md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
-                  What Others Are Saying
-                </p>
-              </div>
-              <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                <p className="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-zinc-950_01 font-josefin_sans font-semibold">
-                  Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
-                  non et elit. Dolor turpis molestie dui magnis facilisis at
-                  fringilla quam.
-                </p>
-              </div>
-
-              {/* Slideshow */}
-              <div
-                className="flex transition-transform duration-500 ease-in-out transform"
-                key={currentSlide}
-              >
-                {testimonials.map((testimonial, index) => (
-                  <div
-                    key={index}
-                    className={`bg-white border border-slate-200   rounded-bl-[200px] rounded-br-[200px] rounded-tl-[200px] rounded-tr-[200px] shadow-md max-w-full md:max-w-[928px] p-6 ${currentSlide === index
-                      ? "opacity-100"
-                      : "opacity-0 absolute"}`}
-                  >
-                    <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
-                      <img
-                        className="flex items-center justify-center h-[117px] md:h-auto rounded-[50%] w-[117px]"
-                        src={testimonial.imageSrc}
-                        alt={`Testimonial ${index + 1}`} />
+            {/* Slideshow */}
+            <div className="flex transition-transform duration-500 ease-in-out transform" key={currentSlide}>
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className={`bg-white border border-slate-200 rounded-bl-[200px] rounded-br-[200px] rounded-tl-[200px] rounded-tr-[200px] shadow-md max-w-full md:max-w-[928px] p-6 ${currentSlide === index ? "opacity-100" : "opacity-0 absolute"}`}>
+                  <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
+                    <img className="flex items-center justify-center h-[117px] md:h-auto rounded-[50%] w-[117px]" src={testimonial.imageSrc} alt={`Testimonial ${index + 1}`} />
+                  </div>
+                  <div id="text part" className="flex flex-wrap justify-center gap-4 items-center g-white-A700 flex-row p-2 shadow-bs3 w-full">
+                    <div className="flex flex-row items-center justify-center w-auto">
+                      <div className="flex items-center justify-center p-2">
+                        {/* Controls */}
+                        <button onClick={handlePrevSlide} className="p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full">&lt;</button>
+                        <div className="flex flex-col items-center justify-center px-6 w-auto">
+                          <div className="flex items-center justify-center overflow-hidden md:w-[550px] md:h-[100px] w-full h-auto">
+                            <p className="text-center text-lg md:text-2xl font-josefin_sans font-semibold line-clamp-3">{testimonial.textBelowImage}</p>
+                          </div>
+                        </div>
+                        <button onClick={handleNextSlide} className="bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full">&gt;</button>
+                      </div>
                     </div>
-                    <div
-                      id="text part"
-                      className="flex flex-wrap justify-center gap-4 items-center g-white-A700 flex-row p-2 shadow-bs3 w-full"
-                    >
-                      <div className="flex flex-row items-center justify-center w-auto">
-                        <div className="flex items-center justify-center p-2">
-                          {/* Controls */}
-                          <button
-                            onClick={handlePrevSlide}
-                            className="p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
-                          >
-                            &lt;
-                          </button>
-                          <div className="flex flex-col items-center justify-center px-6 w-auto">
-                            {/* Text container with fixed width and height */}
-                            <div className="flex items-center justify-center overflow-hidden md:w-[550px] md:h-[100px] w-full h-auto">
-                              <p className="text-center text-lg md:text-2xl font-josefin_sans font-semibold line-clamp-3">
-                                {testimonial.textBelowImage}
-                              </p>
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-6 items-center w-full">
+                    <div className="flex flex-col items-center justify-center px-6 pb-4 w-auto">
+                      <div className="flex flex-wrap justify-center gap-6 items-center g-white-A700 flex-col p-3 shadow-bs3 w-full pb-4">
+                        <div className="flex flex-wrap justify-center gap-4 items-center g-white-A700 flex-row pb-8 shadow-bs3 w-full">
+                          {Array.from({ length: testimonial.numStars }, (_, starIndex) => (
+                            <div key={starIndex} className="flex flex-wrap justify-center items-center w-10 h-10">
+                              <svg>
+                                <g>
+                                  <path d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z" fill="#FE9E0D" />
+                                </g>
+                              </svg>
                             </div>
-                          </div>
-                          <button
-                            onClick={handleNextSlide}
-                            className="bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
-                          >
-                            &gt;
-                          </button>
+                          ))}
                         </div>
                       </div>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-6 items-center w-full">
-                      <div className="flex flex-col items-center justify-center px-6 pb-4 w-auto">
-                        <div className="flex flex-wrap justify-center gap-6 items-center g-white-A700 flex-col p-3 shadow-bs3 w-full pb-4">
-                          <div className="flex flex-wrap justify-center gap-4 items-center g-white-A700 flex-row pb-8 shadow-bs3 w-full">
-                            {Array.from(
-                              { length: testimonial.numStars },
-                              (_, starIndex) => (
-                                <div
-                                  key={starIndex}
-                                  className="flex flex-wrap justify-center items-center w-10 h-10"
-                                >
-                                  <svg>
-                                    <g>
-                                      <path
-                                        d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z"
-                                        fill="#FE9E0D" />
-                                    </g>
-                                  </svg>
-                                </div>
-                              )
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                          <p className="text-xl md:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">
-                            {testimonial.testimonialAuthor}
-                          </p>
-                        </div>
+                      <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+                        <p className="text-xl md:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">{testimonial.testimonialAuthor}</p>
                       </div>
                     </div>
                   </div>
-                ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* How it Works Section */}
+      <div id="LP_section_5_orange_How_it_Works" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative p-16 h-auto" style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}>
+        <div className="flex flex-col items-center justify-center w-full -mt-6">
+          <div id="how-it-works" className="flex flex-col items-center justify-center p-2 w-auto">
+            <p className="text-center md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">How it Works?</p>
+          </div>
+          <div id="how-it-works-text" className="flex flex-col items-center justify-center p-6 w-auto">
+            <p className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-xl text-white font-josefin_sans font-semibold">Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.</p>
+          </div>
+        </div>
+        <div id="cards" className="flex flex-wrap justify-center gap-6">
+          <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
+            <img className="h-[96px] w-[96px] mb-4" src="/images/img_materialsymbol.svg" alt="materialsymbol" />
+            <div className="text-center p-2">
+              <p id="title" className="text-black text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-xl font-bold mb-2">Order at Your convenience</p>
+              <div className="text-center p-2">
+                <p id="body" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl text-black font-semibold">Browse through a wide selection of restaurants and shops, and order your favorite meals, groceries, or other essentials.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
+            <img className="h-[96px] w-[96px] mb-4" src="/images/img_mdicursorpointer.svg" alt="mdicursorpointe" />
+            <div className="text-center p-2">
+              <p id="title" className="text-black text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-xl font-bold mb-2">Fast Delivery</p>
+              <div className="text-center p-2">
+                <p id="body" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl text-black font-semibold">Etomart's fleet of delivery partners ensures your order arrives quickly, so you can enjoy your meals or items wherever and whenever.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
+            <img className="h-[96px] w-[96px] mb-4" src="/images/img_mditruckdelivery.svg" alt="mditruckdeliver" />
+            <div className="text-center p-2">
+              <p id="title" className="text-black text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-xl font-bold mb-2">Convenient Tracking</p>
+              <div className="text-center p-2">
+                <p id="body" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl text-black font-semibold">Track your order in real-time through the Etomart site, so you always know when your delivery is on its way.</p>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div
-          id="LP_section_5_orange_How_it_Works"
-          className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative p-16 h-auto"
-          style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
-        >
-          <div className="flex flex-col items-center justify-center w-full -mt-6">
-            <div
-              id="how-it-works"
-              className="flex flex-col items-center justify-center  p-2 w-auto"
-            >
-              <p className="text-center md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
-                How it Works?
-              </p>
-            </div>
-            <div
-              id="how-it-works-text"
-              className="flex flex-col items-center justify-center  p-6 w-auto"
-            >
-              <p className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl text-white font-josefin_sans font-semibold">
-                Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non
-                et elit. Dolor turpis molestie dui magnis facilisis at fringilla
-                quam.
-              </p>
-            </div>
-          </div>
-          <div id="cards" className="flex flex-wrap justify-center gap-6">
-            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
-              <img
-                className="h-[96px] w-[96px] mb-4"
-                src="/images/img_materialsymbol.svg"
-                alt="materialsymbol" />
-              <div className="text-center p-2">
-                <p
-                  id="title"
-                  className=" text-black text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl font-bold mb-2"
-                >
-                  Order at Your convenience
-                </p>
-                <div className="text-center p-2">
-                  <p
-                    id="body"
-                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl text-black font-semibold"
-                  >
-                    Browse through a wide selection of restaurants and shops,
-                    and order your favorite meals, groceries, or other
-                    essentials.
-                  </p>
+      {/* Additional Sections */}
+      <div id="LP_Hungry_for_more_than_food_buttons_container_2" className="flex items-center justify-center p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen" style={{ maxWidth: "1800px", marginLeft: "auto", marginRight: "auto" }}>
+        <div className="flex flex-col items-center justify-center px-2.5 py-20 w-auto">
+          <h2 className="text-5xl font-Agbalumo font-bold mb-8">Hungry for more than food?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6">
+            <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
+              <div className="p-0 m-2">
+                <div className="p-0 m-4">
+                  <div className="h-96 bg-cover bg-center border border-solid rounded-2xl" style={{ backgroundImage: "url(https://consumer-static-assets.wolt.com/frontpage-assets/courier-card-image.jpg)" }}></div>
+                  <div className="text-center p-8">
+                    <p id="body" className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2" style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}>Get paid as a courier partner.</p>
+                  </div>
                 </div>
+              </div>
+              <div className="flex items-center justify-center p-4 m-2">
+                <a href="https://careers.wolt.com" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded">Apply now</a>
               </div>
             </div>
 
-            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
-              <img
-                className="h-[96px] w-[96px] mb-4"
-                src="/images/img_mdicursorpointer.svg"
-                alt="mdicursorpointe" />
-              <div className="text-center p-2">
-                <p
-                  id="title"
-                  className=" text-black text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl font-bold mb-2"
-                >
-                  Fast Delivery
-                </p>
-                <div className="text-center p-2">
-                  <p
-                    id="body"
-                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl text-black font-semibold"
-                  >
-                    Etomart's fleet of delivery partners ensures your order
-                    arrives quickly, so you can enjoy your meals or items
-                    wherever and whenever
-                  </p>
+            <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
+              <div className="p-0 m-2">
+                <div className="p-0 m-4">
+                  <div className="h-96 bg-cover bg-center border border-solid rounded-2xl" style={{ backgroundImage: "url(https://consumer-static-assets.wolt.com/frontpage-assets/restaurant-card-image.jpg)" }}></div>
+                  <div className="text-center p-8">
+                    <p id="body" className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2" style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}>Serve more people as a restaurant partner</p>
+                  </div>
                 </div>
+              </div>
+              <div className="flex items-center justify-center p-4 m-2">
+                <a href="https://careers.wolt.com" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded">Apply now</a>
               </div>
             </div>
 
-            <div className="bg-white flex flex-col items-center py-[21px] rounded-[20px] shadow-md w-[480px] h-[350px]">
-              <img
-                className="h-[96px] w-[96px] mb-4"
-                src="/images/img_mditruckdelivery.svg"
-                alt="mditruckdeliver" />
-              <div className="text-center p-2">
-                <p
-                  id="title"
-                  className=" text-black text-lg sm:text-xl md:text-2xl lg:text-3xl  max-w-xl font-bold mb-2"
-                >
-                  Convenient Tracking
-                </p>
-                <div className="text-center p-2">
-                  <p
-                    id="body"
-                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl text-black font-semibold"
-                  >
-                    Track your order in real-time through the Etomart site, so
-                    you always know when your delivery is on its way.
-                  </p>
+            <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
+              <div className="p-0 m-2">
+                <div className="p-0 m-4">
+                  <div className="h-96 bg-cover bg-center border border-solid rounded-2xl" style={{ backgroundImage: "url(https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg)" }}></div>
+                  <div className="text-center p-8">
+                    <p id="body" className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2" style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}>Enter a new chapter and find a job at Etomart</p>
+                  </div>
                 </div>
+              </div>
+              <div className="flex items-center justify-center p-4 m-2">
+                <a href="https://careers.wolt.com" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded">Apply now</a>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div
-          id="LP_Hungry_for_more_than_food_buttons_container_2"
-          className="flex items-center justify-center  p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
-          style={{
-            maxWidth: "1800px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          <div className="flex flex-col items-center justify-center px-2.5 py-20  w-auto">
-            <h2 className="text-5xl font-Agbalumo font-bold mb-8">
-              Hungry for more than food?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6">
-              <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
-                <div className="p-0 m-2">
-                  <div className="p-0 m-4">
-                    <div
-                      className="h-96 bg-cover bg-center border border-solid rounded-2xl"
-                      style={{
-                        backgroundImage: "url(https://consumer-static-assets.wolt.com/frontpage-assets/courier-card-image.jpg)",
-                      }}
-                    ></div>
-                    <div className="text-center p-8">
-                      <p
-                        id="body"
-                        className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
-                        style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
-                      >
-                        Get paid as a courier partner.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center p-4 m-2">
-                  <a
-                    href="https://careers.wolt.com"
-                    className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
-                  >
-                    Apply now
-                  </a>
-                </div>
+      <footer>
+        <div id="LP_section_3_orange" className="bg-[#ee9613] border border-solid border-white-A700_19 rounded-tl-[150px] rounded-tr-[150px] shadow-xl relative" style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}>
+          <div className="flex items-center justify-center mx-16 p-2 flex-col md:flex-row">
+            <div className="flex items-center justify-center">
+              <div className="flex justify-start items-center m-2">
+                <h1 className="text-3xl font-shrikhand text-[#000000] whitespace-nowrap"><a href="/LP">Etomart</a></h1>
               </div>
-
-              <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
-                <div className="p-0 m-2">
-                  <div className="p-0 m-4">
-                    <div
-                      className="h-96 bg-cover bg-center border border-solid rounded-2xl"
-                      style={{
-                        backgroundImage: "url(https://consumer-static-assets.wolt.com/frontpage-assets/restaurant-card-image.jpg)",
-                      }}
-                    ></div>
-                    <div className="text-center p-8">
-                      <p
-                        id="body"
-                        className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
-                        style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
-                      >
-                        Serve more people as a restaurant partner
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center p-4 m-2">
-                  <a
-                    href="https://careers.wolt.com"
-                    className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
-                  >
-                    Apply now
-                  </a>
-                </div>
-              </div>
-
-              <div className="p-0 m-2 bg-white shadow-md rounded-lg overflow-hidden border border-solid border-slate-100">
-                <div className="p-0 m-2">
-                  <div className="p-0 m-4">
-                    <div
-                      className="h-96 bg-cover bg-center border border-solid rounded-2xl"
-                      style={{
-                        backgroundImage: "url(https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg)",
-                      }}
-                    ></div>
-                    <div className="text-center p-8 ">
-                      <p
-                        id="body"
-                        className="text-center text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-josefin_sans font-bold text-black mt-4 -mb-6 line-clamp-2"
-                        style={{ minHeight: "60px", maxHeight: "60px", overflow: "hidden" }}
-                      >
-                        Enter a new chapter and find a job at Etomart
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center p-4 m-2">
-                  <a
-                    href="https://careers.wolt.com"
-                    className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl inline-block bg-orange-500 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded"
-                  >
-                    Apply now
-                  </a>
-                </div>
-
-
-              </div></div>
+            </div>
           </div>
-        </div>
-
-
-        <footer>
-          <div
-            id="LP_section_3_orange"
-            className="bg-[#ee9613] border border-solid border-white-A700_19 rounded-tl-[150px] rounded-tr-[150px] shadow-xl relative"
-            style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}
-          >
-            <div className=" flex items-center justify-center mx-16 p-2 flex-col md:flex-row  ">
-              <div className="flex items-center justify-center  ">
-
-                <div className="flex justify-start items-center  m-2  ">
-                  <h1 className="text-3xl font-shrikhand text-[#000000] whitespace-nowrap ">
-                    <a href="/LP">Etomart</a>
-                  </h1>
-                </div>
-              </div>
-
-            </div>
-            {/* <div
-  id="LP_section_3_orange"
-  className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
-  style={{ width: '100%', maxWidth: '100vw', margin: '0 auto' }}
-> */}
-            <div className="container mx-auto py-0 flex flex-col md:flex-row justify-between items-center">
-              <div className="flex flex-col items-center justify-between">
-
-                <div className="flex  items-center justify-between flex-col md:flex-col gap-2 m-2 ">
-                  <a
-                    href="https://wolt.onelink.me/Uy67?af_adset=not-available-web-to-app&af_keywords=not-available-web-to-app&af_r=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.wolt.android&af_sub1=https%3A%2F%2Fwww.google.com%2F&af_sub2=%2Fen&c=not-available-web-to-app&pid=not-available-web-to-app"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    aria-label="Download the Wolt Android app on Google Play"
-                    title="Download the Wolt iOS app on the App Store"
-                    data-test-id="platform-badge-consumer-android"
-                    className="wpt-ui-AppLink_Link_l1ld7axn"
-                    style={{ width: "120px", height: "50px" }}
-                  >
-                    <img
-                      src="https://images.ctfassets.net/23u853certza/7xaqvusYmbDlca5umD9bZo/a0fa3e1c7ca41a70c6285d6c7b18c92b/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg"
-                      loading="lazy"
-                      className="wpt-ui-AppLink_StyledImage_s1lunxia"
-                      alt="Download the Wolt iOS app on the App Store" />
-                  </a>
-                  <a
-                    href="https://wolt.onelink.me/Uy67?af_adset=not-available-web-to-app&af_keywords=not-available-web-to-app&af_r=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.wolt.android&af_sub1=https%3A%2F%2Fwww.google.com%2F&af_sub2=%2Fen&c=not-available-web-to-app&pid=not-available-web-to-app"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    aria-label="Download the Wolt Android app on Google Play"
-                    title="Download the Wolt iOS app on the App Store"
-                    data-test-id="platform-badge-consumer-android"
-                    className="wpt-ui-AppLink_Link_l1ld7axn"
-                    style={{ width: "120px", height: "50px" }}
-                  >
-                    <img
-                      src="https://images.ctfassets.net/23u853certza/1Djo4jOj0doR5PfWVzj9O6/d52acac7f94db66263f5ad9e01c41c82/google-play-badge.png"
-                      loading="lazy"
-                      className="wpt-ui-AppLink_StyledImage_s1lunxia"
-                      alt="Download the Wolt Android app on Google Play" />
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex  items-end gap-4 md:gap-40 ">
-                <div className="flex flex-col items-center">
-                  <nav>
-                    <div className="flex text-center p-2 mb-0">
-                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
-                        Company Links
-                      </p>
-                    </div>
-                    <div className="p-2 wpt-ui-FooterLinkColumn_LinkRegion_lrl0tag">
-                      <ul className="wpt-ui-FooterLinkColumn_Links_ln8lzpy space-y-0">
-                        {companyLinks.map((link, index) => (
-                          <li key={index.label}>
-                            <a
-                              href={link.url}
-                              target={link.target}
-                              className="text-white text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl  font-josefin_sans hover:text-black transition duration-150 ease-in-out"
-                            >
-                              {link.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </nav>
-                </div>
-                <div className="flex flex-col items-center">
-                  <nav>
-                    <div className="flex text-center p-2 mb-0">
-                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
-                        Useful Links
-                      </p>
-                    </div>
-                    <div className="p-2 wpt-ui-FooterLinkColumn_LinkRegion_lrl0tag">
-                      <ul className="wpt-ui-FooterLinkColumn_Links_ln8lzpy space-y-0">
-                        {usefulLinks.map((link, index) => (
-                          <li key={index.label}>
-                            <a
-                              href={link.url}
-                              target={link.target}
-                              className="text-white text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl  font-josefin_sans hover:text-black transition duration-150 ease-in-out"
-                            >
-                              {link.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </nav>
-                </div>
-                <div className="flex flex-col items-center">
-                  <nav>
-                    <div className="flex text-center p-2 mb-0">
-                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
-                        Get to Know US
-                      </p>
-                    </div>
-                    <div className="p-2 wpt-ui-FooterLinkColumn_LinkRegion_lrl0tag">
-                      <ul className="wpt-ui-FooterLinkColumn_Links_ln8lzpy space-y-0">
-                        {GetToKnowUs.map((link, index) => (
-                          <li key={index.label}>
-                            <a
-                              href={link.url}
-                              target={link.target}
-                              className="text-white text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl  font-josefin_sans hover:text-black transition duration-150 ease-in-out"
-                            >
-                              {link.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </nav>
-                </div>
-                <div className="flex flex-col items-center">
-                  <nav>
-                    <div className="flex text-center p-2 mb-0">
-                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl  max-w-xl  font-Agbalumo text-black ">
-                        Follow Links
-                      </p>
-                    </div>
-                    <div className="p-2 wpt-ui-FooterLinkColumn_LinkRegion_lrl0tag">
-                      <ul className="wpt-ui-FooterLinkColumn_Links_ln8lzpy space-y-0">
-                        {followLinks.map((link, index) => (
-                          <li key={index.label}>
-                            <a
-                              href={link.url}
-                              target={link.target}
-                              className="text-white text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl  font-josefin_sans hover:text-black transition duration-150 ease-in-out"
-                            >
-                              {link.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </nav>
-                </div>
+          <div className="container mx-auto py-0 flex flex-col md:flex-row justify-between items-center">
+            <div className="flex flex-col items-center justify-between">
+              <div className="flex items-center justify-between flex-col md:flex-col gap-2 m-2">
+                <a href="https://wolt.onelink.me/Uy67?af_adset=not-available-web-to-app&af_keywords=not-available-web-to-app&af_r=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.wolt.android&af_sub1=https%3A%2F%2Fwww.google.com%2F&af_sub2=%2Fen&c=not-available-web-to-app&pid=not-available-web-to-app" rel="noopener noreferrer" target="_blank" aria-label="Download the Wolt Android app on Google Play" title="Download the Wolt iOS app on the App Store" data-test-id="platform-badge-consumer-android" className="wpt-ui-AppLink_Link_l1ld7axn" style={{ width: "120px", height: "50px" }}>
+                  <img src="https://images.ctfassets.net/23u853certza/7xaqvusYmbDlca5umD9bZo/a0fa3e1c7ca41a70c6285d6c7b18c92b/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" loading="lazy" className="wpt-ui-AppLink_StyledImage_s1lunxia" alt="Download the Wolt iOS app on the App Store" />
+                </a>
+                <a href="https://wolt.onelink.me/Uy67?af_adset=not-available-web-to-app&af_keywords=not-available-web-to-app&af_r=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.wolt.android&af_sub1=https%3A%2F%2Fwww.google.com%2F&af_sub2=%2Fen&c=not-available-web-to-app&pid=not-available-web-to-app" rel="noopener noreferrer" target="_blank" aria-label="Download the Wolt Android app on Google Play" title="Download the Wolt iOS app on the App Store" data-test-id="platform-badge-consumer-android" className="wpt-ui-AppLink_Link_l1ld7axn" style={{ width: "120px", height: "50px" }}>
+                  <img src="https://images.ctfassets.net/23u853certza/1Djo4jOj0doR5PfWVzj9O6/d52acac7f94db66263f5ad9e01c41c82/google-play-badge.png" loading="lazy" className="wpt-ui-AppLink_StyledImage_s1lunxia" alt="Download the Wolt Android app on Google Play" />
+                </a>
               </div>
             </div>
-            <div className="container mx-auto  flex flex-col md:flex-row justify-between items-center bg-[#ee9613] py-4">
-              <div className="flex flex-row md:flex-row items-center md:items-start space-x-4 md:space-x-8">
-                <button
-                  aria-label="Change language"
-                  data-test-id="Footer.OpenLanguageSelectionDialogButton"
-                  className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl  flex font-Agbalumo items-center text-zinc-950 hover:text-zinc-50 transition-colors"
-                  onClick={handleLanguageChange}
-                >
-                  <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><g fill="currentColor"><path d="M21 21.53c0-.29.24-.53.53-.53c.29 0 .53.23.53.53v1.06c0 .29-.24.53-.53.53c-.29 0-.53-.24-.53-.53z" /><path fill-rule="evenodd" d="M16 1C7.716 1 1 7.716 1 16c0 8.284 6.716 15 15 15c8.284 0 15-6.716 15-15c0-8.284-6.716-15-15-15m-3.975 2.619C6.79 5.299 3 10.207 3 16c0 7.18 5.82 13 13 13s13-5.82 13-13c0-1-.113-1.975-.327-2.911L27.32 15.12c-.12.18-.32.29-.54.29h-.34c-.17 0-.31-.14-.31-.31v-.54c0-1.2-.8-3.15-2-3.15h-1.55c-.53 0-.73.66-.42.93l.23.19c.44.37.35 1.06-.16 1.32l-1.15.58h-.35c-.36 0-.66-.3-.66-.66v-.85c0-.27-.22-.5-.5-.5h-.006c-.29 0-1.434 0-1.434 1.4v.5c0 1.01 1.74 1.82 2.73 1.98c.16.02.29.16.29.32v.36c0 .22-.05.44-.15.64l-1.91 2.85h-.34c-.33 0-.6.26-.61.59l-.06 2.42l-1.7 1.7c-.2.21-.47.32-.76.32h-.49c-.6 0-1.08-.49-1.08-1.08v-2.25c0-.56-.29-.7-.5-.7h-.35c-.36 0-.66-.3-.66-.66v-1.72c0-.93-.75-1.68-1.68-1.68H8c-.89 0-2-1.69-2-2.58v-.71c0-.45.17-.88.47-1.2l1.07-1.13c.24-.25.58-.39.93-.38h1.06c.31 0 .6-.12.82-.34l.32-.32c.22-.22.52-.34.83-.34h1.04c.23 0 .49.12.48.39v.28c-.03.58 1.1.32 1.1.32s.96-.87 1.4-.97c.45-.11 1.35.14 1.88.46c.29.17.65-.03.65-.36c0-.63-.52-1.14-1.15-1.14h-.37a.49.49 0 0 1-.49-.49v-.72a.29.29 0 0 0-.29-.29h-.37c-.21 0-.41.1-.53.28l-.62.92c-.12.19-.33.3-.56.3h-.14c-.32 0-.62-.12-.85-.35l-.44-.34c-.36-.3-.82-.31-.91-.31h-.97c-.2 0-.35.16-.35.35l-.04.3c0 .36-.25.85-.61.85h-.58c-.36 0-.65-.29-.65-.64v-1.2c0-.37.3-.66.66-.66c.2 0 .35-.16.35-.35v-.31c0-.79.57-.91.99-.81c.179.047.365.126.553.207c.297.127.6.257.887.263h1.58c.59 0 .98-.4.98-.98c0-.145.007-.296.014-.445c.031-.663.06-1.287-.544-1.165l-.28.28c-.18.19-.29.44-.29.71v.14c0 .25-.2.47-.45.49c-.24.01-.55-.03-.55-.34c0-.26-.008-.41-.015-.547c-.01-.21-.02-.383.005-.863a.546.546 0 0 1 .005-.051m6.21-.428a13.033 13.033 0 0 0-1.537-.173l.352.352h1.01z" clip-rule="evenodd" /></g></svg>
-                  <span>English</span>
-                </button>
-                <button
-                  aria-label="Open accessibility settings"
-                  className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl flex font-Agbalumo items-center space-x-2 text-zinc-950 hover:text-zinc-50 transition-colors"
-                  onClick={handleAccessibilitySettingsOpen}
-                >
 
-                  <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l14.5 14.5a.75.75 0 1 0 1.06-1.06l-1.745-1.745a10.029 10.029 0 0 0 3.3-4.38 1.651 1.651 0 0 0 0-1.185A10.004 10.004 0 0 0 9.999 3a9.956 9.956 0 0 0-4.744 1.194L3.28 2.22ZM7.752 6.69l1.092 1.092a2.5 2.5 0 0 1 3.374 3.373l1.091 1.092a4 4 0 0 0-5.557-5.557Z" clip-rule="evenodd" />
-                    <path d="m10.748 13.93 2.523 2.523a9.987 9.987 0 0 1-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 0 1 0-1.186A10.007 10.007 0 0 1 2.839 6.02L6.07 9.252a4 4 0 0 0 4.678 4.678Z" />
+            <div className="flex items-end gap-4 md:gap-40">
+              <div className="flex flex-col items-center">
+                <nav>
+                  <div className="flex text-center p-2 mb-0">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-Agbalumo text-black">Company Links</p>
+                  </div>
+                  <div className="p-2 wpt-ui-FooterLinkColumn_LinkRegion_lrl0tag">
+                    <ul className="wpt-ui-FooterLinkColumn_Links_ln8lzpy space-y-0">
+                      {companyLinks.map((link, index) => (
+                        <li key={index.label}>
+                          <a href={link.url} target={link.target} className="text-white text-sm sm:text-base md:text-lg lg:text-xl max-w-xl font-josefin_sans hover:text-black transition duration-150 ease-in-out">
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+              <div className="flex flex-col items-center">
+                <nav>
+                  <div className="flex text-center p-2 mb-0">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-Agbalumo text-black">Useful Links</p>
+                  </div>
+                  <div className="p-2 wpt-ui-FooterLinkColumn_LinkRegion_lrl0tag">
+                    <ul className="wpt-ui-FooterLinkColumn_Links_ln8lzpy space-y-0">
+                      {usefulLinks.map((link, index) => (
+                        <li key={index.label}>
+                          <a href={link.url} target={link.target} className="text-white text-sm sm:text-base md:text-lg lg:text-xl max-w-xl font-josefin_sans hover:text-black transition duration-150 ease-in-out">
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+              <div className="flex flex-col items-center">
+                <nav>
+                  <div className="flex text-center p-2 mb-0">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-Agbalumo text-black">Get to Know US</p>
+                  </div>
+                  <div className="p-2 wpt-ui-FooterLinkColumn_LinkRegion_lrl0tag">
+                    <ul className="wpt-ui-FooterLinkColumn_Links_ln8lzpy space-y-0">
+                      {GetToKnowUs.map((link, index) => (
+                        <li key={index.label}>
+                          <a href={link.url} target={link.target} className="text-white text-sm sm:text-base md:text-lg lg:text-xl max-w-xl font-josefin_sans hover:text-black transition duration-150 ease-in-out">
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+              <div className="flex flex-col items-center">
+                <nav>
+                  <div className="flex text-center p-2 mb-0">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-xl font-Agbalumo text-black">Follow Links</p>
+                  </div>
+                  <div className="p-2 wpt-ui-FooterLinkColumn_LinkRegion_lrl0tag">
+                    <ul className="wpt-ui-FooterLinkColumn_Links_ln8lzpy space-y-0">
+                      {followLinks.map((link, index) => (
+                        <li key={index.label}>
+                          <a href={link.url} target={link.target} className="text-white text-sm sm:text-base md:text-lg lg:text-xl max-w-xl font-josefin_sans hover:text-black transition duration-150 ease-in-out">
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <div className="container mx-auto flex flex-col md:flex-row justify-between items-center bg-[#ee9613] py-4">
+            <div className="flex flex-row md:flex-row items-center md:items-start space-x-4 md:space-x-8">
+              <button aria-label="Change language" data-test-id="Footer.OpenLanguageSelectionDialogButton" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl flex font-Agbalumo items-center text-zinc-950 hover:text-zinc-50 transition-colors" onClick={handleLanguageChange}>
+                <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32">
+                  <g fill="currentColor">
+                    <path d="M21 21.53c0-.29.24-.53.53-.53c.29 0 .53.23.53.53v1.06c0 .29-.24.53-.53.53c-.29 0-.53-.24-.53-.53z" />
+                    <path fillRule="evenodd" d="M16 1C7.716 1 1 7.716 1 16c0 8.284 6.716 15 15 15c8.284 0 15-6.716 15-15c0-8.284-6.716-15-15-15m-3.975 2.619C6.79 5.299 3 10.207 3 16c0 7.18 5.82 13 13 13s13-5.82 13-13c0-1-.113-1.975-.327-2.911L27.32 15.12c-.12.18-.32.29-.54.29h-.34c-.17 0-.31-.14-.31-.31v-.54c0-1.2-.8-3.15-2-3.15h-1.55c-.53 0-.73.66-.42.93l.23.19c.44.37.35 1.06-.16 1.32l-1.15.58h-.35c-.36 0-.66-.3-.66-.66v-.85c0-.27-.22-.5-.5-.5h-.006c-.29 0-1.434 0-1.434 1.4v.5c0 1.01 1.74 1.82 2.73 1.98c.16.02.29.16.29.32v.36c0 .22-.05.44-.15.64l-1.91 2.85h-.34c-.33 0-.6.26-.61.59l-.06 2.42l-1.7 1.7c-.2.21-.47.32-.76.32h-.49c-.6 0-1.08-.49-1.08-1.08v-2.25c0-.56-.29-.7-.5-.7h-.35c-.36 0-.66-.3-.66-.66v-1.72c0-.93-.75-1.68-1.68-1.68H8c-.89 0-2-1.69-2-2.58v-.71c0-.45.17-.88.47-1.2l1.07-1.13c.24-.25.58-.39.93-.38h1.06c.31 0 .6-.12.82-.34l.32-.32c.22-.22.52-.34.83-.34h1.04c.23 0 .49.12.48.39v.28c-.03.58 1.1.32 1.1.32s.96-.87 1.4-.97c.45-.11 1.35.14 1.88.46c.29.17.65-.03.65-.36c0-.63-.52-1.14-1.15-1.14h-.37a.49.49 0 0 1-.49-.49v-.72a.29.29 0 0 0-.29-.29h-.37c-.21 0-.41.1-.53.28l-.62.92c-.12.19-.33.3-.56.3h-.14c-.32 0-.62-.12-.85-.35l-.44-.34c-.36-.3-.82-.31-.91-.31h-.97c-.2 0-.35.16-.35.35l-.04.3c0 .36-.25.85-.61.85h-.58c-.36 0-.65-.29-.65-.64v-1.2c0-.37.3-.66.66-.66c.2 0 .35-.16.35-.35v-.31c0-.79.57-.91.99-.81c.179.047.365.126.553.207c.297.127.6.257.887.263h1.58c.59 0 .98-.4.98-.98c0-.145.007-.296.014-.445c.031-.663.06-1.287-.544-1.165l-.28.28c-.18.19-.29.44-.29.71v.14c0 .25-.2.47-.45.49c-.24.01-.55-.03-.55-.34c0-.26-.008-.41-.015-.547c-.01-.21-.02-.383.005-.863a.546.546 0 0 1 .005-.051m6.21-.428a13.033 13.033 0 0 0-1.537-.173l.352.352h1.01z" clipRule="evenodd" />
+                  </g>
+                </svg>
+                <span>English</span>
+              </button>
+              <button aria-label="Open accessibility settings" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl flex font-Agbalumo items-center space-x-2 text-zinc-950 hover:text-zinc-50 transition-colors" onClick={handleAccessibilitySettingsOpen}>
+                <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l14.5 14.5a.75.75 0 1 0 1.06-1.06l-1.745-1.745a10.029 10.029 0 0 0 3.3-4.38 1.651 1.651 0 0 0 0-1.185A10.004 10.004 0 0 0 9.999 3a9.956 9.956 0 0 0-4.744 1.194L3.28 2.22ZM7.752 6.69l1.092 1.092a2.5 2.5 0 0 1 3.374 3.373l1.091 1.092a4 4 0 0 0-5.557-5.557Z" clipRule="evenodd" />
+                  <path d="m10.748 13.93 2.523 2.523a9.987 9.987 0 0 1-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 0 1 0-1.186A10.007 10.007 0 0 1 2.839 6.02L6.07 9.252a4 4 0 0 0 4.678 4.678Z" />
+                </svg>
+                <span>Accessibility</span>
+              </button>
+            </div>
+            <div className="flex items-center space-x-4 text-zinc-950 font-Agbalumo mt-4 md:mt-0">
+              <div className="flex items-center space-x-4">
+                <button aria-label="Open accessibility settings" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl flex font-Agbalumo items-center space-x-2 text-zinc-950 hover:text-zinc-50 transition-colors" onClick={handleAccessibilitySettingsOpen}>
+                  <svg viewBox="0 0 24 24" className="h-5 w-5">
+                    {/* SVG icon path */}
                   </svg>
-                  <span>Accessibility</span>
+                  <span>Privacy Statement</span>
+                </button>
+                <button aria-label="Open accessibility settings" className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl flex font-Agbalumo items-center space-x-2 text-zinc-950 hover:text-zinc-50 transition-colors" onClick={handleAccessibilitySettingsOpen}>
+                  <svg viewBox="0 0 24 24" className="h-5 w-5">
+                    {/* SVG icon path */}
+                  </svg>
+                  <span>User Terms of Service</span>
                 </button>
               </div>
-              <div className="flex  items-center space-x-4 text-zinc-950 font-Agbalumo mt-4 md:mt-0">
-                <div className="flex  items-center space-x-4">
-                  <button
-                    aria-label="Open accessibility settings"
-                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl  flex font-Agbalumo items-center space-x-2 text-zinc-950 hover:text-zinc-50 transition-colors"
-                    onClick={handleAccessibilitySettingsOpen}
-                  >
-                    <svg viewBox="0 0 24 24" className="h-5 w-5">
-                      {/* SVG icon path */}
-                    </svg>
-                    <span>Privacy Statement</span>
-                  </button>
-                  <button
-                    aria-label="Open accessibility settings"
-                    className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl  flex font-Agbalumo items-center space-x-2 text-zinc-950 hover:text-zinc-50 transition-colors"
-                    onClick={handleAccessibilitySettingsOpen}
-                  >
-                    <svg viewBox="0 0 24 24" className="h-5 w-5">
-                      {/* SVG icon path */}
-                    </svg>
-                    <span>User Terms of Service</span>
-                  </button>
-                </div>
-                <p className="text-sm sm:text-base md:text-lg lg:text-xl  max-w-xl ">
-                  ©️ Etomart 2024
-                </p>
+              <div  className="flex flex-col ">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xl">©️ Etomart 2024 </p>
+                <p className="text-sm sm:text-sm md:text-sm lg:text-sm max-w-base"> All Rights Reserved</p>
               </div>
-
             </div>
           </div>
-        </footer>
-      </div>
-      </div>
-  
-  );
+        </div>
+      </footer>
+    </div>
+  </div>
+);
 }
+
 
 export default LandingPage;

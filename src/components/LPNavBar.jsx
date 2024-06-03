@@ -6,6 +6,7 @@ import ForgotPasswordModal from './ForgotPasswordModal';
 import AuthenticatedLoginModal from './AuthenticatedLoginModal';
 import AuthenticatedSignupModal from './AuthenticatedSignupModal';
 
+// LPNavBar Component
 const LPNavBar = () => {
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -26,30 +27,14 @@ const LPNavBar = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  },
-  []);
+  }, []);
 
-
-  const handleLoginClick = () => {
-    setShowLoginModal(true);
-  };
-
-  const handleSignupClick = () => {
-    setShowSignupModal(true);
-  };
-
-  const handleForgotPasswordClick = () => {
-    setShowForgotPasswordModal(true);
-  };
-
-  const handleAuthenticatedLoginClick = () => {
-    setShowAuthenticatedLoginModal(true);
-  };
-
-  const handleAuthenticatedSignupClick = () => {
-    setShowAuthenticatedSignupModal(true);
-  };
-
+  // Modal handlers
+  const handleLoginClick = () => setShowLoginModal(true);
+  const handleSignupClick = () => setShowSignupModal(true);
+  const handleForgotPasswordClick = () => setShowForgotPasswordModal(true);
+  const handleAuthenticatedLoginClick = () => setShowAuthenticatedLoginModal(true);
+  const handleAuthenticatedSignupClick = () => setShowAuthenticatedSignupModal(true);
   const closeModals = () => {
     setShowLoginModal(false);
     setShowSignupModal(false);
@@ -67,12 +52,6 @@ const LPNavBar = () => {
             z-index: 20;
             width: 100%;
           }
-
-          .flex-container {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-          }
         `}
       </style>
 
@@ -85,21 +64,21 @@ const LPNavBar = () => {
           </div>
 
           {/* Buttons container */}
-          <div className="flex-container flex space-x-4">
-            <button onClick={handleLoginClick} className="hover:bg-black hover:text-white  font-josefin_sans py-2 px-4 bg-[#f7a832]  text-Black rounded">
+          <div className="flex space-x-4">
+            <button onClick={handleLoginClick} className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#f7a832] text-black rounded">
               Log in
             </button>
-            <button onClick={handleSignupClick} className="hover:bg-black hover:text-white   font-josefin_sans py-2 px-4 bg-[#ff9f10]  text-Black rounded">
+            <button onClick={handleSignupClick} className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ff9f10] text-black rounded">
               Sign up
             </button>
-            <button onClick={handleForgotPasswordClick} className=" hidden hover:bg-black hover:text-white   font-josefin_sans py-2 px-4 bg-[#ee9613] text-Black rounded">
-            Forgot Password
+            <button onClick={handleForgotPasswordClick} className="hidden hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ee9613] text-black rounded">
+              Forgot Password
             </button>
-            <button onClick={handleAuthenticatedLoginClick} className="hidden hover:bg-black hover:text-white   font-josefin_sans py-2 px-4 bg-[#ee9613] text-Black rounded">
-            Authenticated Log in
+            <button onClick={handleAuthenticatedLoginClick} className="hidden hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ee9613] text-black rounded">
+              Authenticated Log in
             </button>
-            <button onClick={handleAuthenticatedSignupClick} className="hidden hover:bg-black hover:text-white   font-josefin_sans py-2 px-4 bg-[#ee9613] text-Black rounded">
-            Authenticated Sign in
+            <button onClick={handleAuthenticatedSignupClick} className="hidden hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ee9613] text-black rounded">
+              Authenticated Sign in
             </button>
           </div>
         </div>
@@ -126,8 +105,10 @@ const LPNavBar = () => {
           setShowAuthenticatedSignupModal(true);
         }}
       />
-      <SignupModal showModal={showSignupModal} closeModal={closeModals}
-      openLoginModal={() => {
+      <SignupModal
+        showModal={showSignupModal}
+        closeModal={closeModals}
+        openLoginModal={() => {
           closeModals();
           setShowLoginModal(true);
         }}

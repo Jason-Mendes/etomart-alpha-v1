@@ -20,40 +20,41 @@ import Checkers from './components/Regions/Towns/Shops/Xstores/Checkers';
 import Clicks from './components/Regions/Towns/Shops/Xpharmacies/Clicks';
 import JoesBeerhouse from './components/Regions/Towns/Shops/Xrestaurants/JoesBeerhouse';
 import SlowTown from './components/Regions/Towns/Shops/Xrestaurants/SlowTown';
+
 function App() {
   return (
     <Router>
       <CartProvider>
         <div>
+          {/* Uncomment NavBarWrapper if it is needed */}
           {/* <NavbarWrapper /> */}
           <Routes>
-            {/* Same Regions All Landinging Page just different routes */}
+            {/* Routes for LandingPage */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/LP" element={<LandingPage />} />
             <Route path="/LandingPage" element={<LandingPage />} />
-             {/* Same Regions All Landinging Page just different routes ends*/}
-             {/* Towns Per Region All */}
+
+            {/* Routes for Regions */}
             <Route path="/LP/Regions" element={<RegionsHome />} />
-            {/* Towns Per Region All ends*/}
-            {/* Town */}
+
+            {/* Routes for Towns per Region */}
             <Route path="/LP/Khomas/Towns" element={<KhomasTowns />} />
             <Route path="/LP/Erongo/Towns" element={<ErongoTowns />} />
-            {/* Town ends*/}
-            {/* All Stores and Specifics*/}
+
+            {/* Routes for Stores */}
             <Route path="/LP/Khomas/Towns/Stores" element={<Stores />} />
             <Route path="/LP/Khomas/Towns/Store/Checkers" element={<Checkers />} />
             <Route path="/LP/Khomas/Towns/Store/Storestest" element={<Storestest />} />
-            {/* All Stores and Specifics ends*/}
-            {/* All Restaurants and Specifics*/}
+
+            {/* Routes for Restaurants */}
             <Route path="/LP/Khomas/Towns/Restaurants" element={<Restaurants />} />
             <Route path="/LP/Khomas/Towns/Restaurant/Pannarotis" element={<Pannarotis />} />
             <Route path="/LP/Khomas/Towns/Restaurant/JoesBeerhouse" element={<JoesBeerhouse />} />
             <Route path="/LP/Khomas/Towns/Restaurant/SlowTown" element={<SlowTown />} />
-             {/* All Restaurants and Specifics ends*/}
-              {/* All Pharmacies and Specifics*/}
+
+            {/* Routes for Pharmacies */}
             <Route path="/LP/Khomas/Towns/Pharmacies" element={<Pharmacies />} />
-            <Route path="/LP/Khomas/Towns/Pharmacie/Clicks" element={<Clicks />} />
-             {/* All Pharmacies and Specifics*/}
+            <Route path="/LP/Khomas/Towns/Pharmacy/Clicks" element={<Clicks />} />
           </Routes>
         </div>
       </CartProvider>
@@ -62,52 +63,3 @@ function App() {
 }
 
 export default App;
-
-// function App() {
-//   return (
-//     <Router>
-//        <CartProvider>
-//         <div>
-//         <NavBar />
-//         <Routes>
-//           {/* Update these Route components once the corresponding components are ready} */}
-//           {/* <Route path="/" exact element={<LandingPage />} /> */}
-//           <Route path="/home" element={<Home />} />
-//           <Route path="/profile" element={<UserProfile />} />
-//         <Route path="/products" element={<Products />} />
-//         <Route path="/cart" element={<Cart />} />
-//         </Routes>
-//       </div>
-//       </CartProvider>
-//     </Router>
-//   );
-// }
-
-// export default App;
-
-
-
-
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;

@@ -62,7 +62,7 @@
         {
             name: "Checkers",
             imgSrc: "/images/supermarkets/checkers.png",
-            href: "/en/discovery/category/checkers",
+            href: "/LP/Khomas/Towns/Store/Checkers",
             storetype: "Supermarket",
             isEtomartStore: false,
             priceRange: "N$$",
@@ -161,7 +161,7 @@ deliveryTime: true
         {
             name: "Joe's Beerhouse",
             imgSrc: "/images/restaurants/joesbeerhouse.png",
-            href: "/en/discovery/category/joesbeerhouse",
+            href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
             storetype: "Restaurant",
             isEtomartStore: true,
             priceRange: "N$$$",
@@ -238,7 +238,7 @@ deliveryTime: false
         {
             name: "Clicks Pharmacy",
             imgSrc: "/images/pharmacies/clicks.png",
-            href: "/en/discovery/category/clicks",
+            href: "/LP/Khomas/Towns/Pharmacy/Clicks",
             storetype: "Pharmacy",
             isEtomartStore: false,
             priceRange: "N$$",
@@ -312,7 +312,7 @@ deliveryTime: false
       {
           name: "Clicks Pharmacy",
           imgSrc: "/images/pharmacies/clicks.png",
-          href: "/en/discovery/category/clicks",
+          href: "/LP/Khomas/Towns/Pharmacy/Clicks",
           storetype: "Pharmacy",
           isEtomartStore: false,
           priceRange: "N$$",
@@ -367,7 +367,7 @@ deliveryTime: true
       {
           name: "Joe's Beerhouse",
           imgSrc: "/images/restaurants/joesbeerhouse.png",
-          href: "/en/discovery/category/joesbeerhouse",
+          href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
           storetype: "Restaurant",
           isEtomartStore: true,
           priceRange: "N$$$",
@@ -433,7 +433,7 @@ deliveryTime: true
       {
         name: "Checkers",
         imgSrc: "/images/supermarkets/checkers.png",
-        href: "/en/discovery/category/checkers",
+        href: "/LP/Khomas/Towns/Store/Checkers",
         storetype: "Supermarket",
         isEtomartStore: false,
         priceRange: "N$$",
@@ -535,7 +535,7 @@ deliveryTime: true
         {
           name: "Checkers",
           imgSrc: "/images/supermarkets/checkers.png",
-          href: "/en/discovery/category/checkers",
+          href: "/LP/Khomas/Towns/Store/Checkers",
           storetype: "Supermarket",
           isEtomartStore: false,
           priceRange: "N$$",
@@ -668,6 +668,17 @@ deliveryTime: false
 deliveryTime: false
       },
       {
+        name: "Joe's Beerhouse",
+        imgSrc: "/images/restaurants/joesbeerhouse.png",
+        href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
+        storetype: "Restaurant",
+        isEtomartStore: true,
+        priceRange: "N$$$",
+        cuisine: "German",
+        pickupTime: "20–40 min",
+deliveryTime: true
+    },
+      {
           name: "Sardinia Blue Olive",
           imgSrc: "/images/restaurants/sardiniablueolive.png",
           href: "/en/discovery/category/sardiniablueolive",
@@ -706,7 +717,7 @@ deliveryTime: true
       {
           name: "Clicks Pharmacy",
           imgSrc: "/images/pharmacies/clicks.png",
-          href: "/en/discovery/category/clicks",
+          href: "/LP/Khomas/Towns/Pharmacy/Clicks",
           storetype: "Pharmacy",
           isEtomartStore: false,
           priceRange: "N$$",
