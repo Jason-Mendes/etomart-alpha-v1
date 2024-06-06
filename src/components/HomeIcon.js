@@ -4,7 +4,7 @@ const HomeIcon = () => {
   return (
     <div>
                 
-      <a href="/LP/Regions" className=" flex items-center justify-center  tab w-10 h-9 overflow-hidden bg-[#ffaf5e4b] p-3 rounded-full cursor-pointer transition-all duration-300 hover:bg-[#ffaf5e9c] ">
+      <a href="/LP/Region" className=" flex items-center justify-center  tab w-10 h-9 overflow-hidden bg-[#ffaf5e4b] p-3 rounded-full cursor-pointer transition-all duration-300 hover:bg-[#ffaf5e9c] ">
     <svg
       class="svgIcon"
       viewBox="0 0 104 100"

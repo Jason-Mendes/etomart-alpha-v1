@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import LoginModal from './LoginModal';
+import LoginModal from './LoginModal.jsx';
 import SignupModal from './SignupModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import AuthenticatedLoginModal from './AuthenticatedLoginModal';
