@@ -4,7 +4,7 @@ E-Store Platform - Grocery delivery WebApp
 # Project Goal:
 The primary goal of Etomart is to develop a sustainable food and grocery delivery platform that meets the needs of the Namibian market. This involves conducting a feasibility study to ensure that the platform is viable and capable of addressing local market demands. The study covers various aspects, including market analysis, technological requirements, and potential challenges.
 
-#Feasibility Study Focus:
+# Feasibility Study Focus:
 Market Analysis: Understanding the target market, customer needs, and competition.
 Technological Requirements: Assessing the technical aspects required to build and maintain the platform, such as server infrastructure, database management, and user interface design.
 
