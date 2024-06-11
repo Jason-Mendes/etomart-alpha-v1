@@ -1,5 +1,19 @@
-# etomart
-E-Store Platform - Grocery delivery WebApp - Front-End: React - Back-End/Web Server: Node.js (JavaScript/TypeScript) - Database: Firebase (NoSQL) (Firestore or Realtime Database)  Components  - Client-Side Framework: React - Styling: Tailwind CSS
+# Etomart
+E-Store Platform - Grocery delivery WebApp
+
+# Project Goal:
+The primary goal of Etomart is to develop a sustainable food and grocery delivery platform that meets the needs of the Namibian market. This involves conducting a feasibility study to ensure that the platform is viable and capable of addressing local market demands. The study covers various aspects, including market analysis, technological requirements, and potential challenges.
+
+# Feasibility Study Focus:
+Market Analysis: Understanding the target market, customer needs, and competition.
+Technological Requirements: Assessing the technical aspects required to build and maintain the platform, such as server infrastructure, database management, and user interface design.
+
+# Challenges and Solutions: 
+Identifying potential challenges in the Namibian context, such as logistics, internet connectivity, and payment systems, and proposing solutions to address these challenges.
+By focusing on these areas, Etomart aims to provide a reliable and user-friendly platform that enhances the accessibility of groceries and essential products for Namibian customers, contributing to the overall goal of sustainability in the market.
+
+# Architecture:
+Front-End: React - Back-End/Web Server: Node.js (JavaScript/TypeScript) - Database: Firebase (NoSQL) (Firestore or Realtime Database)  Components  - Client-Side Framework: React - Styling: Tailwind CSS
 
 # Getting Started with Create React App
 
