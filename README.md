@@ -1,4 +1,4 @@
-# etomart
+# Etomart
 E-Store Platform - Grocery delivery WebApp
 
 # Project Goal:
