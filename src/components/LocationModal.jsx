@@ -1,33 +1,37 @@
 import React from 'react';
 
+// LocationModal component: handles displaying and controlling the modal for selecting a delivery location
 const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
+  // Handle click event for "Continue" button
   const handleNewLocationButtonClick = () => {
     openNewLocationModal();
   };
 
   return (
     <>
+      {/* Modal wrapper */}
       <div
         className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity ${
           showModal ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
-        {/* Modal background */}
+        {/* Modal background: overlay with a semi-transparent black background */}
         <div
           className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity ${
-            showModal ? 'ease-out duration-700' : 'ease-in duration-700'
+            showModal ? 'ease-out duration-300' : 'ease-in duration-300'
           }`}
-          onClick={closeModal}
+          onClick={closeModal} // Close modal when clicking outside the content
         />
 
         {/* Modal content */}
         <div
           id="Orange_container"
-          className={`bg-[#ee9613] rounded-lg p-4 z-50 fixed bottom-6 top-24  left-1/2 transform -translate-x-1/2 transition-all flex flex-col ${
+          className={`bg-[#ee9613] rounded-lg p-4 z-50 fixed bottom-6 top-24 left-1/2 transform -translate-x-1/2 transition-all flex flex-col ${
             showModal ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
           }`}
-          style={{ width: '600px', maxHeight: '85vh', overflow: 'auto' }}
+          style={{ width: '90%', maxWidth: '600px', maxHeight: '85vh', overflow: 'auto' }} // Responsive and constrained dimensions
         >
+          {/* Close button */}
           <div className="flex justify-end">
             <button className="text-[#000000] hover:text-white" onClick={closeModal}>
               <svg
@@ -42,6 +46,7 @@ const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
             </button>
           </div>
 
+          {/* Modal header */}
           <div className="flex flex-col items-center">
             <h1 className="text-center text-[#000000] text-4xl font-shrikhand mb-4">
               Choose where to deliver
@@ -50,6 +55,7 @@ const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
               Please enter your details
             </span>
 
+            {/* Suburb selector */}
             <div className="w-full mb-4">
               <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor="town">
                 Suburb
@@ -75,6 +81,7 @@ const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
               </select>
             </div>
 
+            {/* Address input */}
             <div className="w-full mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address-query-input">
                 Street name and number
@@ -89,14 +96,16 @@ const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
               />
             </div>
 
+            {/* Continue button */}
             <button
               onClick={handleNewLocationButtonClick}
-              className="w-full bg-black text-white py-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300"
+              className="w-full bg-black text-white py-2 rounded-lg hover:bg-white hover:text-black hover:border hover:border-gray-300 transition-colors duration-200"
             >
               Continue
             </button>
           </div>
 
+          {/* Image section */}
           <div className="w-10/12 bg-white rounded-lg p-4 pt-8 m-8 z-50">
             <div className="relative">
               <img

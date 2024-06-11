@@ -2,12 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import OPNavBar from '../../../../OPNavBar'; // Import OPNavBar component
 import Footer from "../../../../Footer"; // Import Footer component
+import axios from "axios";
 
 // The Clicks component
 function Clicks() {
   const [isDelivery, setIsDelivery] = useState(true); // State for delivery option
   const [searchTerm, setSearchTerm] = useState(''); // State for search term
+  
+  const [currentIndex, setCurrentIndex] = useState(0); // State for current card index
+  const containerRef = useRef(null); // Reference to the card container
+  
+  const [isPaused, setIsPaused] = useState(false); // State for scroll pause
 
+  const [map, setMap] = useState(null); // New state for the map instance
   // Handle search input change
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -151,12 +158,7 @@ const cards = [
   },
   // Add more cards as needed
 ];
-
-
-  const [currentIndex, setCurrentIndex] = useState(0); // State for current card index
-  const containerRef = useRef(null); // Reference to the card container
-  const extendedCards = [...cards, ...cards, ...cards]; // Extend cards array for smooth scrolling
-  const [isPaused, setIsPaused] = useState(false); // State for scroll pause
+const extendedCards = [...cards, ...cards, ...cards]; // Extend cards array for smooth scrolling
 
   // Auto-scroll functionality
   useEffect(() => {
@@ -348,24 +350,109 @@ const cards = [
     return truncatedText;
   };
 
-  // Load Mapbox script and initialize map
-  useEffect(() => {
-    mapboxgl.accessToken = 'your-mapbox-access-token';
-    new mapboxgl.Map({
-      container: 'map1',
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [17.08074939986564, -22.566979439957436], // Coordinates for Windhoek
-      zoom: 9,
+
+// Mapbox access token
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || 'pk.eyJ1IjoiZXRvbWFydG5hIiwiYSI6ImNsd3VuN3k5ZTBmdTkybXIxbG04d2IzYzkifQ.l840oaKK2b0xmUNQ1RjUSQ';
+
+// Marker coordinates
+const MARKER_COORDINATES = [
+  { lng: 17.094332562419833, lat: -22.583743666790397 }, // Clicks Maerua
+  { lng: 17.073723364157306, lat: -22.561939983264068 } // User's home
+];
+
+// Function to initialize the map
+const initializeMap = (mapContainer) => {
+  if (!mapContainer) return; // Check if the map container exists
+
+ 
+
+  const mapInstance = new mapboxgl.Map({
+    container: mapContainer, // Use the provided map container
+    style: 'mapbox://styles/mapbox/streets-v11',
+    
+    zoom: 12, // Initial zoom level
+  });
+
+  // Add navigation control to the map
+  mapInstance.addControl(new mapboxgl.NavigationControl());
+
+  // Add markers to the map
+  MARKER_COORDINATES.forEach(coord => {
+    new mapboxgl.Marker({ color: '#ee9613' }) // Marker color
+      .setLngLat([coord.lng, coord.lat])
+      .addTo(mapInstance);
+  });
+
+  // Define the bounds to include both markers
+  const bounds = new mapboxgl.LngLatBounds();
+  MARKER_COORDINATES.forEach(coord => bounds.extend([coord.lng, coord.lat]));
+
+  // Fit the map to the bounds with padding
+  mapInstance.fitBounds(bounds, {
+    padding: { top: 40, bottom: 300, left: 20, right: 20 },
+    maxZoom: 13, // Limit maximum zoom level
+    linear: true
+  });
+
+  // Fetch and display the route
+  fetchAndDisplayRoute(mapInstance);
+
+  // Save the map instance
+  setMap(mapInstance);
+};
+
+// Function to fetch and display the route
+const fetchAndDisplayRoute = async (mapInstance) => {
+  try {
+    const response = await axios.get(
+      `https://api.mapbox.com/directions/v5/mapbox/driving/${MARKER_COORDINATES[0].lng},${MARKER_COORDINATES[0].lat};${MARKER_COORDINATES[1].lng},${MARKER_COORDINATES[1].lat}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+    );
+
+    const routeLine = response.data.routes[0].geometry;
+
+    mapInstance.on('load', () => {
+      mapInstance.addSource('route', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          properties: {},
+          geometry: routeLine,
+        },
+      });
+
+      mapInstance.addLayer({
+        id: 'route',
+        type: 'line',
+        source: 'route',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': '#ee9613', // Route color
+          'line-width': 8,
+        },
+      });
     });
-  }, []);
+  } catch (error) {
+    console.error('Error fetching route:', error);
+  }
+};
+
+const mapContainerRef = useRef(null);
+
+// Initialize map on component mount
+useEffect(() => {
+  if (mapContainerRef.current) {
+    initializeMap(mapContainerRef.current);
+  }
+}, []);
 
 
   return (
     <div>
       <OPNavBar />
-      <div lang="en">
-        <div id="appsFlyerBanner" aria-hidden="true"></div>
-        <div id="app">
+     
           <div
             style={{
               height: '100%',
@@ -380,7 +467,7 @@ const cards = [
             }}
           ></div>
           <div className="relative">
-            <main
+            <div
               id="mainContent"
               tabIndex="-1"
               className="flex flex-col items-center"
@@ -707,24 +794,25 @@ const cards = [
                 <div className="flex flex-row p-4 space-x-56">
                   <div className="flex flex-col space-y-4">
                     <div>
-                      <p className="text-lg font-bold">Liquor Store</p>
+                      <p className="text-lg font-bold">Checkers</p>
                       <div>
                         <h3 className="text-md font-semibold">See similar stores</h3>
                         <ul className="list-none space-y-1">
                           <li>
                             <a href="/en/isr/eilat/category/alcohol" className="text-[#ee9613] font-bold hover:underline">
-                              Alcohol
+                              Supermarket
                             </a>
                           </li>
                           <li>
                             <a href="/en/isr/eilat/brand/123-alcohol" className="text-[#ee9613] font-bold hover:underline">
-                              123 Alcohol
+                              Store
                             </a>
                           </li>
                         </ul>
                       </div>
                     </div>
                   </div>
+
                   <div className="flex flex-col space-y-4">
                     <div>
                       <h3 className="text-md font-semibold">Address</h3>
@@ -742,49 +830,49 @@ const cards = [
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col space-y-4">
+
+                  <div className="flex flex-col space-y-4 ">
                     <div>
                       <h3 className="text-md font-semibold">Delivery times</h3>
                       <table className="table-auto">
                         <tbody>
                           <tr>
                             <td className="pr-4">Monday</td>
-                            <td>13:00–22:30</td>
+                            <td>09:00–22:30</td>
                           </tr>
                           <tr>
                             <td className="pr-4">Tuesday</td>
-                            <td>13:00–22:30</td>
+                            <td>09:00–22:30</td>
                           </tr>
                           <tr>
                             <td className="pr-4">Wednesday</td>
-                            <td>11:00–22:30</td>
+                            <td>09:00–22:30</td>
                           </tr>
                           <tr>
                             <td className="pr-4">Thursday</td>
-                            <td>11:00–22:30</td>
+                            <td>09:00–22:30</td>
                           </tr>
                           <tr>
                             <td className="pr-4">Friday</td>
-                            <td>10:00–22:30</td>
+                            <td>09:00–22:30</td>
                           </tr>
                           <tr>
                             <td className="pr-4">Saturday</td>
-                            <td>12:00–22:30</td>
+                            <td>09:00–22:30</td>
                           </tr>
                           <tr>
                             <td className="pr-4">Sunday</td>
-                            <td>13:00–22:30</td>
+                            <td>09:00–22:30</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
                   </div>
+
                   <div className="flex flex-col space-y-4">
                     <div>
-                      <h3 className="text-md font-semibold">More information</h3>
-                      <a href="tel:+972543131665" className="text-[#ee9613] font-bold hover:underline">
-                        +972543131665
-                      </a>
+                    <h3 className="text-md font-semibold">More information</h3>
+                      <a href="tel:+972543131665" className="text-[#ee9613] font-bold hover:underline">+972543131665</a>
                     </div>
                   </div>
                 </div>
@@ -792,167 +880,21 @@ const cards = [
                   <div className="w-full h-48">
                     <div className="hidden"></div>
                     <div className="mapboxgl-canvas-container mapboxgl-interactive mapboxgl-touch-drag-pan">
-                      <div id="map1" className="w-full h-48"></div>
-                    </div>
-                    <div className="mapboxgl-control-container">
-                      <div className="mapboxgl-ctrl-top-left"></div>
-                      <div className="mapboxgl-ctrl-top-right"></div>
-                      <div className="mapboxgl-ctrl-bottom-left"></div>
-                      <div className="mapboxgl-ctrl-bottom-right">
-                        <div className="mapboxgl-ctrl block">
-                          <a
-                            className="mapboxgl-ctrl-logo"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://www.mapbox.com/"
-                            aria-label="Mapbox logo"
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mapboxgl-marker" style={{ zIndex: 0, height: '40px', transform: 'translate(1000%, 110%)' }} data-lng="17.0832" data-lat="-22.5700">
-                      <svg viewBox="0 0 56 56" fill="rgba(31, 199, 10, 1)" width="56">
-                        <ellipse cx="28" cy="48" rx="4" ry="1" fill="rgba(32, 33, 37, 1)" fillOpacity="0.24"></ellipse>
-                        <g filter="url(#VenueMarkerRestaurant_svg__a)">
-                          <path d="M28.002 7a15.992 15.992 0 0 0-6.734 30.502 4.224 4.224 0 0 1 2.05 2.057l3.152 6.861a1.683 1.683 0 0 0 3.059 0l3.158-6.866a4.209 4.209 0 0 1 2.049-2.054A15.992 15.992 0 0 0 28.002 7Z"></path>
-                        </g>
-                        <path
-                          d="M21.48 37.048h-.002A15.493 15.493 0 0 1 28.003 7.5a15.492 15.492 0 0 1 6.523 29.547 4.71 4.71 0 0 0-2.292 2.297l-3.159 6.867a1.184 1.184 0 0 1-2.15 0l-3.151-6.86v-.002a4.724 4.724 0 0 0-2.294-2.3Z"
-                          fill="url(#VenueMarkerRestaurant_svg__b)"
-                          stroke="url(#VenueMarkerRestaurant_svg__c)"
-                        ></path>
-                        <svg viewBox="0 0 24 24" fill="rgba(255, 255, 255, 1)" xmlns="http://www.w3.org/2000/svg" width="20" x="18" y="-5">
-                          <path d="M7.5 2.79H10a.25.25 0 0 0 .25-.25v-1a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1a.25.25 0 0 0 .25.25Zm5.04 17.62a.3.3 0 0 0 .21-.261v-.415a.487.487 0 0 0-.174-.361 5.168 5.168 0 0 1-1.826-3.943v-2.39a2.5 2.5 0 0 1 1.7-2.364.365.365 0 0 0 .066-.413l-2.034-2.444a1 1 0 0 1-.232-.64V4.54a.25.25 0 0 0-.25-.25H7.5a.25.25 0 0 0-.25.25v2.638a1 1 0 0 1-.232.64l-2.036 2.444a1 1 0 0 0-.232.64V22.54a1 1 0 0 0 1 1h5.064a.29.29 0 0 0 .287-.354A2.156 2.156 0 0 1 11 22.54a2.249 2.249 0 0 1 1.54-2.13Zm6.047-2.867a3.594 3.594 0 0 1-1.672 1.286.242.242 0 0 0-.165.227v2.235a.25.25 0 0 0 .25.25h1.25a1 1 0 1 1 0 2h-5a1 1 0 0 1 0-2h1.25a.25.25 0 0 0 .25-.25v-2.233a.243.243 0 0 0-.166-.228 3.58 3.58 0 0 1-2.334-3.4v-2.39a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v2.5a3.594 3.594 0 0 1-.663 2.003Zm-2.69-.149a.5.5 0 0 0 .353.147 2 2 0 0 0 2-2 .5.5 0 0 0-1 0 1 1 0 0 1-1 1 .5.5 0 0 0-.354.853Z"></path>
-                        </svg>
-                        <defs>
-                          <linearGradient id="VenueMarkerRestaurant_svg__b" x1="28" y1="7" x2="28" y2="47.4" gradientUnits="userSpaceOnUse">
-                            <stop stopColor="rgba(255, 255, 255, 1)" stopOpacity="0.24"></stop>
-                            <stop offset="1" stopColor="rgba(255, 255, 255, 1)" stopOpacity="0"></stop>
-                          </linearGradient>
-                          <linearGradient id="VenueMarkerRestaurant_svg__c" x1="28" y1="7" x2="28" y2="47.4" gradientUnits="userSpaceOnUse">
-                            <stop stopColor="rgba(255, 255, 255, 1)" stopOpacity="0.24"></stop>
-                            <stop offset="1" stopColor="rgba(255, 255, 255, 1)" stopOpacity="0"></stop>
-                          </linearGradient>
-                          <filter id="VenueMarkerRestaurant_svg__a" x="10" y="5" width="36" height="46.4" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                            <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-                            <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                            <feOffset dy="2"></feOffset>
-                            <feGaussianBlur stdDeviation="1"></feGaussianBlur>
-                            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></feColorMatrix>
-                            <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_16297_127485"></feBlend>
-                            <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                            <feOffset></feOffset>
-                            <feGaussianBlur stdDeviation="1"></feGaussianBlur>
-                            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"></feColorMatrix>
-                            <feBlend in2="effect1_dropShadow_16297_127485" result="effect2_dropShadow_16297_127485"></feBlend>
-                            <feBlend in="SourceGraphic" in2="effect2_dropShadow_16297_127485" result="shape"></feBlend>
-                          </filter>
-                        </defs>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-full bg-black">
-                      <div>
-                        <button
-                          draggable="false"
-                          aria-label="Keyboard shortcuts"
-                          title="Keyboard shortcuts"
-                          type="button"
-                          className="absolute bottom-0 right-0 cursor-pointer outline-offset-3"
-                          style={{ transform: 'translateX(100%)' }}
-                        ></button>
-                      </div>
-                      <div
-                        tabIndex="0"
-                        aria-label="Map"
-                        aria-roledescription="map"
-                        role="region"
-                        aria-describedby="E412F4FB-D385-4728-87CA-CBE3AEC5BB43"
-                        className="absolute top-0 left-0 w-full h-full"
-                      >
-                        <div id="E412F4FB-D385-4728-87CA-CBE3AEC5BB43" className="hidden">
-                          <div className="LGLeeN-keyboard-shortcuts-view">
-                            <table>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    <kbd aria-label="Left arrow">←</kbd>
-                                  </td>
-                                  <td aria-label="Move left.">Move left</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <kbd aria-label="Right arrow">→</kbd>
-                                  </td>
-                                  <td aria-label="Move right.">Move right</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <kbd aria-label="Up arrow">↑</kbd>
-                                  </td>
-                                  <td aria-label="Move up.">Move up</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <kbd aria-label="Down arrow">↓</kbd>
-                                  </td>
-                                  <td aria-label="Move down.">Move down</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <kbd>+</kbd>
-                                  </td>
-                                  <td aria-label="Zoom in.">Zoom in</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <kbd>-</kbd>
-                                  </td>
-                                  <td aria-label="Zoom out.">Zoom out</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <kbd>Home</kbd>
-                                  </td>
-                                  <td aria-label="Jump left by 75%.">Jump left by 75%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <kbd>End</kbd>
-                                  </td>
-                                  <td aria-label="Jump right by 75%.">Jump right by 75%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <kbd>Page Up</kbd>
-                                  </td>
-                                  <td aria-label="Jump up by 75%.">Jump up by 75%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <kbd>Page Down</kbd>
-                                  </td>
-                                  <td aria-label="Jump down by 75%.">Jump down by 75%</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
+                      <div ref={mapContainerRef} className="w-full h-48 mapboxgl-map" style={{ width: '100%', height: '500px' }}></div>
                     </div>
                   </div>
                 </div>
               </div>
-            </main>
-          </div>
-        </div>
-      </div>
+              </div>
+            
+      
       {/* footer */}
       <footer>
         <Footer />
       </footer>
+    </div>   
     </div>
+
   );
 }
 

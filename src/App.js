@@ -18,6 +18,7 @@ import Checkers from './components/Regions/Towns/Shops/Xstores/Checkers';
 import Clicks from './components/Regions/Towns/Shops/Xpharmacies/Clicks';
 import JoesBeerhouse from './components/Regions/Towns/Shops/Xrestaurants/JoesBeerhouse';
 
+import Test from './components/Regions/Towns/Shops/Xpharmacies/Test';
 
 function App() {
   return (
@@ -51,6 +52,8 @@ function App() {
             {/* Routes for Pharmacies */}
             <Route path="/LP/Khomas/Towns/Pharmacies" element={<Pharmacies />} />
             <Route path="/LP/Khomas/Towns/Pharmacy/Clicks" element={<Clicks />} />
+           
+            <Route path="/tests" element={<Test />} />
           </Routes>
         </div>
       </CartProvider>
