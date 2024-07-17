@@ -152,8 +152,10 @@ function RegionHome() {
   };
 
   const handleInputChange = (e) => {
-    setInputLocation(e.target.value);
-  };
+    const sanitizedValue = sanitize(e.target.value);
+    setLocation(sanitizedValue);
+};
+
 
   const handleEditClick = () => {
     setIsEditing(true);

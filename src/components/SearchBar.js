@@ -4,8 +4,10 @@ const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleInputChange = (e) => {
-    setSearchValue(e.target.value);
-  };
+    const sanitizedValue = sanitize(e.target.value);
+    setLocation(sanitizedValue);
+};
+
 
   const handleSearch = () => {
     console.log('Searching for:', searchValue);
