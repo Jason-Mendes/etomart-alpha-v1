@@ -122,13 +122,14 @@ function LocationModal() {
 
   // Auto-scroll effect for the carousel
   useEffect(() => {
+    let interval;
     if (!isPaused) {
-      const interval = setInterval(() => {
-        handleNext();
-      }, 5000);
-      return () => clearInterval(interval);
+        interval = setInterval(() => {
+            handleNext();
+        }, 5000);
     }
-  }, [isPaused, currentIndex]);
+    return () => clearInterval(interval);
+}, [isPaused, currentIndex]);
 
   // Handler for carousel navigation (next)
   const handleNext = () => {

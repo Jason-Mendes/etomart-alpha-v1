@@ -162,13 +162,14 @@ const extendedCards = [...cards, ...cards, ...cards]; // Extend cards array for 
 
   // Auto-scroll functionality
   useEffect(() => {
+    let interval;
     if (!isPaused) {
-      const interval = setInterval(() => {
-        handleNext();
-      }, 5000);
-      return () => clearInterval(interval);
+        interval = setInterval(() => {
+            handleNext();
+        }, 5000);
     }
-  }, [isPaused, currentIndex]);
+    return () => clearInterval(interval);
+}, [isPaused, currentIndex]);
 
   // Handle next card
   const handleNext = () => {

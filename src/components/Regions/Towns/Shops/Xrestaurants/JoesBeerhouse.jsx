@@ -75,13 +75,14 @@ function JoesBeerhouse() {
 
   // Effect to handle auto-scrolling
   useEffect(() => {
+    let interval;
     if (!isPaused) {
-      const interval = setInterval(() => {
-        handleNext();
-      }, 5000);
-      return () => clearInterval(interval);
+        interval = setInterval(() => {
+            handleNext();
+        }, 5000);
     }
-  }, [isPaused, currentIndex]);
+    return () => clearInterval(interval);
+}, [isPaused, currentIndex]);
 
   // Handlers for carousel navigation
   const handleNext = () => {

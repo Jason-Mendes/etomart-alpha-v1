@@ -158,13 +158,14 @@ const cards = [
   
   const extendedCards = [...cards, ...cards, ...cards];
   useEffect(() => {
+    let interval;
     if (!isPaused) {
-      const interval = setInterval(() => {
-        handleNext();
-      }, 5000);
-      return () => clearInterval(interval);
+        interval = setInterval(() => {
+            handleNext();
+        }, 5000);
     }
-  }, [isPaused, currentIndex]);
+    return () => clearInterval(interval);
+}, [isPaused, currentIndex]);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => prevIndex + 1);

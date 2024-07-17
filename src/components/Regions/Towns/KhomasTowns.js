@@ -835,13 +835,14 @@ deliveryTime: true
       const [isPaused, setIsPaused] = useState(false);
     
       useEffect(() => {
+        let interval;
         if (!isPaused) {
-          const interval = setInterval(() => {
-            handleNext();
-          }, 5000);
-          return () => clearInterval(interval);
+            interval = setInterval(() => {
+                handleNext();
+            }, 5000);
         }
-      }, [isPaused, currentIndex]);
+        return () => clearInterval(interval);
+    }, [isPaused, currentIndex]);
     
       const handleNext = () => {
         setCurrentIndex((prevIndex) => prevIndex + 1);
@@ -907,13 +908,14 @@ deliveryTime: true
   const [isPausedau, setIsPausedau] = useState(false);
 
   useEffect(() => {
-    if (!isPausedau) {
-      const intervalau = setInterval(() => {
-        handleNextau();
-      }, 5000);
-      return () => clearInterval(intervalau);
+    let interval;
+    if (!isPaused) {
+        interval = setInterval(() => {
+            handleNext();
+        }, 5000);
     }
-  }, [isPausedau, currentIndexau]);
+    return () => clearInterval(interval);
+}, [isPaused, currentIndex]);
 
   const handleNextau = () => {
     setCurrentIndexau((prevIndex) => prevIndex + 1);
