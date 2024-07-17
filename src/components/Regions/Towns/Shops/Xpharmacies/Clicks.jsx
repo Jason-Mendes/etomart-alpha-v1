@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 import OPNavBar from '../../../../OPNavBar'; // Import OPNavBar component
 import Footer from "../../../../Footer"; // Import Footer component
 import axios from "axios";
-
+import { toast } from 'react-toastify';
 // The Clicks component
 function Clicks() {
   const [isDelivery, setIsDelivery] = useState(true); // State for delivery option
@@ -314,8 +314,8 @@ const extendedCards = [...cards, ...cards, ...cards]; // Extend cards array for 
 
   // Add to favorites alert
   const addToFavorites = () => {
-    alert('Store added to favorites');
-  };
+    toast.success('Store added to favorites');
+};
 
   // Get more info alert
   const getMoreInfo = () => {

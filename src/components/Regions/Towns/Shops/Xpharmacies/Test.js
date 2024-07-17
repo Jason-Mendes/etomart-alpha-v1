@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 import axios from "axios";
 import OPNavBar from '../../../../OPNavBar';
 import Footer from "../../../../Footer";
-
+import { toast } from 'react-toastify';
 // The main component for the Location Modal
 function LocationModal() {
   const [isDelivery, setIsDelivery] = useState(true); // Initial value is set to true
@@ -197,8 +197,8 @@ function LocationModal() {
 
   // Add store to favorites (dummy functionality for now)
   const addToFavorites = () => {
-    alert('Store added to favorites');
-  };
+    toast.success('Store added to favorites');
+};
 
   // Get more information about the store (dummy functionality for now)
   const getMoreInfo = () => {

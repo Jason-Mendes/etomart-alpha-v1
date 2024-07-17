@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 import OPNavBar from '../../../../OPNavBar'; 
 import Footer from "../../../../Footer";
 import axios from "axios";
-
+import { toast } from 'react-toastify';
 function Checkers() {
   const [isDelivery, setIsDelivery] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -418,8 +418,8 @@ const storescards1 = [
   }, [isDropdownOpen]);
 
   const addToFavorites = () => {
-    alert('Store added to favorites');
-  };
+    toast.success('Store added to favorites');
+};
 
   const getMoreInfo = () => {
     alert('More information about the store');

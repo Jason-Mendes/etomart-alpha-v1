@@ -3,6 +3,7 @@ import mapboxgl from "mapbox-gl";
 import OPNavBar from '../../../../OPNavBar';
 import Footer from "../../../../Footer";
 import axios from "axios";
+import { toast } from 'react-toastify';
 // The main component for Joe's Beerhouse
 function JoesBeerhouse() {
   const [isDelivery, setIsDelivery] = useState(true); // Initial value is set to true
@@ -215,8 +216,8 @@ function JoesBeerhouse() {
   };
   
   const addToFavorites = () => {
-    alert('Store added to favorites');
-  };
+    toast.success('Store added to favorites');
+};
 
   const getMoreInfo = () => {
     alert('More information about the store');
