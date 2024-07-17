@@ -274,16 +274,16 @@ return (
         <div id="LP_section_3_orange" className="flex-col sm:flex-col justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10" style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}>
           <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-2 md:mt-4">
             {isLargeScreen ? (
-              <text className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">Explore Etomart Regions</text>
+              <span className="sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-20 md:ml-14 md:py-0 lg:mt-0 lg:my-0 md:pr-4">Explore Etomart Regions</span>
             ) : (
-              <text className="flex justify-center text-2xl text-black-900 font-Agbalumo font-bold">Explore Etomart Regions</text>
+              <span className="flex justify-center text-2xl text-black-900 font-Agbalumo font-bold">Explore Etomart Regions</span>
             )}
           </div>
           <div className="text-container whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
             {isLargeScreen ? (
-              <text className="text-1xl sm:text-1xl md:text-1xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">Delivered to you at your convenience!</text>
+              <span className="text-1xl sm:text-1xl md:text-1xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-20 md:ml-14">Delivered to you at your convenience!</span>
             ) : (
-              <text className="flex justify-center text-1xl text-white font-josefin_sans">Delivered to you at your convenience!</text>
+              <span className="flex justify-center text-1xl text-white font-josefin_sans">Delivered to you at your convenience!</span>
             )}
           </div>
           {/* Regions Buttons */}

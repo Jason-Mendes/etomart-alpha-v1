@@ -279,24 +279,24 @@ function RegionHome() {
               <div className="md:w-1/2 md:pr-4 md:mb-6">
                 <div className="text-container md:flex md:items-end md:justify-end whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2">
                   {isLargeScreen ? (
-                    <text className="sm:text-3xl md:text-2xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-0 md:ml-0 md:py-0 lg:mt-0 lg:my-0">
+                    <span className="sm:text-3xl md:text-2xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo sm:ml-16 sm:mr-0 md:mr-0 md:ml-0 md:py-0 lg:mt-0 lg:my-0">
                       Explore Etomart Towns
-                    </text>
+                    </span>
                   ) : (
-                    <text className="flex justify-center text-xl text-black-900 font-Agbalumo font-bold">
+                    <span className="flex justify-center text-xl text-black-900 font-Agbalumo font-bold">
                       Explore Etomart Towns
-                    </text>
+                    </span>
                   )}
                 </div>
                 <div className="text-container md:flex md:items-end md:justify-end whitespace-nowrap sm:whitespace-wrap md:whitespace-wrap lg:whitespace-wrap xl:whitespace-wrap sd:mt-2 mt-0 md:mt-4">
                   {isLargeScreen ? (
-                    <text className="text-base sm:text-base md:text-base lg:text-2xl xl:text-3xl 2xl:text-4xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-0 md:ml-0">
+                    <span className="text-base sm:text-base md:text-base lg:text-2xl xl:text-3xl 2xl:text-4xl text-white font-josefin_sans mt-0 mb-4 sm:ml-16 sm:mr-0 md:mr-0 md:ml-0">
                       Delivered to you at your convenience!
-                    </text>
+                    </span>
                   ) : (
-                    <text className="flex justify-center text-base text-white font-josefin_sans">
+                    <span className="flex justify-center text-base text-white font-josefin_sans">
                       Delivered to you at your convenience!
-                    </text>
+                    </span>
                   )}
                 </div>
               </div>
