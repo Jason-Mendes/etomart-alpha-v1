@@ -143,35 +143,35 @@ function Stores() {
 
     // Footer links
     const companyLinks = [
-        { label: 'Jobs', url: 'https://careers.wolt.com' },
-        { label: 'Security', url: '/en/alb/security' },
-        { label: 'Investors', url: 'https://ir.doordash.com/overview/default.aspx', target: '_blank' },
-        { label: 'Wolt Market', url: '/en/alb/wolt-market' },
-        { label: 'Developers', url: 'https://developer.wolt.com' },
+        { label: 'Jobs', url: 'https://careers.wolt.com', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Security', url: '/en/alb/security', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Investors', url: 'https://ir.doordash.com/overview/default.aspx', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Wolt Market', url: '/en/alb/wolt-market', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Developers', url: 'https://developer.wolt.com', target: '_blank', rel: 'noopener noreferrer' },
     ];
 
     const GetToKnowUs = [
-        { label: 'About us', url: '/en/alb/about' },
-        { label: 'What we stand for', url: '/en/alb/about/wolt-values' },
-        { label: 'Support', url: 'https://wolt.com/help' },
-        { label: 'Contact', url: '/en/alb/contact' },
-        { label: 'Sustainability', url: '/en/alb/about/better-cities' },
+        { label: 'About us', url: '/en/alb/about', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'What we stand for', url: '/en/alb/about/wolt-values', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Support', url: 'https://wolt.com/help', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Contact', url: '/en/alb/contact', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Sustainability', url: '/en/alb/about/better-cities', target: '_blank', rel: 'noopener noreferrer' },
     ];
 
     const usefulLinks = [
-        { label: "For couriers", url: "/en/alb/couriers" },
-        { label: "For merchants", url: "/en/alb/merchant" },
-        { label: "For affiliates", url: "/en/alb/affiliates" },
-        { label: 'Promo codes', url: 'https://life.wolt.com/en/alb/howto/wolt-promo-codes' },
-        { label: 'Wolt Ads', url: '/en/alb/wolt-ads' },
+        { label: "For couriers", url: "/en/alb/couriers", target: '_blank', rel: 'noopener noreferrer' },
+        { label: "For merchants", url: "/en/alb/merchant", target: '_blank', rel: 'noopener noreferrer' },
+        { label: "For affiliates", url: "/en/alb/affiliates", target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Promo codes', url: 'https://life.wolt.com/en/alb/howto/wolt-promo-codes', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Wolt Ads', url: '/en/alb/wolt-ads', target: '_blank', rel: 'noopener noreferrer' },
     ];
 
     const followLinks = [
-        { label: 'Blog', url: 'https://blog.wolt.com/' },
-        { label: 'Instagram', url: 'https://instagram.com/woltapp', target: '_blank' },
-        { label: 'Facebook', url: 'https://www.facebook.com/woltapp/', target: '_blank' },
-        { label: 'Twitter', url: 'https://twitter.com/woltapp', target: '_blank' },
-        { label: 'LinkedIn', url: 'https://www.linkedin.com/company/wolt-oy/', target: '_blank' },
+        { label: 'Blog', url: 'https://blog.wolt.com/', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Instagram', url: 'https://instagram.com/woltapp', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Facebook', url: 'https://www.facebook.com/woltapp/', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'Twitter', url: 'https://twitter.com/woltapp', target: '_blank', rel: 'noopener noreferrer' },
+        { label: 'LinkedIn', url: 'https://www.linkedin.com/company/wolt-oy/', target: '_blank', rel: 'noopener noreferrer' },
     ];
 
     // Refs for scrolling functionality

@@ -4,7 +4,7 @@ import RegionsBanner from './RegionsBanner';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Footer from "./Footer";
 import LPNavBar from "./LPNavBar"
-
+import DOMPurify from 'dompurify';
 function LandingPage() {
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   //Location buttons stuff
@@ -12,7 +12,7 @@ function LandingPage() {
   const [location, setLocation] = useState("");
   const [numStars] = useState(5); // State for the number of stars
   const [currentSlide, setCurrentSlide] = useState(0);
-
+  const [inputLocation, setInputLocation] = useState("");
 
   // JavaScript
   const [isVideoVisible, setIsVideoVisible] = useState(false);
@@ -178,10 +178,10 @@ function LandingPage() {
 
   //Location buttons stuff
 
-  const handleInputChange = (e) => {
-    const sanitizedValue = sanitize(e.target.value);
-    setLocation(sanitizedValue);
-};
+  const handleInputChange = (event) => {
+    const sanitizedValue = DOMPurify.sanitize(event.target.value);
+    setInputLocation(sanitizedValue);
+  };
 
 
   const handleEditClick = () => {

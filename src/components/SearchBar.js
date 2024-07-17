@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-
+import DOMPurify from 'dompurify'; 
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
-
-  const handleInputChange = (e) => {
-    const sanitizedValue = sanitize(e.target.value);
+  const [location, setLocation] = useState('');
+  const handleInputChange = (event) => {
+    const sanitizedValue = DOMPurify.sanitize(event.target.value);
     setLocation(sanitizedValue);
-};
+  };
+
 
 
   const handleSearch = () => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
+import DOMPurify from 'dompurify'; 
 import Footer from "../Footer";
 import LPNavBar from "../LPNavBar";
 
@@ -9,7 +10,6 @@ function RegionHome() {
   const [inputLocation, setInputLocation] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVideoVisible, setIsVideoVisible] = useState(false);
-
   const navigate = useNavigate();
   const showButtonLocation = useLocation();
   const selectedRegionButton = showButtonLocation.state?.selectedRegion;
@@ -151,10 +151,10 @@ function RegionHome() {
     navigate(path);
   };
 
-  const handleInputChange = (e) => {
-    const sanitizedValue = sanitize(e.target.value);
-    setLocation(sanitizedValue);
-};
+  const handleInputChange = (event) => {
+    const sanitizedValue = DOMPurify.sanitize(event.target.value);
+    setInputLocation(sanitizedValue);
+  };
 
 
   const handleEditClick = () => {
