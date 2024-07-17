@@ -20,4 +20,21 @@ module.exports = {
   resolve: {
     extensions: ['.js'],
   },
+  devServer: {
+    setupMiddlewares: (middlewares, devServer) => {
+      // Custom middleware setup that was in onBeforeSetupMiddleware
+      middlewares.unshift((req, res, next) => {
+        // Custom middleware logic here...
+        next();
+      });
+
+      // Custom middleware setup that was in onAfterSetupMiddleware
+      middlewares.push((req, res, next) => {
+        // Custom middleware logic here...
+        next();
+      });
+
+      return middlewares;
+    },
+  },
 };
