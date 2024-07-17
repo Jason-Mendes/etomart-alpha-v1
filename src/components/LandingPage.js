@@ -179,8 +179,10 @@ function LandingPage() {
   //Location buttons stuff
 
   const handleInputChange = (e) => {
-    setLocation(e.target.value);
-  };
+    const sanitizedValue = sanitize(e.target.value);
+    setLocation(sanitizedValue);
+};
+
 
   const handleEditClick = () => {
     setIsEditing(true);
