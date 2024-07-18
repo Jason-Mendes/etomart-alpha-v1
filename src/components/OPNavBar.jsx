@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { CgMenuRound, CgClose } from 'react-icons/cg';
-import { Link } from 'react-router-dom';
-import LocationButton from './LocationButton';
-import SearchBar from './SearchBar';
-import CartIcon from './CartIcon';
-import UserProfileIcon from './UserProfileIcon';
-import HomeIcon from './HomeIcon';
-import LocationModal from './LocationModal';
+import React, { useEffect, useState } from "react";
+
+import { CgMenuRound, CgClose } from "react-icons/cg";
+import { Link } from "react-router-dom";
+
+import CartIcon from "./CartIcon";
+import HomeIcon from "./HomeIcon";
+import LocationButton from "./LocationButton";
+import LocationModal from "./LocationModal";
+import SearchBar from "./SearchBar";
+import UserProfileIcon from "./UserProfileIcon";
 
 // OPNavBar Component
 const OPNavBar = () => {
@@ -19,18 +21,18 @@ const OPNavBar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const navbar = document.getElementById('opnavbar');
+      const navbar = document.getElementById("opnavbar");
       const scrollPosition = window.scrollY;
       if (scrollPosition > 0) {
-        navbar.classList.add('sticky');
+        navbar.classList.add("sticky");
       } else {
-        navbar.classList.remove('sticky');
+        navbar.classList.remove("sticky");
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -76,18 +78,14 @@ const OPNavBar = () => {
         </nav>
 
         {/* Render modals */}
-        <LocationModal
-          showModal={showLocationModal}
-          closeModal={closeModals}
-        />
+        <LocationModal showModal={showLocationModal} closeModal={closeModals} />
       </div>
 
       <div
         className={`absolute z-20 w-full bg-[#f9f9f9] xl:hidden ${
-          nav ? 'block' : 'hidden'
+          nav ? "block" : "hidden"
         } transition-all duration-500 ease-in-out`}
-      >
-      </div>
+      ></div>
       {nav && (
         <div
           className="absolute top-24 right-0 z-20 w-56 bg-[#fdfdfd] rounded-lg shadow-lg transition-opacity duration-200"
@@ -98,7 +96,7 @@ const OPNavBar = () => {
             <div className="absolute -top-2.5 right-3 z-20">
               <svg viewBox="0 0 32 16" className="w-4 h-4 text-white">
                 <path className="fill-white" d="M 16,0 L32,16 H0 Z"></path>
-                <path fill='#fdfdfd' d="M 16,1 L31,16 H1 Z"></path>
+                <path fill="#fdfdfd" d="M 16,1 L31,16 H1 Z"></path>
               </svg>
             </div>
             <div className="p-4">

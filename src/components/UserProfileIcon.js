@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-
+import React, { useState } from "react";
 
 const UserProfileIcon = () => {
-  
-    return (
-        <div>
-                
-      <a href="#" className=" flex items-center justify-center  tab flex items-center justify-center w-10 h-9 overflow-hidden bg-[#ffaf5e4b] p-3 rounded-full cursor-pointer transition-all duration-300 hover:bg-[#ffaf5e9c] ">
+  return (
+    <div>
+      <a
+        href="#"
+        className=" flex items-center justify-center  tab flex items-center justify-center w-10 h-9 overflow-hidden bg-[#ffaf5e4b] p-3 rounded-full cursor-pointer transition-all duration-300 hover:bg-[#ffaf5e9c] "
+      >
         <svg
           width="104"
           height="100"
@@ -26,7 +26,7 @@ const UserProfileIcon = () => {
           <g clipPath="url(#clip0_41_27)">
             <mask
               id="mask0_41_27"
-              style={{ maskType: 'luminance' }}
+              style={{ maskType: "luminance" }}
               maskUnits="userSpaceOnUse"
               x="0"
               y="61"
@@ -57,11 +57,8 @@ const UserProfileIcon = () => {
           </defs>
         </svg>
       </a>
+    </div>
+  );
+};
 
-  
-                  </div>
-    );
-  };
-  
-  export default UserProfileIcon;
-  
+export default UserProfileIcon;

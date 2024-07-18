@@ -1,11 +1,10 @@
 // Import the Firebase modules needed
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // Import the firebaseConfig object
-import { firebaseConfig } from './firebase-config'; // Ensure this path is correct
+import { firebaseConfig } from "./firebase-config"; // Ensure this path is correct
 
 // Initialize Firebase with your project's configuration
 const app = initializeApp(firebaseConfig);

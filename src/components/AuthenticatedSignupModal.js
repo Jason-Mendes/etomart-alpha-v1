@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const AuthenticatedSignupModal = ({ showModal, closeModal }) => {
   return (
@@ -6,21 +6,21 @@ const AuthenticatedSignupModal = ({ showModal, closeModal }) => {
       {/* Modal */}
       <div
         className={`fixed inset-0 flex items-center justify-center z-50 ${
-          showModal ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          showModal ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
         <div
           className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity ${
-            showModal ? 'ease-out duration-700' : 'ease-in duration-700'
+            showModal ? "ease-out duration-700" : "ease-in duration-700"
           }`}
           onClick={closeModal}
         />
         <div
           id="Orange_container"
           className={`bg-[#ee9613] rounded-lg m-6 p-6 z-50 fixed bottom-6 top-6 left-1/2 transform -translate-x-1/2 transition-all flex flex-col ${
-            showModal ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+            showModal ? "opacity-100 scale-100" : "opacity-0 scale-95"
           }`}
-          style={{ width: '90%', maxHeight: '90vh', overflow: 'auto' }}
+          style={{ width: "90%", maxHeight: "90vh", overflow: "auto" }}
         >
           {/* Your content for the Authenticated modal goes here */}
           <div className="flex justify-end">

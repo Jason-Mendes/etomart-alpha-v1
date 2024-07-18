@@ -1,24 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { CartProvider } from './context/CartContext';
+import React from "react";
 
-import LandingPage from './components/LandingPage';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import LandingPage from "./components/LandingPage";
 
 // import CartIcon from './components/CartIcon';
 
 // import KhomasLandingPage from './components/Regions/khomasLandingPage';
-import RegionHome from './components/Regions/RegionHome';
-import KhomasTowns from './components/Regions/Towns/KhomasTowns';
-import ErongoTowns from './components/Regions/Towns/ErongoTowns';
-import Stores from './components/Regions/Towns/Shops/Stores';
-import Restaurants from './components/Regions/Towns/Shops/Restaurants';
-import Pharmacies from './components/Regions/Towns/Shops/Pharmacies';
-import Checkers from './components/Regions/Towns/Shops/Xstores/Checkers';
-import Clicks from './components/Regions/Towns/Shops/Xpharmacies/Clicks';
-import JoesBeerhouse from './components/Regions/Towns/Shops/Xrestaurants/JoesBeerhouse';
-
-import Test from './components/Regions/Towns/Shops/Xpharmacies/Test';
+import RegionHome from "./components/Regions/RegionHome";
+import ErongoTowns from "./components/Regions/Towns/ErongoTowns";
+import KhomasTowns from "./components/Regions/Towns/KhomasTowns";
+import Pharmacies from "./components/Regions/Towns/Shops/Pharmacies";
+import Restaurants from "./components/Regions/Towns/Shops/Restaurants";
+import Stores from "./components/Regions/Towns/Shops/Stores";
+import Clicks from "./components/Regions/Towns/Shops/Xpharmacies/Clicks";
+import Test from "./components/Regions/Towns/Shops/Xpharmacies/Test";
+import JoesBeerhouse from "./components/Regions/Towns/Shops/Xrestaurants/JoesBeerhouse";
+import Checkers from "./components/Regions/Towns/Shops/Xstores/Checkers";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
@@ -42,17 +41,31 @@ function App() {
 
             {/* Routes for Stores */}
             <Route path="/LP/Khomas/Towns/Stores" element={<Stores />} />
-            <Route path="/LP/Khomas/Towns/Store/Checkers" element={<Checkers />} />
-
+            <Route
+              path="/LP/Khomas/Towns/Store/Checkers"
+              element={<Checkers />}
+            />
 
             {/* Routes for Restaurants */}
-            <Route path="/LP/Khomas/Towns/Restaurants" element={<Restaurants />} />
-            <Route path="/LP/Khomas/Towns/Restaurant/JoesBeerhouse" element={<JoesBeerhouse />} />
+            <Route
+              path="/LP/Khomas/Towns/Restaurants"
+              element={<Restaurants />}
+            />
+            <Route
+              path="/LP/Khomas/Towns/Restaurant/JoesBeerhouse"
+              element={<JoesBeerhouse />}
+            />
 
             {/* Routes for Pharmacies */}
-            <Route path="/LP/Khomas/Towns/Pharmacies" element={<Pharmacies />} />
-            <Route path="/LP/Khomas/Towns/Pharmacy/Clicks" element={<Clicks />} />
-           
+            <Route
+              path="/LP/Khomas/Towns/Pharmacies"
+              element={<Pharmacies />}
+            />
+            <Route
+              path="/LP/Khomas/Towns/Pharmacy/Clicks"
+              element={<Clicks />}
+            />
+
             <Route path="/tests" element={<Test />} />
           </Routes>
         </div>
