@@ -21,6 +21,11 @@ export default [
         sourceType: 'module',
       },
     },
+    env: {
+      browser: true, // Added browser environment
+      es6: true,
+      node: true,
+    },
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
