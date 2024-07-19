@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import DOMPurify from "dompurify";
 import { useNavigate, useLocation } from "react-router-dom";
-
 import Footer from "./Footer";
 import LPNavBar from "./LPNavBar";
 import RegionsBanner from "./RegionsBanner";
@@ -17,7 +16,13 @@ function LandingPage() {
   const [inputLocation, setInputLocation] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [userRegion, setUserRegion] = useState(null);
+  const [confirmRegion, setConfirmRegion] = useState(false);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const inputRef = useRef(null);
   // JavaScript
   const [isVideoVisible, setIsVideoVisible] = useState(false);
 
@@ -27,6 +32,35 @@ function LandingPage() {
   const [selectedRegion, setSelectedRegion] = React.useState(null);
   const [bannerImage, setBannerImage] = useState("");
   const navigate = useNavigate();
+
+
+
+  // Define the region data as a constant outside the component
+  const regionsData = {
+    Khomas: { code: "ALB", name: "Khomas", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Region", latitude: -22.57, longitude: 17.08 },
+    Erongo: { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Region", latitude: -22.55, longitude: 14.28 },
+    Oshana: { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Region", latitude: -18.46, longitude: 15.99 },
+    Omusati: { code: "ALB", name: "Omusati", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Region", latitude: -18.28, longitude: 14.88 },
+    Karas: { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Region", latitude: -27.00, longitude: 18.50 },
+    Ohangwena: { code: "CYP", name: "Ohangwena", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Region", latitude: -17.47, longitude: 16.47 },
+    Zambezi: { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Region", latitude: -17.50, longitude: 24.27 },
+    Oshikoto: { code: "HRV", name: "Oshikoto", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Region", latitude: -18.60, longitude: 16.90 },
+    Omaheke: { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Region", latitude: -21.43, longitude: 19.55 },
+    Hardap: { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Region", latitude: -24.67, longitude: 17.93 },
+    Otjozondjupa: { code: "HRV", name: "Otjozondjupa", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Region", latitude: -20.58, longitude: 17.06 },
+    Kunene: { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Region", latitude: -19.50, longitude: 14.50 },
+    KavangoEast: { code: "ALB", name: "Kavango East", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/Region", latitude: -18.00, longitude: 20.00 },
+    KavangoWest: { code: "HRV", name: "Kavango West", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/Region", latitude: -18.28, longitude: 19.18 }
+  };
+
+  const handleRegionDropdownClick = (regionData, shouldNavigate) => {
+    setSelectedRegion(regionData);
+    setBannerImage(regionData.flagPath);
+    if (shouldNavigate) {
+      setBannerVisible(true);
+      setNextPage("/LP/Region");
+    }
+  };
 
   const regions = [
     { code: "ALB", name: "Khomas", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Region" },
@@ -98,60 +132,129 @@ function LandingPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleInputChange = (event) => {
-    const sanitizedValue = DOMPurify.sanitize(event.target.value);
-    setInputLocation(sanitizedValue);
-
-    if (sanitizedValue) {
-      const allLocations = [...regions.map(r => r.name)];
-      const filteredSuggestions = allLocations.filter((loc) =>
-        loc.toLowerCase().includes(sanitizedValue.toLowerCase())
-      );
-      setSuggestions(filteredSuggestions);
-    } else {
-      setSuggestions([]);
-    }
+  // Clear input field
+  const clearLocation = () => {
+    setLocation("");
+    setIsDropdownOpen(false);
+    setIsEditing(false);
   };
 
-  const clearLocation = () => {
-    setInputLocation('');
-    setSuggestions([]);
+  const handleSelect = (option) => {
+    setSelectedRegion(option);
+    setLocation(option.label);
+    setIsEditing(false);
+    if (option) {
+      const region = regionsData[option.value];
+      if (region) {
+        navigate(region.path, { state: { selectedRegion: option.value } });
+      }
+    }
+  };
+  const handleSelectdrop = (option) => {
+    setLocation(option.label);
+    setIsDropdownOpen(false);
+    handleRegionDropdownClick(option, true);
   };
 
   const handleUseCurrentLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setUserLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      });
+      setIsLoading(true);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ latitude, longitude });
+
+          const region = determineRegion(latitude, longitude);
+          setUserRegion(region);
+          setConfirmRegion(true);
+          setIsLoading(false);
+        },
+        (error) => {
+          console.error("Error getting location", error);
+          alert("Error getting location");
+          setIsLoading(false);
+        }
+      );
     } else {
-      alert('Geolocation is not supported by this browser.');
+      alert("Geolocation is not supported by this browser");
     }
   };
 
+  const determineRegion = (latitude, longitude) => {
+    let closestRegion = null;
+    let closestDistance = Infinity;
+
+    Object.values(regionsData).forEach((region) => {
+      const distance = getDistance(latitude, longitude, region.latitude, region.longitude);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestRegion = region.name;
+      }
+    });
+
+    return closestRegion;
+  };
+
+  const getDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radius of the Earth in km
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+      0.5 - Math.cos(dLat) / 2 +
+      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * (1 - Math.cos(dLon)) / 2;
+
+    return R * 2 * Math.asin(Math.sqrt(a));
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setLocation(value);
+
+    if (value.length > 0) {
+      const newSuggestions = Object.keys(regionsData)
+        .filter(region => region.toLowerCase().includes(value.toLowerCase()))
+        .map(region => ({
+          value: region,
+          label: regionsData[region].name
+        }));
+      setSuggestions(newSuggestions);
+      setIsDropdownOpen(true);
+    } else {
+      setSuggestions([]);
+      setIsDropdownOpen(false);
+    }
+  };
+
+  const regionOptions = useMemo(() => (
+    Object.keys(regionsData).map((key) => ({
+      value: key,
+      label: regionsData[key].name,
+    }))
+  ), []);
+
+  const confirmRegionSelection = () => {
+    if (userRegion) {
+      const region = regionsData[userRegion];
+      navigate(region.path, { state: { selectedRegion: userRegion } });
+    }
+  };
   useEffect(() => {
-    if (userLocation) {
-      const closestTown = findClosestTown(userLocation);
-      setInputLocation(closestTown);
-    }
-  }, [userLocation]);
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !event.target.closest('#protected-div')
+      ) {
+        setIsDropdownOpen(false);
+        setIsEditing(false);
+      }
+    };
 
-  const findClosestTown = (userLocation) => {
-    // Placeholder function to find the closest town based on user's coordinates
-    // Implement your logic to find the closest town from the user's location
-    return 'Closest Town';
-  };
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleSaveClick = () => {
-    // Save the location data here
-    setIsEditing(false);
-  };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -231,87 +334,90 @@ function LandingPage() {
           </div>
 
           {/* Location Buttons Section */}
+         
+<div id="LP_location_buttons_container_2" className="flex relative m-8">
+  <div id="button-group" className="flex flex-row items-center container justify-between w-auto">
+    <div className="flex flex-col items-center pr-8">
+      <div className="flex flex-col max-w-sm items-center space-y-4">
+        <div
+          id="protected-div"
+          className="flex items-center bg-white text-gray-600 px-8 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 relative"
+          onClick={() => {
+            setIsEditing(true);
+            setIsDropdownOpen(true);
+          }}
+        >
+          <img className="h-7 mr-2" src="/images/img_linkedin.svg" alt="LinkedIn" loading="lazy" />
+          {isEditing ? (
+            <input
+              ref={inputRef}
+              className="text-md bg-transparent border-none focus:outline-none flex-grow"
+              type="text"
+              value={location}
+              placeholder="What's Your Region?"
+              autoFocus
+              onChange={handleInputChange}
+            />
+          ) : (
+            <span className="text-md flex-grow">{location || "What's Your Region?"}</span>
+          )}
+          {location && (
+            <XClearButton
+              onClick={(e) => {
+                e.stopPropagation();
+                clearLocation();
+              }}
+              className="absolute right-2 top-2/2 transform -translate-y-2.5"
+            />
+          )}
+        </div>
+        {isDropdownOpen && suggestions.length > 0 && (
           <div
-      id="LP_location_buttons_container_2"
-      className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
-      style={{
-        maxWidth: '1800px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      }}
-    >
-      <div className="button-group flex items-start">
-        <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
-          <button
-            className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
-            onClick={() => setIsEditing(!isEditing)}
+            ref={dropdownRef}
+            className="flex flex-col max-w-sm items-center space-y-2 bg-white border border-gray-300 shadow-md w-full max-h-60 overflow-y-auto z-10"
           >
-            <img
-              className="h-7 mr-2"
-              src="/images/img_linkedin.svg"
-              alt="linkedin"
-              loading="lazy"
-            />
-            <p
-              className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${
-                isEditing ? 'hidden' : ''
-              }`}
-            >
-              What's your Address?
-            </p>
-            <div className={`relative ${!isEditing ? 'hidden' : ''}`}>
-              <input
-                className="text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none"
-                type="text"
-                value={location}
-                onChange={handleInputChange}
-              />
-              <button
-                className="absolute top-0 right-0 mt-2 mr-4"
-                onClick={clearLocation}
+            {suggestions.map((option) => (
+              <div
+                key={option.value}
+                onClick={() => handleSelectdrop(option)}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer w-full text-left"
               >
-                <img
-                  className="h-5 w-5"
-                  src="/images/img_clear_text.svg"
-                  alt="clear"
-                />
-              </button>
-              {suggestions.length > 0 && (
-                <ul className="absolute bg-white border border-gray-300 w-full mt-1 max-h-60 overflow-y-auto z-10">
-                  {suggestions.map((suggestion, index) => (
-                    <li
-                      key={index}
-                      className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                      onClick={() => {
-                        setLocation(suggestion);
-                        setSuggestions([]);
-                      }}
-                    >
-                      {suggestion}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </button>
-
+                {option.label}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <button
+        className="flex items-center bg-white text-black px-4 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 mt-4"
+        onClick={handleUseCurrentLocation}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2"></div>
+        ) : (
+          <img className="h-5 mr-2" src="/images/img_save.svg" alt="save" loading="lazy" />
+        )}
+        <p className="text-base font-bold">{isLoading ? "Getting Location..." : "Use Current Location"}</p>
+      </button>
+    </div>
+    <div className="flex flex-col items-center">
+      {!isLoading && confirmRegion && userRegion && (
+        <div className="text-center">
+          <p>
+            Are you in <b>{userRegion}</b> region
+          </p>
           <button
-            className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
-            onClick={handleUseCurrentLocation}
+            className="flex items-center justify-center m-2 hover:bg-black hover:text-white font-josefin_sans px-4 py-2 bg-[#ff9f10] text-black rounded-full"
+            onClick={confirmRegionSelection}
           >
-            <img
-              className="h-5 mr-2"
-              src="/images/img_save.svg"
-              alt="save"
-              loading="lazy"
-            />
-            <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-zinc-950 font-bold">
-              Use Current Location
-            </p>
+            Confirm Region
           </button>
         </div>
-      </div>
+      )}
     </div>
+  </div>
+</div>;
 
           {/* Explore Regions Section */}
           <div
@@ -397,139 +503,137 @@ function LandingPage() {
 
         {/* Did You Know Section */}
         <div
-            id="LP_location_buttons_container_2"
-            className="flex items-center justify-center p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
-            style={{
-              maxWidth: "1800px",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
+          id="LP_location_buttons_container_2"
+          className="flex items-center justify-center p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
+          style={{
+            maxWidth: "1800px",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          <div
+            id="LP_Did_you_know_container_4"
+            class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6"
+          >
+            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+              <p class="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
+                Did you Know?
+              </p>
+            </div>
+            <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+              <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-zinc-950_01 font-josefin_sans font-semibold">
+                Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
+                non et elit. Dolor turpis molestie dui magnis facilisis at
+                fringilla quam.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* What is Etomart Section */}
+        <div
+          id="LP_section_3_orange"
+          className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
+          style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
+        >
+          <div
+            className={`flex flex-col md:flex-row justify-center items-center gap-8 p-4 transition-all duration-500 relative z-10 mb-16 ${isVideoVisible ? "opacity-0 pointer-events-none" : ""
+              }`}
           >
             <div
-              id="LP_Did_you_know_container_4"
-              class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6"
+              id="What_is_Etomart"
+              className="flex items-center justify-center w-full md:w-1/2 px-4 md:px-0 z-10"
             >
-              <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                <p class="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
-                  Did you Know?
+              <div
+                id="text"
+                className="relative max-w-3xl p-4 md:p-16 text-center"
+              >
+                <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black mb-4">
+                  What is Etomart?
+                </h2>
+                <p className="text-base md:text-xl text-white font-medium mb-8">
+                  Etomart makes it incredibly easy for you to discover and get
+                  what you want. Delivered to you – quickly, reliably and
+                  affordably.
                 </p>
+                <button
+                  className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
+                  onClick={handleWatchVideo}
+                  style={{ position: "relative", zIndex: "999" }}
+                >
+                  <span>Watch Video</span>
+                </button>
               </div>
-              <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-zinc-950_01 font-josefin_sans font-semibold">
-                  Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
-                  non et elit. Dolor turpis molestie dui magnis facilisis at
-                  fringilla quam.
-                </p>
+            </div>
+            <div
+              id="card"
+              className="flex flex-wrap justify-center gap-6 w-full md:w-1/2 p-4 md:px-0 z-10"
+            >
+              <div className="bg-white w-full md:w-auto h-full bg-cover bg-center rounded-lg flex flex-col items-center py-4 md:py-[21px] px-4 md:px-[21px] max-w-[200px] sm:max-w-[300px] md:max-w-[400px] max-h-[200px] sm:max-h-[300px] md:max-h-[450px] shadow-md relative">
+                <div className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-none max-h-[200px] sm:max-h-[300px] md:max-h-[400px] flex items-center justify-center">
+                  <img
+                    className="w-full h-auto rounded-xl"
+                    src="/images/website_intro/video-cover-image-4.jpg"
+                    alt="web_intro"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
-          {/* What is Etomart Section */}
           <div
-            id="LP_section_3_orange"
-            className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
-            style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
+            id="video-container"
+            className={`flex flex-col justify-center items-center transition-all duration-500 ${isVideoVisible ? "" : "opacity-0 pointer-events-none"
+              }`}
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              zIndex: "1",
+            }}
           >
             <div
-              className={`flex flex-col md:flex-row justify-center items-center gap-8 p-4 transition-all duration-500 relative z-10 mb-16 ${
-                isVideoVisible ? "opacity-0 pointer-events-none" : ""
-              }`}
+              id="description"
+              className="m-4 relative max-w-3xl p-4 text-center"
             >
-              <div
-                id="What_is_Etomart"
-                className="flex items-center justify-center w-full md:w-1/2 px-4 md:px-0 z-10"
-              >
-                <div
-                  id="text"
-                  className="relative max-w-3xl p-4 md:p-16 text-center"
-                >
-                  <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black mb-4">
-                    What is Etomart?
-                  </h2>
-                  <p className="text-base md:text-xl text-white font-medium mb-8">
-                    Etomart makes it incredibly easy for you to discover and get
-                    what you want. Delivered to you – quickly, reliably and
-                    affordably.
-                  </p>
-                  <button
-                    className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
-                    onClick={handleWatchVideo}
-                    style={{ position: "relative", zIndex: "999" }}
-                  >
-                    <span>Watch Video</span>
-                  </button>
-                </div>
-              </div>
-              <div
-                id="card"
-                className="flex flex-wrap justify-center gap-6 w-full md:w-1/2 p-4 md:px-0 z-10"
-              >
-                <div className="bg-white w-full md:w-auto h-full bg-cover bg-center rounded-lg flex flex-col items-center py-4 md:py-[21px] px-4 md:px-[21px] max-w-[200px] sm:max-w-[300px] md:max-w-[400px] max-h-[200px] sm:max-h-[300px] md:max-h-[450px] shadow-md relative">
-                  <div className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-none max-h-[200px] sm:max-h-[300px] md:max-h-[400px] flex items-center justify-center">
-                    <img
-                      className="w-full h-auto rounded-xl"
-                      src="/images/website_intro/video-cover-image-4.jpg"
-                      alt="web_intro"
-                    />
-                  </div>
-                </div>
-              </div>
+              <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black">
+                This is Etomart!
+              </h2>
             </div>
-
             <div
-              id="video-container"
-              className={`flex flex-col justify-center items-center transition-all duration-500 ${
-                isVideoVisible ? "" : "opacity-0 pointer-events-none"
-              }`}
-              style={{
-                position: "absolute",
-                top: "0",
-                left: "0",
-                width: "100%",
-                height: "100%",
-                zIndex: "1",
-              }}
+              id="video"
+              className="m-4 relative flex align-items-center md:w-[600px] md:h-[350px]"
             >
-              <div
-                id="description"
-                className="m-4 relative max-w-3xl p-4 text-center"
+              <video
+                className="absolute rounded-3xl inset-0 w-full h-full object-fill"
+                poster="/images/website_intro/video-cover-image-4.jpg"
+                controls
+                volume={0.5}
+                onEnded={handleVideoEnded}
               >
-                <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black">
-                  This is Etomart!
-                </h2>
-              </div>
-              <div
-                id="video"
-                className="m-4 relative flex align-items-center md:w-[600px] md:h-[350px]"
-              >
-                <video
-                  className="absolute rounded-3xl inset-0 w-full h-full object-fill"
-                  poster="/images/website_intro/video-cover-image-4.jpg"
-                  controls
-                  volume={0.5}
-                  onEnded={handleVideoEnded}
-                >
-                  <source
-              src="/videos/website_intro/etomart_Brand_Intro.mp4"
-              type="video/mp4"
-            />
-            <source
-              src="/videos/website_intro/etomart_Brand_Intro.webm"
-              type="video/webm"
-            />
-                </video>
-                
-              </div>
-              <div
-                id="description"
-                className="m-4 relative max-w-3xl p-4 text-center "
-              >
-                <p className="text-base md:text-xl text-white font-medium mb-4  px-16 ">
+                <source
+                  src="/videos/website_intro/etomart_Brand_Intro.mp4"
+                  type="video/mp4"
+                />
+                <source
+                  src="/videos/website_intro/etomart_Brand_Intro.webm"
+                  type="video/webm"
+                />
+              </video>
+
+            </div>
+            <div
+              id="description"
+              className="m-4 relative max-w-3xl p-4 text-center "
+            >
+              <p className="text-base md:text-xl text-white font-medium mb-4  px-16 ">
                 Etomart makes it incredibly easy for you to discover and get
-                    what you want. Delivered to you – quickly, reliably and
-                    affordably.
-                </p>
-                </div> </div> </div>
+                what you want. Delivered to you – quickly, reliably and
+                affordably.
+              </p>
+            </div> </div> </div>
         {/* Testimonials Section */}
         <div
           id="LP_location_Testimonials_container_2"
@@ -574,11 +678,10 @@ function LandingPage() {
                 {testimonials.map((testimonial, index) => (
                   <div
                     key={index}
-                    className={`bg-white border border-slate-200 rounded-bl-[200px] rounded-br-[200px] rounded-tl-[200px] rounded-tr-[200px] shadow-md max-w-full md:max-w-[928px] p-6 ${
-                      currentSlide === index
-                        ? "opacity-100"
-                        : "opacity-0 absolute"
-                    }`}
+                    className={`bg-white border border-slate-200 rounded-bl-[200px] rounded-br-[200px] rounded-tl-[200px] rounded-tr-[200px] shadow-md max-w-full md:max-w-[928px] p-6 ${currentSlide === index
+                      ? "opacity-100"
+                      : "opacity-0 absolute"
+                      }`}
                   >
                     <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
                       <img
