@@ -914,7 +914,7 @@ function RegionHome() {
             >
               <div
                 id="description"
-                className="mb-10 relative max-w-3xl p-4 text-center"
+                className="m-4 relative max-w-3xl p-4 text-center"
               >
                 <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black">
                   This is Etomart!
@@ -922,7 +922,7 @@ function RegionHome() {
               </div>
               <div
                 id="video"
-                className="mb-10 relative flex align-items-center md:w-[600px] md:h-[350px]"
+                className="m-4 relative flex align-items-center md:w-[600px] md:h-[350px]"
               >
                 <video
                   className="absolute rounded-3xl inset-0 w-full h-full object-fill"
@@ -932,17 +932,26 @@ function RegionHome() {
                   onEnded={handleVideoEnded}
                 >
                   <source
-                    src="Videos/website_intro/etomart_Brand_Intro.mp4"
-                    type="video/mp4"
-                  />
-                  <source
-                    src="Videos/website_intro/etomart_Brand_Intro.webm"
-                    type="video/webm"
-                  />
+              src="/videos/website_intro/etomart_Brand_Intro.mp4"
+              type="video/mp4"
+            />
+            <source
+              src="/videos/website_intro/etomart_Brand_Intro.webm"
+              type="video/webm"
+            />
                 </video>
+                
               </div>
-            </div>
-          </div>
+              <div
+                id="description"
+                className="m-4 relative max-w-3xl p-4 text-center "
+              >
+                <p className="text-base md:text-xl text-white font-medium mb-4  px-16 ">
+                Etomart makes it incredibly easy for you to discover and get
+                    what you want. Delivered to you – quickly, reliably and
+                    affordably.
+                </p>
+                </div> </div> </div>
 
           {/* Testimonials Section */}
           <div

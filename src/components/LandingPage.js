@@ -408,106 +408,141 @@ function LandingPage() {
           </div>
         </div>
 
+        {/* Did You Know Section */}
         <div
-          id="LP_section_3_orange"
-          className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
-          style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
-        >
-          {/* Text, Image, and Button */}
-          <div
-            className={`flex flex-col md:flex-row justify-center items-center gap-8 p-4 transition-all duration-500 relative z-10 mb-16 ${
-              isVideoVisible ? "opacity-0 pointer-events-none" : ""
-            }`}
-          >
-            {/* Text and Button */}
-            <div
-              id="What_is_Etomart"
-              className="flex items-center justify-center w-full md:w-1/2 px-4 md:px-0 z-10"
-            >
-              <div
-                id="text"
-                className="relative max-w-3xl p-4 md:p-16 text-center"
-              >
-                <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black mb-4">
-                  What is Etomart?
-                </h2>
-                <p className="text-base md:text-xl text-white font-medium mb-8">
-                  Etomart makes it incredibly easy for you to discover and get
-                  what you want. Delivered to you – quickly, reliably and
-                  affordably.
-                </p>
-                <button
-                  className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md  transition-all duration-300  hover:bg-orange-300"
-                  onClick={handleWatchVideo}
-                  style={{ position: "relative", zIndex: "999" }}
-                >
-                  <span>Watch Video</span>
-                </button>
-              </div>
-            </div>
-            {/* Video */}
-            <div
-              id="card"
-              className="flex flex-wrap justify-center gap-6 w-full md:w-1/2 p-4 md:px-0 z-10"
-            >
-              <div className="bg-white w-full md:w-auto h-full bg-cover bg-center rounded-lg flex flex-col items-center py-4 md:py-[21px] px-4 md:px-[21px] max-w-[200px] sm:max-w-[300px] md:max-w-[400px] max-h-[200px] sm:max-h-[300px] md:max-h-[450px] shadow-md relative">
-                <div className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-none max-h-[200px] sm:max-h-[300px] md:max-h-[400px] flex items-center justify-center">
-                  <img
-                    className="w-full h-auto rounded-xl"
-                    src="/images/website_intro/video-cover-image-4.jpg"
-                    alt="web_intro"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Video Container */}
-          <div
-            id="video-container"
-            className={`flex flex-col  justify-center items-center transition-all duration-500 ${
-              isVideoVisible ? "" : "opacity-0 pointer-events-none"
-            }`}
+            id="LP_location_buttons_container_2"
+            className="flex items-center justify-center p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
             style={{
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              zIndex: "1",
+              maxWidth: "1800px",
+              marginLeft: "auto",
+              marginRight: "auto",
             }}
           >
             <div
-              id="description"
-              className="mb-10  relative max-w-3xl p-4 text-center"
+              id="LP_Did_you_know_container_4"
+              class="flex flex-col gap-[35px] items-center justify-start w-auto md:w-full pt-16 pb-6"
             >
-              <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black ">
-                This is Etomart!
-              </h2>
-            </div>
-            <div
-              id="video"
-              className=" mb-10 relative flex align-items-center  md:w-[600px] md:h-[350px]"
-            >
-              <video
-                className="absolute rounded-3xl inset-0 w-full h-full object-fill"
-                poster="/images/website_intro/video-cover-image-4.jpg"
-                controls
-                volume={0.5}
-                onEnded={handleVideoEnded}
-              >
-                <source
-                  src="Videos/website_intro/etomart_Brand_Intro.mp4"
-                  type="video/mp4"
-                />
-                <source
-                  src="Videos/website_intro/etomart_Brand_Intro.webm"
-                  type="video/webm"
-                />
-              </video>
+              <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+                <p class="text-left md:text-5xl text-6xl text-black w-auto font-bold font-Agbalumo">
+                  Did you Know?
+                </p>
+              </div>
+              <div class="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+                <p class="text-center sm:text-[21px] md:text-[23px] text-[25px] max-w-xl text-zinc-950_01 font-josefin_sans font-semibold">
+                  Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
+                  non et elit. Dolor turpis molestie dui magnis facilisis at
+                  fringilla quam.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
+          {/* What is Etomart Section */}
+          <div
+            id="LP_section_3_orange"
+            className="flex flex-col items-center justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl relative md:p-10 p-5"
+            style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
+          >
+            <div
+              className={`flex flex-col md:flex-row justify-center items-center gap-8 p-4 transition-all duration-500 relative z-10 mb-16 ${
+                isVideoVisible ? "opacity-0 pointer-events-none" : ""
+              }`}
+            >
+              <div
+                id="What_is_Etomart"
+                className="flex items-center justify-center w-full md:w-1/2 px-4 md:px-0 z-10"
+              >
+                <div
+                  id="text"
+                  className="relative max-w-3xl p-4 md:p-16 text-center"
+                >
+                  <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black mb-4">
+                    What is Etomart?
+                  </h2>
+                  <p className="text-base md:text-xl text-white font-medium mb-8">
+                    Etomart makes it incredibly easy for you to discover and get
+                    what you want. Delivered to you – quickly, reliably and
+                    affordably.
+                  </p>
+                  <button
+                    className="bg-white text-black px-6 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
+                    onClick={handleWatchVideo}
+                    style={{ position: "relative", zIndex: "999" }}
+                  >
+                    <span>Watch Video</span>
+                  </button>
+                </div>
+              </div>
+              <div
+                id="card"
+                className="flex flex-wrap justify-center gap-6 w-full md:w-1/2 p-4 md:px-0 z-10"
+              >
+                <div className="bg-white w-full md:w-auto h-full bg-cover bg-center rounded-lg flex flex-col items-center py-4 md:py-[21px] px-4 md:px-[21px] max-w-[200px] sm:max-w-[300px] md:max-w-[400px] max-h-[200px] sm:max-h-[300px] md:max-h-[450px] shadow-md relative">
+                  <div className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-none max-h-[200px] sm:max-h-[300px] md:max-h-[400px] flex items-center justify-center">
+                    <img
+                      className="w-full h-auto rounded-xl"
+                      src="/images/website_intro/video-cover-image-4.jpg"
+                      alt="web_intro"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="video-container"
+              className={`flex flex-col justify-center items-center transition-all duration-500 ${
+                isVideoVisible ? "" : "opacity-0 pointer-events-none"
+              }`}
+              style={{
+                position: "absolute",
+                top: "0",
+                left: "0",
+                width: "100%",
+                height: "100%",
+                zIndex: "1",
+              }}
+            >
+              <div
+                id="description"
+                className="m-4 relative max-w-3xl p-4 text-center"
+              >
+                <h2 className="text-2xl md:text-5xl font-Agbalumo font-bold text-black">
+                  This is Etomart!
+                </h2>
+              </div>
+              <div
+                id="video"
+                className="m-4 relative flex align-items-center md:w-[600px] md:h-[350px]"
+              >
+                <video
+                  className="absolute rounded-3xl inset-0 w-full h-full object-fill"
+                  poster="/images/website_intro/video-cover-image-4.jpg"
+                  controls
+                  volume={0.5}
+                  onEnded={handleVideoEnded}
+                >
+                  <source
+              src="/videos/website_intro/etomart_Brand_Intro.mp4"
+              type="video/mp4"
+            />
+            <source
+              src="/videos/website_intro/etomart_Brand_Intro.webm"
+              type="video/webm"
+            />
+                </video>
+                
+              </div>
+              <div
+                id="description"
+                className="m-4 relative max-w-3xl p-4 text-center "
+              >
+                <p className="text-base md:text-xl text-white font-medium mb-4  px-16 ">
+                Etomart makes it incredibly easy for you to discover and get
+                    what you want. Delivered to you – quickly, reliably and
+                    affordably.
+                </p>
+                </div> </div> </div>
         {/* Testimonials Section */}
         <div
           id="LP_location_Testimonials_container_2"
