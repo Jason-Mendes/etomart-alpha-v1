@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import AuthenticatedLoginModal from "./AuthenticatedLoginModal";
 import AuthenticatedSignupModal from "./AuthenticatedSignupModal";
 import ForgotPasswordModal from "./ForgotPasswordModal";
-import LoginModal from "./LoginModal.jsx";
+import LoginModal from "./LoginModal";
 import SignupModal from "./SignupModal";
 
 // LPNavBar Component
@@ -108,59 +108,69 @@ const LPNavBar = () => {
         </div>
       </nav>
 
-      {/* Render modals */}
-      <LoginModal
-        showModal={showLoginModal}
-        closeModal={closeModals}
-        openSignupModal={() => {
-          closeModals();
-          setShowSignupModal(true);
-        }}
-        openForgotPasswordModal={() => {
-          closeModals();
-          setShowForgotPasswordModal(true);
-        }}
-        openAuthenticatedLoginModal={() => {
-          closeModals();
-          setShowAuthenticatedLoginModal(true);
-        }}
-        openAuthenticatedSignupModal={() => {
-          closeModals();
-          setShowAuthenticatedSignupModal(true);
-        }}
-      />
-      <SignupModal
-        showModal={showSignupModal}
-        closeModal={closeModals}
-        openLoginModal={() => {
-          closeModals();
-          setShowLoginModal(true);
-        }}
-        openForgotPasswordModal={() => {
-          closeModals();
-          setShowForgotPasswordModal(true);
-        }}
-        openAuthenticatedLoginModal={() => {
-          closeModals();
-          setShowAuthenticatedLoginModal(true);
-        }}
-        openAuthenticatedSignupModal={() => {
-          closeModals();
-          setShowAuthenticatedSignupModal(true);
-        }}
-      />
-      <ForgotPasswordModal
-        showModal={showForgotPasswordModal}
-        closeModal={closeModals}
-      />
-      <AuthenticatedLoginModal
-        showModal={showAuthenticatedLoginModal}
-        closeModal={closeModals}
-      />
-      <AuthenticatedSignupModal
-        showModal={showAuthenticatedSignupModal}
-        closeModal={closeModals}
-      />
+      {/* Conditionally render modals */}
+      {showLoginModal && (
+        <LoginModal
+          showModal={showLoginModal}
+          closeModal={closeModals}
+          openSignupModal={() => {
+            closeModals();
+            setShowSignupModal(true);
+          }}
+          openForgotPasswordModal={() => {
+            closeModals();
+            setShowForgotPasswordModal(true);
+          }}
+          openAuthenticatedLoginModal={() => {
+            closeModals();
+            setShowAuthenticatedLoginModal(true);
+          }}
+          openAuthenticatedSignupModal={() => {
+            closeModals();
+            setShowAuthenticatedSignupModal(true);
+          }}
+        />
+      )}
+      {showSignupModal && (
+        <SignupModal
+          showModal={showSignupModal}
+          closeModal={closeModals}
+          openLoginModal={() => {
+            closeModals();
+            setShowLoginModal(true);
+          }}
+          openForgotPasswordModal={() => {
+            closeModals();
+            setShowForgotPasswordModal(true);
+          }}
+          openAuthenticatedLoginModal={() => {
+            closeModals();
+            setShowAuthenticatedLoginModal(true);
+          }}
+          openAuthenticatedSignupModal={() => {
+            closeModals();
+            setShowAuthenticatedSignupModal(true);
+          }}
+        />
+      )}
+      {showForgotPasswordModal && (
+        <ForgotPasswordModal
+          showModal={showForgotPasswordModal}
+          closeModal={closeModals}
+        />
+      )}
+      {showAuthenticatedLoginModal && (
+        <AuthenticatedLoginModal
+          showModal={showAuthenticatedLoginModal}
+          closeModal={closeModals}
+        />
+      )}
+      {showAuthenticatedSignupModal && (
+        <AuthenticatedSignupModal
+          showModal={showAuthenticatedSignupModal}
+          closeModal={closeModals}
+        />
+      )}
     </div>
   );
 };
