@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import XClearButton from './componentsCalled/XClearButton'; // Ensure the path is correct and case-sensitive
+
+
 
 // LoginModal component definition
+{/* modalPropMangement is done in the LPNavBar.jsx as well*/}
 const LoginModal = ({
   showModal,
   closeModal,
@@ -8,16 +12,28 @@ const LoginModal = ({
   openForgotPasswordModal,
   openAuthenticatedLoginModal,
 }) => {
+  // State variables for input fields
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // Handlers to clear input fields
+  const clearEmail = () => setEmail("");
+  const clearPassword = () => setPassword("");
+
   // Handler for signup link click
   const handleSignupLinkClick = () => {
-    openSignupModal();
-  };
-
+  closeModal(); // Close the current modal
+  setTimeout(() => {
+    openSignupModal(); // Open the login modal after a short delay
+  }, 300); // Adjust this delay as needed
+};
   // Handler for forgot password link click
   const handleForgotPasswordLinkClick = () => {
-    openForgotPasswordModal();
-  };
-
+  closeModal(); // Close the current modal
+  setTimeout(() => {
+    openForgotPasswordModal(); // Open the login modal after a short delay
+  }, 300); // Adjust this delay as needed
+};
   // Handler for authenticated login link click
   const handleAuthenticatedLoginLinkClick = () => {
     openAuthenticatedLoginModal();
@@ -50,7 +66,7 @@ const LoginModal = ({
           {/* Close button */}
           <div className="flex justify-end">
             <button
-              className="text-[#000000] hover:text-white"
+              className="text-[#000000] transition-all duration-300 ease-in-out hover:text-white"
               onClick={closeModal}
             >
               <svg
@@ -70,119 +86,127 @@ const LoginModal = ({
             </button>
           </div>
 
-          <div id="Image_and_Form_Container" className="flex flex-col md:flex-row items-start justify-center flex-grow">
-  {/* Left side: Image */}
-  <div className="flex flex-col justify-center md:w-1/2 order-2 md:order-1 mb-8 md:mb-0 w-full">
-    <h2 className="text-center text-[#000000] text-2xl md:text-3xl lg:text-4xl font-Agbalumo font-bold m-6">
-      Welcome Back!
-    </h2>
-    <div className="w-full bg-[#ffffff] rounded-lg p-4 pt-8 z-50">
-      <div className="relative">
-        <img
-          src="/images/Mais_reverse.jpg"
-          alt="img"
-          className="w-full md:max-w-md lg:max-w-lg xl:max-w-xl max-h-[70vh] min-h-[50vh] rounded-r-2xl object-cover"
-          style={{ maxHeight: "70vh", minHeight: "70vh" }}
-        />
-      </div>
-    </div>
-  </div>
+          <div
+            id="Image_and_Form_Container"
+            className="flex flex-col md:flex-row items-start justify-center flex-grow"
+          >
+            {/* Left side: Image */}
+            <div className="flex flex-col justify-center md:w-1/2 order-2 md:order-1 mb-8 md:mb-0 w-full">
+              <h2 className="text-center text-[#000000] text-2xl md:text-3xl lg:text-4xl font-Agbalumo font-bold m-6">
+                Welcome Back!
+              </h2>
+              <div className="w-full bg-[#ffffff] rounded-lg p-4 pt-8 z-50">
+                <div className="relative">
+                  <img
+                    src="/images/Mais_reverse.jpg"
+                    alt="img"
+                    className="w-full md:max-w-md lg:max-w-lg xl:max-w-xl max-h-[70vh] min-h-[50vh] rounded-r-2xl object-cover"
+                    style={{ maxHeight: "70vh", minHeight: "70vh" }}
+                  />
+                </div>
+              </div>
+            </div>
 
-  {/* Right side: Form */}
-  <div className="flex flex-col justify-center md:ml-16 w-full md:w-1/2 order-1 md:order-2">
-    <h2 className="text-center text-[#000000] text-2xl md:text-4xl lg:text-5xl font-Agbalumo font-bold mb-4">
-      Login / Sign Up
-    </h2>
-    <span className="text-center font-josefin_sans text-xl md:text-2xl font-semibold text-white mb-4">
-      Please enter your details
-    </span>
+            {/* Right side: Form */}
+            <div className="flex flex-col justify-center md:ml-16 w-full md:w-1/2 order-1 md:order-2">
+              <h2 className="text-center text-[#000000] text-2xl md:text-4xl lg:text-5xl font-Agbalumo font-bold mb-4">
+                Login / Sign Up
+              </h2>
+              <span className="text-center font-josefin_sans text-xl md:text-2xl font-semibold text-white mb-4">
+                Please enter your details
+              </span>
 
-    {/* Email input */}
-    <div className="py-4">
-      <span className="text-black text-xl md:text-2xl font-Agbalumo font-semibold mb-2">
-        Email
-      </span>
-      <input
-        type="text"
-        className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-        name="email"
-        id="email"
-      />
-    </div>
-
-    {/* Password input */}
-    <div className="py-4">
-      <span className="font-Agbalumo text-lg md:text-xl font-semibold mb-2">
-        Password
-      </span>
-      <input
-        type="password"
-        name="pass"
-        id="pass"
-        className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-      />
-    </div>
-
-    {/* Remember me and forgot password */}
-    <div className="flex justify-between w-full py-4">
-      <div className="flex items-center">
-        <input
-          type="checkbox"
-          name="ch"
-          id="ch"
-          className="h-5 w-5 mr-2"
-        />
-        <span className="font-semibold text-lg">
-          Remember for 30 days
-        </span>
-      </div>
-      <button
-        onClick={handleForgotPasswordLinkClick}
-        className="text-white hover:text-black font-semibold text-lg underline"
-      >
-        Forgot password?
-      </button>
-    </div>
-
-    {/* Login buttons */}
-    <button
-      onClick={handleAuthenticatedLoginLinkClick}
-      className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
-    >
-      Log in
-    </button>
-    <button className="w-full border bg-white border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-black hover:text-white">
-      <img
-        src="/images/google.svg"
-        alt="Google Logo"
-        className="w-6 h-6 inline mr-2"
-      />
-      Log in with Google
-    </button>
-    <button className="w-full border bg-white border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-black hover:text-white">
-      <img
-        src="/images/apple.svg"
-        alt="iCloud"
-        className="w-6 h-6 inline mr-4"
-      />
-      Log in with iCloud
-    </button>
-
-    {/* Signup link */}
-    <div className="text-center text-black">
-      <span className="text-center text-white font-semibold text-lg mr-2">
-        Don't have an account?
-      </span>
-      <button
-        onClick={handleSignupLinkClick}
-        className="text-white hover:text-black font-semibold text-lg underline"
-      >
-        Sign up for free
-      </button>
-    </div>
-  </div>
+              {/* Email input */}
+              <div className="py-4 relative">
+                <span className="text-black text-xl md:text-2xl font-Agbalumo font-semibold mb-2">
+                  Email
+                </span>
+                <input
+    type="text"
+    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500 pr-10" // Ensure padding-right is enough to avoid overlap with the button
+    name="email"
+    id="email"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+  />
+  {email && <XClearButton onClick={clearEmail} />}
 </div>
 
+              {/* Password input */}
+              <div className="py-4 relative">
+                <span className="font-Agbalumo text-lg md:text-xl font-semibold mb-2">
+                  Password
+                </span>
+                <input
+                  type="password"
+                  name="pass"
+                  id="pass"
+                  className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {password && <XClearButton onClick={clearPassword} />}
+              </div>
+
+              {/* Remember me and forgot password */}
+              <div className="flex justify-between w-full py-4">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    name="ch"
+                    id="ch"
+                    className="h-5 w-5 mr-2"
+                  />
+                  <span className="font-semibold text-lg">
+                    Remember for 30 days
+                  </span>
+                </div>
+                <button
+                  onClick={handleForgotPasswordLinkClick}
+                  className="text-white transition-all duration-300 ease-in-out hover:text-black font-semibold text-lg underline"
+                >
+                  Forgot password?
+                </button>
+              </div>
+
+              {/* Login buttons */}
+              <button
+                onClick={handleAuthenticatedLoginLinkClick}
+                className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black transition-all duration-300 ease-in-out "
+              >
+                Log in
+              </button>
+              <button className="w-full  bg-white border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-black hover:text-white">
+                <img
+                  src="/images/google.svg"
+                  alt="Google Logo"
+                  className="w-6 h-6 inline mr-2"
+                />
+                Log in with Google
+              </button>
+              <button className="w-full  bg-white border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-black transition-all duration-300 ease-in-out hover:text-white">
+                <img
+                  src="/images/apple.svg"
+                  alt="iCloud"
+                  className="w-6 h-6 inline mr-4"
+                />
+                Log in with iCloud
+              </button>
+
+              {/* Signup link */}
+              <div className="text-center text-black">
+                <span className="text-center text-white font-semibold text-lg mr-2">
+                  Don't have an account?
+                </span>
+                <button
+                  onClick={handleSignupLinkClick}
+                  className="text-black transition-all duration-300 ease-in-out hover:text-white font-semibold text-lg underline"
+                >
+                  Sign up for free
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
-
 import { Link } from "react-router-dom";
-
 import AuthenticatedLoginModal from "./AuthenticatedLoginModal";
 import AuthenticatedSignupModal from "./AuthenticatedSignupModal";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 import LoginModal from "./LoginModal";
 import SignupModal from "./SignupModal";
 
-// LPNavBar Component
 const LPNavBar = () => {
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
-  const [showAuthenticatedLoginModal, setShowAuthenticatedLoginModal] =
-    useState(false);
-  const [showAuthenticatedSignupModal, setShowAuthenticatedSignupModal] =
-    useState(false);
+  const [showAuthenticatedLoginModal, setShowAuthenticatedLoginModal] = useState(false);
+  const [showAuthenticatedSignupModal, setShowAuthenticatedSignupModal] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,27 +21,29 @@ const LPNavBar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Modal handlers
-  const handleLoginClick = () => setShowLoginModal(true);
-  const handleSignupClick = () => setShowSignupModal(true);
-  const handleForgotPasswordClick = () => setShowForgotPasswordModal(true);
-  const handleAuthenticatedLoginClick = () =>
-    setShowAuthenticatedLoginModal(true);
-  const handleAuthenticatedSignupClick = () =>
-    setShowAuthenticatedSignupModal(true);
   const closeModals = () => {
     setShowLoginModal(false);
     setShowSignupModal(false);
     setShowForgotPasswordModal(false);
     setShowAuthenticatedLoginModal(false);
     setShowAuthenticatedSignupModal(false);
+  };
+
+  const openModal = (modalSetter) => {
+    closeModals();
+    modalSetter(true);
+  };
+
+  const modalProps = {
+    openLoginModal: () => openModal(setShowLoginModal),
+    openSignupModal: () => openModal(setShowSignupModal),
+    openForgotPasswordModal: () => openModal(setShowForgotPasswordModal),
+    openAuthenticatedLoginModal: () => openModal(setShowAuthenticatedLoginModal),
+    openAuthenticatedSignupModal: () => openModal(setShowAuthenticatedSignupModal),
+    closeModal: closeModals,
   };
 
   return (
@@ -72,105 +69,28 @@ const LPNavBar = () => {
             </h1>
           </div>
 
-          {/* Buttons container */}
           <div className="flex space-x-4">
             <button
-              onClick={handleLoginClick}
+              onClick={() => openModal(setShowLoginModal)}
               className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#f7a832] text-black rounded"
             >
               Log in
             </button>
             <button
-              onClick={handleSignupClick}
+              onClick={() => openModal(setShowSignupModal)}
               className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ff9f10] text-black rounded"
             >
               Sign up
             </button>
-            <button
-              onClick={handleForgotPasswordClick}
-              className="hidden hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ee9613] text-black rounded"
-            >
-              Forgot Password
-            </button>
-            <button
-              onClick={handleAuthenticatedLoginClick}
-              className="hidden hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ee9613] text-black rounded"
-            >
-              Authenticated Log in
-            </button>
-            <button
-              onClick={handleAuthenticatedSignupClick}
-              className="hidden hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ee9613] text-black rounded"
-            >
-              Authenticated Sign in
-            </button>
           </div>
         </div>
       </nav>
-
-      {/* Conditionally render modals */}
-      {showLoginModal && (
-        <LoginModal
-          showModal={showLoginModal}
-          closeModal={closeModals}
-          openSignupModal={() => {
-            closeModals();
-            setShowSignupModal(true);
-          }}
-          openForgotPasswordModal={() => {
-            closeModals();
-            setShowForgotPasswordModal(true);
-          }}
-          openAuthenticatedLoginModal={() => {
-            closeModals();
-            setShowAuthenticatedLoginModal(true);
-          }}
-          openAuthenticatedSignupModal={() => {
-            closeModals();
-            setShowAuthenticatedSignupModal(true);
-          }}
-        />
-      )}
-      {showSignupModal && (
-        <SignupModal
-          showModal={showSignupModal}
-          closeModal={closeModals}
-          openLoginModal={() => {
-            closeModals();
-            setShowLoginModal(true);
-          }}
-          openForgotPasswordModal={() => {
-            closeModals();
-            setShowForgotPasswordModal(true);
-          }}
-          openAuthenticatedLoginModal={() => {
-            closeModals();
-            setShowAuthenticatedLoginModal(true);
-          }}
-          openAuthenticatedSignupModal={() => {
-            closeModals();
-            setShowAuthenticatedSignupModal(true);
-          }}
-        />
-      )}
-      {showForgotPasswordModal && (
-        <ForgotPasswordModal
-          showModal={showForgotPasswordModal}
-          closeModal={closeModals}
-        />
-      )}
-      {showAuthenticatedLoginModal && (
-        <AuthenticatedLoginModal
-          showModal={showAuthenticatedLoginModal}
-          closeModal={closeModals}
-        />
-      )}
-      {showAuthenticatedSignupModal && (
-        <AuthenticatedSignupModal
-          showModal={showAuthenticatedSignupModal}
-          closeModal={closeModals}
-        />
-      )}
+{/* modalPropMangement */}
+      {showLoginModal && <LoginModal showModal={showLoginModal} {...modalProps} />}
+      {showSignupModal && <SignupModal showModal={showSignupModal} {...modalProps} />}
+      {showForgotPasswordModal && <ForgotPasswordModal showModal={showForgotPasswordModal} {...modalProps} />}
+      {showAuthenticatedLoginModal && <AuthenticatedLoginModal showModal={showAuthenticatedLoginModal} {...modalProps} />}
+      {showAuthenticatedSignupModal && <AuthenticatedSignupModal showModal={showAuthenticatedSignupModal} {...modalProps} />}
     </div>
   );
 };
