@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
-
 import DOMPurify from "dompurify";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import Footer from "./Footer";
 import LPNavBar from "./LPNavBar";
 import RegionsBanner from "./RegionsBanner";
+import XClearButton from './componentsCalled/XClearButton'; // Ensure the path is correct and case-sensitive
 
 function LandingPage() {
   const [isLargeScreen, setIsLargeScreen] = useState(false);
-  //Location buttons stuff
+  // Location buttons state
   const [isEditing, setIsEditing] = useState(false);
   const [location, setLocation] = useState("");
   const [numStars] = useState(5); // State for the number of stars
   const [currentSlide, setCurrentSlide] = useState(0);
   const [inputLocation, setInputLocation] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
 
   // JavaScript
   const [isVideoVisible, setIsVideoVisible] = useState(false);
 
-  //Regions stuff
-
+  // Regions state
   const [isBannerVisible, setBannerVisible] = useState(false);
   const [nextPage, setNextPage] = useState("");
   const [selectedRegion, setSelectedRegion] = React.useState(null);
@@ -28,95 +29,25 @@ function LandingPage() {
   const navigate = useNavigate();
 
   const regions = [
-    {
-      code: "ALB",
-      name: "Khomas",
-      flagPath: "/images/regions/khomas2.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "HRV",
-      name: "Erongo",
-      flagPath: "/images/regions/erongo.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "CYP",
-      name: "Oshana",
-      flagPath: "/images/regions/oshana.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "ALB",
-      name: "Omusati",
-      flagPath: "/images/regions/omusati.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "HRV",
-      name: "Karas",
-      flagPath: "/images/regions/kharas2.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "CYP",
-      name: "Ohangwena",
-      flagPath: "/images/regions/ohangwena.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "ALB",
-      name: "Zambezi",
-      flagPath: "/images/regions/zambezi.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "HRV",
-      name: "Oshikoto",
-      flagPath: "/images/regions/oshikoto.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "CYP",
-      name: "Omaheke",
-      flagPath: "/images/regions/omaheke.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "ALB",
-      name: "Hardap",
-      flagPath: "/images/regions/hardap.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "HRV",
-      name: "Otjozondjupa",
-      flagPath: "/images/regions/otjozondjupa.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "CYP",
-      name: "Kunene",
-      flagPath: "/images/regions/kunene2.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "ALB",
-      name: "Kavango East",
-      flagPath: "/images/regions/kavango_east.jpeg",
-      path: "/LP/Region",
-    },
-    {
-      code: "HRV",
-      name: "Kavango West",
-      flagPath: "/images/regions/kavango_west.jpeg",
-      path: "/LP/Region",
-    },
+    { code: "ALB", name: "Khomas", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Region" },
+    { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Region" },
+    { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Region" },
+    { code: "ALB", name: "Omusati", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Region" },
+    { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Region" },
+    { code: "CYP", name: "Ohangwena", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Region" },
+    { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Region" },
+    { code: "HRV", name: "Oshikoto", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Region" },
+    { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Region" },
+    { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Region" },
+    { code: "HRV", name: "Otjozondjupa", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Region" },
+    { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Region" },
+    { code: "ALB", name: "Kavango East", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/Region" },
+    { code: "HRV", name: "Kavango West", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/Region" },
   ];
 
   const handleRegionClick = (region, shouldNavigate) => {
-    setSelectedRegion(region); // set the selected region
-    setBannerImage(region.flagPath); // set the banner image
+    setSelectedRegion(region);
+    setBannerImage(region.flagPath);
     if (shouldNavigate) {
       setBannerVisible(true);
       setNextPage("/LP/Region");
@@ -129,7 +60,7 @@ function LandingPage() {
   };
 
   console.log("Selected Region:", selectedRegion);
-  //Objectcode:"ALB" flagPath:"/images/regions/khomas2.jpeg" name:"Khomas" path:"/LP/Region"
+
   const testimonials = [
     {
       imageSrc: "/images/img_ellipse1.png",
@@ -139,24 +70,19 @@ function LandingPage() {
     },
     {
       imageSrc: "/images/img_ellipse1.png",
-      textBelowImage:
-        "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
+      textBelowImage: "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
       numStars: 5,
       testimonialAuthor: "John Doe",
     },
     {
       imageSrc: "/images/img_ellipse1.png",
-      textBelowImage:
-        "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
+      textBelowImage: "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
       numStars: 3,
       testimonialAuthor: "John Doe",
     },
-    // Add more testimonials as needed
   ];
 
   const handleClick = (url) => {
-    // Handle the click event here
-    // You can navigate to the URL or perform any other action
     console.log("Clicked URL:", url);
   };
 
@@ -165,21 +91,57 @@ function LandingPage() {
       setIsLargeScreen(window.innerWidth >= 640);
     };
 
-    // Initial call to set screen size
     handleResize();
 
-    // Event listener for window resize
     window.addEventListener("resize", handleResize);
 
-    // Cleanup the event listener
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  //Location buttons stuff
 
   const handleInputChange = (event) => {
     const sanitizedValue = DOMPurify.sanitize(event.target.value);
     setInputLocation(sanitizedValue);
+
+    if (sanitizedValue) {
+      const allLocations = [...regions.map(r => r.name)];
+      const filteredSuggestions = allLocations.filter((loc) =>
+        loc.toLowerCase().includes(sanitizedValue.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const clearLocation = () => {
+    setInputLocation('');
+    setSuggestions([]);
+  };
+
+  const handleUseCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setUserLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      });
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
+  };
+
+  useEffect(() => {
+    if (userLocation) {
+      const closestTown = findClosestTown(userLocation);
+      setInputLocation(closestTown);
+    }
+  }, [userLocation]);
+
+  const findClosestTown = (userLocation) => {
+    // Placeholder function to find the closest town based on user's coordinates
+    // Implement your logic to find the closest town from the user's location
+    return 'Closest Town';
   };
 
   const handleEditClick = () => {
@@ -191,7 +153,6 @@ function LandingPage() {
     setIsEditing(false);
   };
 
-  // // render starts testimonials container
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) =>
@@ -221,7 +182,7 @@ function LandingPage() {
   const handleVideoEnded = () => {
     setIsVideoVisible(false);
   };
-  // JSX content
+
   return (
     <div>
       <LPNavBar />
@@ -271,60 +232,86 @@ function LandingPage() {
 
           {/* Location Buttons Section */}
           <div
-            id="LP_location_buttons_container_2"
-            className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
-            style={{
-              maxWidth: "1800px",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
+      id="LP_location_buttons_container_2"
+      className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
+      style={{
+        maxWidth: '1800px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      }}
+    >
+      <div className="button-group flex items-start">
+        <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
+          <button
+            className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
+            onClick={() => setIsEditing(!isEditing)}
           >
-            <div className="button-group flex items-start">
-              <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
-                <button
-                  className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
-                  onClick={handleEditClick}
-                >
-                  <img
-                    className="h-7 mr-2"
-                    src="/images/img_linkedin.svg"
-                    alt="linkedin"
-                    loading="lazy"
-                  />
-                  <p
-                    className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${
-                      isEditing ? "hidden" : ""
-                    }`}
-                  >
-                    What's your Address?
-                  </p>
-                  <input
-                    className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none ${
-                      !isEditing ? "hidden" : ""
-                    }`}
-                    type="text"
-                    value={location}
-                    onChange={handleInputChange}
-                  />
-                </button>
-
-                <button
-                  className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
-                  onClick={handleSaveClick}
-                >
-                  <img
-                    className="h-5 mr-2"
-                    src="/images/img_save.svg"
-                    alt="save"
-                    loading="lazy"
-                  />
-                  <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-zinc-950 font-bold">
-                    Use Current Location
-                  </p>
-                </button>
-              </div>
+            <img
+              className="h-7 mr-2"
+              src="/images/img_linkedin.svg"
+              alt="linkedin"
+              loading="lazy"
+            />
+            <p
+              className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${
+                isEditing ? 'hidden' : ''
+              }`}
+            >
+              What's your Address?
+            </p>
+            <div className={`relative ${!isEditing ? 'hidden' : ''}`}>
+              <input
+                className="text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none"
+                type="text"
+                value={location}
+                onChange={handleInputChange}
+              />
+              <button
+                className="absolute top-0 right-0 mt-2 mr-4"
+                onClick={clearLocation}
+              >
+                <img
+                  className="h-5 w-5"
+                  src="/images/img_clear_text.svg"
+                  alt="clear"
+                />
+              </button>
+              {suggestions.length > 0 && (
+                <ul className="absolute bg-white border border-gray-300 w-full mt-1 max-h-60 overflow-y-auto z-10">
+                  {suggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                      onClick={() => {
+                        setLocation(suggestion);
+                        setSuggestions([]);
+                      }}
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-          </div>
+          </button>
+
+          <button
+            className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
+            onClick={handleUseCurrentLocation}
+          >
+            <img
+              className="h-5 mr-2"
+              src="/images/img_save.svg"
+              alt="save"
+              loading="lazy"
+            />
+            <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-zinc-950 font-bold">
+              Use Current Location
+            </p>
+          </button>
+        </div>
+      </div>
+    </div>
 
           {/* Explore Regions Section */}
           <div

@@ -1,462 +1,226 @@
-import React, { useState, useEffect, useRef } from "react";
-
-import axios from "axios";
-import mapboxgl from "mapbox-gl";
-import { toast } from "react-toastify";
-
+import React, { useState, useMemo } from "react";
+import Select from "react-select";
+import { useNavigate } from "react-router-dom";
+import LPNavBar from "../../../../LPNavBar";
 import Footer from "../../../../Footer";
-import OPNavBar from "../../../../OPNavBar";
 
-// The main component for the Location Modal
-function LocationModal() {
-  const [isDelivery, setIsDelivery] = useState(true); // Initial value is set to true
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const containerRef = useRef(null);
-  const dropdownRef = useRef(null);
-  const mapContainerRef = useRef(null);
-  const [map, setMap] = useState(null); // State for the map instance
+const regionsData = {
+  Khomas: { code: "ALB", name: "Khomas", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Region", latitude: -22.57, longitude: 17.08 },
+  Erongo: { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Region", latitude: -22.55, longitude: 14.28 },
+  Oshana: { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Region", latitude: -18.46, longitude: 15.99 },
+  Omusati: { code: "ALB", name: "Omusati", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Region", latitude: -18.28, longitude: 14.88 },
+  Karas: { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Region", latitude: -27.00, longitude: 18.50 },
+  Ohangwena: { code: "CYP", name: "Ohangwena", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Region", latitude: -17.47, longitude: 16.47 },
+  Zambezi: { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Region", latitude: -17.50, longitude: 24.27 },
+  Oshikoto: { code: "HRV", name: "Oshikoto", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Region", latitude: -18.60, longitude: 16.90 },
+  Omaheke: { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Region", latitude: -21.43, longitude: 19.55 },
+  Hardap: { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Region", latitude: -24.67, longitude: 17.93 },
+  Otjozondjupa: { code: "HRV", name: "Otjozondjupa", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Region", latitude: -20.58, longitude: 17.06 },
+  Kunene: { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Region", latitude: -19.50, longitude: 14.50 },
+  KavangoEast: { code: "ALB", name: "Kavango East", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/Region", latitude: -18.00, longitude: 20.00 },
+  KavangoWest: { code: "HRV", name: "Kavango West", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/Region", latitude: -18.28, longitude: 19.18 }
+};
 
-  // Marker coordinates
-  const MARKER_COORDINATES = [
-    { lng: 17.090396711968985, lat: -22.550459904783143 }, // Location 1
-    { lng: 17.073723364157306, lat: -22.561939983264068 }, // Location 2
-  ];
+const Test = () => {
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
+  const [userRegion, setUserRegion] = useState(null);
+  const [confirmRegion, setConfirmRegion] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [location, setLocation] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const navigate = useNavigate();
 
-  // Mapbox access token
-  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-
-  // Function to initialize the map
-  const initializeMap = (mapContainer) => {
-    if (!mapContainer) return;
-
-    const mapInstance = new mapboxgl.Map({
-      container: mapContainer,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [17.08074939986564, -22.566979439957436], // Center point coordinates
-      zoom: 12,
-    });
-
-    // Add navigation control to the map
-    mapInstance.addControl(new mapboxgl.NavigationControl());
-
-    // Add markers to the map
-    MARKER_COORDINATES.forEach((coord) => {
-      new mapboxgl.Marker({ color: "#ee9613" })
-        .setLngLat([coord.lng, coord.lat])
-        .addTo(mapInstance);
-    });
-
-    // Define bounds to include both markers
-    const bounds = new mapboxgl.LngLatBounds();
-    MARKER_COORDINATES.forEach((coord) =>
-      bounds.extend([coord.lng, coord.lat])
-    );
-
-    // Fit the map to the bounds
-    mapInstance.fitBounds(bounds, {
-      padding: { top: 20, bottom: 300, left: 20, right: 20 },
-      maxZoom: 13,
-      linear: true,
-    });
-
-    // Fetch and display the route
-    fetchAndDisplayRoute(mapInstance);
-
-    // Save the map instance
-    setMap(mapInstance);
+  const handleSelect = (selectedOption) => {
+    setSelectedRegion(selectedOption);
+    if (selectedOption) {
+      const region = regionsData[selectedOption.value];
+      if (region) {
+        navigate(region.path, { state: { selectedRegion: selectedOption.value } });
+      }
+    }
   };
 
-  // Function to fetch and display the route
-  const fetchAndDisplayRoute = async (mapInstance) => {
-    try {
-      const response = await axios.get(
-        `https://api.mapbox.com/directions/v5/mapbox/driving/${MARKER_COORDINATES[0].lng},${MARKER_COORDINATES[0].lat};${MARKER_COORDINATES[1].lng},${MARKER_COORDINATES[1].lat}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+  const handleUseCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ latitude, longitude });
+
+          // Logic to determine the region based on coordinates
+          const region = determineRegion(latitude, longitude);
+          setUserRegion(region);
+          setConfirmRegion(true);
+        },
+        (error) => {
+          console.error("Error getting location", error);
+          alert("Error getting location");
+        }
       );
-
-      const routeLine = response.data.routes[0].geometry;
-
-      mapInstance.on("load", () => {
-        mapInstance.addSource("route", {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            properties: {},
-            geometry: routeLine,
-          },
-        });
-
-        mapInstance.addLayer({
-          id: "route",
-          type: "line",
-          source: "route",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#ee9613",
-            "line-width": 8,
-          },
-        });
-      });
-    } catch (error) {
-      console.error("Error fetching route:", error);
+    } else {
+      alert("Geolocation is not supported by this browser");
     }
   };
 
-  // Initialize map on component mount
-  useEffect(() => {
-    if (mapContainerRef.current) {
-      initializeMap(mapContainerRef.current);
-    }
-  }, []);
+  // Function to determine the region based on coordinates
+  const determineRegion = (latitude, longitude) => {
+    let closestRegion = null;
+    let closestDistance = Infinity;
 
-  // Cards array for the carousel
-  const cards = [
-    {
-      title: "Fine Dining",
-      description:
-        "Experience exquisite gourmet meals from top-rated fine dining restaurants. Indulge in luxury and sophistication.",
-      image: "/images/restaurants/fine-dining.webp",
-    },
-    // Add more cards as needed
-  ];
-  const extendedCards = [...cards, ...cards, ...cards];
-
-  // Auto-scroll effect for the carousel
-  useEffect(() => {
-    let interval;
-    if (!isPaused) {
-      interval = setInterval(() => {
-        handleNext();
-      }, 5000);
-    }
-    return () => clearInterval(interval);
-  }, [isPaused, currentIndex]);
-
-  // Handler for carousel navigation (next)
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => prevIndex + 1);
-  };
-
-  // Handler for carousel navigation (previous)
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) => prevIndex - 1);
-  };
-
-  // Handle transition end for infinite scrolling effect
-  const handleTransitionEnd = () => {
-    if (currentIndex >= extendedCards.length - cards.length) {
-      setCurrentIndex(cards.length);
-      if (containerRef.current) {
-        containerRef.current.style.transition = "none";
-        containerRef.current.style.transform = `translateX(-${
-          cards.length * 576
-        }px)`;
-        setTimeout(() => {
-          if (containerRef.current) {
-            containerRef.current.style.transition =
-              "transform 0.5s ease-in-out";
-          }
-        }, 50);
+    Object.values(regionsData).forEach((region) => {
+      const distance = getDistance(latitude, longitude, region.latitude, region.longitude);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestRegion = region.name;
       }
+    });
+
+    return closestRegion;
+  };
+
+  // Function to calculate the distance between two coordinates
+  const getDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radius of the Earth in km
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+      0.5 - Math.cos(dLat) / 2 +
+      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * (1 - Math.cos(dLon)) / 2;
+
+    return R * 2 * Math.asin(Math.sqrt(a));
+  };
+
+  const handleInputChange = (e) => {
+    setLocation(e.target.value);
+    // Update the suggestions logic based on input
+  };
+
+  const clearLocation = () => {
+    setLocation("");
+    setSuggestions([]);
+  };
+
+  const regionOptions = useMemo(() => (
+    Object.keys(regionsData).map((key) => ({
+      value: key,
+      label: regionsData[key].name,
+    }))
+  ), []);
+
+  const confirmRegionSelection = () => {
+    if (userRegion) {
+      const region = regionsData[userRegion];
+      navigate(region.path, { state: { selectedRegion: userRegion } });
     }
-    if (currentIndex <= 0) {
-      setCurrentIndex(extendedCards.length - 2 * cards.length);
-      if (containerRef.current) {
-        containerRef.current.style.transition = "none";
-        containerRef.current.style.transform = `translateX(-${
-          (extendedCards.length - 2 * cards.length) * 576
-        }px)`;
-        setTimeout(() => {
-          if (containerRef.current) {
-            containerRef.current.style.transition =
-              "transform 0.5s ease-in-out";
-          }
-        }, 50);
-      }
-    }
   };
 
-  // Pause and resume auto-scroll for the carousel
-  const pauseScroll = () => {
-    setIsPaused(true);
-    setTimeout(() => {
-      setIsPaused(false);
-    }, 5000);
-  };
-
-  // Toggle dropdown menu visibility
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
-
-  // Close dropdown when clicking outside
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropdownOpen(false);
-    }
-  };
-
-  // Handle dot click for carousel navigation
-  const handleDotClick = (index) => {
-    setCurrentIndex(index);
-    pauseScroll();
-  };
-
-  // Add store to favorites (dummy functionality for now)
-  const addToFavorites = () => {
-    toast.success("Store added to favorites");
-  };
-
-  // Get more information about the store (dummy functionality for now)
-  const getMoreInfo = () => {
-    alert("More information about the store");
-  };
-
-  // Render the component
   return (
     <div>
-      <OPNavBar />
-      <div lang="en">
-        <div id="appsFlyerBanner" aria-hidden="true"></div>
-        <div id="app">
-          <div className="relative">
-            <main
-              id="mainContent"
-              tabIndex="-1"
-              className="flex flex-col items-center"
-            >
-              <div style={{ height: "0px" }}></div>
-              <div>
-                <div className="rtl" data-test-id="MainDiscoveryContent">
-                  <div className="flex flex-col space-y-2">
-                    <div
-                      data-test-id="venue-content-header.root"
-                      className="relative"
-                    >
-                      <header className="relative">
-                        <div className="relative">
-                          <img
-                            loading="eager"
-                            decoding="auto"
-                            fetchpriority="high"
-                            sizes="100vw"
-                            srcSet="/images/restaurants/joesbeerhouse.png"
-                            src="https://imageproxy.wolt.com/venue/6122210d7489d8613f7d1880/915af130-149f-11ec-8f09-7abce278992e_karela_00189.jpg"
-                            alt="Joe's Beerhouse"
-                            className="w-full h-[510px] object-scale-down"
-                          />
-                          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
-                          <div className="px-4">
-                            <h1 className="text-white text-4xl font-bold">
-                              Joe's Beerhouse
-                            </h1>
-                            <p className="text-white text-lg">Est 1991</p>
-                            <div className="mt-2 flex items-center">
-                              <button
-                                data-test-id="venue-favorite"
-                                aria-label="Favorite"
-                                className="text-white p-2 rounded-full hover:bg-white hover:text-black transition duration-200"
-                              >
-                                <svg
-                                  viewBox="0 0 24 24"
-                                  className="w-6 h-6 fill-current"
-                                >
-                                  <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498ZM20.657 11.151L12.357 19.696C12.2628 19.7928 12.1335 19.8474 11.9985 19.8474C11.8634 19.8474 11.7341 19.7928 11.64 19.696L3.32699 11.136C1.94998 9.78618 1.60717 7.69937 2.47999 5.97998C3.13326 4.68428 4.37197 3.78375 5.80599 3.56198C7.26664 3.31621 8.75572 3.79456 9.79999 4.84498L11.33 6.24498C11.7117 6.59273 12.2953 6.59273 12.677 6.24498L14.238 4.82198C15.278 3.7873 16.7534 3.3181 18.2 3.56198C19.6323 3.78494 20.869 4.68536 21.521 5.97998C22.3943 7.7072 22.0444 9.8015 20.657 11.151Z"></path>
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                          <div className="absolute bottom-6 right-4 px-4">
-                            <button
-                              aria-label="More options"
-                              className="text-white p-2"
-                              onClick={toggleDropdown}
-                            >
-                              <svg
-                                viewBox="0 0 24 24"
-                                className="w-8 h-8 text-white fill-current rounded-full hover:bg-white hover:text-black transition duration-200"
-                              >
-                                <circle cx="12" cy="5" r="2"></circle>
-                                <circle cx="12" cy="12" r="2"></circle>
-                                <circle cx="12" cy="19" r="2"></circle>
-                              </svg>
-                            </button>
-                          </div>
-                        </div>
-                        <div className="relative" ref={dropdownRef}>
-                          <div
-                            id="dropdown-menu"
-                            className={`${
-                              isDropdownOpen ? "block" : "hidden"
-                            } absolute -top-48 right-4 z-20 w-56 bg-[#fdfdfd] rounded-lg shadow-lg transition-opacity duration-200`}
-                            role="dialog"
-                          >
-                            <div className="relative">
-                              <div className="absolute top-28 right-3 z-20">
-                                <svg
-                                  viewBox="0 0 32 32"
-                                  className="w-5 h-5 text-white"
-                                >
-                                  <path
-                                    className="fill-white"
-                                    d="M16,16 L0,0 H32 Z"
-                                  ></path>
-                                  <path
-                                    fill="#fdfdfd"
-                                    d="M16,15 L1,0 H31 Z"
-                                  ></path>
-                                </svg>
-                              </div>
-                              <div className="p-4">
-                                <button
-                                  className="w-full py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md"
-                                  onClick={addToFavorites}
-                                >
-                                  Add to Favorites
-                                </button>
-                                <button
-                                  className="w-full py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md"
-                                  onClick={getMoreInfo}
-                                >
-                                  More Information
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </header>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-row p-4 space-x-56">
-                  <div className="flex flex-col space-y-4">
-                    <div>
-                      <p className="text-lg font-bold">Liquor Store</p>
-                      <div>
-                        <h3 className="text-md font-semibold">
-                          See similar stores
-                        </h3>
-                        <ul className="list-none space-y-1">
-                          <li>
-                            <a
-                              href="/en/isr/eilat/category/alcohol"
-                              className="text-[#ee9613] font-bold hover:underline"
-                            >
-                              Alcohol
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="/en/isr/eilat/brand/123-alcohol"
-                              className="text-[#ee9613] font-bold hover:underline"
-                            >
-                              123 Alcohol
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col space-y-4">
-                    <div>
-                      <h3 className="text-md font-semibold">Address</h3>
-                      <div>
-                        <p>Windhoek West</p>
-                        <p>8850603 Eilat</p>
-                        <a
-                          href="https://maps.google.com/?q=29.56134350459979,34.95609347009179"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#ee9613] font-bold hover:underline"
-                        >
-                          See map
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col space-y-4">
-                    <div>
-                      <h3 className="text-md font-semibold">Delivery times</h3>
-                      <table className="table-auto">
-                        <tbody>
-                          <tr>
-                            <td className="pr-4">Monday</td>
-                            <td>13:00–22:30</td>
-                          </tr>
-                          <tr>
-                            <td className="pr-4">Tuesday</td>
-                            <td>13:00–22:30</td>
-                          </tr>
-                          <tr>
-                            <td className="pr-4">Wednesday</td>
-                            <td>11:00–22:30</td>
-                          </tr>
-                          <tr>
-                            <td className="pr-4">Thursday</td>
-                            <td>11:00–22:30</td>
-                          </tr>
-                          <tr>
-                            <td className="pr-4">Friday</td>
-                            <td>10:00–22:30</td>
-                          </tr>
-                          <tr>
-                            <td className="pr-4">Saturday</td>
-                            <td>12:00–22:30</td>
-                          </tr>
-                          <tr>
-                            <td className="pr-4">Sunday</td>
-                            <td>13:00–22:30</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div className="flex flex-col space-y-4">
-                    <div>
-                      <h3 className="text-md font-semibold">
-                        More information
-                      </h3>
-                      <a
-                        href="tel:+972543131665"
-                        className="text-[#ee9613] font-bold hover:underline"
-                      >
-                        +972543131665
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  aria-hidden="true"
-                  className="relative overflow-hidden border-4 p-4"
+      <LPNavBar />
+      <div className="container mx-auto py-4">
+        <div className="mb-4">
+      
+          <Select
+            className="w-full p-2 mb-4 border border-gray-300 rounded"
+            placeholder="What's your address?"
+            options={regionOptions}
+            onChange={handleSelect}
+            value={selectedRegion}
+          />
+        </div>
+
+        <div
+          id="LP_location_buttons_container_2"
+          className="flex items-center justify-center sm:justify-start md:justify-start lg:justify-start xl:justify-start 2xl:justify-start p-8 mx-auto sm:max-w-full md:max-w-screen lg:max-w-screen xl:max-w-screen 2xl:max-w-screen"
+          style={{ maxWidth: '1800px', marginLeft: 'auto', marginRight: 'auto' }}
+        >
+          <div className="button-group flex items-start">
+            <div className="button-row flex flex-col gap-4 items-center justify-center md:items-start lg:items-start xl:items-start 2xl:items-start mb-4">
+              <button
+                className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
+                onClick={() => setIsEditing(!isEditing)}
+              >
+                <img
+                  className="h-7 mr-2"
+                  src="/images/img_linkedin.svg"
+                  alt="linkedin"
+                  loading="lazy"
+                />
+                <p
+                  className={`text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold ${isEditing ? 'hidden' : ''}`}
                 >
-                  <div className="w-full h-48">
-                    <div className="hidden"></div>
-                    <div className="mapboxgl-canvas-container mapboxgl-interactive mapboxgl-touch-drag-pan">
-                      <div
-                        ref={mapContainerRef}
-                        className="w-full h-48 mapboxgl-map"
-                        style={{ width: "100%", height: "500px" }}
-                      ></div>
-                    </div>
-                  </div>
+                  What's your Address?
+                </p>
+                <div className={`relative ${!isEditing ? 'hidden' : ''}`}>
+                  <input
+                    className="text-center md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl sm:text-lg text-xl text-gray-700 font-bold focus:outline-none"
+                    type="text"
+                    value={location}
+                    onChange={handleInputChange}
+                  />
+                  <button
+                    className="absolute top-0 right-0 mt-2 mr-4"
+                    onClick={clearLocation}
+                  >
+                    <img
+                      className="h-5 w-5"
+                      src="/images/img_clear_text.svg"
+                      alt="clear"
+                    />
+                  </button>
+                  {suggestions.length > 0 && (
+                    <ul className="absolute bg-white border border-gray-300 w-full mt-1 max-h-60 overflow-y-auto z-10">
+                      {suggestions.map((suggestion, index) => (
+                        <li
+                          key={index}
+                          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                          onClick={() => {
+                            setLocation(suggestion);
+                            setSuggestions([]);
+                          }}
+                        >
+                          {suggestion}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-              </div>
-            </main>
+              </button>
+
+              <button
+                className="flex items-center bg-white text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg pr-8 font-josefin_sans border border-slate-200"
+                onClick={handleUseCurrentLocation}
+              >
+                <img
+                  className="h-5 mr-2"
+                  src="/images/img_save.svg"
+                  alt="save"
+                  loading="lazy"
+                />
+                <p className="text-left md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl sm:text-sm text-base text-zinc-950 font-bold">
+                  Use Current Location
+                </p>
+              </button>
+            </div>
           </div>
         </div>
+
+        {confirmRegion && userRegion && (
+          <div className="text-center mt-4">
+            <p>Your region: {userRegion}</p>
+            <button
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+              onClick={confirmRegionSelection}
+            >
+              Confirm Region
+            </button>
+          </div>
+        )}
       </div>
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </div>
   );
-}
+};
 
-export default LocationModal;
+export default Test;
