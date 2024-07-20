@@ -1,8 +1,6 @@
 // RegionsBanner.js
 import React, { useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
-
 const RegionsBanner = ({ isVisible, imageSrc, closeBanner }) => {
   useEffect(() => {
     if (isVisible) {
@@ -14,12 +12,11 @@ const RegionsBanner = ({ isVisible, imageSrc, closeBanner }) => {
   }, [isVisible, closeBanner]);
 
   return (
-    <>
-      <div
-        className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity ${
-          isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
+    <div
+      className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity ${
+        isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
         <div
           className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity ${
             isVisible ? "ease-out duration-700" : "ease-in duration-700"
@@ -82,7 +79,6 @@ const RegionsBanner = ({ isVisible, imageSrc, closeBanner }) => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

@@ -490,7 +490,7 @@ function RegionHome() {
     ]
     // Add other towns similarly...
   };
-  
+
 
 
 
@@ -994,7 +994,7 @@ function RegionHome() {
     navigate(path);
   };
 
-  
+
   const clearLocation = () => {
     setLocation("");
     setIsDropdownOpen(false);
@@ -1249,98 +1249,98 @@ function RegionHome() {
 
           {/* Location Buttons Section */}
           <div id="LP_location_buttons_container_2" className="flex relative m-8">
-        <div id="button-group" className="flex flex-row items-center container justify-between w-auto">
-          <div className="flex flex-col items-center pr-8">
-            <div className="flex flex-col max-w-sm items-center space-y-4">
-              <div 
-                id="protected-div" 
-                className="flex items-center bg-white text-gray-600 px-8 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 relative"
-                onClick={() => {
-                  setIsEditing(true);
-                  setIsDropdownOpen(true);
-                }}
-              >
-                <img
-                  className="h-7 mr-2"
-                  src="/images/img_linkedin.svg"
-                  alt="LinkedIn"
-                  loading="lazy"
-                />
-                {isEditing ? (
-                  <input
-                    ref={inputRef}
-                    className="text-md bg-transparent border-none focus:outline-none flex-grow"
-                    type="text"
-                    value={location}
-                    placeholder="Search for a town"
-                    autoFocus
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  <span className="text-md flex-grow">{location || "Search for a town"}</span>
-                )}
-                {location && (
-                  <XClearButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      clearLocation();
+            <div id="button-group" className="flex flex-row items-center container justify-between w-auto">
+              <div className="flex flex-col items-center pr-8">
+                <div className="flex flex-col max-w-sm items-center space-y-4">
+                  <div
+                    id="protected-div"
+                    className="flex items-center bg-white text-gray-600 px-8 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 relative"
+                    onClick={() => {
+                      setIsEditing(true);
+                      setIsDropdownOpen(true);
                     }}
-                    className="absolute right-2 top-2/2 transform -translate-y-2.5"
-                  />
-                )}
-              </div>
-              {isDropdownOpen && suggestions.length > 0 && (
-                <div
-                  ref={dropdownRef}
-                  className="flex flex-col max-w-sm items-center space-y-2 bg-white border border-gray-300 shadow-md w-full max-h-60 overflow-y-auto z-10"
-                >
-                  {suggestions.map((town) => (
+                  >
+                    <img
+                      className="h-7 mr-2"
+                      src="/images/img_linkedin.svg"
+                      alt="LinkedIn"
+                      loading="lazy"
+                    />
+                    {isEditing ? (
+                      <input
+                        ref={inputRef}
+                        className="text-md bg-transparent border-none focus:outline-none flex-grow"
+                        type="text"
+                        value={location}
+                        placeholder="Search for a town"
+                        autoFocus
+                        onChange={handleInputChange}
+                      />
+                    ) : (
+                      <span className="text-md flex-grow">{location || "Search for a town"}</span>
+                    )}
+                    {location && (
+                      <XClearButton
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          clearLocation();
+                        }}
+                        className="absolute right-2 top-2/2 transform -translate-y-2.5"
+                      />
+                    )}
+                  </div>
+                  {isDropdownOpen && suggestions.length > 0 && (
                     <div
-                      key={`${town.region}-${town.name}`}
-                      onClick={() => handleSelect(town)}
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer w-full text-left"
+                      ref={dropdownRef}
+                      className="flex flex-col max-w-sm items-center space-y-2 bg-white border border-gray-300 shadow-md w-full max-h-60 overflow-y-auto z-10"
                     >
-                      {town.name} ({town.region})
+                      {suggestions.map((town) => (
+                        <div
+                          key={`${town.region}-${town.name}`}
+                          onClick={() => handleSelect(town)}
+                          className="px-4 py-2 hover:bg-gray-100 cursor-pointer w-full text-left"
+                        >
+                          {town.name} ({town.region})
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
-              )}
-            </div>
-            <button
-              className="flex items-center bg-white text-black px-4 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 mt-4"
-              onClick={handleUseCurrentLocation}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2"></div>
-              ) : (
-                <img
-                  className="h-5 mr-2"
-                  src="/images/img_save.svg"
-                  alt="save"
-                  loading="lazy"
-                />
-              )}
-              <p className="text-base font-bold">
-                {isLoading ? "Getting Location..." : "Use Current Location"}
-              </p>
-            </button>
-          </div>
-          <div className="flex flex-col items-center">
-            {!isLoading && confirmRegion && userRegion && (
-              <div className="text-center">
-                <p>Are you in <b>{location}</b>, from <b>{userRegion}</b> region?</p>
                 <button
-                  className="flex items-center justify-center m-2 hover:bg-black hover:text-white font-josefin_sans px-4 py-2 bg-[#ff9f10] text-black rounded-full"
-                  onClick={confirmRegionSelection}
+                  className="flex items-center bg-white text-black px-4 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 mt-4"
+                  onClick={handleUseCurrentLocation}
+                  disabled={isLoading}
                 >
-                  Confirm Location
+                  {isLoading ? (
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2"></div>
+                  ) : (
+                    <img
+                      className="h-5 mr-2"
+                      src="/images/img_save.svg"
+                      alt="save"
+                      loading="lazy"
+                    />
+                  )}
+                  <p className="text-base font-bold">
+                    {isLoading ? "Getting Location..." : "Use Current Location"}
+                  </p>
                 </button>
               </div>
-            )}
+              <div className="flex flex-col items-center">
+                {!isLoading && confirmRegion && userRegion && (
+                  <div className="text-center">
+                    <p>Are you in <b>{location}</b>, from <b>{userRegion}</b> region?</p>
+                    <button
+                      className="flex items-center justify-center m-2 hover:bg-black hover:text-white font-josefin_sans px-4 py-2 bg-[#ff9f10] text-black rounded-full"
+                      onClick={confirmRegionSelection}
+                    >
+                      Confirm Location
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
           {/* Region Selection Section */}
           <div
             id="LP_section_3_orange"
@@ -1497,9 +1497,8 @@ function RegionHome() {
             style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
           >
             <div
-              className={`flex flex-col md:flex-row justify-center items-center gap-8 p-4 transition-all duration-500 relative z-10 mb-16 ${
-                isVideoVisible ? "opacity-0 pointer-events-none" : ""
-              }`}
+              className={`flex flex-col md:flex-row justify-center items-center gap-8 p-4 transition-all duration-500 relative z-10 mb-16 ${isVideoVisible ? "opacity-0 pointer-events-none" : ""
+                }`}
             >
               <div
                 id="What_is_Etomart"
@@ -1544,9 +1543,8 @@ function RegionHome() {
 
             <div
               id="video-container"
-              className={`flex flex-col justify-center items-center transition-all duration-500 ${
-                isVideoVisible ? "" : "opacity-0 pointer-events-none"
-              }`}
+              className={`flex flex-col justify-center items-center transition-all duration-500 ${isVideoVisible ? "" : "opacity-0 pointer-events-none"
+                }`}
               style={{
                 position: "absolute",
                 top: "0",
@@ -1576,26 +1574,26 @@ function RegionHome() {
                   onEnded={handleVideoEnded}
                 >
                   <source
-              src="/videos/website_intro/etomart_Brand_Intro.mp4"
-              type="video/mp4"
-            />
-            <source
-              src="/videos/website_intro/etomart_Brand_Intro.webm"
-              type="video/webm"
-            />
+                    src="/videos/website_intro/etomart_Brand_Intro.mp4"
+                    type="video/mp4"
+                  />
+                  <source
+                    src="/videos/website_intro/etomart_Brand_Intro.webm"
+                    type="video/webm"
+                  />
                 </video>
-                
+
               </div>
               <div
                 id="description"
                 className="m-4 relative max-w-3xl p-4 text-center "
               >
                 <p className="text-base md:text-xl text-white font-medium mb-4  px-16 ">
-                Etomart makes it incredibly easy for you to discover and get
-                    what you want. Delivered to you – quickly, reliably and
-                    affordably.
+                  Etomart makes it incredibly easy for you to discover and get
+                  what you want. Delivered to you – quickly, reliably and
+                  affordably.
                 </p>
-                </div> </div> </div>
+              </div> </div> </div>
 
           {/* Testimonials Section */}
           <div
@@ -1641,11 +1639,10 @@ function RegionHome() {
                   {testimonials.map((testimonial, index) => (
                     <div
                       key={index}
-                      className={`bg-white border border-slate-200 rounded-bl-[200px] rounded-br-[200px] rounded-tl-[200px] rounded-tr-[200px] shadow-md max-w-full md:max-w-[928px] p-6 ${
-                        currentSlide === index
+                      className={`bg-white border border-slate-200 rounded-bl-[200px] rounded-br-[200px] rounded-tl-[200px] rounded-tr-[200px] shadow-md max-w-full md:max-w-[928px] p-6 ${currentSlide === index
                           ? "opacity-100"
                           : "opacity-0 absolute"
-                      }`}
+                        }`}
                     >
                       <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
                         <img
