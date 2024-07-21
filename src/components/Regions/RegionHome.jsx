@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import DOMPurify from "dompurify";
 import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "../Footer";
@@ -1128,13 +1128,13 @@ function RegionHome() {
     setInputLocation(sanitizedValue);
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
+  // const handleEditClick = () => {
+  //   setIsEditing(true);
+  // };
 
-  const handleSaveClick = () => {
-    setIsEditing(false);
-  };
+  // const handleSaveClick = () => {
+  //   setIsEditing(false);
+  // };
 
   const handleWatchVideo = () => {
     setIsVideoVisible(true);
@@ -1285,7 +1285,7 @@ function RegionHome() {
                           e.stopPropagation();
                           clearLocation();
                         }}
-                        className="absolute right-2 top-2/2 transform -translate-y-2.5"
+                        className="absolute right-2 top-2 transform -translate-y-2.5"
                       />
                     )}
                   </div>

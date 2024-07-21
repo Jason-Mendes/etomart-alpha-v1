@@ -1,6 +1,5 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
-import DOMPurify from "dompurify";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import LPNavBar from "./LPNavBar";
 import RegionsBanner from "./RegionsBanner";
@@ -389,7 +388,7 @@ function LandingPage() {
                           e.stopPropagation();
                           clearLocation();
                         }}
-                        className="absolute right-2 top-1.5/3 transform -translate-y-3"
+                        className="absolute right-2 top-2 transform -translate-y-2.5"
                       />
                     )}
                   </div>
