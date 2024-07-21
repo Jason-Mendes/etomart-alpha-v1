@@ -16,7 +16,7 @@ function RegionHome() {
   const [suggestions, setSuggestions] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [userRegion, setUserRegion] = useState(null);
+  const [userSelectedRegion, setuserSelectedRegion] = useState(null);
   const [confirmRegion, setConfirmRegion] = useState(false);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -1019,7 +1019,7 @@ function RegionHome() {
           setUserLocation({ latitude, longitude });
 
           const { region, town } = determineRegionAndTown(latitude, longitude);
-          setUserRegion(region);
+          setuserSelectedRegion(region);
           setLocation(town);
           setConfirmRegion(true);
           setIsLoading(false);
@@ -1090,9 +1090,9 @@ function RegionHome() {
   };
 
   const confirmRegionSelection = () => {
-    if (userRegion) {
-      const region = townsData[userRegion];
-      navigate(region[0].path, { state: { selectedRegion: userRegion } });
+    if (userSelectedRegion) {
+      const region = townsData[userSelectedRegion];
+      navigate(region[0].path, { state: { selectedRegion: userSelectedRegion } });
     }
   };
 
@@ -1327,9 +1327,9 @@ function RegionHome() {
                 </button>
               </div>
               <div className="flex flex-col items-center">
-                {!isLoading && confirmRegion && userRegion && (
+                {!isLoading && confirmRegion && userSelectedRegion && (
                   <div className="text-center">
-                    <p>Are you in <b>{location}</b>, from <b>{userRegion}</b> region?</p>
+                    <p>Are you in <b>{location}</b>, from <b>{userSelectedRegion}</b> region?</p>
                     <button
                       className="flex items-center justify-center m-2 hover:bg-black hover:text-white font-josefin_sans px-4 py-2 bg-[#ff9f10] text-black rounded-full"
                       onClick={confirmRegionSelection}
@@ -1390,76 +1390,87 @@ function RegionHome() {
                             </p>
                           </div>
                         </button>
-                        <button className="flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden">
-                          <div className="flex items-center justify-between w-full">
-                            <a
-                              href="/LP"
-                              className="text-center text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-xl text-gray-700 font-bold"
-                            >
-                              All Regions
-                            </a>
-                            <div className="flex items-center justify-end -mr-2">
-                              <svg
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-4 h-6 fill-current text-zinc-950 transform rotate-180"
-                              >
-                                <g fill="none" fillRule="evenodd">
-                                  <path fill="none" d="M0 0h24v24H0z" />
-                                  <path
-                                    d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
-                                    fill="#202125"
-                                  />
-                                </g>
-                              </svg>
+                        <button>
+                          <a
+                            href="/LP"
+                            className="flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden"
+                          >
+                            <div className="flex items-center justify-between w-full">
+                              <span className="text-center text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-xl text-gray-700 font-bold">
+                                All Regions
+                              </span>
+                              <div className="flex items-center justify-end -mr-2">
+                                <svg
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="w-4 h-6 fill-current text-zinc-950 transform rotate-180"
+                                >
+                                  <g fill="none" fillRule="evenodd">
+                                    <path fill="none" d="M0 0h24v24H0z" />
+                                    <path
+                                      d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
+                                      fill="#202125"
+                                    />
+                                  </g>
+                                </svg>
+                              </div>
                             </div>
-                          </div>
+                          </a>
                         </button>
+
+
+
+
+
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            {/* Towns Buttons based on the region selected in the landing page */}
-            <div
-              id="button-sizing"
-              className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-0 px-16"
-            >
-              {townsForSelectedRegion.map((town) => (
-                <div key={town.code} className="flex justify-center w-full">
-                  <div className="button-row flex flex-col gap-4 mb-4">
-                    <button
-                      className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[220px] overflow-hidden"
-                      onClick={() => handleTownsClick(town.path)}
-                    >
-                      <div className="flex items-center flex-grow">
-                        <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
-                          {town.name}
-                        </p>
-                      </div>
-                      <div className="ml-auto pr-2 flex-shrink-0">
-                        <svg
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-4 h-6 fill-current text-zinc-950"
-                        >
-                          <g fill="none" fillRule="evenodd">
-                            <path fill="none" d="M0 0h24v24H0z" />
-                            <path
-                              d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
-                              fill="#202125"
-                            />
-                          </g>
-                        </svg>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-              ))}
+{/* Towns Buttons based on the region selected in the landing page */}
+<div
+  id="button-sizing"
+  className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-0 px-16"
+>
+  {townsForSelectedRegion.map((town) => (
+    <div key={town.code} className="flex justify-center w-full">
+      <div className="button-row flex flex-col gap-4 mb-4">
+        <button
+          className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[220px] transition-transform transform hover:scale-105 relative overflow-hidden"
+        >
+          <a
+            href={town.path}
+            className="flex items-center justify-between w-full"
+          >
+            <div className="flex items-center flex-grow">
+              <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
+                {town.name}
+              </p>
             </div>
-          </div>
+            <div className="ml-auto pr-2 flex-shrink-0">
+              <svg
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-6 fill-current text-zinc-950"
+              >
+                <g fill="none" fillRule="evenodd">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path
+                    d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
+                    fill="#202125"
+                  />
+                </g>
+              </svg>
+            </div>
+          </a>
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
+</div>
 
           {/* Did You Know Section */}
           <div
@@ -1640,8 +1651,8 @@ function RegionHome() {
                     <div
                       key={index}
                       className={`bg-white border border-slate-200 rounded-bl-[200px] rounded-br-[200px] rounded-tl-[200px] rounded-tr-[200px] shadow-md max-w-full md:max-w-[928px] p-6 ${currentSlide === index
-                          ? "opacity-100"
-                          : "opacity-0 absolute"
+                        ? "opacity-100"
+                        : "opacity-0 absolute"
                         }`}
                     >
                       <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">

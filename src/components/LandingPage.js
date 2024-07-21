@@ -20,7 +20,7 @@ function LandingPage() {
   const [suggestions, setSuggestions] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [userRegion, setUserRegion] = useState(null);
+  const [userSelectedRegion, setuserSelectedRegion] = useState(null);
   const [confirmRegion, setConfirmRegion] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isVideoVisible, setIsVideoVisible] = useState(false);
@@ -35,23 +35,24 @@ function LandingPage() {
   const inputRef = useRef(null);
   const videoRef = useRef(null);
 
-  // Regions data
-  const regionsData = [
-    { code: "ALB", name: "Khomas", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Region", latitude: -22.57, longitude: 17.08 },
-    { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Region", latitude: -22.55, longitude: 14.28 },
-    { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Region" },
-    { code: "ALB", name: "Omusati", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Region" },
-    { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Region" },
-    { code: "CYP", name: "Ohangwena", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Region" },
-    { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Region" },
-    { code: "HRV", name: "Oshikoto", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Region" },
-    { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Region" },
-    { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Region" },
-    { code: "HRV", name: "Otjozondjupa", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Region" },
-    { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Region" },
-    { code: "ALB", name: "Kavango East", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/Region" },
-    { code: "HRV", name: "Kavango West", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/Region" },
-  ];
+// Regions data
+const regionsData = [
+  { code: "ALB", name: "Khomas", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Region", latitude: -22.57, longitude: 17.08 },
+  { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Region", latitude: -22.55, longitude: 14.28 },
+  { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Region", latitude: -18.46, longitude: 15.64 },
+  { code: "ALB", name: "Omusati", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Region", latitude: -18.13, longitude: 15.37 },
+  { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Region", latitude: -27.38, longitude: 17.92 },
+  { code: "CYP", name: "Ohangwena", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Region", latitude: -17.60, longitude: 16.06 },
+  { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Region", latitude: -17.50, longitude: 24.27 },
+  { code: "HRV", name: "Oshikoto", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Region", latitude: -18.81, longitude: 16.92 },
+  { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Region", latitude: -21.76, longitude: 19.59 },
+  { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Region", latitude: -24.43, longitude: 18.29 },
+  { code: "HRV", name: "Otjozondjupa", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Region", latitude: -20.45, longitude: 17.23 },
+  { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Region", latitude: -19.58, longitude: 13.41 },
+  { code: "ALB", name: "Kavango East", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/Region", latitude: -18.03, longitude: 20.78 },
+  { code: "HRV", name: "Kavango West", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/Region", latitude: -18.12, longitude: 19.79 },
+];
+
 
   // Regions   
   const regions = [
@@ -70,9 +71,6 @@ function LandingPage() {
     { code: "ALB", name: "Kavango East", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/Region" },
     { code: "HRV", name: "Kavango West", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/Region" },
   ];
-
-
-
 
   // Close the banner and navigate to the next page
   const closeBanner = () => {
@@ -143,7 +141,7 @@ function LandingPage() {
           const { latitude, longitude } = position.coords;
           setUserLocation({ latitude, longitude });
           const region = determineRegion(latitude, longitude);
-          setUserRegion(region.name); // Store only the name for display
+          setuserSelectedRegion(region.name); // Store only the name for display
           setConfirmRegion(true);
           setIsLoading(false);
         },
@@ -219,8 +217,8 @@ function LandingPage() {
 
   // Confirm the selected region
   const confirmRegionSelection = () => {
-    if (userRegion) {
-      const selectedRegionObject = regionsData.find(region => region.name === userRegion);
+    if (userSelectedRegion) {
+      const selectedRegionObject = regionsData.find(region => region.name === userSelectedRegion);
       if (selectedRegionObject) {
         const formattedRegion = {
           code: selectedRegionObject.code,
@@ -423,10 +421,10 @@ function LandingPage() {
                   <p className="text-base font-bold">{isLoading ? "Getting Location..." : "Use Current Location"}</p>
                 </button>
               </div>
-              {!isLoading && confirmRegion && userRegion && (
+              {!isLoading && confirmRegion && userSelectedRegion && (
                 <div className="text-center">
                   <p>
-                    Are you in <b>{userRegion}</b> region?
+                    Are you in <b>{userSelectedRegion}</b> region?
                   </p>
                   <button
                     className="flex items-center justify-center m-2 hover:bg-black hover:text-white font-josefin_sans px-4 py-2 bg-[#ff9f10] text-black rounded-full"
@@ -474,53 +472,59 @@ function LandingPage() {
           )}
         </div>
         {/* Regions Buttons */}
-        <div
-          id="button sizing"
-          className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-2 px-16"
-        >
-          {regions.map((region) => (
-            <div key={region.code} className="flex justify-start">
-              <div className="button-row flex flex-col gap-4 mb-4 w-full">
-                <button
-                  className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[280px] transition-transform transform hover:scale-105 relative overflow-hidden"
-                  onClick={() => handleRegionClick(region)}
-                  name={region.name}
-                  flagPath={region.flagPath}
-                >
-                  <div className="flex items-center flex-grow">
-                    <img
-                      className="rounded-[36px] h-10 mr-2 flex-shrink-0"
-                      src={region.flagPath}
-                      alt={`${region.name} flag`}
-                      loading="lazy"
-                    />
-                    <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
-                      {region.name}
-                    </p>
-                  </div>
-                  <div className="ml-auto pr-2 flex-shrink-0">
-                    <svg
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-4 h-6 fill-current text-zinc-950"
-                    >
-                      <g fill="none" fillRule="evenodd">
-                        <path fill="none" d="M0 0h24v24H0z" />
-                        <path
-                          d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
-                          fill="#202125"
-                        />
-                      </g>
-                    </svg>
-                  </div>
-                </button>
+<div
+  id="button-sizing"
+  className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-44 py-2 px-16"
+>
+  {regions.map((region) => (
+    <div key={region.code} className="flex justify-center w-full">
+      <div className="button-row flex flex-col gap-4 mb-4">
+        <div className="relative">
+          <a
+            href={region.path}
+            onClick={(e) => {
+              e.preventDefault();
+              handleRegionClick(region);
+            }}
+            className="block"
+          >
+            <button
+              className="flex flex-shrink-0 justify-between items-center bg-white hover:bg-orange-300 text-black px-4 py-2 ml-0 rounded-[36px] shadow-lg font-josefin_sans min-w-[280px] transition-transform transform hover:scale-105 relative overflow-hidden"
+            >
+              <div className="flex items-center flex-grow">
+                <img
+                  className="rounded-[36px] h-10 mr-2 flex-shrink-0"
+                  src={region.flagPath}
+                  alt={`${region.name} flag`}
+                  loading="lazy"
+                />
+                <p className="text-left text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-700 font-bold flex-shrink-0">
+                  {region.name}
+                </p>
               </div>
-            </div>
-          ))}
-
-
-        </div></div>
+              <div className="ml-auto pr-2 flex-shrink-0">
+                <svg
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-6 fill-current text-zinc-950"
+                >
+                  <g fill="none" fillRule="evenodd">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path
+                      d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
+                      fill="#202125"
+                    />
+                  </g>
+                </svg>
+              </div>
+            </button>
+          </a>
         </div>
+      </div>
+    </div>
+  ))}
+</div>
+</div></div>
 
 
         {/* Did You Know Section */}
