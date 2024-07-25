@@ -594,7 +594,7 @@ function JoesBeerhouse() {
               <div className="py-4 border-b border-gray-200">
                 <div
                   data-testid="venue-list-header"
-                  className="flex items-center"
+                  className="flex items-center p-4"
                 >
                   <h2 className="text-lg font-bold">All venues</h2>
                   <button
@@ -604,7 +604,8 @@ function JoesBeerhouse() {
                     Sort by
                   </button>
                 </div>
-                <div className="grid grid-cols-3 gap-4 py-2">
+                <div className="flex flex-col overflow-y-auto h-[200px] md:h-[350px]">
+                 <div className="grid grid-cols-3 gap-4 py-2">
                   {storescards1.map((store, index) => (
                     <a
                       key={index}
@@ -646,7 +647,7 @@ function JoesBeerhouse() {
                     </a>
                   ))}
                 </div>
-              </div>
+                </div> </div>
             </div>
 
             <div className="flex flex-row p-4 space-x-56">

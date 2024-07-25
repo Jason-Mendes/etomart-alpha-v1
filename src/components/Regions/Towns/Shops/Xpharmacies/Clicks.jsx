@@ -781,7 +781,7 @@ function Clicks() {
                 </div>
                 {/* Main Content - Products */}
                 <div className="w-3/4 px-4">
-                  <div className="flex items-center px-8">
+                  <div className="flex items-center p-4">
                     <h2 className="text-2xl font-bold">All Products</h2>
                     <div className="ml-auto">
                       <button className="flex items-center px-4 py-2 border rounded-md">
@@ -804,6 +804,7 @@ function Clicks() {
                       </button>
                     </div>
                   </div>
+                  <div className="flex flex-col overflow-y-auto h-[600px] md:h-[850px]">
                   <div className="px-4 pb-4">
                     <div className="flex flex-wrap justify-start">
                       {storescards1.map((category, shopsindex) => (
@@ -862,7 +863,7 @@ function Clicks() {
                                       </div>
                                     </div>
                                   </div>
-                                </div>
+                                  </div>
                                 <div className="m-auto w-full">
                                   <div className="text-black text-xs py-1 rounded">
                                     <span className="text-black">Etomart </span>
@@ -888,7 +889,8 @@ function Clicks() {
                   </div>
                 </div>
               </div>
-            </div>
+              </div>
+              </div>
             <div className="flex flex-row p-4 space-x-56">
               <div className="flex flex-col space-y-4">
                 <div>
