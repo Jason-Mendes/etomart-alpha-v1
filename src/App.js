@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import LandingPage from "./components/LandingPage";
+import LandingPageTest from "./components/LandingPage Test";
 
 // import CartIcon from './components/CartIcon';
 
@@ -19,6 +20,7 @@ import JoesBeerhouse from "./components/Regions/Towns/Shops/Xrestaurants/JoesBee
 import Checkers from "./components/Regions/Towns/Shops/Xstores/Checkers";
 import { CartProvider } from "./context/CartContext";
 
+
 function App() {
   return (
     <Router>
@@ -31,6 +33,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/LP" element={<LandingPage />} />
             <Route path="/LandingPage" element={<LandingPage />} />
+            <Route path="/LandingPageTest" element={<LandingPageTest />} />
 
             {/* Routes for Regions */}
             <Route path="/LP/Region" element={<RegionHome />} />
