@@ -1,57 +1,52 @@
 import React from "react";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const AuthenticatedLoginModal = ({ showModal, closeModal }) => {
-  return (
-    <>
-      {/* Modal */}
-      <div
-        className={`fixed inset-0 flex items-center justify-center z-50 ${
-          showModal ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div
-          className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity ${
-            showModal ? "ease-out duration-700" : "ease-in duration-700"
-          }`}
-          onClick={closeModal}
-        />
-        <div
-          id="Orange_container"
-          className={`bg-[#ee9613] rounded-lg m-6 p-6 z-50 fixed bottom-6 top-6 left-1/2 transform -translate-x-1/2 transition-all flex flex-col ${
-            showModal ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          }`}
-          style={{ width: "90%", maxHeight: "90vh", overflow: "auto" }}
-        >
-          {/* Your content for the Authenticated modal goes here */}
-          <div className="flex justify-end">
-            <button
-              className="text-[#000000] hover:text-white"
-              onClick={closeModal}
-            >
-              <svg
-                className="mb-4 h-8 w-8"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-            </button>
-          </div>
+  if (!showModal) return null;
 
-          <h2 className="text-center text-2xl font-bold mb-4">
-            Authenticated Login
-          </h2>
-          {/* Add your content for the authenticated user here */}
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onClick={closeModal}></div>
+
+        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div className="inline-block align-bottom bg-[#ee9613] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+          <div className="bg-[#ee9613] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div className="flex flex-col items-center justify-center">
+              <h3 className="text-3xl leading-6 font-Agbalumo text-black mb-4 text-center" id="modal-title">
+                Welcome Back!
+              </h3>
+              <div className="mt-2 mb-6 text-center">
+                <p className="text-sm text-gray-700">
+                  You have successfully logged in. We're excited to have you back!
+                </p>
+              </div>
+              <div className="w-full max-w-md mb-6">
+                <div className="bg-white rounded-lg p-2 h-[450px] w-full overflow-hidden">
+                  <LazyLoadImage
+                    className="w-full h-full rounded-lg object-cover"
+                    src="/images/Mais_reverse.jpg"
+                    alt="Welcome back"
+                    effect="blur"
+                    wrapperClassName="w-full h-full"
+                    placeholderSrc="/path/to/placeholder-image.jpg"
+                  />
+                </div>
+              </div>
+              <button
+                type="button"
+                className="w-full max-w-xs inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                onClick={closeModal}
+              >
+                Start Exploring
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

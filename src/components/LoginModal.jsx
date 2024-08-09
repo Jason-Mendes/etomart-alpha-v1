@@ -1,10 +1,6 @@
-import React, { useState } from "react";
-import XClearButton from './componentsCalled/XClearButton'; // Ensure the path is correct and case-sensitive
+import React, { useState, useCallback } from "react";
+import XClearButton from './componentsCalled/XClearButton';
 
-
-
-// LoginModal component definition
-{/* modalPropMangement is done in the LPNavBar.jsx as well*/}
 const LoginModal = ({
   showModal,
   closeModal,
@@ -12,204 +8,204 @@ const LoginModal = ({
   openForgotPasswordModal,
   openAuthenticatedLoginModal,
 }) => {
-  // State variables for input fields
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    rememberMe: false
+  });
 
-  // Handlers to clear input fields
-  const clearEmail = () => setEmail("");
-  const clearPassword = () => setPassword("");
+  const handleInputChange = useCallback((e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  }, []);
 
-  // Handler for signup link click
-  const handleSignupLinkClick = () => {
-  closeModal(); // Close the current modal
-  setTimeout(() => {
-    openSignupModal(); // Open the login modal after a short delay
-  }, 300); // Adjust this delay as needed
-};
-  // Handler for forgot password link click
-  const handleForgotPasswordLinkClick = () => {
-  closeModal(); // Close the current modal
-  setTimeout(() => {
-    openForgotPasswordModal(); // Open the login modal after a short delay
-  }, 300); // Adjust this delay as needed
-};
-  // Handler for authenticated login link click
-  const handleAuthenticatedLoginLinkClick = () => {
+  const clearInput = useCallback((field) => {
+    setFormData(prev => ({ ...prev, [field]: "" }));
+  }, []);
+
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
     openAuthenticatedLoginModal();
-  };
+    // Add your login logic here
+  }, [openAuthenticatedLoginModal]);
+
+  const handleModalTransition = useCallback((action) => {
+    closeModal();
+    setTimeout(action, 300);
+  }, [closeModal]);
+
+  if (!showModal) return null;
 
   return (
-    <>
-      {/* Modal */}
-      <div
-        className={`fixed inset-0 flex items-center justify-center z-50 ${
-          showModal ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        {/* Modal background */}
-        <div
-          className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity ${
-            showModal ? "ease-out duration-700" : "ease-in duration-700"
-          }`}
-          onClick={closeModal}
-        />
+    <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onClick={closeModal}></div>
 
-        {/* Modal content */}
-        <div
-          id="Orange_container"
-          className={`bg-[#ee9613] rounded-lg m-6 p-6 z-50 fixed bottom-6 top-6 left-1/2 transform -translate-x-1/2 transition-all flex flex-col ${
-            showModal ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          }`}
-          style={{ width: "90%", maxHeight: "90vh", overflow: "auto" }}
-        >
-          {/* Close button */}
-          <div className="flex justify-end">
+        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div className="inline-block align-bottom bg-[#ee9613] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div className="absolute top-0 right-0 pt-4 pr-4">
             <button
-              className="text-[#000000] transition-all duration-300 ease-in-out hover:text-white"
+              type="button"
+              className="bg-transparent rounded-md text-black hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               onClick={closeModal}
             >
-              <svg
-                className="mb-4 h-8 w-8"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
+              <span className="sr-only">Close</span>
+              <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          <div
-            id="Image_and_Form_Container"
-            className="flex flex-col md:flex-row items-start justify-center flex-grow"
-          >
-            {/* Left side: Image */}
-            <div className="flex flex-col justify-center md:w-1/2 order-2 md:order-1 mb-8 md:mb-0 w-full">
-              <h2 className="text-center text-[#000000] text-2xl md:text-3xl lg:text-4xl font-Agbalumo font-bold m-6">
-                Welcome Back!
-              </h2>
-              <div className="w-full bg-[#ffffff] rounded-lg p-4 pt-8 z-50">
-                <div className="relative">
-                  <img
-                    src="/images/Mais_reverse.jpg"
-                    alt="img"
-                    className="w-full md:max-w-md lg:max-w-lg xl:max-w-xl max-h-[70vh] min-h-[50vh] rounded-r-2xl object-cover"
-                    style={{ maxHeight: "70vh", minHeight: "70vh" }}
-                  />
+          <div className="bg-[#ee9613] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div className="sm:flex sm:items-start">
+              <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                <h3 className="text-3xl leading-6 font-Agbalumo text-black mb-4" id="modal-title">
+                  Login / Sign Up
+                </h3>
+                <div className="mt-2">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-black">
+                        Email
+                      </label>
+                      <div className="mt-1 relative rounded-md shadow-sm">
+                        <input
+                          type="email"
+                          name="email"
+                          id="email"
+                          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-3 pr-10 py-2 sm:text-sm border-gray-300 rounded-md"
+                          placeholder="you@example.com"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        {formData.email && (
+                          <XClearButton onClick={() => clearInput('email')} className="absolute inset-y-0 right-0 pr-3 flex items-center" />
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="password" className="block text-sm font-medium text-black">
+                        Password
+                      </label>
+                      <div className="mt-1 relative rounded-md shadow-sm">
+                        <input
+                          type="password"
+                          name="password"
+                          id="password"
+                          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-3 pr-10 py-2 sm:text-sm border-gray-300 rounded-md"
+                          value={formData.password}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        {formData.password && (
+                          <XClearButton onClick={() => clearInput('password')} className="absolute inset-y-0 right-0 pr-3 flex items-center" />
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <input
+                          id="remember-me"
+                          name="rememberMe"
+                          type="checkbox"
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                          checked={formData.rememberMe}
+                          onChange={handleInputChange}
+                        />
+                        <label htmlFor="remember-me" className="ml-2 block text-sm text-black">
+                          Remember me
+                        </label>
+                      </div>
+
+                      <div className="text-sm">
+                        <button
+                          type="button"
+                          onClick={() => handleModalTransition(openForgotPasswordModal)}
+                          className="font-medium text-white hover:text-black"
+                        >
+                          Forgot your password?
+                        </button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <button
+                        type="submit"
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      >
+                        Sign in
+                      </button>
+                    </div>
+                  </form>
+
+                  <div className="mt-6">
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-300"></div>
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-[#ee9613] text-black">Or continue with</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 grid grid-cols-2 gap-3">
+                    <div>
+                        <button
+                          type="button"
+                          className="w-full inline-flex items-center justify-center md:justify-start py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors duration-300"
+                        >
+                         <img
+                            src="/images/google.svg"
+                            alt="Google Logo"
+                            className="w-5 h-5"
+                          />
+                          <span className="sr-only md:not-sr-only md:inline-block">Sign in with Google</span>
+                          
+                        </button>
+                      </div>
+
+                      <div>
+                        <button
+                          type="button"
+                          className="w-full inline-flex items-center justify-center md:justify-start py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors duration-300"
+                        >
+                          <img
+                            src="/images/apple.svg"
+                            alt="Apple Logo"
+                            className="w-5 h-5"
+                          />
+                          <span className="sr-only md:not-sr-only md:inline-block">Sign in with Apple</span>
+                         
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Right side: Form */}
-            <div className="flex flex-col justify-center md:ml-16 w-full md:w-1/2 order-1 md:order-2">
-              <h2 className="text-center text-[#000000] text-2xl md:text-4xl lg:text-5xl font-Agbalumo font-bold mb-4">
-                Login / Sign Up
-              </h2>
-              <span className="text-center font-josefin_sans text-xl md:text-2xl font-semibold text-white mb-4">
-                Please enter your details
-              </span>
-
-              {/* Email input */}
-              <div className="py-4 relative">
-                <span className="text-black text-xl md:text-2xl font-Agbalumo font-semibold mb-2">
-                  Email
-                </span>
-                <input
-    type="text"
-    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500 pr-10" // Ensure padding-right is enough to avoid overlap with the button
-    name="email"
-    id="email"
-    value={email}
-    onChange={(e) => setEmail(e.target.value)}
-  />
-  {email && <XClearButton onClick={clearEmail} />}
-</div>
-
-              {/* Password input */}
-              <div className="py-4 relative">
-                <span className="font-Agbalumo text-lg md:text-xl font-semibold mb-2">
-                  Password
-                </span>
-                <input
-                  type="password"
-                  name="pass"
-                  id="pass"
-                  className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                {password && <XClearButton onClick={clearPassword} />}
-              </div>
-
-              {/* Remember me and forgot password */}
-              <div className="flex justify-between w-full py-4">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    name="ch"
-                    id="ch"
-                    className="h-5 w-5 mr-2"
-                  />
-                  <span className="font-semibold text-lg">
-                    Remember for 30 days
-                  </span>
-                </div>
-                <button
-                  onClick={handleForgotPasswordLinkClick}
-                  className="text-white transition-all duration-300 ease-in-out hover:text-black font-semibold text-lg underline"
-                >
-                  Forgot password?
-                </button>
-              </div>
-
-              {/* Login buttons */}
-              <button
-                onClick={handleAuthenticatedLoginLinkClick}
-                className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black transition-all duration-300 ease-in-out "
-              >
-                Log in
-              </button>
-              <button className="w-full  bg-white border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-black hover:text-white">
-                <img
-                  src="/images/google.svg"
-                  alt="Google Logo"
-                  className="w-6 h-6 inline mr-2"
-                />
-                Log in with Google
-              </button>
-              <button className="w-full  bg-white border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-black transition-all duration-300 ease-in-out hover:text-white">
-                <img
-                  src="/images/apple.svg"
-                  alt="iCloud"
-                  className="w-6 h-6 inline mr-4"
-                />
-                Log in with iCloud
-              </button>
-
-              {/* Signup link */}
-              <div className="text-center text-black">
-                <span className="text-center text-white font-semibold text-lg mr-2">
-                  Don't have an account?
-                </span>
-                <button
-                  onClick={handleSignupLinkClick}
-                  className="text-black transition-all duration-300 ease-in-out hover:text-white font-semibold text-lg underline"
-                >
-                  Sign up for free
-                </button>
               </div>
             </div>
           </div>
+          <div className="bg-[#ee9613] px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <p className="text-center text-sm text-black mt-2">
+              Don't have an account yet?{' '}
+              <button
+                onClick={() => handleModalTransition(openSignupModal)}
+                className="font-medium text-white hover:text-black transition-colors duration-300"
+              >
+                Sign up for free
+              </button>
+            </p>
+          </div>
+         
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

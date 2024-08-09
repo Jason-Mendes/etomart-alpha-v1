@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import AuthenticatedLoginModal from "./AuthenticatedLoginModal";
 import AuthenticatedSignupModal from "./AuthenticatedSignupModal";
@@ -8,89 +8,70 @@ import SignupModal from "./SignupModal";
 
 const LPNavBar = () => {
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignupModal, setShowSignupModal] = useState(false);
-  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
-  const [showAuthenticatedLoginModal, setShowAuthenticatedLoginModal] = useState(false);
-  const [showAuthenticatedSignupModal, setShowAuthenticatedSignupModal] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsNavbarSticky(scrollPosition > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+  const handleScroll = useCallback(() => {
+    setIsNavbarSticky(window.scrollY > 0);
   }, []);
 
-  const closeModals = () => {
-    setShowLoginModal(false);
-    setShowSignupModal(false);
-    setShowForgotPasswordModal(false);
-    setShowAuthenticatedLoginModal(false);
-    setShowAuthenticatedSignupModal(false);
-  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
-  const openModal = (modalSetter) => {
+  const closeModals = useCallback(() => {
+    setActiveModal(null);
+  }, []);
+
+  const openModal = useCallback((modalName) => {
     closeModals();
-    modalSetter(true);
-  };
+    setActiveModal(modalName);
+  }, [closeModals]);
 
   const modalProps = {
-    openLoginModal: () => openModal(setShowLoginModal),
-    openSignupModal: () => openModal(setShowSignupModal),
-    openForgotPasswordModal: () => openModal(setShowForgotPasswordModal),
-    openAuthenticatedLoginModal: () => openModal(setShowAuthenticatedLoginModal),
-    openAuthenticatedSignupModal: () => openModal(setShowAuthenticatedSignupModal),
+    openLoginModal: () => openModal('login'),
+    openSignupModal: () => openModal('signup'),
+    openForgotPasswordModal: () => openModal('forgotPassword'),
+    openAuthenticatedLoginModal: () => openModal('authenticatedLogin'),
+    openAuthenticatedSignupModal: () => openModal('authenticatedSignup'),
     closeModal: closeModals,
   };
 
   return (
     <div>
-      <style>
-        {`
-          .sticky {
-            position: fixed;
-            z-index: 20;
-            width: 100%;
-          }
-        `}
-      </style>
-
       <nav
         id="lpnavbar"
-        className={`bg-[#f9f9f9] px-4 ${isNavbarSticky ? "sticky" : ""}`}
+        className={`bg-[#f9f9f9] px-4 transition-all duration-300 ${isNavbarSticky ? "sticky top-0 z-20 shadow-md" : ""}`}
       >
-        <div className="flex items-center justify-between mx-auto max-w-7xl">
-          <div className="flex items-center mt-6 mb-4">
-            <h1 className="-mt-2 text-3xl font-shrikhand text-[#ee9613] whitespace-nowrap">
-              <Link to="/LP">Etomart</Link>
-            </h1>
-          </div>
+        <div className="flex items-center justify-between mx-auto max-w-7xl py-4">
+          <Link to="/LP" className="text-3xl font-shrikhand text-[#ee9613] whitespace-nowrap">
+            Etomart
+          </Link>
 
           <div className="flex space-x-4">
             <button
-              onClick={() => openModal(setShowLoginModal)}
-              className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#f7a832] text-black rounded"
+              onClick={() => openModal('login')}
+              className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#f7a832] text-black rounded transition-colors duration-300"
+              aria-label="Log in"
             >
               Log in
             </button>
             <button
-              onClick={() => openModal(setShowSignupModal)}
-              className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ff9f10] text-black rounded"
+              onClick={() => openModal('signup')}
+              className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ff9f10] text-black rounded transition-colors duration-300"
+              aria-label="Sign up"
             >
               Sign up
             </button>
           </div>
         </div>
       </nav>
-{/* modalPropMangement */}
-      {showLoginModal && <LoginModal showModal={showLoginModal} {...modalProps} />}
-      {showSignupModal && <SignupModal showModal={showSignupModal} {...modalProps} />}
-      {showForgotPasswordModal && <ForgotPasswordModal showModal={showForgotPasswordModal} {...modalProps} />}
-      {showAuthenticatedLoginModal && <AuthenticatedLoginModal showModal={showAuthenticatedLoginModal} {...modalProps} />}
-      {showAuthenticatedSignupModal && <AuthenticatedSignupModal showModal={showAuthenticatedSignupModal} {...modalProps} />}
+
+      {activeModal === 'login' && <LoginModal showModal={true} {...modalProps} />}
+      {activeModal === 'signup' && <SignupModal showModal={true} {...modalProps} />}
+      {activeModal === 'forgotPassword' && <ForgotPasswordModal showModal={true} {...modalProps} />}
+      {activeModal === 'authenticatedLogin' && <AuthenticatedLoginModal showModal={true} {...modalProps} />}
+      {activeModal === 'authenticatedSignup' && <AuthenticatedSignupModal showModal={true} {...modalProps} />}
     </div>
   );
 };
