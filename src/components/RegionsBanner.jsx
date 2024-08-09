@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 
-const RegionsBanner = ({ isVisible, imageSrc, closeBanner }) => {
+const RegionsBanner = ({ isVisible, imageSrc, closeBanner, goBack }) => {
   const handleClose = useCallback(() => {
     closeBanner();
   }, [closeBanner]);
@@ -24,13 +24,21 @@ const RegionsBanner = ({ isVisible, imageSrc, closeBanner }) => {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
-        onClick={handleClose}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>
       <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-xl">
         <button
-          className="absolute top-4 right-4 text-white hover:text-orange-500 transition-colors duration-300"
+          className="absolute top-4 left-4 text-orange-500 hover:text-black transition-colors duration-300"
+          onClick={goBack}
+          aria-label="Go back"
+        >
+          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+        </button>
+        <button
+          className="absolute top-4 right-4 text-orange-500 hover:text-black transition-colors duration-300"
           onClick={handleClose}
           aria-label="Close banner"
         >
