@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import DOMPurify from "dompurify";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -15,7 +14,7 @@ function RegionHome() {
   const inputRef = useRef(null);
   const videoRef = useRef(null);
 
-  // Combined state
+  // State management
   const [state, setState] = useState({
     isLargeScreen: false,
     isEditing: false,
@@ -205,36 +204,34 @@ function RegionHome() {
       ], 
     []);
 
+
+    
   // Callbacks
+ // Helper functionsto normalize region names
+ const normalizeRegionName = (name) => {
+  return name.replace(/\s+/g, '').toLowerCase();
+};
 
-  // Helper function to normalize region names
-  const normalizeRegionName = (name) => {
-      return name.replace(/\s+/g, '').toLowerCase();
-    };
 
-    // Update the getRegionDetails function
+   // Update the getRegionDetails function
+   
+
+    // Update the getRegionTowns function
     const getRegionDetails = useCallback((regionName) => {
       if (!regionName) return null;
-
       const normalizedRegionName = normalizeRegionName(regionName);
-
       const matchingRegion = Object.entries(regions).find(([key, value]) =>
         normalizeRegionName(key) === normalizedRegionName
       );
-
       return matchingRegion ? matchingRegion[1][0] : null;
     }, [regions]);
-
-    // Update the getRegionTowns function
+    
     const getRegionTowns = useCallback((regionName) => {
       if (!regionName) return [];
-
       const normalizedRegionName = normalizeRegionName(regionName);
-
       const matchingRegion = Object.keys(townsByRegion).find(key =>
         normalizeRegionName(key) === normalizedRegionName
       );
-
       return matchingRegion ? townsByRegion[matchingRegion] : [];
     }, [townsByRegion]);
 
@@ -251,7 +248,7 @@ function RegionHome() {
         isEditing: false,
       }));
     }, []);
-
+    
     const handleSelect = useCallback((option) => {
       setState(prev => ({
         ...prev,
@@ -263,6 +260,7 @@ function RegionHome() {
         navigate(option.path, { state: { selectedRegion: option.region, selectedTown: option.name } });
       }
     }, [navigate]);
+    
 
     const handleUseCurrentLocation = useCallback(() => {
       if (navigator.geolocation) {
@@ -296,7 +294,6 @@ function RegionHome() {
       let closestRegion = null;
       let closestTown = null;
       let closestDistance = Infinity;
-
       Object.entries(townsData).forEach(([regionName, towns]) => {
         towns.forEach(town => {
           const distance = getDistance(latitude, longitude, town.latitude, town.longitude);
@@ -307,10 +304,9 @@ function RegionHome() {
           }
         });
       });
-
       return { region: closestRegion, town: closestTown };
     }, [townsData]);
-
+  
     const getDistance = useCallback((lat1, lon1, lat2, lon2) => {
       const R = 6371; // Radius of the Earth in km
       const dLat = (lat2 - lat1) * (Math.PI / 180);
@@ -318,7 +314,6 @@ function RegionHome() {
       const a =
         0.5 - Math.cos(dLat) / 2 +
         Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * (1 - Math.cos(dLon)) / 2;
-
       return R * 2 * Math.asin(Math.sqrt(a));
     }, []);
 
@@ -329,14 +324,14 @@ function RegionHome() {
         location: value,
         suggestions: value.length > 0
           ? Object.entries(townsData).flatMap(([regionName, towns]) =>
-            towns.filter(town => town.name.toLowerCase().includes(value.toLowerCase()))
-              .map(town => ({ ...town, region: regionName }))
-          )
+              towns.filter(town => town.name.toLowerCase().includes(value.toLowerCase()))
+                .map(town => ({ ...town, region: regionName }))
+            )
           : [],
         isDropdownOpen: value.length > 0,
       }));
     }, [townsData]);
-
+  
     const confirmRegionSelection = useCallback(() => {
       if (state.userSelectedRegion) {
         const region = townsData[state.userSelectedRegion];
@@ -350,11 +345,11 @@ function RegionHome() {
     const handleWatchVideo = useCallback(() => {
       setState(prev => ({ ...prev, isVideoVisible: true }));
     }, []);
-
+  
     const handleVideoEnded = useCallback(() => {
       setState(prev => ({ ...prev, isVideoVisible: false }));
     }, []);
-
+  
     const handleGoBack = useCallback(() => {
       if (videoRef.current) {
         videoRef.current.pause();
@@ -362,10 +357,12 @@ function RegionHome() {
       }
       setState((prev) => ({ ...prev, isVideoVisible: false }));
     }, []);
-
+  
     const handleOverlayClick = useCallback(() => {
       handleGoBack();
     }, [handleGoBack]);
+  
+   
 
     // Testimonial-related callbacks
     const handlePrevSlide = useCallback(() => {
@@ -374,7 +371,7 @@ function RegionHome() {
         currentSlide: prev.currentSlide === 0 ? testimonials.length - 1 : prev.currentSlide - 1,
       }));
     }, [testimonials.length]);
-
+  
     const handleNextSlide = useCallback(() => {
       setState(prev => ({
         ...prev,
@@ -383,11 +380,11 @@ function RegionHome() {
     }, [testimonials.length]);
 
     // Effects
-    useEffect(() => {
+   // Effect hooks
+  useEffect(() => {
     const handleResize = () => {
       setState(prev => ({ ...prev, isLargeScreen: window.innerWidth >= 640 }));
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -403,7 +400,6 @@ function RegionHome() {
         setState(prev => ({ ...prev, isDropdownOpen: false, isEditing: false }));
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -417,53 +413,10 @@ function RegionHome() {
         currentSlide: prev.currentSlide === testimonials.length - 1 ? 0 : prev.currentSlide + 1,
       }));
     }, 10000);
-
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
-  // Effects
-  useEffect(() => {
-    const handleResize = () => {
-      setState(prev => ({ ...prev, isLargeScreen: window.innerWidth >= 640 }));
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target) &&
-        !event.target.closest('#protected-div')
-      ) {
-        setState(prev => ({ ...prev, isDropdownOpen: false, isEditing: false }));
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setState(prev => ({
-        ...prev,
-        currentSlide: prev.currentSlide === testimonials.length - 1 ? 0 : prev.currentSlide + 1,
-      }));
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [testimonials.length]);
-
-
-
-
-
+  
   return (
     <div>
       <LPNavBar />
@@ -513,9 +466,8 @@ function RegionHome() {
           </div>
           <div class="container mx-auto rounded-bl-[150px] rounded-br-[150px] flex flex-row md:flex-row items-center px-10">
           </div>
-          {/* Location Buttons Section */}
-
-          <div className="container mx-auto px-4">
+           {/* Location Buttons Section */}
+           <div className="container mx-auto px-4">
             <section className="flex relative m-8">
               <div id="LP_location_buttons_container_2" className="flex relative m-8">
                 <div id="button-group" className="flex flex-row items-center container justify-between w-auto">
@@ -524,12 +476,16 @@ function RegionHome() {
                       <div
                         id="protected-div"
                         className="flex items-center bg-white text-gray-600 px-4 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 relative w-full"
-                        onClick={() => setState(prev => ({ ...prev, isEditing: true, isDropdownOpen: true }))}
-                        role="button"
-                        aria-haspopup="listbox"
-                        aria-expanded={state.isDropdownOpen}
+                        onClick={() => {
+                          setState(prev => ({ ...prev, isEditing: true, isDropdownOpen: true }));
+                        }}
                       >
-                        <img className="h-6 mr-2" src="/images/img_linkedin.svg" alt="" aria-hidden="true" />
+                        <img
+                          className="h-6 mr-2"
+                          src="/images/img_linkedin.svg"
+                          alt=""
+                          aria-hidden="true"
+                        />
                         {state.isEditing ? (
                           <input
                             ref={inputRef}
@@ -782,95 +738,96 @@ function RegionHome() {
           )}
 
           {/* Testimonials Section */}
-          <section aria-labelledby="testimonials-title" className="py-16">
-            <div className="container mx-auto px-4 flex flex-col items-center">
-              <h2 id="testimonials-title" className="text-center text-4xl font-bold font-shrikhand text-orange-500 mb-4">
-                Testimonials
-              </h2>
-              <h3 className="text-center text-5xl font-bold font-Agbalumo mb-8">
-                What Others Are Saying
-              </h3>
-              <p className="text-center text-xl max-w-2xl mx-auto mb-12 font-josefin_sans font-semibold">
-                Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
-                non et elit. Dolor turpis molestie dui magnis facilisis at
-                fringilla quam.
-              </p>
-              <div className="relative">
-                {testimonials.map((testimonial, index) => (
+        <section aria-labelledby="testimonials-title" className="py-16">
+          <div className="container mx-auto px-4 flex flex-col items-center">
+            <h2 id="testimonials-title" className="text-center text-4xl font-bold font-shrikhand text-orange-500 mb-4">
+              Testimonials
+            </h2>
+            <h3 className="text-center text-5xl font-bold font-Agbalumo mb-8">
+              What Others Are Saying
+            </h3>
+            <p className="text-center text-xl max-w-2xl mx-auto mb-12 font-josefin_sans font-semibold">
+              Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
+              non et elit. Dolor turpis molestie dui magnis facilisis at
+              fringilla quam.
+            </p>
+            <div className="relative">
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className={`bg-white border border-slate-200 rounded-[200px] shadow-md max-w-full md:max-w-[928px] p-6 transition-opacity duration-500 ease-in-out ${
+                    state.currentSlide === index ? 'opacity-100' : 'opacity-0 absolute'
+                  }`}
+                >
+                  <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
+                    <LazyLoadImage
+                      className="h-[117px] md:h-auto rounded-full w-[117px]"
+                      src={testimonial.imageSrc}
+                      alt={`${testimonial.testimonialAuthor}'s avatar`}
+                      effect="blur"
+                    />
+                  </div>
                   <div
-                    key={index}
-                    className={`bg-white border border-slate-200 rounded-[200px] shadow-md max-w-full md:max-w-[928px] p-6 transition-opacity duration-500 ease-in-out ${state.currentSlide === index ? 'opacity-100' : 'opacity-0 absolute'
-                      }`}
+                    id="text-part"
+                    className="flex flex-wrap justify-center gap-4 items-center bg-white p-2 shadow-bs3 w-full"
                   >
-                    <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
-                      <LazyLoadImage
-                        className="h-[117px] md:h-auto rounded-full w-[117px]"
-                        src={testimonial.imageSrc}
-                        alt={`${testimonial.testimonialAuthor}'s avatar`}
-                        effect="blur"
-                      />
-                    </div>
-                    <div
-                      id="text-part"
-                      className="flex flex-wrap justify-center gap-4 items-center bg-white p-2 shadow-bs3 w-full"
-                    >
-                      <div className="flex flex-row items-center justify-center w-auto">
-                        <div className="flex items-center justify-center p-2">
-                          {/* Controls */}
-                          <button
-                            onClick={handlePrevSlide}
-                            className="p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
-                          >
-                            &lt;
-                          </button>
-                          <div className="flex flex-col items-center justify-center px-6 w-auto">
-                            <div className="flex items-center justify-center overflow-hidden md:w-[550px] md:h-[100px] w-full h-auto">
-                              <p className="text-center text-lg md:text-2xl font-josefin_sans font-semibold line-clamp-3">
-                                {testimonial.textBelowImage}
-                              </p>
-                            </div>
-                          </div>
-                          <button
-                            onClick={handleNextSlide}
-                            className="bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
-                          >
-                            &gt;
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-6 items-center w-full">
-                      <div className="flex flex-col items-center justify-center px-6 pb-4 w-auto">
-                        <div className="flex flex-wrap justify-center gap-6 items-center bg-white p-3 shadow-bs3 w-full pb-4">
-                          <div className="flex flex-wrap justify-center gap-4 items-center bg-white flex-row pb-8 shadow-bs3 w-full">
-                            {Array.from({ length: 5 }, (_, starIndex) => (
-                              <div
-                                key={starIndex}
-                                className={`flex justify-center items-center w-10 h-10 ${starIndex < testimonial.numStars ? 'text-orange-400' : 'text-gray-300'
-                                  }`}
-                              >
-                                <svg fill="currentColor" viewBox="0 0 40 40">
-                                  <g>
-                                    <path d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z" />
-                                  </g>
-                                </svg>
-                              </div>
-                            ))}
+                    <div className="flex flex-row items-center justify-center w-auto">
+                      <div className="flex items-center justify-center p-2">
+                        {/* Controls */}
+                        <button
+                          onClick={handlePrevSlide}
+                          className="p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
+                        >
+                          &lt;
+                        </button>
+                        <div className="flex flex-col items-center justify-center px-6 w-auto">
+                          <div className="flex items-center justify-center overflow-hidden md:w-[550px] md:h-[100px] w-full h-auto">
+                          <p className="text-center text-lg md:text-2xl font-josefin_sans font-semibold line-clamp-3">
+                              {testimonial.textBelowImage}
+                            </p>
                           </div>
                         </div>
-                        <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                          <p className="text-xl md:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">
-                            {testimonial.testimonialAuthor}
-                          </p>
-                        </div>
+                        <button
+                          onClick={handleNextSlide}
+                          className="bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
+                        >
+                          &gt;
+                        </button>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-
+                  <div className="flex flex-wrap justify-center gap-6 items-center w-full">
+                    <div className="flex flex-col items-center justify-center px-6 pb-4 w-auto">
+                      <div className="flex flex-wrap justify-center gap-6 items-center bg-white p-3 shadow-bs3 w-full pb-4">
+                        <div className="flex flex-wrap justify-center gap-4 items-center bg-white flex-row pb-8 shadow-bs3 w-full">
+                          {Array.from({ length: 5 }, (_, starIndex) => (
+                            <div
+                              key={starIndex}
+                              className={`flex justify-center items-center w-10 h-10 ${
+                                starIndex < testimonial.numStars ? 'text-orange-400' : 'text-gray-300'
+                              }`}
+                            >
+                              <svg fill="currentColor" viewBox="0 0 40 40">
+                                <g>
+                                  <path d="M9.7080136.6667L12.416324.9583L3.3330117.0833L15.33316.0417L19.99975L24.666316.0417L36.666317.0833L27.58324.9583L30.291336.6667L19.999730.4583L9.7080136.6667Z" />
+                                </g>
+                              </svg>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+                        <p className="text-xl md:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">
+                          {testimonial.testimonialAuthor}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </section>
+          </div>
+        </section>
 
           {/* How it Works Section */}
           <section aria-labelledby="how-it-works-title" className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]">
