@@ -96,7 +96,7 @@ const LandingPage = () => {
     setState(prev => ({ ...prev, isBannerVisible: false }));
   }, []);
 
-  const handleSelectDrop = useCallback((option) => {
+  const handleSelect = useCallback((option) => {
     setState(prev => ({
       ...prev,
       selectedRegion: option,
