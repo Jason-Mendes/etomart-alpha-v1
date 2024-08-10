@@ -1,7 +1,13 @@
 import React, { useState, useCallback } from "react";
+import LanguageModal from "./Footer/LanguageModal";
+import AccessibilityModal from "./Footer/AccessibilityModal";
+import { GlobeAltIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"; // Importing icons from Heroicons
 
 const Footer = () => {
   const [language, setLanguage] = useState("English");
+  const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
+  const [isAccessibilityModalOpen, setIsAccessibilityModalOpen] = useState(false);
+  const [isHighContrastEnabled, setIsHighContrastEnabled] = useState(false);
 
   const linkCategories = {
     companyLinks: [
@@ -25,7 +31,7 @@ const Footer = () => {
       { label: "Contact", url: "/en/alb/contact" },
       { label: "Sustainability", url: "/en/alb/about/better-cities" },
     ],
-   followLinks: [
+    followLinks: [
       { label: "Blog", url: "https://blog.wolt.com/" },
       { label: "Instagram", url: "https://instagram.com/woltapp" },
       { label: "Facebook", url: "https://www.facebook.com/woltapp/" },
@@ -34,14 +40,19 @@ const Footer = () => {
     ],
   };
 
-  const handleLanguageChange = useCallback(() => {
-    // Implement language change logic
-    setLanguage(prevLang => prevLang === "English" ? "Español" : "English");
+  const handleLanguageChange = useCallback((selectedLanguage) => {
+    setLanguage(selectedLanguage);
+    setIsLanguageModalOpen(false);
   }, []);
 
+  
+
   const handleAccessibilitySettingsOpen = useCallback(() => {
-    // Implement accessibility settings logic
-    console.log("Accessibility settings opened");
+    setIsAccessibilityModalOpen(true);
+  }, []);
+
+  const handleContrastToggle = useCallback(() => {
+    setIsHighContrastEnabled(prev => !prev);
   }, []);
 
   const renderLinkColumn = useCallback((title, links) => (
@@ -115,8 +126,8 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-center mt-8 pt-4 border-t border-white">
-           {/* Mobile download tags for small screens */}
-           <div className="flex md:hidden gap-4 mb-4">
+          {/* Mobile download tags for small screens */}
+          <div className="flex md:hidden gap-4 mb-4">
             <a
               href="https://apps.apple.com/app/id943905271"
               target="_blank"
@@ -142,32 +153,30 @@ const Footer = () => {
               />
             </a>
           </div>
+
           <div className="flex flex-col sm:flex-row gap-4 mb-4 sm:mb-0">
             <button
-              onClick={handleLanguageChange}
+              onClick={() => setIsLanguageModalOpen(true)}
               aria-label="Change language"
               className="flex items-center text-black hover:text-white transition-colors"
             >
-              <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-2a8 8 0 100-16 8 8 0 000 16z" />
-                <path d="M9.6 7.2h4.8v1.6h-4.8z" />
-              </svg>
+              <GlobeAltIcon className="h-4 w-4 mr-2" />
               {language}
             </button>
             <button
-              onClick={handleAccessibilitySettingsOpen}
-              aria-label="Open accessibility settings"
-              className="flex items-center text-black hover:text-white transition-colors"
-            >
-              <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-2a8 8 0 100-16 8 8 0 000 16z" />
-                <path d="M12 6a2 2 0 110 4 2 2 0 010-4zm-1 6h2v6h-2v-6z" />
-              </svg>
-              Accessibility
-            </button>
-          </div>
+  onClick={handleAccessibilitySettingsOpen}
+  aria-label="Open accessibility settings"
+  className="flex items-center text-black hover:text-white transition-colors"
+>
+  {isHighContrastEnabled ? (
+    <EyeIcon className="h-4 w-4 mr-2" />
+  ) : (
+    <EyeSlashIcon className="h-4 w-4 mr-2" />
+  )}
+  Accessibility
+</button>
 
-         
+          </div>
 
           <div className="text-center sm:text-right">
             <p className="text-sm">&copy; 2024 Etomart. All Rights Reserved.</p>
@@ -178,6 +187,18 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <LanguageModal
+        isOpen={isLanguageModalOpen}
+        onClose={() => setIsLanguageModalOpen(false)}
+        onLanguageChange={handleLanguageChange}
+        currentLanguage={language}
+      />
+      <AccessibilityModal
+        isOpen={isAccessibilityModalOpen}
+        onClose={() => setIsAccessibilityModalOpen(false)}
+        isHighContrastEnabled={isHighContrastEnabled}
+        onContrastToggle={handleContrastToggle}
+      />
     </footer>
   );
 };
