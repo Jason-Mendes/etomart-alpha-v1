@@ -937,38 +937,6 @@ function KhomasTowns() {
     []
   );
 
-  // Helper function to truncate strings
-  const truncateMiddle = useCallback((str, maxLength) => {
-    if (str.length <= maxLength) return str;
-    const middleIndex = Math.floor(maxLength / 2);
-    const start = str.substring(0, middleIndex);
-    const end = str.substring(str.length - middleIndex);
-    return `${start}...${end}`;
-  }, []);
-
-  // Refs for carousels
-  const iconscategoriescarouselscroll = useRef(null);
-  const categoriescardsscroll = useRef(null);
-  const storescards1scroll = useRef(null);
-  const storescards2scroll = useRef(null);
-  const supermarketsscroll = useRef(null);
-  const restaurantsscroll = useRef(null);
-  const pharmaciesscroll = useRef(null);
-
-  // Function to scroll carousels to the left
-  const scrollLeft = useCallback((carouselRef) => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
-    }
-  }, []);
-
-  // Function to scroll carousels to the right
-  const scrollRight = useCallback((carouselRef) => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 200, behavior: "smooth" });
-    }
-  }, []);
-
   const cards = useMemo(
     () => [
       {
@@ -1007,6 +975,53 @@ function KhomasTowns() {
     []
   );
 
+  const aboutus = useMemo(
+    () => [
+      {
+        title: "Easy Ordering",
+        description:
+          "Our user-friendly platform makes it simple to order your favorite groceries with just a few clicks.",
+        image: "/images/1EO1.png",
+      },
+      {
+        title: "Fast Delivery",
+        description:
+          "Enjoy lightning-fast delivery times, ensuring your groceries arrive fresh and on time.",
+        image: "/images/2FD2.png",
+      },
+      {
+        title: "Customer Support",
+        description:
+          "Our dedicated support team is here to help you with any questions or issues, 24/7.",
+        image: "/images/3CS3.png",
+      },
+      // ... other about us items
+    ],
+    []
+  );
+
+  const containerRef = useRef(null);
+  const extendedCards = useMemo(
+    () => [...cards, ...cards, ...cards],
+    [cards]
+  );
+
+  const containerRefau = useRef(null);
+  const extendedAboutus = useMemo(
+    () => [...aboutus, ...aboutus, ...aboutus],
+    [aboutus]
+  );
+
+  // Refs for carousels
+  const iconscategoriescarouselscroll = useRef(null);
+  const categoriescardsscroll = useRef(null);
+  const storescards1scroll = useRef(null);
+  const storescards2scroll = useRef(null);
+  const supermarketsscroll = useRef(null);
+  const restaurantsscroll = useRef(null);
+  const pharmaciesscroll = useRef(null);
+
+
   const [state, setState] = useState({
     currentIndex: 0,
     isPaused: false,
@@ -1014,11 +1029,32 @@ function KhomasTowns() {
     isPausedau: false,
   });
 
-  const containerRef = useRef(null);
-  const extendedCards = useMemo(
-    () => [...cards, ...cards, ...cards],
-    [cards]
-  );
+  // Function to scroll carousels to the left
+  const scrollLeft = useCallback((carouselRef) => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
+    }
+  }, []);
+
+  // Function to scroll carousels to the right
+  const scrollRight = useCallback((carouselRef) => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: 200, behavior: "smooth" });
+    }
+  }, []);
+
+
+
+  // Helper function to truncate strings
+  const truncateMiddle = useCallback((str, maxLength) => {
+    if (str.length <= maxLength) return str;
+    const middleIndex = Math.floor(maxLength / 2);
+    const start = str.substring(0, middleIndex);
+    const end = str.substring(str.length - middleIndex);
+    return `${start}...${end}`;
+  }, []);
+
+
 
   useEffect(() => {
     let interval;
@@ -1082,37 +1118,6 @@ function KhomasTowns() {
     setState((prevState) => ({ ...prevState, currentIndex: index }));
     pauseScroll();
   };
-
-  const aboutus = useMemo(
-    () => [
-      {
-        title: "Easy Ordering",
-        description:
-          "Our user-friendly platform makes it simple to order your favorite groceries with just a few clicks.",
-        image: "/images/1EO1.png",
-      },
-      {
-        title: "Fast Delivery",
-        description:
-          "Enjoy lightning-fast delivery times, ensuring your groceries arrive fresh and on time.",
-        image: "/images/2FD2.png",
-      },
-      {
-        title: "Customer Support",
-        description:
-          "Our dedicated support team is here to help you with any questions or issues, 24/7.",
-        image: "/images/3CS3.png",
-      },
-      // ... other about us items
-    ],
-    []
-  );
-
-  const containerRefau = useRef(null);
-  const extendedAboutus = useMemo(
-    () => [...aboutus, ...aboutus, ...aboutus],
-    [aboutus]
-  );
 
   useEffect(() => {
     let interval;
