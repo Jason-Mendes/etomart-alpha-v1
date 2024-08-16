@@ -546,7 +546,7 @@ const LandingPage = () => {
           what you want. Delivered to you – quickly, reliably and
           affordably.
         </p>
-        <div className="hidden md:flex md:justify-center">
+        <div className="hidden md:flex md:justify-center md:w-2/3">
           <button
             className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
             onClick={handleWatchVideo}
@@ -569,7 +569,7 @@ const LandingPage = () => {
         </div>
       </div>
     </div>
-    <div className="mt-8 md:hidden flex justify-center">
+    <div className="flex mt-8 md:hidden  justify-center">
       <button
         className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
         onClick={handleWatchVideo}
@@ -593,7 +593,7 @@ const LandingPage = () => {
                 onClick={(e) => e.stopPropagation()} // Prevents the overlay click event
               >
                 <div className="text-center mb-4">
-                  <h3 className="text-2xl font-bold">This is Etomart!</h3>
+                  <h3 className="text-4xl font-bold font-Agbalumo">This is Etomart!</h3>
                 </div>
                 <div className="relative aspect-w-16 aspect-h-9">
                   <video

@@ -681,7 +681,7 @@ function RegionHome() {
           what you want. Delivered to you – quickly, reliably and
           affordably.
         </p>
-        <div className="hidden md:flex md:justify-center">
+        <div className="hidden md:flex md:justify-center md:w-2/3">
           <button
             className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
             onClick={handleWatchVideo}
