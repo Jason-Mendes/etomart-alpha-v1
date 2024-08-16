@@ -604,7 +604,7 @@ function RegionHome() {
                     </button>
                     <a
                       href="/LP"
-                      className="flex justify-center items-center bg-white text-black px-4 py-2 rounded-[36px] shadow-lg font-josefin_sans hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden"
+                      className="flex justify-center items-center bg-white text-black px-6 py-2 rounded-[36px] shadow-lg font-josefin_sans hover:bg-orange-300 min-w-[150px] h-14 overflow-hidden"
                       aria-label="View all regions"
                     >
                       <div className="flex items-center justify-between w-full">
