@@ -20,6 +20,7 @@ function RegionHome() {
     isEditing: false,
     location: "",
     currentSlide: 0,
+    isPaused: false,
     inputLocation: "",
     suggestions: [],
     userLocation: null,
@@ -365,19 +366,26 @@ function RegionHome() {
    
 
     // Testimonial-related callbacks
-    const handlePrevSlide = useCallback(() => {
-      setState(prev => ({
-        ...prev,
-        currentSlide: prev.currentSlide === 0 ? testimonials.length - 1 : prev.currentSlide - 1,
-      }));
-    }, [testimonials.length]);
+    const handleSlideChange = useCallback((direction) => {
+      setState(prev => {
+        const newSlide = direction === 'next'
+          ? (prev.currentSlide - 1 + testimonials.length) % testimonials.length
+          : (prev.currentSlide + 1) % testimonials.length;
+        return {
+          ...prev,
+          currentSlide: newSlide,
+          isPaused: true,
+        };
+      });
   
-    const handleNextSlide = useCallback(() => {
-      setState(prev => ({
-        ...prev,
-        currentSlide: prev.currentSlide === testimonials.length - 1 ? 0 : prev.currentSlide + 1,
-      }));
-    }, [testimonials.length]);
+      // Resume auto-scroll after 5 seconds
+      setTimeout(() => {
+        setState(prev => ({ ...prev, isPaused: false }));
+      }, 8000);
+    }, []);
+  
+    const handlePrevSlide = useCallback(() => handleSlideChange('prev'), [handleSlideChange]);
+    const handleNextSlide = useCallback(() => handleSlideChange('next'), [handleSlideChange]);
 
     // Effects
    // Effect hooks
@@ -406,15 +414,21 @@ function RegionHome() {
     };
   }, []);
 
+  // Effect hooks
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setState(prev => ({
-        ...prev,
-        currentSlide: prev.currentSlide === testimonials.length - 1 ? 0 : prev.currentSlide + 1,
-      }));
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [testimonials.length]);
+    let timer;
+    if (!state.isPaused) {
+      timer = setInterval(() => {
+        setState(prev => ({
+          ...prev,
+          currentSlide: (prev.currentSlide - 1 + testimonials.length) % testimonials.length,
+        }));
+      }, 6000); // Change slide every 2 seconds
+    }
+    return () => clearInterval(timer);
+  }, [state.isPaused]);
+
 
   
   return (
@@ -463,8 +477,6 @@ function RegionHome() {
                 </div>
               </div>
             </div>
-          </div>
-          <div class="container mx-auto rounded-bl-[150px] rounded-br-[150px] flex flex-row md:flex-row items-center px-10">
           </div>
            {/* Location Buttons Section */}
            <div className="container mx-auto px-4">
@@ -561,10 +573,10 @@ function RegionHome() {
             </section> </div>
 
           {/* Explore Etomart Towns */}
-          {/* What is Etomart Section */}
+   {/* Towns Buttons */}
           <section aria-labelledby="what-is-etomart-title" className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]">
             <div className="container mx-auto px-4">
-              {/* Header and Region Selection */}
+              {/* Landing Page and Region Section */}
               <div className="flex flex-col md:flex-row w-full mb-8">
                 <div className="md:w-1/2 md:pr-4 mb-6 md:mb-0">
                   <h2 className="text-center md:text-left text-3xl md:text-5xl text-black-900 font-Agbalumo">
@@ -617,23 +629,29 @@ function RegionHome() {
               </div>
 
               {/* Towns Buttons */}
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-                {townsData[selectedRegionButton.name]?.map((town) => (
-                  <a
-                    key={town.code}
-                    href={town.path}
-                    className="w-[280px] h-[55px] flex justify-between items-center bg-white hover:bg-orange-300 text-black px-4 rounded-[36px] shadow-lg font-josefin_sans transition-transform transform hover:scale-105 overflow-hidden "
-                    aria-label={`Select ${town.name}`}
-                  >
-                    <span className="text-left text-sm md:text-base lg:text-lg text-gray-700 font-bold truncate">
-                      {town.name}
-                    </span>
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-4 h-6 flex-shrink-0 fill-current text-zinc-950" aria-hidden="true">
-                      <path d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164" fill="#202125" />
-                    </svg>
-                  </a>
-                ))}
-              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 justify-items-center">
+      {townsData[selectedRegionButton.name]?.map((town) => (
+        <div key={town.code} className="w-full flex justify-center">
+          <a
+            href={town.path}
+            className="w-[280px] h-[55px] flex justify-between items-center bg-white hover:bg-orange-300 text-black px-4 rounded-[36px] shadow-lg font-josefin_sans transition-transform transform hover:scale-105 overflow-hidden"
+            aria-label={`Select ${town.name}`}
+          >
+            <span className="text-left text-sm md:text-base lg:text-lg text-gray-700 font-bold truncate">
+              {town.name}
+            </span>
+            <svg 
+              viewBox="0 0 24 24" 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="w-4 h-6 flex-shrink-0 fill-current text-zinc-950 ml-2" 
+              aria-hidden="true"
+            >
+              <path d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164" fill="#202125" />
+            </svg>
+          </a>
+        </div>
+      ))}
+    </div>
             </div>
           </section>
           {/* Did You Know Section */}
@@ -650,53 +668,53 @@ function RegionHome() {
             </div>
           </section>
 
-          {/* What is Etomart Section */}
-          <section aria-labelledby="what-is-etomart-title" className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]">
-            <div className="container mx-auto px-4">
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="md:w-1/2">
-                  <h2 id="what-is-etomart-title" className="text-4xl md:text-5xl font-bold font-Agbalumo text-black mb-4 text-center md:text-left">
-                    What is Etomart?
-                  </h2>
-                  <p className="text-xl text-white font-medium mb-8 text-center md:text-left">
-                    Etomart makes it incredibly easy for you to discover and get
-                    what you want. Delivered to you – quickly, reliably and
-                    affordably.
-                  </p>
-                  <div className="hidden md:block">
-                    <button
-                      className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
-                      onClick={handleWatchVideo}
-                      aria-label="Watch video about Etomart"
-                    >
-                      Watch Video
-                    </button>
-                  </div>
-                </div>
-                <div className="md:w-1/2 flex justify-center items-center">
-                  <div className="bg-white rounded-lg shadow-md p-1 md:p-4 w-full max-w-md">
-                    <div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-lg">
-                      <LazyLoadImage
-                        className="w-full h-full object-cover"
-                        src="/images/website_intro/video-cover-image-4.jpg"
-                        alt="Etomart introduction"
-                        effect="blur"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-8 md:hidden flex justify-center">
-                <button
-                  className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
-                  onClick={handleWatchVideo}
-                  aria-label="Watch video about Etomart"
-                >
-                  Watch Video
-                </button>
-              </div>
-            </div>
-          </section>
+{/* What is Etomart Section */}
+<section aria-labelledby="what-is-etomart-title" className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]">
+  <div className="container mx-auto px-4">
+    <div className="flex flex-col md:flex-row items-center gap-8">
+      <div className="md:w-1/2 md:p-6">
+        <h2 id="what-is-etomart-title" className="text-4xl md:text-5xl font-bold font-Agbalumo text-black mb-4 text-center md:text-left">
+          What is Etomart?
+        </h2>
+        <p className="text-xl text-white font-medium mb-8 text-center md:text-left">
+          Etomart makes it incredibly easy for you to discover and get
+          what you want. Delivered to you – quickly, reliably and
+          affordably.
+        </p>
+        <div className="hidden md:flex md:justify-center">
+          <button
+            className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
+            onClick={handleWatchVideo}
+            aria-label="Watch video about Etomart"
+          >
+            Watch Video
+          </button>
+        </div>
+      </div>
+      <div className="md:w-1/2 flex justify-center items-center">
+        <div className="bg-white rounded-lg shadow-md p-1 md:p-4 w-full max-w-md">
+          <div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-lg">
+            <LazyLoadImage
+              className="w-full h-full object-cover"
+              src="/images/website_intro/video-cover-image-4.jpg"
+              alt="Etomart introduction"
+              effect="blur"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="mt-8 md:hidden flex justify-center">
+      <button
+        className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
+        onClick={handleWatchVideo}
+        aria-label="Watch video about Etomart"
+      >
+        Watch Video
+      </button>
+    </div>
+  </div>
+</section>
 
 
           {/* Video Modal */}
@@ -736,98 +754,102 @@ function RegionHome() {
               </div>
             </div>
           )}
-
-          {/* Testimonials Section */}
-        <section aria-labelledby="testimonials-title" className="py-16">
-          <div className="container mx-auto px-4 flex flex-col items-center">
-            <h2 id="testimonials-title" className="text-center text-4xl font-bold font-shrikhand text-orange-500 mb-4">
-              Testimonials
-            </h2>
-            <h3 className="text-center text-5xl font-bold font-Agbalumo mb-8">
-              What Others Are Saying
-            </h3>
-            <p className="text-center text-xl max-w-2xl mx-auto mb-12 font-josefin_sans font-semibold">
-              Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
-              non et elit. Dolor turpis molestie dui magnis facilisis at
-              fringilla quam.
-            </p>
-            <div className="relative">
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className={`bg-white border border-slate-200 rounded-[200px] shadow-md max-w-full md:max-w-[928px] p-6 transition-opacity duration-500 ease-in-out ${
-                    state.currentSlide === index ? 'opacity-100' : 'opacity-0 absolute'
-                  }`}
-                >
-                  <div className="flex flex-col items-center justify-center px-6 py-6 w-auto">
-                    <LazyLoadImage
-                      className="h-[117px] md:h-auto rounded-full w-[117px]"
-                      src={testimonial.imageSrc}
-                      alt={`${testimonial.testimonialAuthor}'s avatar`}
-                      effect="blur"
-                    />
-                  </div>
-                  <div
-                    id="text-part"
-                    className="flex flex-wrap justify-center gap-4 items-center bg-white p-2 shadow-bs3 w-full"
-                  >
-                    <div className="flex flex-row items-center justify-center w-auto">
-                      <div className="flex items-center justify-center p-2">
-                        {/* Controls */}
-                        <button
-                          onClick={handlePrevSlide}
-                          className="p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
-                        >
-                          &lt;
-                        </button>
-                        <div className="flex flex-col items-center justify-center px-6 w-auto">
-                          <div className="flex items-center justify-center overflow-hidden md:w-[550px] md:h-[100px] w-full h-auto">
-                          <p className="text-center text-lg md:text-2xl font-josefin_sans font-semibold line-clamp-3">
-                              {testimonial.textBelowImage}
-                            </p>
-                          </div>
-                        </div>
-                        <button
-                          onClick={handleNextSlide}
-                          className="bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
-                        >
-                          &gt;
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap justify-center gap-6 items-center w-full">
-                    <div className="flex flex-col items-center justify-center px-6 pb-4 w-auto">
-                      <div className="flex flex-wrap justify-center gap-6 items-center bg-white p-3 shadow-bs3 w-full pb-4">
-                        <div className="flex flex-wrap justify-center gap-4 items-center bg-white flex-row pb-8 shadow-bs3 w-full">
-                          {Array.from({ length: 5 }, (_, starIndex) => (
-                            <div
-                              key={starIndex}
-                              className={`flex justify-center items-center w-10 h-10 ${
-                                starIndex < testimonial.numStars ? 'text-orange-400' : 'text-gray-300'
-                              }`}
-                            >
-                              <svg fill="currentColor" viewBox="0 0 40 40">
-                                <g>
-                                  <path d="M9.7080136.6667L12.416324.9583L3.3330117.0833L15.33316.0417L19.99975L24.666316.0417L36.666317.0833L27.58324.9583L30.291336.6667L19.999730.4583L9.7080136.6667Z" />
-                                </g>
-                              </svg>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                        <p className="text-xl md:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">
-                          {testimonial.testimonialAuthor}
-                        </p>
-                      </div>
+ {/* Testimonials Section */}
+<section aria-labelledby="testimonials-title" className="py-16">
+  <div className="container mx-auto px-4 flex flex-col items-center">
+    <h2 id="testimonials-title" className="text-center text-4xl font-bold font-shrikhand text-orange-500 mb-4">
+      Testimonials
+    </h2>
+    <h3 className="text-center text-5xl font-bold font-Agbalumo mb-8">
+      What Others Are Saying
+    </h3>
+    <p className="text-center text-xl max-w-2xl mx-auto mb-12 font-josefin_sans font-semibold">
+      Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
+      non et elit. Dolor turpis molestie dui magnis facilisis at
+      fringilla quam.
+    </p>
+    <div className="p-6 relative w-full md:max-w-[745px] overflow-hidden">
+      <div className="flex  w-full h-[580px]"> {/* Adjust height as needed */}
+        {testimonials.map((testimonial, index) => (
+          <div
+            key={index}
+            className={`absolute top-4 left-4  bg-white border border-slate-200 rounded-[200px] shadow-md p-6 transition-all duration-500 ease-in-out ${
+              state.currentSlide === index
+                ? 'opacity-100 translate-7-0'
+                : state.currentSlide === (index + 1) % testimonials.length
+                ? 'opacity-0 translate-x-full'
+                : 'opacity-0 -translate-x-full'
+            }`}
+          >
+            <div className="flex  flex-col items-center justify-center px-6 py-10 w-auto">
+              <LazyLoadImage
+                className="h-[117px] md:h-auto rounded-full w-[117px]"
+                src={testimonial.imageSrc}
+                alt={`${testimonial.testimonialAuthor}'s avatar`}
+                effect="blur"
+              />
+            </div>
+            <div
+              id="text-part"
+              className="flex flex-wrap justify-center gap-4 items-center bg-white p-2 shadow-bs3 w-full"
+            >
+              <div className="flex flex-row items-center justify-center w-auto">
+                <div className="flex items-center justify-center p-6">
+                  <div className="flex flex-col items-center justify-center px-6 w-auto">
+                    <div className="flex items-center justify-center overflow-hidden md:w-[550px] md:h-[100px] w-full h-auto">
+                      <p className="text-center text-lg md:text-2xl font-josefin_sans font-semibold line-clamp-3">
+                        {testimonial.textBelowImage}
+                      </p>
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-center gap-6 items-center w-full">
+              <div className="flex flex-col items-center justify-center px-6 pb-4 w-auto">
+                <div className="flex flex-wrap justify-center gap-6 items-center bg-white p-3 shadow-bs3 w-full pb-4">
+                  <div className="flex flex-wrap justify-center gap-4 items-center bg-white flex-row pb-8 shadow-bs3 w-full">
+                    {Array.from({ length: 5 }, (_, starIndex) => (
+                      <div
+                        key={starIndex}
+                        className={`flex justify-center items-center w-10 h-10 ${
+                          starIndex < testimonial.numStars ? 'text-orange-400' : 'text-gray-300'
+                        }`}
+                      >
+                        <svg fill="currentColor" viewBox="0 0 40 40">
+                          <g>
+                            <path d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z" />
+                          </g>
+                        </svg>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
+                  <p className="text-xl md:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">
+                    {testimonial.testimonialAuthor}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+        ))}
+      </div>
+      <button
+        onClick={handlePrevSlide}
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
+      >
+        &lt;
+      </button>
+      <button
+        onClick={handleNextSlide}
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
+      >
+        &gt;
+      </button>
+    </div>
+  </div>
+</section>
 
           {/* How it Works Section */}
           <section aria-labelledby="how-it-works-title" className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]">
@@ -840,7 +862,7 @@ function RegionHome() {
                 et elit. Dolor turpis molestie dui magnis facilisis at fringilla
                 quam.
               </p>
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-3 gap-8 p-6">
                 {[
                   {
                     icon: "/images/img_materialsymbol.svg",
@@ -874,53 +896,60 @@ function RegionHome() {
           </section>
 
           {/* Hungry for More Section */}
-          <section aria-labelledby="hungry-for-more-title" className="py-16">
-            <div className="container mx-auto px-4">
-              <h2 id="hungry-for-more-title" className="text-center text-5xl font-bold font-Agbalumo mb-12">
-                Hungry for more than food?
-              </h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                {[
-                  {
-                    image: "https://consumer-static-assets.wolt.com/frontpage-assets/courier-card-image.jpg",
-                    title: "Get paid as a courier partner.",
-                    cta: "Apply now",
-                    link: "https://careers.wolt.com"
-                  },
-                  {
-                    image: "https://consumer-static-assets.wolt.com/frontpage-assets/restaurant-card-image.jpg",
-                    title: "Serve more people as a restaurant partner",
-                    cta: "Apply now",
-                    link: "https://careers.wolt.com"
-                  },
-                  {
-                    image: "https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg",
-                    title: "Enter a new chapter and find a job at Etomart",
-                    cta: "Apply now",
-                    link: "https://careers.wolt.com"
-                  }
-                ].map((item, index) => (
-                  <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div className="h-64 bg-cover bg-center" style={{ backgroundImage: `url(${item.image})` }}></div>
-                    <div className="p-6 text-center">
-                      <h3 className="text-xl font-bold mb-4 h-16">{item.title}</h3>
-                      <a
-                        href={item.link}
-                        className="inline-block bg-orange-500 text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition-colors"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Apply now for ${item.title}`}
-                      >
-                        {item.cta}
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <Footer />
+      <section aria-labelledby="hungry-for-more-title" className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 id="hungry-for-more-title" className="text-center text-5xl font-bold font-Agbalumo mb-12">
+            Hungry for more than food?
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8 p-6">
+  {[
+    {
+      image: "https://consumer-static-assets.wolt.com/frontpage-assets/courier-card-image.jpg",
+      title: "Get paid as a courier partner.",
+      cta: "Apply now",
+      link: "https://careers.wolt.com"
+    },
+    {
+      image: "https://consumer-static-assets.wolt.com/frontpage-assets/restaurant-card-image.jpg",
+      title: "Serve more people as a restaurant partner",
+      cta: "Apply now",
+      link: "https://careers.wolt.com"
+    },
+    {
+      image: "https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg",
+      title: "Enter a new chapter and find a job at Etomart",
+      cta: "Apply now",
+      link: "https://careers.wolt.com"
+    }
+  ].map((item, index) => (
+    <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="h-80 bg-cover bg-center">
+        <LazyLoadImage
+          src={item.image}
+          alt={item.title}
+          effect="blur"
+          className="w-full h-full object-cover"
+          wrapperClassName="w-full h-full"
+        />
+      </div>
+      <div className="p-6 text-center">
+        <h3 className="text-xl font-bold mb-4 h-16">{item.title}</h3>
+        <a
+          href={item.link}
+          className="inline-block bg-orange-500 text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Apply now for ${item.title}`}
+        >
+          {item.cta}
+        </a>
+      </div>
+    </div>
+  ))}
+</div>
+        </div>
+      </section>
+      <Footer />
         </div>
       </div>
     </div>

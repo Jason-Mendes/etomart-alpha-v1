@@ -166,7 +166,7 @@ const LoginModal = ({
                             alt="Google Logo"
                             className="w-5 h-5"
                           />
-                          <span className="sr-only md:not-sr-only md:inline-block">Sign in with Google</span>
+                          <span className="sr-only md:not-sr-only md:inline-block md:px-2">Sign in with Google</span>
                           
                         </button>
                       </div>
@@ -181,7 +181,7 @@ const LoginModal = ({
                             alt="Apple Logo"
                             className="w-5 h-5"
                           />
-                          <span className="sr-only md:not-sr-only md:inline-block">Sign in with Apple</span>
+                          <span className="sr-only md:not-sr-only md:inline-block md:px-2">Sign in with Apple</span>
                          
                         </button>
                       </div>
