@@ -621,78 +621,67 @@ const LandingPage = () => {
           )}
 
  {/* Testimonials Section */}
-<section aria-labelledby="testimonials-title" className="py-16">
+<section aria-labelledby="testimonials-title" className="py-8 md:py-16">
   <div className="container mx-auto px-4 flex flex-col items-center">
-    <h2 id="testimonials-title" className="text-center text-4xl font-bold font-shrikhand text-orange-500 mb-4">
+    <h2 id="testimonials-title" className="text-center text-3xl md:text-4xl font-bold font-shrikhand text-orange-500 mb-2 md:mb-4">
       Testimonials
     </h2>
-    <h3 className="text-center text-5xl font-bold font-Agbalumo mb-8">
+    <h3 className="text-center text-4xl md:text-5xl font-bold font-Agbalumo mb-4 md:mb-8">
       What Others Are Saying
     </h3>
-    <p className="text-center text-xl max-w-2xl mx-auto mb-12 font-josefin_sans font-semibold">
+    <p className="text-center text-lg md:text-xl max-w-2xl mx-auto mb-8 md:mb-12 font-josefin_sans font-semibold">
       Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
       non et elit. Dolor turpis molestie dui magnis facilisis at
       fringilla quam.
     </p>
-    <div className="p-6 relative w-full md:max-w-[745px] overflow-hidden">
-      <div className="flex  w-full h-[580px]"> {/* Adjust height as needed */}
+    <div className="p-4 md:p-6 relative w-full md:max-w-[745px] overflow-hidden">
+      <div className="flex w-full h-[400px] md:h-[580px]"> {/* Adjusted height for mobile */}
         {testimonials.map((testimonial, index) => (
           <div
             key={index}
-            className={`absolute top-4 left-4  bg-white border border-slate-200 rounded-[200px] shadow-md p-6 transition-all duration-500 ease-in-out ${
+            className={`absolute top-8 left-4 right-4 bg-white border border-slate-200 rounded-3xl md:rounded-[200px] shadow-md p-4 md:p-6 transition-all duration-500 ease-in-out ${
               state.currentSlide === index
-                ? 'opacity-100 translate-7-0'
+                ? 'opacity-100 translate-x-0'
                 : state.currentSlide === (index + 1) % testimonials.length
                 ? 'opacity-0 translate-x-full'
                 : 'opacity-0 -translate-x-full'
             }`}
           >
-            <div className="flex  flex-col items-center justify-center px-6 py-10 w-auto">
+            <div className="flex flex-col items-center justify-center px-2 md:px-6 py-4 md:py-10 w-auto">
               <LazyLoadImage
-                className="h-[117px] md:h-auto rounded-full w-[117px]"
+                className="h-20 w-20 md:h-[117px] md:w-[117px] rounded-full"
                 src={testimonial.imageSrc}
                 alt={`${testimonial.testimonialAuthor}'s avatar`}
                 effect="blur"
               />
             </div>
-            <div
-              id="text-part"
-              className="flex flex-wrap justify-center gap-4 items-center bg-white p-2 shadow-bs3 w-full"
-            >
-              <div className="flex flex-row items-center justify-center w-auto">
-                <div className="flex items-center justify-center p-6">
-                  <div className="flex flex-col items-center justify-center px-6 w-auto">
-                    <div className="flex items-center justify-center overflow-hidden md:w-[550px] md:h-[100px] w-full h-auto">
-                      <p className="text-center text-lg md:text-2xl font-josefin_sans font-semibold line-clamp-3">
-                        {testimonial.textBelowImage}
-                      </p>
-                    </div>
-                  </div>
+            <div className="flex flex-wrap justify-center gap-2 md:gap-4 items-center p-2 w-full">
+              <div className="flex flex-col items-center justify-center w-full md:w-auto">
+                <div className="flex items-center justify-center overflow-hidden w-full md:w-[550px] h-20 md:h-[100px]">
+                  <p className="text-center text-sm md:text-lg lg:text-2xl font-josefin_sans font-semibold line-clamp-3">
+                    {testimonial.textBelowImage}
+                  </p>
                 </div>
               </div>
             </div>
-            <div className="flex flex-wrap justify-center gap-6 items-center w-full">
-              <div className="flex flex-col items-center justify-center px-6 pb-4 w-auto">
-                <div className="flex flex-wrap justify-center gap-6 items-center bg-white p-3 shadow-bs3 w-full pb-4">
-                  <div className="flex flex-wrap justify-center gap-4 items-center bg-white flex-row pb-8 shadow-bs3 w-full">
-                    {Array.from({ length: 5 }, (_, starIndex) => (
-                      <div
-                        key={starIndex}
-                        className={`flex justify-center items-center w-10 h-10 ${
-                          starIndex < testimonial.numStars ? 'text-orange-400' : 'text-gray-300'
-                        }`}
-                      >
-                        <svg fill="currentColor" viewBox="0 0 40 40">
-                          <g>
-                            <path d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z" />
-                          </g>
-                        </svg>
-                      </div>
-                    ))}
-                  </div>
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6 items-center w-full mt-4">
+              <div className="flex flex-col items-center justify-center px-2 md:px-6 pb-2 md:pb-4 w-auto">
+                <div className="flex flex-wrap justify-center gap-2 md:gap-4 items-center p-2 md:p-2 md:mb-4 border border-slate-200 rounded-3xl md:rounded-[200px]  shadow-md md:shadow-bs3 w-full">
+                  {Array.from({ length: 5 }, (_, starIndex) => (
+                    <div
+                      key={starIndex}
+                      className={`flex justify-center items-center w-6 h-6 md:w-10 md:h-10 ${
+                        starIndex < testimonial.numStars ? 'text-orange-400' : 'text-gray-300'
+                      }`}
+                    >
+                      <svg fill="currentColor" viewBox="0 0 40 40" className="w-full h-full">
+                        <path d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z" />
+                      </svg>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex flex-col items-center justify-center px-2.5 py-[3px] w-auto">
-                  <p className="text-xl md:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">
+                <div className="flex flex-col items-center justify-center px-2 py-2 w-auto mt-2">
+                  <p className="text-lg md:text-xl lg:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">
                     {testimonial.testimonialAuthor}
                   </p>
                 </div>
@@ -703,13 +692,15 @@ const LandingPage = () => {
       </div>
       <button
         onClick={handlePrevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
+        className="absolute left-0 md:left-8 top-1/2 transform -translate-y-1/2 p-2 md:p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-orange-500 z-10 rounded-full"
+        aria-label="Previous testimonial"
       >
         &lt;
       </button>
       <button
         onClick={handleNextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white border border-slate-200 shadow-lg w-8 h-8 flex items-center justify-center focus:outline-none z-10 rounded-full"
+        className="absolute right-0 md:right-8 top-1/2 transform -translate-y-1/2 bg-white border border-slate-200 shadow-lg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-orange-500 z-10 rounded-full"
+        aria-label="Next testimonial"
       >
         &gt;
       </button>
