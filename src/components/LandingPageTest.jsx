@@ -5,7 +5,6 @@ import {
   Route,
   Routes,
   Link,
-  Navigate,
   useNavigate,
 } from "react-router-dom";
 
@@ -20,11 +19,7 @@ const authService = {
     }
     return Promise.reject("Invalid credentials");
   },
-  signup: (email, password) => {
-    // Simulated signup logic
-    authService.currentUser = { email };
-    return Promise.resolve(authService.currentUser);
-  },
+
   logout: () => {
     authService.currentUser = null;
     return Promise.resolve();
@@ -209,11 +204,6 @@ const Auth = () => {
       </button>
     </div>
   );
-};
-
-const PrivateRoute = ({ children }) => {
-  const { user } = useAuth();
-  return user ? children : <Navigate to="/auth" />;
 };
 
 const LandingPageTest = () => {

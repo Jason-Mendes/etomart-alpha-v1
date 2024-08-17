@@ -55,7 +55,11 @@ export default [
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['error'],
+      '@typescript-eslint/no-unused-vars': ['warn', { 
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": false
+      }],
       'prettier/prettier': 'error',
       'import/order': [
         'error',

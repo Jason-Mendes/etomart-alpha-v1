@@ -6,7 +6,6 @@ import React, {
   useMemo,
 } from "react";
 
-import DOMPurify from "dompurify";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate, useLocation } from "react-router-dom";
 
