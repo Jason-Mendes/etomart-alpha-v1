@@ -1,5 +1,5 @@
 // src/components/componentsCalled/XClearButton.js
-import React from 'react';
+import React from "react";
 
 const XClearButton = ({ onClick, className }) => {
   return (

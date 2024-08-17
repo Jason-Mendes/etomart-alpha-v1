@@ -2,4 +2,9 @@ node_modules
 build
 dist
 coverage
-*.config.js
+.git
+*.d.ts
+webpack.config.js
+babel.config.js
+code_context.txt
+code_context_minified.json

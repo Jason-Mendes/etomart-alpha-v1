@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
-import XClearButton from './componentsCalled/XClearButton';
+
+import XClearButton from "./componentsCalled/XClearButton";
 
 const LoginModal = ({
   showModal,
@@ -11,40 +12,60 @@ const LoginModal = ({
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    rememberMe: false
+    rememberMe: false,
   });
 
   const handleInputChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   }, []);
 
   const clearInput = useCallback((field) => {
-    setFormData(prev => ({ ...prev, [field]: "" }));
+    setFormData((prev) => ({ ...prev, [field]: "" }));
   }, []);
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    openAuthenticatedLoginModal();
-    // Add your login logic here
-  }, [openAuthenticatedLoginModal]);
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      openAuthenticatedLoginModal();
+      // Add your login logic here
+    },
+    [openAuthenticatedLoginModal]
+  );
 
-  const handleModalTransition = useCallback((action) => {
-    closeModal();
-    setTimeout(action, 300);
-  }, [closeModal]);
+  const handleModalTransition = useCallback(
+    (action) => {
+      closeModal();
+      setTimeout(action, 300);
+    },
+    [closeModal]
+  );
 
   if (!showModal) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onClick={closeModal}></div>
+        <div
+          className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          aria-hidden="true"
+          onClick={closeModal}
+        ></div>
 
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <span
+          className="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+        >
+          &#8203;
+        </span>
 
         <div className="inline-block align-bottom bg-[#ee9613] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="absolute top-0 right-0 pt-4 pr-4">
@@ -54,8 +75,20 @@ const LoginModal = ({
               onClick={closeModal}
             >
               <span className="sr-only">Close</span>
-              <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -63,13 +96,19 @@ const LoginModal = ({
           <div className="bg-[#ee9613] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                <h3 className="text-3xl leading-6 font-Agbalumo text-black mb-4" id="modal-title">
+                <h3
+                  className="text-3xl leading-6 font-Agbalumo text-black mb-4"
+                  id="modal-title"
+                >
                   Login / Sign Up
                 </h3>
                 <div className="mt-2">
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-black">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-black"
+                      >
                         Email
                       </label>
                       <div className="mt-1 relative rounded-md shadow-sm">
@@ -84,13 +123,19 @@ const LoginModal = ({
                           required
                         />
                         {formData.email && (
-                          <XClearButton onClick={() => clearInput('email')} className="absolute inset-y-0 right-0 pr-3 flex items-center" />
+                          <XClearButton
+                            onClick={() => clearInput("email")}
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                          />
                         )}
                       </div>
                     </div>
 
                     <div>
-                      <label htmlFor="password" className="block text-sm font-medium text-black">
+                      <label
+                        htmlFor="password"
+                        className="block text-sm font-medium text-black"
+                      >
                         Password
                       </label>
                       <div className="mt-1 relative rounded-md shadow-sm">
@@ -104,7 +149,10 @@ const LoginModal = ({
                           required
                         />
                         {formData.password && (
-                          <XClearButton onClick={() => clearInput('password')} className="absolute inset-y-0 right-0 pr-3 flex items-center" />
+                          <XClearButton
+                            onClick={() => clearInput("password")}
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                          />
                         )}
                       </div>
                     </div>
@@ -119,7 +167,10 @@ const LoginModal = ({
                           checked={formData.rememberMe}
                           onChange={handleInputChange}
                         />
-                        <label htmlFor="remember-me" className="ml-2 block text-sm text-black">
+                        <label
+                          htmlFor="remember-me"
+                          className="ml-2 block text-sm text-black"
+                        >
                           Remember me
                         </label>
                       </div>
@@ -127,7 +178,9 @@ const LoginModal = ({
                       <div className="text-sm">
                         <button
                           type="button"
-                          onClick={() => handleModalTransition(openForgotPasswordModal)}
+                          onClick={() =>
+                            handleModalTransition(openForgotPasswordModal)
+                          }
                           className="font-medium text-white hover:text-black"
                         >
                           Forgot your password?
@@ -151,23 +204,26 @@ const LoginModal = ({
                         <div className="w-full border-t border-gray-300"></div>
                       </div>
                       <div className="relative flex justify-center text-sm">
-                        <span className="px-2 bg-[#ee9613] text-black">Or continue with</span>
+                        <span className="px-2 bg-[#ee9613] text-black">
+                          Or continue with
+                        </span>
                       </div>
                     </div>
 
                     <div className="mt-6 grid grid-cols-2 gap-3">
-                    <div>
+                      <div>
                         <button
                           type="button"
                           className="w-full inline-flex items-center justify-center md:justify-start py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors duration-300"
                         >
-                         <img
+                          <img
                             src="/images/google.svg"
                             alt="Google Logo"
                             className="w-5 h-5"
                           />
-                          <span className="sr-only md:not-sr-only md:inline-block md:px-2">Sign in with Google</span>
-                          
+                          <span className="sr-only md:not-sr-only md:inline-block md:px-2">
+                            Sign in with Google
+                          </span>
                         </button>
                       </div>
 
@@ -181,8 +237,9 @@ const LoginModal = ({
                             alt="Apple Logo"
                             className="w-5 h-5"
                           />
-                          <span className="sr-only md:not-sr-only md:inline-block md:px-2">Sign in with Apple</span>
-                         
+                          <span className="sr-only md:not-sr-only md:inline-block md:px-2">
+                            Sign in with Apple
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -193,7 +250,7 @@ const LoginModal = ({
           </div>
           <div className="bg-[#ee9613] px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <p className="text-center text-sm text-black mt-2">
-              Don't have an account yet?{' '}
+              Don't have an account yet?{" "}
               <button
                 onClick={() => handleModalTransition(openSignupModal)}
                 className="font-medium text-white hover:text-black transition-colors duration-300"
@@ -202,7 +259,6 @@ const LoginModal = ({
               </button>
             </p>
           </div>
-         
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import React, { Children, createContext, useContext, useState } from "react";
 const CartContext = createContext();
 
 export const useCart = () => useContext(CartContext);
-// eslint-disable-next-line react/prop-types
+
 export const CartProvider = ({ children }) => {
   // State for the cart items and a function to add an item.
   const [cart, setCart] = useState([]);

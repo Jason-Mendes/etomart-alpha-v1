@@ -1,6 +1,11 @@
 import React from "react";
 
-const AccessibilityModal = ({ isOpen, onClose, isHighContrastEnabled, onContrastToggle }) => {
+const AccessibilityModal = ({
+  isOpen,
+  onClose,
+  isHighContrastEnabled,
+  onContrastToggle,
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -23,7 +28,8 @@ const AccessibilityModal = ({ isOpen, onClose, isHighContrastEnabled, onContrast
           </button>
         </div>
         <p className="mt-2 text-sm text-gray-600">
-          Improves readability with higher colour contrast and text styling adjustments.
+          Improves readability with higher colour contrast and text styling
+          adjustments.
         </p>
         <button
           onClick={onClose}

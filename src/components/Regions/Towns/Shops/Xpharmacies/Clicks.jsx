@@ -805,92 +805,94 @@ function Clicks() {
                     </div>
                   </div>
                   <div className="flex flex-col overflow-y-auto h-[600px] md:h-[850px]">
-                  <div className="px-4 pb-4">
-                    <div className="flex flex-wrap justify-start">
-                      {storescards1.map((category, shopsindex) => (
-                        <div
-                          key={shopsindex}
-                          className="flex-shrink-0 w-full sm:w-1/2 md:w-1/2 lg:w-1/3 p-4"
-                          style={{ height: "425px" }}
-                        >
-                          <a
-                            href={category.href}
-                            className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
+                    <div className="px-4 pb-4">
+                      <div className="flex flex-wrap justify-start">
+                        {storescards1.map((category, shopsindex) => (
+                          <div
+                            key={shopsindex}
+                            className="flex-shrink-0 w-full sm:w-1/2 md:w-1/2 lg:w-1/3 p-4"
+                            style={{ height: "425px" }}
                           >
-                            <div className="flex flex-col h-full">
-                              <div className="relative w-full h-52">
-                                <img
-                                  src={category.imgSrc}
-                                  alt={category.name}
-                                  loading="lazy"
-                                  decoding="async"
-                                  className="object-cover w-full h-full rounded-t-lg"
-                                  fetchPriority="high"
-                                />
-                                {category.discount && (
-                                  <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#ee9613] text-white text-xs px-2 py-1 rounded">
-                                    {`-${category.discount}%`}
-                                  </div>
-                                )}
-                                <div className="absolute bottom-2 right-0 mt-2 mr-2 bg-[#ee9613] text-white text-lg px-5 py-0 rounded">
-                                  +
-                                </div>
-                              </div>
-                              <div className="flex flex-col w-full p-2">
-                                <div className="flex flex-col w-full p-0 mb-4">
-                                  <div className="flex flex-col w-full">
-                                    <h3 className="font-bold">
-                                      {category.name}
-                                    </h3>
-                                    <div className="flex items-center text-sm mt-4 mb-2">
-                                      <div className="text-[#ee9613] text-sm font-bold">
-                                        <span>{category.priceRange}</span>
-                                      </div>
-                                      <span className="mx-1">•</span>
-                                      <span>{category.cuisine}</span>
+                            <a
+                              href={category.href}
+                              className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
+                            >
+                              <div className="flex flex-col h-full">
+                                <div className="relative w-full h-52">
+                                  <img
+                                    src={category.imgSrc}
+                                    alt={category.name}
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="object-cover w-full h-full rounded-t-lg"
+                                    fetchPriority="high"
+                                  />
+                                  {category.discount && (
+                                    <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#ee9613] text-white text-xs px-2 py-1 rounded">
+                                      {`-${category.discount}%`}
                                     </div>
-                                    <div className="flex flex-row h-full">
-                                      <div className="text-xs text-gray-500 mb-2">{`Pickup: ${category.pickupTime}`}</div>
-                                      <div
-                                        className="text-xs text-gray-500 flex-grow -mb-4"
-                                        style={{ height: "50px" }}
-                                      >
-                                        {truncateText(
-                                          category.description,
-                                          3,
-                                          30
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                  </div>
-                                <div className="m-auto w-full">
-                                  <div className="text-black text-xs py-1 rounded">
-                                    <span className="text-black">Etomart </span>
-                                    {category.deliveryTime ? (
-                                      <span className="text-[#ee9613] font-bold">
-                                        {" "}
-                                        Delivery Available
-                                      </span>
-                                    ) : (
-                                      <span className="text-[#ee1313] font-bold">
-                                        {" "}
-                                        Delivery Not Available
-                                      </span>
-                                    )}
+                                  )}
+                                  <div className="absolute bottom-2 right-0 mt-2 mr-2 bg-[#ee9613] text-white text-lg px-5 py-0 rounded">
+                                    +
                                   </div>
                                 </div>
+                                <div className="flex flex-col w-full p-2">
+                                  <div className="flex flex-col w-full p-0 mb-4">
+                                    <div className="flex flex-col w-full">
+                                      <h3 className="font-bold">
+                                        {category.name}
+                                      </h3>
+                                      <div className="flex items-center text-sm mt-4 mb-2">
+                                        <div className="text-[#ee9613] text-sm font-bold">
+                                          <span>{category.priceRange}</span>
+                                        </div>
+                                        <span className="mx-1">•</span>
+                                        <span>{category.cuisine}</span>
+                                      </div>
+                                      <div className="flex flex-row h-full">
+                                        <div className="text-xs text-gray-500 mb-2">{`Pickup: ${category.pickupTime}`}</div>
+                                        <div
+                                          className="text-xs text-gray-500 flex-grow -mb-4"
+                                          style={{ height: "50px" }}
+                                        >
+                                          {truncateText(
+                                            category.description,
+                                            3,
+                                            30
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="m-auto w-full">
+                                    <div className="text-black text-xs py-1 rounded">
+                                      <span className="text-black">
+                                        Etomart{" "}
+                                      </span>
+                                      {category.deliveryTime ? (
+                                        <span className="text-[#ee9613] font-bold">
+                                          {" "}
+                                          Delivery Available
+                                        </span>
+                                      ) : (
+                                        <span className="text-[#ee1313] font-bold">
+                                          {" "}
+                                          Delivery Not Available
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </a>
-                        </div>
-                      ))}
+                            </a>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              </div>
-              </div>
+            </div>
             <div className="flex flex-row p-4 space-x-56">
               <div className="flex flex-col space-y-4">
                 <div>

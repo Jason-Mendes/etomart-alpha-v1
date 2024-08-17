@@ -2,12 +2,11 @@ import React from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import LandingPage from "./components/LandingPage";
-import LandingPageTest from "./components/LandingPage Test";
-
 // import CartIcon from './components/CartIcon';
 
 // import KhomasLandingPage from './components/Regions/khomasLandingPage';
+import LandingPage from "./components/LandingPage";
+import LandingPageTest from "./components/LandingPageTest";
 import RegionHome from "./components/Regions/RegionHome";
 import ErongoTowns from "./components/Regions/Towns/ErongoTowns";
 import KhomasTowns from "./components/Regions/Towns/KhomasTowns";
@@ -19,7 +18,6 @@ import Test from "./components/Regions/Towns/Shops/Xpharmacies/Test";
 import JoesBeerhouse from "./components/Regions/Towns/Shops/Xrestaurants/JoesBeerhouse";
 import Checkers from "./components/Regions/Towns/Shops/Xstores/Checkers";
 import { CartProvider } from "./context/CartContext";
-
 
 function App() {
   return (

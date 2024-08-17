@@ -1,16 +1,24 @@
-import React, { useState, createContext, useContext, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, createContext, useContext, useEffect } from "react";
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 
 // Simulated auth service
 const authService = {
   currentUser: null,
   login: (email, password) => {
     // Simulated login logic
-    if (email === 'makosaisaac@gmail.com' && password === 'Newpassword@12') {
+    if (email === "makosaisaac@gmail.com" && password === "Newpassword@12") {
       authService.currentUser = { email };
       return Promise.resolve(authService.currentUser);
     }
-    return Promise.reject('Invalid credentials');
+    return Promise.reject("Invalid credentials");
   },
   signup: (email, password) => {
     // Simulated signup logic
@@ -65,21 +73,39 @@ const NavBar = () => {
 
   const handleLogout = async () => {
     await logout();
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <nav className="bg-blue-500 p-4">
       <ul className="flex justify-between">
-        <li><Link to="/" className="text-white">Home</Link></li>
-        <li><Link to="/products" className="text-white">Products</Link></li>
+        <li>
+          <Link to="/" className="text-white">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link to="/products" className="text-white">
+            Products
+          </Link>
+        </li>
         {user ? (
           <>
-            <li><span className="text-white">{user.email}</span></li>
-            <li><button onClick={handleLogout} className="text-white">Logout</button></li>
+            <li>
+              <span className="text-white">{user.email}</span>
+            </li>
+            <li>
+              <button onClick={handleLogout} className="text-white">
+                Logout
+              </button>
+            </li>
           </>
         ) : (
-          <li><Link to="/auth" className="text-white">Login/Signup</Link></li>
+          <li>
+            <Link to="/auth" className="text-white">
+              Login/Signup
+            </Link>
+          </li>
         )}
       </ul>
     </nav>
@@ -88,7 +114,9 @@ const NavBar = () => {
 
 const Home = () => (
   <div className="p-4">
-    <h1 className="text-2xl font-bold mb-4">Welcome to Our Grocery Delivery App</h1>
+    <h1 className="text-2xl font-bold mb-4">
+      Welcome to Our Grocery Delivery App
+    </h1>
     <p>Browse our products and get them delivered to your doorstep!</p>
   </div>
 );
@@ -96,16 +124,16 @@ const Home = () => (
 const Products = () => {
   const { user } = useAuth();
   const products = [
-    { id: 1, name: 'Apples', price: 1.99 },
-    { id: 2, name: 'Bread', price: 2.49 },
-    { id: 3, name: 'Milk', price: 3.99 },
+    { id: 1, name: "Apples", price: 1.99 },
+    { id: 2, name: "Bread", price: 2.49 },
+    { id: 3, name: "Milk", price: 3.99 },
   ];
 
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Our Products</h2>
       <ul>
-        {products.map(product => (
+        {products.map((product) => (
           <li key={product.id} className="mb-2">
             {product.name} - ${product.price}
             {user && (
@@ -117,7 +145,9 @@ const Products = () => {
         ))}
       </ul>
       {!user && (
-        <p className="mt-4 text-red-500">Please log in to add items to your cart.</p>
+        <p className="mt-4 text-red-500">
+          Please log in to add items to your cart.
+        </p>
       )}
     </div>
   );
@@ -125,8 +155,8 @@ const Products = () => {
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login, signup } = useAuth();
   const navigate = useNavigate();
 
@@ -138,7 +168,7 @@ const Auth = () => {
       } else {
         await signup(email, password);
       }
-      navigate('/products');
+      navigate("/products");
     } catch (error) {
       alert(error);
     }
@@ -146,7 +176,7 @@ const Auth = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">{isLogin ? 'Login' : 'Signup'}</h2>
+      <h2 className="text-xl font-bold mb-4">{isLogin ? "Login" : "Signup"}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"
@@ -164,15 +194,18 @@ const Auth = () => {
           className="w-full p-2 border rounded"
           required
         />
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
-          {isLogin ? 'Login' : 'Signup'}
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded"
+        >
+          {isLogin ? "Login" : "Signup"}
         </button>
       </form>
       <button
         onClick={() => setIsLogin(!isLogin)}
         className="mt-4 text-blue-500"
       >
-        {isLogin ? 'Need an account? Signup' : 'Have an account? Login'}
+        {isLogin ? "Need an account? Signup" : "Have an account? Login"}
       </button>
     </div>
   );

@@ -1,7 +1,13 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import Footer from "../../Footer";
-import OPNavBar from "../../OPNavBar";//or import OPNavBar from '../../components/OPNavBar';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 
+import Footer from "../../Footer";
+import OPNavBar from "../../OPNavBar"; //or import OPNavBar from '../../components/OPNavBar';
 
 function ErongoTowns() {
   // Icon categories for the carousel
@@ -1015,10 +1021,7 @@ function ErongoTowns() {
   });
 
   const containerRef = useRef(null);
-  const extendedCards = useMemo(
-    () => [...cards, ...cards, ...cards],
-    [cards]
-  );
+  const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
   useEffect(() => {
     let interval;
@@ -1051,8 +1054,9 @@ function ErongoTowns() {
         currentIndex: cards.length,
       }));
       containerRef.current.style.transition = "none";
-      containerRef.current.style.transform = `translateX(-${cards.length * 576
-        }px)`;
+      containerRef.current.style.transform = `translateX(-${
+        cards.length * 576
+      }px)`;
       setTimeout(() => {
         containerRef.current.style.transition = "transform 0.5s ease-in-out";
       }, 50);
@@ -1063,8 +1067,9 @@ function ErongoTowns() {
         currentIndex: extendedCards.length - 2 * cards.length,
       }));
       containerRef.current.style.transition = "none";
-      containerRef.current.style.transform = `translateX(-${(extendedCards.length - 2 * cards.length) * 576
-        }px)`;
+      containerRef.current.style.transform = `translateX(-${
+        (extendedCards.length - 2 * cards.length) * 576
+      }px)`;
       setTimeout(() => {
         containerRef.current.style.transition = "transform 0.5s ease-in-out";
       }, 50);
@@ -1145,8 +1150,9 @@ function ErongoTowns() {
         currentIndexau: aboutus.length,
       }));
       containerRefau.current.style.transition = "none";
-      containerRefau.current.style.transform = `translateX(-${aboutus.length * 576
-        }px)`;
+      containerRefau.current.style.transform = `translateX(-${
+        aboutus.length * 576
+      }px)`;
       setTimeout(() => {
         containerRefau.current.style.transition = "transform 0.5s ease-in-out";
       }, 50);
@@ -1157,8 +1163,9 @@ function ErongoTowns() {
         currentIndexau: extendedAboutus.length - 2 * aboutus.length,
       }));
       containerRefau.current.style.transition = "none";
-      containerRefau.current.style.transform = `translateX(-${(extendedAboutus.length - 2 * aboutus.length) * 576
-        }px)`;
+      containerRefau.current.style.transform = `translateX(-${
+        (extendedAboutus.length - 2 * aboutus.length) * 576
+      }px)`;
       setTimeout(() => {
         containerRefau.current.style.transition = "transform 0.5s ease-in-out";
       }, 50);
@@ -1189,7 +1196,6 @@ function ErongoTowns() {
             className="relative z-10 flex justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl md:h-auto md:p-10 h-auto p-10"
             style={{ width: "65%", maxWidth: "100vw", margin: "0 auto" }}
           >
-
             <div className="relative z-10 flex items-center justify-center w-full mb-0">
               <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
                 <div role="tablist" className=" flex space-x-2 gap-2">
@@ -1398,8 +1404,9 @@ function ErongoTowns() {
               {cards.map((_, index) => (
                 <div
                   key={index}
-                  className={`h-2 w-2 rounded-full cursor-pointer ${index === state.currentIndex ? "bg-white" : "bg-gray-400"
-                    }`}
+                  className={`h-2 w-2 rounded-full cursor-pointer ${
+                    index === state.currentIndex ? "bg-white" : "bg-gray-400"
+                  }`}
                   onClick={() => handleDotClick(index)}
                 ></div>
               ))}
@@ -1471,7 +1478,9 @@ function ErongoTowns() {
             <p className="flex items-start justify-start text-left md:text-4xl text-5xl text-black w-auto font-bold font-Agbalumo">
               Restaurants, Supermarkets and Pharmacies Near Me
             </p>
-          </div> </div>  </div>
+          </div>{" "}
+        </div>{" "}
+      </div>
 
       {/* Storescards1scroll Carousel Buttons */}
       <div className="relative">
@@ -1781,7 +1790,8 @@ function ErongoTowns() {
                 </a>
               </div>
             ))}
-          </div>   </div>
+          </div>{" "}
+        </div>
         {/* supermarketsscroll Container */}
         {/* Right Button */}
         <button
@@ -2107,8 +2117,11 @@ function ErongoTowns() {
                   {aboutus.map((_, index) => (
                     <div
                       key={index}
-                      className={`h-2 w-2 rounded-full cursor-pointer ${index === state.currentIndexau ? "bg-white" : "bg-gray-400"
-                        }`}
+                      className={`h-2 w-2 rounded-full cursor-pointer ${
+                        index === state.currentIndexau
+                          ? "bg-white"
+                          : "bg-gray-400"
+                      }`}
                       onClick={() => handleDotClickau(index)}
                     ></div>
                   ))}

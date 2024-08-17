@@ -1,68 +1,112 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import Footer from "../../Footer";
-import OPNavBar from "../../OPNavBar";//or import OPNavBar from '../../components/OPNavBar';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 
+import Footer from "../../Footer";
+import OPNavBar from "../../OPNavBar"; //or import OPNavBar from '../../components/OPNavBar';
 
 function KhomasTowns() {
   // Icon categories for the carousel
   const iconscategories = useMemo(
     () => [
       {
-        name: "Grocery", imgSrc: "/images/websiteicons/grocery.png", href: "/en/discovery/category/grocery",
+        name: "Grocery",
+        imgSrc: "/images/websiteicons/grocery.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Bakery", imgSrc: "/images/websiteicons/bakery.png", href: "/en/discovery/category/grocery",
+        name: "Bakery",
+        imgSrc: "/images/websiteicons/bakery.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Healthy", imgSrc: "/images/websiteicons/healthy-food.png", href: "/en/discovery/category/grocery",
+        name: "Healthy",
+        imgSrc: "/images/websiteicons/healthy-food.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Desserts", imgSrc: "/images/websiteicons/desserts.png", href: "/en/discovery/category/grocery",
+        name: "Desserts",
+        imgSrc: "/images/websiteicons/desserts.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Fruits & Vegetables", imgSrc: "/images/websiteicons/fruit-and-vegetables.png", href: "/en/discovery/category/grocery",
+        name: "Fruits & Vegetables",
+        imgSrc: "/images/websiteicons/fruit-and-vegetables.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Dairy & Eggs", imgSrc: "/images/websiteicons/dairy-and-eggs.png", href: "/en/discovery/category/grocery",
+        name: "Dairy & Eggs",
+        imgSrc: "/images/websiteicons/dairy-and-eggs.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Meat", imgSrc: "/images/websiteicons/meat.png", href: "/en/discovery/category/grocery",
+        name: "Meat",
+        imgSrc: "/images/websiteicons/meat.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Seafood", imgSrc: "/images/websiteicons/seafood.png", href: "/en/discovery/category/grocery",
+        name: "Seafood",
+        imgSrc: "/images/websiteicons/seafood.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Beverages", imgSrc: "/images/websiteicons/beverages.png", href: "/en/discovery/category/grocery",
+        name: "Beverages",
+        imgSrc: "/images/websiteicons/beverages.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Snacks & Sweets", imgSrc: "/images/websiteicons/snacks-and-sweets.png", href: "/en/discovery/category/grocery",
+        name: "Snacks & Sweets",
+        imgSrc: "/images/websiteicons/snacks-and-sweets.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Household Essentials", imgSrc: "/images/websiteicons/household-essentials.png", href: "/en/discovery/category/grocery",
+        name: "Household Essentials",
+        imgSrc: "/images/websiteicons/household-essentials.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Pharmaceuticals", imgSrc: "/images/websiteicons/pharmaceuticals.png", href: "/en/discovery/category/grocery",
+        name: "Pharmaceuticals",
+        imgSrc: "/images/websiteicons/pharmaceuticals.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Baby", imgSrc: "/images/websiteicons/baby.png", href: "/en/discovery/category/grocery",
+        name: "Baby",
+        imgSrc: "/images/websiteicons/baby.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Pet Supplies", imgSrc: "/images/websiteicons/pet-food.png", href: "/en/discovery/category/grocery",
+        name: "Pet Supplies",
+        imgSrc: "/images/websiteicons/pet-food.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Frozen Foods", imgSrc: "/images/websiteicons/frozen-food.png", href: "/en/discovery/category/grocery",
+        name: "Frozen Foods",
+        imgSrc: "/images/websiteicons/frozen-food.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Fast Food", imgSrc: "/images/websiteicons/fast-food.png", href: "/en/discovery/category/grocery",
+        name: "Fast Food",
+        imgSrc: "/images/websiteicons/fast-food.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Restaurant", imgSrc: "/images/websiteicons/restaurant.png", href: "/en/discovery/category/grocery",
+        name: "Restaurant",
+        imgSrc: "/images/websiteicons/restaurant.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "International Foods", imgSrc: "/images/websiteicons/international-food.png", href: "/en/discovery/category/grocery",
+        name: "International Foods",
+        imgSrc: "/images/websiteicons/international-food.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Alcohol", imgSrc: "/images/websiteicons/alcohol.png", href: "/en/discovery/category/grocery",
+        name: "Alcohol",
+        imgSrc: "/images/websiteicons/alcohol.png",
+        href: "/en/discovery/category/grocery",
       },
       // ... other categories
     ],
@@ -72,61 +116,99 @@ function KhomasTowns() {
   const categoriescards = useMemo(
     () => [
       {
-        name: "Grocery", imgSrc: "/images/cardcategories/cardgrocery.png", href: "/en/discovery/category/grocery",
+        name: "Grocery",
+        imgSrc: "/images/cardcategories/cardgrocery.png",
+        href: "/en/discovery/category/grocery",
       },
       {
-        name: "Bakery", imgSrc: "/images/cardcategories/cardbakery.png", href: "/en/discovery/category/bakery",
+        name: "Bakery",
+        imgSrc: "/images/cardcategories/cardbakery.png",
+        href: "/en/discovery/category/bakery",
       },
       {
-        name: "Healthy", imgSrc: "/images/cardcategories/card-healthy-food.png", href: "/en/discovery/category/healthy",
+        name: "Healthy",
+        imgSrc: "/images/cardcategories/card-healthy-food.png",
+        href: "/en/discovery/category/healthy",
       },
       {
-        name: "Desserts", imgSrc: "/images/cardcategories/carddesserts.png", href: "/en/discovery/category/desserts",
+        name: "Desserts",
+        imgSrc: "/images/cardcategories/carddesserts.png",
+        href: "/en/discovery/category/desserts",
       },
       {
-        name: "Fruits & Vegetables", imgSrc: "/images/cardcategories/card-fruits-and-vegetables.png", href: "/en/discovery/category/fruits-vegetables",
+        name: "Fruits & Vegetables",
+        imgSrc: "/images/cardcategories/card-fruits-and-vegetables.png",
+        href: "/en/discovery/category/fruits-vegetables",
       },
       {
-        name: "Dairy & Eggs", imgSrc: "/images/cardcategories/card-dairy-and-eggs.png", href: "/en/discovery/category/dairy-eggs",
+        name: "Dairy & Eggs",
+        imgSrc: "/images/cardcategories/card-dairy-and-eggs.png",
+        href: "/en/discovery/category/dairy-eggs",
       },
       {
-        name: "Meat", imgSrc: "/images/cardcategories/cardmeat.png", href: "/en/discovery/category/meat",
+        name: "Meat",
+        imgSrc: "/images/cardcategories/cardmeat.png",
+        href: "/en/discovery/category/meat",
       },
       {
-        name: "Seafood", imgSrc: "/images/cardcategories/cardseafood.png", href: "/en/discovery/category/seafood",
+        name: "Seafood",
+        imgSrc: "/images/cardcategories/cardseafood.png",
+        href: "/en/discovery/category/seafood",
       },
       {
-        name: "Beverages", imgSrc: "/images/cardcategories/cardbeverages.png", href: "/en/discovery/category/beverages",
+        name: "Beverages",
+        imgSrc: "/images/cardcategories/cardbeverages.png",
+        href: "/en/discovery/category/beverages",
       },
       {
-        name: "Snacks & Sweets", imgSrc: "/images/cardcategories/card-snacks-and-sweets.png", href: "/en/discovery/category/snacks-sweets",
+        name: "Snacks & Sweets",
+        imgSrc: "/images/cardcategories/card-snacks-and-sweets.png",
+        href: "/en/discovery/category/snacks-sweets",
       },
       {
-        name: "Household Essentials", imgSrc: "/images/cardcategories/card-household-essentials.png", href: "/en/discovery/category/household-essentials",
+        name: "Household Essentials",
+        imgSrc: "/images/cardcategories/card-household-essentials.png",
+        href: "/en/discovery/category/household-essentials",
       },
       {
-        name: "Pharmaceuticals", imgSrc: "/images/cardcategories/cardpharmaceuticals.png", href: "/en/discovery/category/household-essentials",
+        name: "Pharmaceuticals",
+        imgSrc: "/images/cardcategories/cardpharmaceuticals.png",
+        href: "/en/discovery/category/household-essentials",
       },
       {
-        name: "Baby", imgSrc: "/images/cardcategories/cardbaby.png", href: "/en/discovery/category/baby",
+        name: "Baby",
+        imgSrc: "/images/cardcategories/cardbaby.png",
+        href: "/en/discovery/category/baby",
       },
       {
-        name: "Pet Supplies", imgSrc: "/images/cardcategories/card-pet-food.png", href: "/en/discovery/category/pet-supplies",
+        name: "Pet Supplies",
+        imgSrc: "/images/cardcategories/card-pet-food.png",
+        href: "/en/discovery/category/pet-supplies",
       },
       {
-        name: "Frozen Foods", imgSrc: "/images/cardcategories/card-frozen-food.png", href: "/en/discovery/category/frozen-foods",
+        name: "Frozen Foods",
+        imgSrc: "/images/cardcategories/card-frozen-food.png",
+        href: "/en/discovery/category/frozen-foods",
       },
       {
-        name: "Fast Food", imgSrc: "/images/cardcategories/card-fast-food.png", href: "/en/discovery/category/fast-food",
+        name: "Fast Food",
+        imgSrc: "/images/cardcategories/card-fast-food.png",
+        href: "/en/discovery/category/fast-food",
       },
       {
-        name: "Restaurant", imgSrc: "/images/cardcategories/cardrestaurant.png", href: "/en/discovery/category/restaurant",
+        name: "Restaurant",
+        imgSrc: "/images/cardcategories/cardrestaurant.png",
+        href: "/en/discovery/category/restaurant",
       },
       {
-        name: "International Foods", imgSrc: "/images/cardcategories/card-international-food.png", href: "/en/discovery/category/international-foods",
+        name: "International Foods",
+        imgSrc: "/images/cardcategories/card-international-food.png",
+        href: "/en/discovery/category/international-foods",
       },
       {
-        name: "Alcohol", imgSrc: "/images/cardcategories/cardalcohol.png", href: "/en/discovery/category/alcohol",
+        name: "Alcohol",
+        imgSrc: "/images/cardcategories/cardalcohol.png",
+        href: "/en/discovery/category/alcohol",
       },
       // ... other categories
     ],
@@ -136,67 +218,235 @@ function KhomasTowns() {
   const storescards1 = useMemo(
     () => [
       {
-        name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/LP/Khomas/Towns/Store/Checkers", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Checkers",
+        imgSrc: "/images/supermarkets/checkers.png",
+        href: "/LP/Khomas/Towns/Store/Checkers",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Shoprite",
+        imgSrc: "/images/supermarkets/shoprite.png",
+        href: "/en/discovery/category/shoprite",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Pick n Pay",
+        imgSrc: "/images/supermarkets/picknpay.png",
+        href: "/en/discovery/category/picknpay",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Spar",
+        imgSrc: "/images/supermarkets/spar.png",
+        href: "/en/discovery/category/spar",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Woermann Brock",
+        imgSrc: "/images/supermarkets/woermannbrock.png",
+        href: "/en/discovery/category/woermannbrock",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "OK Foods",
+        imgSrc: "/images/supermarkets/okfoods.png",
+        href: "/en/discovery/category/okfoods",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Choppies",
+        imgSrc: "/images/supermarkets/choppies.png",
+        href: "/en/discovery/category/choppies",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Food Lover's Market",
+        imgSrc: "/images/supermarkets/foodlovers.png",
+        href: "/en/discovery/category/foodloversmarket",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Metro",
+        imgSrc: "/images/supermarkets/metro.png",
+        href: "/en/discovery/category/metro",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse", storetype: "Restaurant", isEtomartStore: true, priceRange: "N$$$", cuisine: "German", pickupTime: "20–40 min", deliveryTime: false,
+        name: "Joe's Beerhouse",
+        imgSrc: "/images/restaurants/joesbeerhouse.png",
+        href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
+        storetype: "Restaurant",
+        isEtomartStore: true,
+        priceRange: "N$$$",
+        cuisine: "German",
+        pickupTime: "20–40 min",
+        deliveryTime: false,
       },
       {
-        name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch", storetype: "Restaurant", isEtomartStore: false, priceRange: "N$$$", cuisine: "International", pickupTime: "20–40 min", deliveryTime: false,
+        name: "The Stellenbosch Wine Bar",
+        imgSrc: "/images/restaurants/stellenbosch.png",
+        href: "/en/discovery/category/stellenbosch",
+        storetype: "Restaurant",
+        isEtomartStore: false,
+        priceRange: "N$$$",
+        cuisine: "International",
+        pickupTime: "20–40 min",
+        deliveryTime: false,
       },
       {
-        name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga", storetype: "Restaurant", isEtomartStore: false, priceRange: "N$$$", cuisine: "Portuguese", pickupTime: "20–40 min", deliveryTime: false,
+        name: "O Portuga",
+        imgSrc: "/images/restaurants/oportuga.png",
+        href: "/en/discovery/category/oportuga",
+        storetype: "Restaurant",
+        isEtomartStore: false,
+        priceRange: "N$$$",
+        cuisine: "Portuguese",
+        pickupTime: "20–40 min",
+        deliveryTime: false,
       },
       {
-        name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial", storetype: "Restaurant", isEtomartStore: true, priceRange: "N$$$", cuisine: "Bar & Grill", pickupTime: "20–40 min", deliveryTime: true,
+        name: "The Social",
+        imgSrc: "/images/restaurants/thesocial.png",
+        href: "/en/discovery/category/thesocial",
+        storetype: "Restaurant",
+        isEtomartStore: true,
+        priceRange: "N$$$",
+        cuisine: "Bar & Grill",
+        pickupTime: "20–40 min",
+        deliveryTime: true,
       },
       {
-        name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive", storetype: "Restaurant", isEtomartStore: false, priceRange: "N$$$", cuisine: "Mediterranean", pickupTime: "20–40 min", deliveryTime: true,
+        name: "Sardinia Blue Olive",
+        imgSrc: "/images/restaurants/sardiniablueolive.png",
+        href: "/en/discovery/category/sardiniablueolive",
+        storetype: "Restaurant",
+        isEtomartStore: false,
+        priceRange: "N$$$",
+        cuisine: "Mediterranean",
+        pickupTime: "20–40 min",
+        deliveryTime: true,
       },
       {
-        name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown", storetype: "Café", isEtomartStore: false, priceRange: "N$$", cuisine: "Coffee", pickupTime: "10–20 min", deliveryTime: false,
+        name: "Slowtown Coffee Roasters",
+        imgSrc: "/images/restaurants/slowtown.png",
+        href: "/en/discovery/category/slowtown",
+        storetype: "Café",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Coffee",
+        pickupTime: "10–20 min",
+        deliveryTime: false,
       },
       {
-        name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem", storetype: "Pharmacy", isEtomartStore: true, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: false,
+        name: "Dis-Chem",
+        imgSrc: "/images/pharmacies/dischem.png",
+        href: "/en/discovery/category/dischem",
+        storetype: "Pharmacy",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: false,
       },
       {
-        name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/LP/Khomas/Towns/Pharmacy/Clicks", storetype: "Pharmacy", isEtomartStore: false, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Clicks Pharmacy",
+        imgSrc: "/images/pharmacies/clicks.png",
+        href: "/LP/Khomas/Towns/Pharmacy/Clicks",
+        storetype: "Pharmacy",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm", storetype: "Pharmacy", isEtomartStore: false, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Nampharm Pharmacy",
+        imgSrc: "/images/pharmacies/nampharm.png",
+        href: "/en/discovery/category/nampharm",
+        storetype: "Pharmacy",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm", storetype: "Pharmacy", isEtomartStore: true, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Alpha Pharm",
+        imgSrc: "/images/pharmacies/alphapharm.png",
+        href: "/en/discovery/category/alphapharm",
+        storetype: "Pharmacy",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld", storetype: "Pharmacy", isEtomartStore: false, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Medicine World",
+        imgSrc: "/images/pharmacies/medicineworld.png",
+        href: "/en/discovery/category/medicineworld",
+        storetype: "Pharmacy",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy", storetype: "Pharmacy", isEtomartStore: true, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: false,
+        name: "City Pharmacy",
+        imgSrc: "/images/pharmacies/citypharmacy.png",
+        href: "/en/discovery/category/citypharmacy",
+        storetype: "Pharmacy",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: false,
       },
       // ... other stores
     ],
@@ -206,67 +456,235 @@ function KhomasTowns() {
   const storescards2 = useMemo(
     () => [
       {
-        name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem", storetype: "Pharmacy", isEtomartStore: true, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: false,
+        name: "Dis-Chem",
+        imgSrc: "/images/pharmacies/dischem.png",
+        href: "/en/discovery/category/dischem",
+        storetype: "Pharmacy",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: false,
       },
       {
-        name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/LP/Khomas/Towns/Pharmacy/Clicks", storetype: "Pharmacy", isEtomartStore: false, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Clicks Pharmacy",
+        imgSrc: "/images/pharmacies/clicks.png",
+        href: "/LP/Khomas/Towns/Pharmacy/Clicks",
+        storetype: "Pharmacy",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm", storetype: "Pharmacy", isEtomartStore: false, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Nampharm Pharmacy",
+        imgSrc: "/images/pharmacies/nampharm.png",
+        href: "/en/discovery/category/nampharm",
+        storetype: "Pharmacy",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm", storetype: "Pharmacy", isEtomartStore: true, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Alpha Pharm",
+        imgSrc: "/images/pharmacies/alphapharm.png",
+        href: "/en/discovery/category/alphapharm",
+        storetype: "Pharmacy",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld", storetype: "Pharmacy", isEtomartStore: false, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Medicine World",
+        imgSrc: "/images/pharmacies/medicineworld.png",
+        href: "/en/discovery/category/medicineworld",
+        storetype: "Pharmacy",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy", storetype: "Pharmacy", isEtomartStore: true, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "City Pharmacy",
+        imgSrc: "/images/pharmacies/citypharmacy.png",
+        href: "/en/discovery/category/citypharmacy",
+        storetype: "Pharmacy",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse", storetype: "Restaurant", isEtomartStore: true, priceRange: "N$$$", cuisine: "German", pickupTime: "20–40 min", deliveryTime: true,
+        name: "Joe's Beerhouse",
+        imgSrc: "/images/restaurants/joesbeerhouse.png",
+        href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
+        storetype: "Restaurant",
+        isEtomartStore: true,
+        priceRange: "N$$$",
+        cuisine: "German",
+        pickupTime: "20–40 min",
+        deliveryTime: true,
       },
       {
-        name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch", storetype: "Restaurant", isEtomartStore: false, priceRange: "N$$$", cuisine: "International", pickupTime: "20–40 min", deliveryTime: false,
+        name: "The Stellenbosch Wine Bar",
+        imgSrc: "/images/restaurants/stellenbosch.png",
+        href: "/en/discovery/category/stellenbosch",
+        storetype: "Restaurant",
+        isEtomartStore: false,
+        priceRange: "N$$$",
+        cuisine: "International",
+        pickupTime: "20–40 min",
+        deliveryTime: false,
       },
       {
-        name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga", storetype: "Restaurant", isEtomartStore: false, priceRange: "N$$$", cuisine: "Portuguese", pickupTime: "20–40 min", deliveryTime: false,
+        name: "O Portuga",
+        imgSrc: "/images/restaurants/oportuga.png",
+        href: "/en/discovery/category/oportuga",
+        storetype: "Restaurant",
+        isEtomartStore: false,
+        priceRange: "N$$$",
+        cuisine: "Portuguese",
+        pickupTime: "20–40 min",
+        deliveryTime: false,
       },
       {
-        name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial", storetype: "Restaurant", isEtomartStore: true, priceRange: "N$$$", cuisine: "Bar & Grill", pickupTime: "20–40 min", deliveryTime: false,
+        name: "The Social",
+        imgSrc: "/images/restaurants/thesocial.png",
+        href: "/en/discovery/category/thesocial",
+        storetype: "Restaurant",
+        isEtomartStore: true,
+        priceRange: "N$$$",
+        cuisine: "Bar & Grill",
+        pickupTime: "20–40 min",
+        deliveryTime: false,
       },
       {
-        name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive", storetype: "Restaurant", isEtomartStore: false, priceRange: "N$$$", cuisine: "Mediterranean", pickupTime: "20–40 min", deliveryTime: true,
+        name: "Sardinia Blue Olive",
+        imgSrc: "/images/restaurants/sardiniablueolive.png",
+        href: "/en/discovery/category/sardiniablueolive",
+        storetype: "Restaurant",
+        isEtomartStore: false,
+        priceRange: "N$$$",
+        cuisine: "Mediterranean",
+        pickupTime: "20–40 min",
+        deliveryTime: true,
       },
       {
-        name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown", storetype: "Café", isEtomartStore: false, priceRange: "N$$", cuisine: "Coffee", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Slowtown Coffee Roasters",
+        imgSrc: "/images/restaurants/slowtown.png",
+        href: "/en/discovery/category/slowtown",
+        storetype: "Café",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Coffee",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/LP/Khomas/Towns/Store/Checkers", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Checkers",
+        imgSrc: "/images/supermarkets/checkers.png",
+        href: "/LP/Khomas/Towns/Store/Checkers",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Shoprite",
+        imgSrc: "/images/supermarkets/shoprite.png",
+        href: "/en/discovery/category/shoprite",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Pick n Pay",
+        imgSrc: "/images/supermarkets/picknpay.png",
+        href: "/en/discovery/category/picknpay",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Spar",
+        imgSrc: "/images/supermarkets/spar.png",
+        href: "/en/discovery/category/spar",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Woermann Brock",
+        imgSrc: "/images/supermarkets/woermannbrock.png",
+        href: "/en/discovery/category/woermannbrock",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "OK Foods",
+        imgSrc: "/images/supermarkets/okfoods.png",
+        href: "/en/discovery/category/okfoods",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Choppies",
+        imgSrc: "/images/supermarkets/choppies.png",
+        href: "/en/discovery/category/choppies",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       {
-        name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Food Lover's Market",
+        imgSrc: "/images/supermarkets/foodlovers.png",
+        href: "/en/discovery/category/foodloversmarket",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Metro",
+        imgSrc: "/images/supermarkets/metro.png",
+        href: "/en/discovery/category/metro",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       // ... other stores
     ],
@@ -276,31 +694,103 @@ function KhomasTowns() {
   const supermarkets = useMemo(
     () => [
       {
-        name: "Checkers", imgSrc: "/images/supermarkets/checkers.png", href: "/LP/Khomas/Towns/Store/Checkers", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Checkers",
+        imgSrc: "/images/supermarkets/checkers.png",
+        href: "/LP/Khomas/Towns/Store/Checkers",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Shoprite", imgSrc: "/images/supermarkets/shoprite.png", href: "/en/discovery/category/shoprite", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Shoprite",
+        imgSrc: "/images/supermarkets/shoprite.png",
+        href: "/en/discovery/category/shoprite",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Pick n Pay", imgSrc: "/images/supermarkets/picknpay.png", href: "/en/discovery/category/picknpay", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Pick n Pay",
+        imgSrc: "/images/supermarkets/picknpay.png",
+        href: "/en/discovery/category/picknpay",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Spar", imgSrc: "/images/supermarkets/spar.png", href: "/en/discovery/category/spar", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Spar",
+        imgSrc: "/images/supermarkets/spar.png",
+        href: "/en/discovery/category/spar",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Woermann Brock", imgSrc: "/images/supermarkets/woermannbrock.png", href: "/en/discovery/category/woermannbrock", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Woermann Brock",
+        imgSrc: "/images/supermarkets/woermannbrock.png",
+        href: "/en/discovery/category/woermannbrock",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "OK Foods", imgSrc: "/images/supermarkets/okfoods.png", href: "/en/discovery/category/okfoods", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "OK Foods",
+        imgSrc: "/images/supermarkets/okfoods.png",
+        href: "/en/discovery/category/okfoods",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Choppies", imgSrc: "/images/supermarkets/choppies.png", href: "/en/discovery/category/choppies", storetype: "Supermarket", isEtomartStore: true, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Choppies",
+        imgSrc: "/images/supermarkets/choppies.png",
+        href: "/en/discovery/category/choppies",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Food Lover's Market", imgSrc: "/images/supermarkets/foodlovers.png", href: "/en/discovery/category/foodloversmarket", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: true,
+        name: "Food Lover's Market",
+        imgSrc: "/images/supermarkets/foodlovers.png",
+        href: "/en/discovery/category/foodloversmarket",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: true,
       },
       {
-        name: "Metro", imgSrc: "/images/supermarkets/metro.png", href: "/en/discovery/category/metro", storetype: "Supermarket", isEtomartStore: false, priceRange: "N$$", cuisine: "Supermarket", pickupTime: "15–30 min", deliveryTime: false,
+        name: "Metro",
+        imgSrc: "/images/supermarkets/metro.png",
+        href: "/en/discovery/category/metro",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
       },
       // ... other supermarkets
     ],
@@ -310,22 +800,70 @@ function KhomasTowns() {
   const restaurants = useMemo(
     () => [
       {
-        name: "The Stellenbosch Wine Bar", imgSrc: "/images/restaurants/stellenbosch.png", href: "/en/discovery/category/stellenbosch", storetype: "Restaurant", isEtomartStore: false, priceRange: "N$$$", cuisine: "International", pickupTime: "20–40 min", deliveryTime: false,
+        name: "The Stellenbosch Wine Bar",
+        imgSrc: "/images/restaurants/stellenbosch.png",
+        href: "/en/discovery/category/stellenbosch",
+        storetype: "Restaurant",
+        isEtomartStore: false,
+        priceRange: "N$$$",
+        cuisine: "International",
+        pickupTime: "20–40 min",
+        deliveryTime: false,
       },
       {
-        name: "O Portuga", imgSrc: "/images/restaurants/oportuga.png", href: "/en/discovery/category/oportuga", storetype: "Restaurant", isEtomartStore: false, priceRange: "N$$$", cuisine: "Portuguese", pickupTime: "20–40 min", deliveryTime: false,
+        name: "O Portuga",
+        imgSrc: "/images/restaurants/oportuga.png",
+        href: "/en/discovery/category/oportuga",
+        storetype: "Restaurant",
+        isEtomartStore: false,
+        priceRange: "N$$$",
+        cuisine: "Portuguese",
+        pickupTime: "20–40 min",
+        deliveryTime: false,
       },
       {
-        name: "The Social", imgSrc: "/images/restaurants/thesocial.png", href: "/en/discovery/category/thesocial", storetype: "Restaurant", isEtomartStore: true, priceRange: "N$$$", cuisine: "Bar & Grill", pickupTime: "20–40 min", deliveryTime: false,
+        name: "The Social",
+        imgSrc: "/images/restaurants/thesocial.png",
+        href: "/en/discovery/category/thesocial",
+        storetype: "Restaurant",
+        isEtomartStore: true,
+        priceRange: "N$$$",
+        cuisine: "Bar & Grill",
+        pickupTime: "20–40 min",
+        deliveryTime: false,
       },
       {
-        name: "Joe's Beerhouse", imgSrc: "/images/restaurants/joesbeerhouse.png", href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse", storetype: "Restaurant", isEtomartStore: true, priceRange: "N$$$", cuisine: "German", pickupTime: "20–40 min", deliveryTime: true,
+        name: "Joe's Beerhouse",
+        imgSrc: "/images/restaurants/joesbeerhouse.png",
+        href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
+        storetype: "Restaurant",
+        isEtomartStore: true,
+        priceRange: "N$$$",
+        cuisine: "German",
+        pickupTime: "20–40 min",
+        deliveryTime: true,
       },
       {
-        name: "Sardinia Blue Olive", imgSrc: "/images/restaurants/sardiniablueolive.png", href: "/en/discovery/category/sardiniablueolive", storetype: "Restaurant", isEtomartStore: false, priceRange: "N$$$", cuisine: "Mediterranean", pickupTime: "20–40 min", deliveryTime: true,
+        name: "Sardinia Blue Olive",
+        imgSrc: "/images/restaurants/sardiniablueolive.png",
+        href: "/en/discovery/category/sardiniablueolive",
+        storetype: "Restaurant",
+        isEtomartStore: false,
+        priceRange: "N$$$",
+        cuisine: "Mediterranean",
+        pickupTime: "20–40 min",
+        deliveryTime: true,
       },
       {
-        name: "Slowtown Coffee Roasters", imgSrc: "/images/restaurants/slowtown.png", href: "/en/discovery/category/slowtown", storetype: "Café", isEtomartStore: false, priceRange: "N$$", cuisine: "Coffee", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Slowtown Coffee Roasters",
+        imgSrc: "/images/restaurants/slowtown.png",
+        href: "/en/discovery/category/slowtown",
+        storetype: "Café",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Coffee",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       // ... other restaurants
     ],
@@ -335,22 +873,70 @@ function KhomasTowns() {
   const pharmacies = useMemo(
     () => [
       {
-        name: "Dis-Chem", imgSrc: "/images/pharmacies/dischem.png", href: "/en/discovery/category/dischem", storetype: "Pharmacy", isEtomartStore: true, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Dis-Chem",
+        imgSrc: "/images/pharmacies/dischem.png",
+        href: "/en/discovery/category/dischem",
+        storetype: "Pharmacy",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Clicks Pharmacy", imgSrc: "/images/pharmacies/clicks.png", href: "/LP/Khomas/Towns/Pharmacy/Clicks", storetype: "Pharmacy", isEtomartStore: false, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Clicks Pharmacy",
+        imgSrc: "/images/pharmacies/clicks.png",
+        href: "/LP/Khomas/Towns/Pharmacy/Clicks",
+        storetype: "Pharmacy",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Nampharm Pharmacy", imgSrc: "/images/pharmacies/nampharm.png", href: "/en/discovery/category/nampharm", storetype: "Pharmacy", isEtomartStore: false, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Nampharm Pharmacy",
+        imgSrc: "/images/pharmacies/nampharm.png",
+        href: "/en/discovery/category/nampharm",
+        storetype: "Pharmacy",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "Alpha Pharm", imgSrc: "/images/pharmacies/alphapharm.png", href: "/en/discovery/category/alphapharm", storetype: "Pharmacy", isEtomartStore: true, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: false,
+        name: "Alpha Pharm",
+        imgSrc: "/images/pharmacies/alphapharm.png",
+        href: "/en/discovery/category/alphapharm",
+        storetype: "Pharmacy",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: false,
       },
       {
-        name: "Medicine World", imgSrc: "/images/pharmacies/medicineworld.png", href: "/en/discovery/category/medicineworld", storetype: "Pharmacy", isEtomartStore: false, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "Medicine World",
+        imgSrc: "/images/pharmacies/medicineworld.png",
+        href: "/en/discovery/category/medicineworld",
+        storetype: "Pharmacy",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       {
-        name: "City Pharmacy", imgSrc: "/images/pharmacies/citypharmacy.png", href: "/en/discovery/category/citypharmacy", storetype: "Pharmacy", isEtomartStore: true, priceRange: "N$$", cuisine: "Health & Wellness", pickupTime: "10–20 min", deliveryTime: true,
+        name: "City Pharmacy",
+        imgSrc: "/images/pharmacies/citypharmacy.png",
+        href: "/en/discovery/category/citypharmacy",
+        storetype: "Pharmacy",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Health & Wellness",
+        pickupTime: "10–20 min",
+        deliveryTime: true,
       },
       // ... other pharmacies
     ],
@@ -360,19 +946,35 @@ function KhomasTowns() {
   const cards = useMemo(
     () => [
       {
-        title: "Fresh Produce", description: "Get farm-fresh fruits and vegetables delivered to your doorstep. Quality you can trust, convenience you will love.", image: "/images/1.webp",
+        title: "Fresh Produce",
+        description:
+          "Get farm-fresh fruits and vegetables delivered to your doorstep. Quality you can trust, convenience you will love.",
+        image: "/images/1.webp",
       },
       {
-        title: "Dairy Products", description: "Order fresh milk, cheese, yogurt, and more. Fast delivery and reliable service at your fingertips.", image: "/images/2.webp",
+        title: "Dairy Products",
+        description:
+          "Order fresh milk, cheese, yogurt, and more. Fast delivery and reliable service at your fingertips.",
+        image: "/images/2.webp",
       },
       {
-        title: "Bakery Goods", description: "Craving fresh bread and pastries? Get delicious bakery items delivered from local bakers. Quick and easy.", image: "/images/3.webp",
+        title: "Bakery Goods",
+        description:
+          "Craving fresh bread and pastries? Get delicious bakery items delivered from local bakers. Quick and easy.",
+        image: "/images/3.webp",
       },
       {
-        title: "Pantry Staples", description: "Stock up on pantry essentials with our fast and convenient delivery service. Everything you need in one place.", image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+        title: "Pantry Staples",
+        description:
+          "Stock up on pantry essentials with our fast and convenient delivery service. Everything you need in one place.",
+        image:
+          "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
       },
       {
-        title: "Beverages", description: "Shop a wide range of beverages, from juices to sodas. Refresh your day with our top selections.", image: "/images/4.webp",
+        title: "Beverages",
+        description:
+          "Shop a wide range of beverages, from juices to sodas. Refresh your day with our top selections.",
+        image: "/images/4.webp",
       },
       // ... other cards
     ],
@@ -382,13 +984,22 @@ function KhomasTowns() {
   const aboutus = useMemo(
     () => [
       {
-        title: "Easy Ordering", description: "Our user-friendly platform makes it simple to order your favorite groceries with just a few clicks.", image: "/images/1EO1.png",
+        title: "Easy Ordering",
+        description:
+          "Our user-friendly platform makes it simple to order your favorite groceries with just a few clicks.",
+        image: "/images/1EO1.png",
       },
       {
-        title: "Fast Delivery", description: "Enjoy lightning-fast delivery times, ensuring your groceries arrive fresh and on time.", image: "/images/2FD2.png",
+        title: "Fast Delivery",
+        description:
+          "Enjoy lightning-fast delivery times, ensuring your groceries arrive fresh and on time.",
+        image: "/images/2FD2.png",
       },
       {
-        title: "Customer Support", description: "Our dedicated support team is here to help you with any questions or issues, 24/7.", image: "/images/3CS3.png",
+        title: "Customer Support",
+        description:
+          "Our dedicated support team is here to help you with any questions or issues, 24/7.",
+        image: "/images/3CS3.png",
       },
       // ... other about us items
     ],
@@ -396,10 +1007,7 @@ function KhomasTowns() {
   );
 
   const containerRef = useRef(null);
-  const extendedCards = useMemo(
-    () => [...cards, ...cards, ...cards],
-    [cards]
-  );
+  const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
   const containerRefau = useRef(null);
   const extendedAboutus = useMemo(
@@ -415,7 +1023,6 @@ function KhomasTowns() {
   const supermarketsscroll = useRef(null);
   const restaurantsscroll = useRef(null);
   const pharmaciesscroll = useRef(null);
-
 
   const [state, setState] = useState({
     currentIndex: 0,
@@ -438,8 +1045,6 @@ function KhomasTowns() {
     }
   }, []);
 
-
-
   // Helper function to truncate strings
   const truncateMiddle = useCallback((str, maxLength) => {
     if (str.length <= maxLength) return str;
@@ -448,8 +1053,6 @@ function KhomasTowns() {
     const end = str.substring(str.length - middleIndex);
     return `${start}...${end}`;
   }, []);
-
-
 
   useEffect(() => {
     let interval;
@@ -482,8 +1085,9 @@ function KhomasTowns() {
         currentIndex: cards.length,
       }));
       containerRef.current.style.transition = "none";
-      containerRef.current.style.transform = `translateX(-${cards.length * 576
-        }px)`;
+      containerRef.current.style.transform = `translateX(-${
+        cards.length * 576
+      }px)`;
       setTimeout(() => {
         containerRef.current.style.transition = "transform 0.5s ease-in-out";
       }, 50);
@@ -494,8 +1098,9 @@ function KhomasTowns() {
         currentIndex: extendedCards.length - 2 * cards.length,
       }));
       containerRef.current.style.transition = "none";
-      containerRef.current.style.transform = `translateX(-${(extendedCards.length - 2 * cards.length) * 576
-        }px)`;
+      containerRef.current.style.transform = `translateX(-${
+        (extendedCards.length - 2 * cards.length) * 576
+      }px)`;
       setTimeout(() => {
         containerRef.current.style.transition = "transform 0.5s ease-in-out";
       }, 50);
@@ -545,8 +1150,9 @@ function KhomasTowns() {
         currentIndexau: aboutus.length,
       }));
       containerRefau.current.style.transition = "none";
-      containerRefau.current.style.transform = `translateX(-${aboutus.length * 576
-        }px)`;
+      containerRefau.current.style.transform = `translateX(-${
+        aboutus.length * 576
+      }px)`;
       setTimeout(() => {
         containerRefau.current.style.transition = "transform 0.5s ease-in-out";
       }, 50);
@@ -557,8 +1163,9 @@ function KhomasTowns() {
         currentIndexau: extendedAboutus.length - 2 * aboutus.length,
       }));
       containerRefau.current.style.transition = "none";
-      containerRefau.current.style.transform = `translateX(-${(extendedAboutus.length - 2 * aboutus.length) * 576
-        }px)`;
+      containerRefau.current.style.transform = `translateX(-${
+        (extendedAboutus.length - 2 * aboutus.length) * 576
+      }px)`;
       setTimeout(() => {
         containerRefau.current.style.transition = "transform 0.5s ease-in-out";
       }, 50);
@@ -589,7 +1196,6 @@ function KhomasTowns() {
             className="relative z-10 flex justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl md:h-auto md:p-10 h-auto p-10"
             style={{ width: "65%", maxWidth: "100vw", margin: "0 auto" }}
           >
-
             <div className="relative z-10 flex items-center justify-center w-full mb-0">
               <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
                 <div role="tablist" className=" flex space-x-2 gap-2">
@@ -798,8 +1404,9 @@ function KhomasTowns() {
               {cards.map((_, index) => (
                 <div
                   key={index}
-                  className={`h-2 w-2 rounded-full cursor-pointer ${index === state.currentIndex ? "bg-white" : "bg-gray-400"
-                    }`}
+                  className={`h-2 w-2 rounded-full cursor-pointer ${
+                    index === state.currentIndex ? "bg-white" : "bg-gray-400"
+                  }`}
                   onClick={() => handleDotClick(index)}
                 ></div>
               ))}
@@ -871,7 +1478,9 @@ function KhomasTowns() {
             <p className="flex items-start justify-start text-left md:text-4xl text-5xl text-black w-auto font-bold font-Agbalumo">
               Restaurants, Supermarkets and Pharmacies Near Me
             </p>
-          </div> </div>  </div>
+          </div>{" "}
+        </div>{" "}
+      </div>
 
       {/* Storescards1scroll Carousel Buttons */}
       <div className="relative">
@@ -1181,7 +1790,8 @@ function KhomasTowns() {
                 </a>
               </div>
             ))}
-          </div>   </div>
+          </div>{" "}
+        </div>
         {/* supermarketsscroll Container */}
         {/* Right Button */}
         <button
@@ -1507,8 +2117,11 @@ function KhomasTowns() {
                   {aboutus.map((_, index) => (
                     <div
                       key={index}
-                      className={`h-2 w-2 rounded-full cursor-pointer ${index === state.currentIndexau ? "bg-white" : "bg-gray-400"
-                        }`}
+                      className={`h-2 w-2 rounded-full cursor-pointer ${
+                        index === state.currentIndexau
+                          ? "bg-white"
+                          : "bg-gray-400"
+                      }`}
                       onClick={() => handleDotClickau(index)}
                     ></div>
                   ))}

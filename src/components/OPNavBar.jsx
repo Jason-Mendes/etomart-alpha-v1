@@ -79,7 +79,10 @@ const OPNavBar = () => {
 
         {/* Conditionally render modals */}
         {showLocationModal && (
-          <LocationModal showModal={showLocationModal} closeModal={closeModals} />
+          <LocationModal
+            showModal={showLocationModal}
+            closeModal={closeModals}
+          />
         )}
       </div>
 

@@ -1,18 +1,32 @@
 import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import typescriptParser from '@typescript-eslint/parser';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
+import globals from 'globals';
 
 export default [
+  {
+    ignores: ['**/build/**', '**/dist/**', '**/node_modules/**', '**/*.config.js'],
+    linterOptions: {
+      reportUnusedDisableDirectives: true,
+    },
+  },
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+  {
+    files: ['*.js', '*.mjs'],
+    languageOptions: {
+      sourceType: 'module',
+      ecmaVersion: 'latest',
+    },
+  },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
-      parser: tseslint.parser,
+      parser: typescriptParser,
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
@@ -20,31 +34,22 @@ export default [
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
-    },
-    env: {
-      browser: true, // Added browser environment
-      es6: true,
-      node: true,
+      globals: {
+        ...globals.browser,
+        ...globals.es2021,
+        ...globals.node,
+      },
     },
     plugins: {
+      '@typescript-eslint': tseslint,
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
-      '@typescript-eslint': tseslint.plugin,
       'jsx-a11y': jsxA11yPlugin,
       import: importPlugin,
       prettier: prettierPlugin,
     },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        },
-      },
-    },
     rules: {
+      ...tseslint.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -72,6 +77,16 @@ export default [
         },
       ],
     },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        },
+      },
+    },
   },
   {
     files: [
@@ -80,8 +95,10 @@ export default [
       '**/*.test.ts',
       '**/*.test.tsx',
     ],
-    env: {
-      jest: true,
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
     },
   },
 ];

@@ -1,19 +1,25 @@
 import React, { useState, useCallback } from "react";
-import LanguageModal from "./Footer/LanguageModal";
-import AccessibilityModal from "./Footer/AccessibilityModal";
+
 import { GlobeAltIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"; // Importing icons from Heroicons
+
+import AccessibilityModal from "./Footer/AccessibilityModal";
+import LanguageModal from "./Footer/LanguageModal";
 
 const Footer = () => {
   const [language, setLanguage] = useState("English");
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
-  const [isAccessibilityModalOpen, setIsAccessibilityModalOpen] = useState(false);
+  const [isAccessibilityModalOpen, setIsAccessibilityModalOpen] =
+    useState(false);
   const [isHighContrastEnabled, setIsHighContrastEnabled] = useState(false);
 
   const linkCategories = {
     companyLinks: [
       { label: "Jobs", url: "https://careers.wolt.com" },
       { label: "Security", url: "/en/alb/security" },
-      { label: "Investors", url: "https://ir.doordash.com/overview/default.aspx" },
+      {
+        label: "Investors",
+        url: "https://ir.doordash.com/overview/default.aspx",
+      },
       { label: "Wolt Market", url: "/en/alb/wolt-market" },
       { label: "Developers", url: "https://developer.wolt.com" },
     ],
@@ -21,7 +27,10 @@ const Footer = () => {
       { label: "For couriers", url: "/en/alb/couriers" },
       { label: "For merchants", url: "/en/alb/merchant" },
       { label: "For affiliates", url: "/en/alb/affiliates" },
-      { label: "Promo codes", url: "https://life.wolt.com/en/alb/howto/wolt-promo-codes" },
+      {
+        label: "Promo codes",
+        url: "https://life.wolt.com/en/alb/howto/wolt-promo-codes",
+      },
       { label: "Wolt Ads", url: "/en/alb/wolt-ads" },
     ],
     getToKnowUs: [
@@ -45,39 +54,40 @@ const Footer = () => {
     setIsLanguageModalOpen(false);
   }, []);
 
-  
-
   const handleAccessibilitySettingsOpen = useCallback(() => {
     setIsAccessibilityModalOpen(true);
   }, []);
 
   const handleContrastToggle = useCallback(() => {
-    setIsHighContrastEnabled(prev => !prev);
+    setIsHighContrastEnabled((prev) => !prev);
   }, []);
 
-  const renderLinkColumn = useCallback((title, links) => (
-    <div className="flex flex-col items-center">
-      <nav>
-        <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-Agbalumo text-black mb-2">
-          {title}
-        </h2>
-        <ul className="space-y-1">
-          {links.map((link, index) => (
-            <li key={index}>
-              <a
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white text-sm sm:text-base md:text-lg font-josefin_sans hover:text-black transition duration-150 ease-in-out"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
-  ), []);
+  const renderLinkColumn = useCallback(
+    (title, links) => (
+      <div className="flex flex-col items-center">
+        <nav>
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-Agbalumo text-black mb-2">
+            {title}
+          </h2>
+          <ul className="space-y-1">
+            {links.map((link, index) => (
+              <li key={index}>
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white text-sm sm:text-base md:text-lg font-josefin_sans hover:text-black transition duration-150 ease-in-out"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    ),
+    []
+  );
 
   return (
     <footer className="bg-[#ee9613] rounded-tl-[150px] rounded-tr-[150px] shadow-xl">
@@ -164,25 +174,31 @@ const Footer = () => {
               {language}
             </button>
             <button
-  onClick={handleAccessibilitySettingsOpen}
-  aria-label="Open accessibility settings"
-  className="flex items-center text-black hover:text-white transition-colors"
->
-  {isHighContrastEnabled ? (
-    <EyeIcon className="h-4 w-4 mr-2" />
-  ) : (
-    <EyeSlashIcon className="h-4 w-4 mr-2" />
-  )}
-  Accessibility
-</button>
-
+              onClick={handleAccessibilitySettingsOpen}
+              aria-label="Open accessibility settings"
+              className="flex items-center text-black hover:text-white transition-colors"
+            >
+              {isHighContrastEnabled ? (
+                <EyeIcon className="h-4 w-4 mr-2" />
+              ) : (
+                <EyeSlashIcon className="h-4 w-4 mr-2" />
+              )}
+              Accessibility
+            </button>
           </div>
 
           <div className="text-center sm:text-right">
             <p className="text-sm">&copy; 2024 Etomart. All Rights Reserved.</p>
             <div className="flex justify-center sm:justify-end mt-2">
-              <a href="/privacy" className="text-sm text-black hover:text-white mr-4">Privacy Statement</a>
-              <a href="/terms" className="text-sm text-black hover:text-white">Terms of Service</a>
+              <a
+                href="/privacy"
+                className="text-sm text-black hover:text-white mr-4"
+              >
+                Privacy Statement
+              </a>
+              <a href="/terms" className="text-sm text-black hover:text-white">
+                Terms of Service
+              </a>
             </div>
           </div>
         </div>

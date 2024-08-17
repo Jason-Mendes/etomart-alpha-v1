@@ -1,12 +1,19 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
+
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
+
+import XClearButton from "./componentsCalled/XClearButton";
 import Footer from "./Footer";
 import LPNavBar from "./LPNavBar";
 import RegionsBanner from "./RegionsBanner";
-import XClearButton from './componentsCalled/XClearButton';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 /**
  * LandingPage Component
@@ -17,20 +24,118 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Define regions data
 const regionsData = [
-  { code: "ALB", name: "Khomas", flagPath: "/images/regions/khomas2.jpeg", path: "/LP/Region", latitude: -22.57, longitude: 17.08 },
-  { code: "HRV", name: "Erongo", flagPath: "/images/regions/erongo.jpeg", path: "/LP/Region", latitude: -22.55, longitude: 14.28 },
-  { code: "CYP", name: "Oshana", flagPath: "/images/regions/oshana.jpeg", path: "/LP/Region", latitude: -18.46, longitude: 15.64 },
-  { code: "ALB", name: "Omusati", flagPath: "/images/regions/omusati.jpeg", path: "/LP/Region", latitude: -18.13, longitude: 15.37 },
-  { code: "HRV", name: "Karas", flagPath: "/images/regions/kharas2.jpeg", path: "/LP/Region", latitude: -27.38, longitude: 17.92 },
-  { code: "CYP", name: "Ohangwena", flagPath: "/images/regions/ohangwena.jpeg", path: "/LP/Region", latitude: -17.60, longitude: 16.06 },
-  { code: "ALB", name: "Zambezi", flagPath: "/images/regions/zambezi.jpeg", path: "/LP/Region", latitude: -17.50, longitude: 24.27 },
-  { code: "HRV", name: "Oshikoto", flagPath: "/images/regions/oshikoto.jpeg", path: "/LP/Region", latitude: -18.81, longitude: 16.92 },
-  { code: "CYP", name: "Omaheke", flagPath: "/images/regions/omaheke.jpeg", path: "/LP/Region", latitude: -21.76, longitude: 19.59 },
-  { code: "ALB", name: "Hardap", flagPath: "/images/regions/hardap.jpeg", path: "/LP/Region", latitude: -24.43, longitude: 18.29 },
-  { code: "HRV", name: "Otjozondjupa", flagPath: "/images/regions/otjozondjupa.jpeg", path: "/LP/Region", latitude: -20.45, longitude: 17.23 },
-  { code: "CYP", name: "Kunene", flagPath: "/images/regions/kunene2.jpeg", path: "/LP/Region", latitude: -19.58, longitude: 13.41 },
-  { code: "ALB", name: "Kavango East", flagPath: "/images/regions/kavango_east.jpeg", path: "/LP/Region", latitude: -18.03, longitude: 20.78 },
-  { code: "HRV", name: "Kavango West", flagPath: "/images/regions/kavango_west.jpeg", path: "/LP/Region", latitude: -18.12, longitude: 19.79 },
+  {
+    code: "ALB",
+    name: "Khomas",
+    flagPath: "/images/regions/khomas2.jpeg",
+    path: "/LP/Region",
+    latitude: -22.57,
+    longitude: 17.08,
+  },
+  {
+    code: "HRV",
+    name: "Erongo",
+    flagPath: "/images/regions/erongo.jpeg",
+    path: "/LP/Region",
+    latitude: -22.55,
+    longitude: 14.28,
+  },
+  {
+    code: "CYP",
+    name: "Oshana",
+    flagPath: "/images/regions/oshana.jpeg",
+    path: "/LP/Region",
+    latitude: -18.46,
+    longitude: 15.64,
+  },
+  {
+    code: "ALB",
+    name: "Omusati",
+    flagPath: "/images/regions/omusati.jpeg",
+    path: "/LP/Region",
+    latitude: -18.13,
+    longitude: 15.37,
+  },
+  {
+    code: "HRV",
+    name: "Karas",
+    flagPath: "/images/regions/kharas2.jpeg",
+    path: "/LP/Region",
+    latitude: -27.38,
+    longitude: 17.92,
+  },
+  {
+    code: "CYP",
+    name: "Ohangwena",
+    flagPath: "/images/regions/ohangwena.jpeg",
+    path: "/LP/Region",
+    latitude: -17.6,
+    longitude: 16.06,
+  },
+  {
+    code: "ALB",
+    name: "Zambezi",
+    flagPath: "/images/regions/zambezi.jpeg",
+    path: "/LP/Region",
+    latitude: -17.5,
+    longitude: 24.27,
+  },
+  {
+    code: "HRV",
+    name: "Oshikoto",
+    flagPath: "/images/regions/oshikoto.jpeg",
+    path: "/LP/Region",
+    latitude: -18.81,
+    longitude: 16.92,
+  },
+  {
+    code: "CYP",
+    name: "Omaheke",
+    flagPath: "/images/regions/omaheke.jpeg",
+    path: "/LP/Region",
+    latitude: -21.76,
+    longitude: 19.59,
+  },
+  {
+    code: "ALB",
+    name: "Hardap",
+    flagPath: "/images/regions/hardap.jpeg",
+    path: "/LP/Region",
+    latitude: -24.43,
+    longitude: 18.29,
+  },
+  {
+    code: "HRV",
+    name: "Otjozondjupa",
+    flagPath: "/images/regions/otjozondjupa.jpeg",
+    path: "/LP/Region",
+    latitude: -20.45,
+    longitude: 17.23,
+  },
+  {
+    code: "CYP",
+    name: "Kunene",
+    flagPath: "/images/regions/kunene2.jpeg",
+    path: "/LP/Region",
+    latitude: -19.58,
+    longitude: 13.41,
+  },
+  {
+    code: "ALB",
+    name: "Kavango East",
+    flagPath: "/images/regions/kavango_east.jpeg",
+    path: "/LP/Region",
+    latitude: -18.03,
+    longitude: 20.78,
+  },
+  {
+    code: "HRV",
+    name: "Kavango West",
+    flagPath: "/images/regions/kavango_west.jpeg",
+    path: "/LP/Region",
+    latitude: -18.12,
+    longitude: 19.79,
+  },
 ];
 
 // Testimonials data
@@ -43,23 +148,26 @@ const testimonials = [
   },
   {
     imageSrc: "/images/img_ellipse1.png",
-    textBelowImage: "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
+    textBelowImage:
+      "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
     numStars: 5,
     testimonialAuthor: "John Doe",
   },
   {
     imageSrc: "/images/img_ellipse1.png",
-    textBelowImage: "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
+    textBelowImage:
+      "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
     numStars: 3,
     testimonialAuthor: "John Doe",
-  },{
+  },
+  {
     imageSrc: "/images/img_ellipse1.png",
-    textBelowImage: "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTtttttttteststssyvhgvehevfjhvf ejhfvehvdjhssb dfvhsvdhjvdws b j",
+    textBelowImage:
+      "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTtttttttteststssyvhgvehevfjhvf ejhfvehvdjhssb dfvhsvdhjvdws b j",
     numStars: 3,
     testimonialAuthor: "John Doe",
   },
 ];
-
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -87,74 +195,90 @@ const LandingPage = () => {
     selectedRegion: null,
     bannerImage: "",
   });
-// Memoized regions data
-  const regions = useMemo(() => regionsData.map(({ code, name, flagPath, path }) => ({
-    code,
-    name,
-    flagPath,
-    path: path.replace(' ', '') // Remove spaces from path
-  })), []);
+  // Memoized regions data
+  const regions = useMemo(
+    () =>
+      regionsData.map(({ code, name, flagPath, path }) => ({
+        code,
+        name,
+        flagPath,
+        path: path.replace(" ", ""), // Remove spaces from path
+      })),
+    []
+  );
 
   // Callbacks
   // Update the closeBanner function
   // Helper functions
   const closeBanner = useCallback(() => {
-    setState(prev => ({ ...prev, isBannerVisible: false }));
+    setState((prev) => ({ ...prev, isBannerVisible: false }));
   }, []);
 
   const handleSelect = useCallback((option) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       selectedRegion: option,
       bannerImage: option.flagPath,
       isBannerVisible: true,
-      nextPage: `/LP/Region/`
+      nextPage: `/LP/Region/`,
     }));
     console.log("Selected Region:", option);
   }, []);
 
   const clearLocation = useCallback(() => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       location: "",
       inputLocation: "",
       isEditing: false,
-      selectedRegion: null
+      selectedRegion: null,
     }));
   }, []);
 
   const handleUseCurrentLocation = useCallback(() => {
     if (navigator.geolocation) {
-      setState(prev => ({ ...prev, isLoading: true }));
+      setState((prev) => ({ ...prev, isLoading: true }));
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
           const region = determineRegion(latitude, longitude);
-          setState(prev => ({
+          setState((prev) => ({
             ...prev,
             userLocation: { latitude, longitude },
             userSelectedRegion: region.name,
             confirmRegion: true,
-            isLoading: false
+            isLoading: false,
           }));
         },
         (error) => {
           console.error("Error getting location", error);
-          alert("Error getting location. Please try again or enter your location manually.");
-          setState(prev => ({ ...prev, isLoading: false }));
+          alert(
+            "Error getting location. Please try again or enter your location manually."
+          );
+          setState((prev) => ({ ...prev, isLoading: false }));
         },
         { timeout: 10000, maximumAge: 60000 }
       );
     } else {
-      alert("Geolocation is not supported by this browser. Please enter your location manually.");
+      alert(
+        "Geolocation is not supported by this browser. Please enter your location manually."
+      );
     }
   }, []);
 
   const determineRegion = useCallback((latitude, longitude) => {
-    return regionsData.reduce((closest, region) => {
-      const distance = getDistance(latitude, longitude, region.latitude, region.longitude);
-      return distance < closest.distance ? { ...region, distance } : closest;
-    }, { distance: Infinity });
+    return regionsData.reduce(
+      (closest, region) => {
+        const distance = getDistance(
+          latitude,
+          longitude,
+          region.latitude,
+          region.longitude
+        );
+        return distance < closest.distance ? { ...region, distance } : closest;
+      },
+      { distance: Infinity }
+    );
   }, []);
 
   const getDistance = useCallback((lat1, lon1, lat2, lon2) => {
@@ -162,23 +286,37 @@ const LandingPage = () => {
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
     const a =
-      0.5 - Math.cos(dLat) / 2 +
-      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * (1 - Math.cos(dLon)) / 2;
+      0.5 -
+      Math.cos(dLat) / 2 +
+      (Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
+        (1 - Math.cos(dLon))) /
+        2;
     return R * 2 * Math.asin(Math.sqrt(a));
   }, []);
 
   const handleInputChange = useCallback((e) => {
     const value = e.target.value;
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       inputLocation: value,
       location: value,
-      suggestions: value.length > 0
-        ? regionsData
-          .filter(region => region.name.toLowerCase().includes(value.toLowerCase()))
-          .map(({ code, name, flagPath, path }) => ({ value: code, label: name, code, name, flagPath, path }))
-        : [],
-      isDropdownOpen: value.length > 0
+      suggestions:
+        value.length > 0
+          ? regionsData
+              .filter((region) =>
+                region.name.toLowerCase().includes(value.toLowerCase())
+              )
+              .map(({ code, name, flagPath, path }) => ({
+                value: code,
+                label: name,
+                code,
+                name,
+                flagPath,
+                path,
+              }))
+          : [],
+      isDropdownOpen: value.length > 0,
     }));
   }, []);
 
@@ -186,57 +324,57 @@ const LandingPage = () => {
   const handleRegionClick = useCallback((region) => {
     const formattedRegion = {
       ...region,
-      formattedName: region.name  // Add this line
+      formattedName: region.name, // Add this line
     };
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       selectedRegion: formattedRegion,
       bannerImage: formattedRegion.flagPath,
       isBannerVisible: true,
-      nextPage: `/LP/Region/`
+      nextPage: `/LP/Region/`,
     }));
     console.log("Selected Region:", formattedRegion);
   }, []);
 
-
   // In your confirmRegionSelection function
   const confirmRegionSelection = useCallback(() => {
     if (state.userSelectedRegion) {
-      const selectedRegionObject = regionsData.find(region => region.name === state.userSelectedRegion);
+      const selectedRegionObject = regionsData.find(
+        (region) => region.name === state.userSelectedRegion
+      );
       if (selectedRegionObject) {
         const formattedRegion = {
           ...selectedRegionObject,
-          formattedName: selectedRegionObject.name.replace(' ', '')  // Add this line
+          formattedName: selectedRegionObject.name.replace(" ", ""), // Add this line
         };
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           selectedRegion: formattedRegion,
           bannerImage: formattedRegion.flagPath,
           isBannerVisible: true,
-          nextPage: `/LP/Region/`
+          nextPage: `/LP/Region/`,
         }));
         console.log("Selected Region:", formattedRegion);
       }
     }
   }, [state.userSelectedRegion]);
 
-
-
   const goBack = useCallback(() => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       isBannerVisible: false,
       selectedRegion: null,
       nextPage: "",
-      bannerImage: ""
+      bannerImage: "",
     }));
   }, []);
 
   const handleSlideChange = useCallback((direction) => {
-    setState(prev => {
-      const newSlide = direction === 'next'
-        ? (prev.currentSlide - 1 + testimonials.length) % testimonials.length
-        : (prev.currentSlide + 1) % testimonials.length;
+    setState((prev) => {
+      const newSlide =
+        direction === "next"
+          ? (prev.currentSlide - 1 + testimonials.length) % testimonials.length
+          : (prev.currentSlide + 1) % testimonials.length;
       return {
         ...prev,
         currentSlide: newSlide,
@@ -246,14 +384,19 @@ const LandingPage = () => {
 
     // Resume auto-scroll after 5 seconds
     setTimeout(() => {
-      setState(prev => ({ ...prev, isPaused: false }));
+      setState((prev) => ({ ...prev, isPaused: false }));
     }, 8000);
   }, []);
 
-  const handlePrevSlide = useCallback(() => handleSlideChange('prev'), [handleSlideChange]);
-  const handleNextSlide = useCallback(() => handleSlideChange('next'), [handleSlideChange]);
+  const handlePrevSlide = useCallback(
+    () => handleSlideChange("prev"),
+    [handleSlideChange]
+  );
+  const handleNextSlide = useCallback(
+    () => handleSlideChange("next"),
+    [handleSlideChange]
+  );
 
-  
   const handleWatchVideo = useCallback(() => {
     setState((prev) => ({ ...prev, isVideoVisible: true }));
   }, []);
@@ -274,16 +417,16 @@ const LandingPage = () => {
     handleGoBack();
   }, [handleGoBack]);
 
-
   // Effect hooks
 
   useEffect(() => {
     let timer;
     if (!state.isPaused) {
       timer = setInterval(() => {
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
-          currentSlide: (prev.currentSlide - 1 + testimonials.length) % testimonials.length,
+          currentSlide:
+            (prev.currentSlide - 1 + testimonials.length) % testimonials.length,
         }));
       }, 6000); // Change slide every 2 seconds
     }
@@ -292,13 +435,18 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (!state.isBannerVisible && state.selectedRegion && state.nextPage) {
-      navigate(state.nextPage, { state: { selectedRegion: state.selectedRegion } });
+      navigate(state.nextPage, {
+        state: { selectedRegion: state.selectedRegion },
+      });
     }
   }, [state.isBannerVisible, state.selectedRegion, state.nextPage, navigate]);
 
   useEffect(() => {
     const handleResize = () => {
-      setState(prev => ({ ...prev, isLargeScreen: window.innerWidth >= 640 }));
+      setState((prev) => ({
+        ...prev,
+        isLargeScreen: window.innerWidth >= 640,
+      }));
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -310,23 +458,25 @@ const LandingPage = () => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target) &&
-        !event.target.closest('#protected-div')
+        !event.target.closest("#protected-div")
       ) {
-        setState(prev => ({ ...prev, isDropdownOpen: false, isEditing: false }));
+        setState((prev) => ({
+          ...prev,
+          isDropdownOpen: false,
+          isEditing: false,
+        }));
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-
 
   // Render
   return (
     <div>
-        <RegionsBanner
+      <RegionsBanner
         isVisible={state.isBannerVisible}
         imageSrc={state.bannerImage}
         closeBanner={closeBanner}
@@ -345,7 +495,11 @@ const LandingPage = () => {
                   style={{ width: "100%", margin: "0 auto" }}
                 >
                   <p className="relative sm:text-3xl text-nowrap md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl text-black-900 font-Agbalumo font-bold lg:ml-24">
-                    Your Daily Food<br />Delivered<br />Hot & Fresh
+                    Your Daily Food
+                    <br />
+                    Delivered
+                    <br />
+                    Hot & Fresh
                   </p>
                 </div>
                 <div
@@ -380,19 +534,36 @@ const LandingPage = () => {
           {/* Location Buttons Section */}
           <div className="container mx-auto px-4">
             <section className="flex relative m-8">
-              <div id="LP_location_buttons_container_2" className="flex relative m-8">
-                <div id="button-group" className="flex flex-row items-center container justify-between w-auto">
+              <div
+                id="LP_location_buttons_container_2"
+                className="flex relative m-8"
+              >
+                <div
+                  id="button-group"
+                  className="flex flex-row items-center container justify-between w-auto"
+                >
                   <div className="flex flex-col items-center pr-8">
                     <div className="flex flex-col max-w-sm items-center space-y-4">
                       <div
                         id="protected-div"
                         className="flex items-center bg-white text-gray-600 px-8 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 relative"
-                        onClick={() => setState(prev => ({ ...prev, isEditing: true, isDropdownOpen: true }))}
+                        onClick={() =>
+                          setState((prev) => ({
+                            ...prev,
+                            isEditing: true,
+                            isDropdownOpen: true,
+                          }))
+                        }
                         role="button"
                         aria-haspopup="listbox"
                         aria-expanded={state.isDropdownOpen}
                       >
-                        <img className="h-7 mr-2" src="/images/img_linkedin.svg" alt="Location icon" loading="lazy" />
+                        <img
+                          className="h-7 mr-2"
+                          src="/images/img_linkedin.svg"
+                          alt="Location icon"
+                          loading="lazy"
+                        />
                         {state.isEditing ? (
                           <input
                             ref={inputRef}
@@ -405,7 +576,9 @@ const LandingPage = () => {
                             aria-label="Search for a town"
                           />
                         ) : (
-                          <span className="text-md flex-grow">{state.location || "What's Your Region?"}</span>
+                          <span className="text-md flex-grow">
+                            {state.location || "What's Your Region?"}
+                          </span>
                         )}
                         {state.location && (
                           <XClearButton
@@ -430,7 +603,9 @@ const LandingPage = () => {
                               onClick={() => handleSelect(option)}
                               className="px-4 py-2 hover:bg-gray-100 cursor-pointer w-full text-left"
                               role="option"
-                              aria-selected={state.selectedRegion?.code === option.code}
+                              aria-selected={
+                                state.selectedRegion?.code === option.code
+                              }
                             >
                               {option.label}
                             </div>
@@ -445,34 +620,53 @@ const LandingPage = () => {
                       aria-label="Use current location"
                     >
                       {state.isLoading ? (
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2" aria-hidden="true"></div>
+                        <div
+                          className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2"
+                          aria-hidden="true"
+                        ></div>
                       ) : (
-                        <img className="h-5 mr-2" src="/images/img_save.svg" alt="Location icon" loading="lazy" />
+                        <img
+                          className="h-5 mr-2"
+                          src="/images/img_save.svg"
+                          alt="Location icon"
+                          loading="lazy"
+                        />
                       )}
-                      <p className="text-base font-bold">{state.isLoading ? "Getting Location..." : "Use Current Location"}</p>
+                      <p className="text-base font-bold">
+                        {state.isLoading
+                          ? "Getting Location..."
+                          : "Use Current Location"}
+                      </p>
                     </button>
                   </div>
                 </div>
-                {!state.isLoading && state.confirmRegion && state.userSelectedRegion && (
-                  <div className="text-center">
-                    <p>Are you in <b>{state.userSelectedRegion}</b> region?</p>
-                    <button
-                      className="flex items-center justify-center m-2 hover:bg-black hover:text-white font-josefin_sans px-4 py-2 bg-[#ff9f10] text-black rounded-full"
-                      onClick={confirmRegionSelection}
-                      aria-label={`Confirm ${state.userSelectedRegion} region`}
-                    >
-                      Confirm Region
-                    </button>
-                  </div>
-                )}
+                {!state.isLoading &&
+                  state.confirmRegion &&
+                  state.userSelectedRegion && (
+                    <div className="text-center">
+                      <p>
+                        Are you in <b>{state.userSelectedRegion}</b> region?
+                      </p>
+                      <button
+                        className="flex items-center justify-center m-2 hover:bg-black hover:text-white font-josefin_sans px-4 py-2 bg-[#ff9f10] text-black rounded-full"
+                        onClick={confirmRegionSelection}
+                        aria-label={`Confirm ${state.userSelectedRegion} region`}
+                      >
+                        Confirm Region
+                      </button>
+                    </div>
+                  )}
               </div>
             </section>
           </div>
         </div>
       </div>
-{/* Explore Etomart Regions */}
+      {/* Explore Etomart Regions */}
       {/* Regions Buttons */}
-      <section aria-labelledby="what-is-etomart-title" className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]">
+      <section
+        aria-labelledby="what-is-etomart-title"
+        className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]"
+      >
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-black-900 font-Agbalumo mb-4">
@@ -483,260 +677,296 @@ const LandingPage = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 justify-items-center">
-  {regions.map((region) => (
-    <div key={region.code} className="w-full flex justify-center">
-      <button
-        onClick={() => handleRegionClick(region)}
-        className="w-[280px] h-[55px] flex justify-between items-center bg-white hover:bg-orange-300 text-black px-4 rounded-[36px] shadow-lg font-josefin_sans transition-transform transform hover:scale-105 overflow-hidden"
-        aria-label={`Select ${region.name} region`}
-      >
-        <div className="flex items-center">
-          <LazyLoadImage
-            className="rounded-full h-10 w-10 mr-2 flex-shrink-0 object-cover"
-            src={region.flagPath}
-            alt={`${region.name} flag`}
-            effect="blur"
-          />
-          <p className="text-left text-sm sm:text-base lg:text-lg text-gray-700 font-bold truncate">
-            {region.name}
-          </p>
-        </div>
-        <svg
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-4 h-6 fill-current text-zinc-950 ml-2 flex-shrink-0"
-          aria-hidden="true"
-        >
-          <path
-            d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
-            fill="#202125"
-          />
-        </svg>
-      </button>
-    </div>
-  ))}
-</div>
+            {regions.map((region) => (
+              <div key={region.code} className="w-full flex justify-center">
+                <button
+                  onClick={() => handleRegionClick(region)}
+                  className="w-[280px] h-[55px] flex justify-between items-center bg-white hover:bg-orange-300 text-black px-4 rounded-[36px] shadow-lg font-josefin_sans transition-transform transform hover:scale-105 overflow-hidden"
+                  aria-label={`Select ${region.name} region`}
+                >
+                  <div className="flex items-center">
+                    <LazyLoadImage
+                      className="rounded-full h-10 w-10 mr-2 flex-shrink-0 object-cover"
+                      src={region.flagPath}
+                      alt={`${region.name} flag`}
+                      effect="blur"
+                    />
+                    <p className="text-left text-sm sm:text-base lg:text-lg text-gray-700 font-bold truncate">
+                      {region.name}
+                    </p>
+                  </div>
+                  <svg
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-6 fill-current text-zinc-950 ml-2 flex-shrink-0"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
+                      fill="#202125"
+                    />
+                  </svg>
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Did You Know Section */}
       <section aria-labelledby="did-you-know-title" className="py-16">
         <div className="container mx-auto px-4">
-          <h2 id="did-you-know-title" className="text-center text-5xl font-bold font-Agbalumo mb-8">
+          <h2
+            id="did-you-know-title"
+            className="text-center text-5xl font-bold font-Agbalumo mb-8"
+          >
             Did you Know?
           </h2>
           <p className="text-center text-xl max-w-2xl mx-auto font-josefin_sans font-semibold">
-            Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
-            non et elit. Dolor turpis molestie dui magnis facilisis at
-            fringilla quam.
+            Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et
+            elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.
           </p>
         </div>
       </section>
 
-    {/* What is Etomart Section */}
-<section aria-labelledby="what-is-etomart-title" className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]">
-  <div className="container mx-auto px-4">
-    <div className="flex flex-col md:flex-row items-center gap-8">
-      <div className="md:w-1/2 md:p-6">
-        <h2 id="what-is-etomart-title" className="text-4xl md:text-5xl font-bold font-Agbalumo text-black mb-4 text-center md:text-left">
-          What is Etomart?
-        </h2>
-        <p className="text-xl text-white font-medium mb-8 text-center md:text-left">
-          Etomart makes it incredibly easy for you to discover and get
-          what you want. Delivered to you – quickly, reliably and
-          affordably.
-        </p>
-        <div className="hidden md:flex md:justify-center md:w-2/3">
-          <button
-            className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
-            onClick={handleWatchVideo}
-            aria-label="Watch video about Etomart"
-          >
-            Watch Video
-          </button>
-        </div>
-      </div>
-      <div className="md:w-1/2 flex justify-center items-center">
-        <div className="bg-white rounded-lg shadow-md p-1 md:p-4 w-full max-w-md">
-          <div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-lg">
-            <LazyLoadImage
-              className="w-full h-full object-cover"
-              src="/images/website_intro/video-cover-image-4.jpg"
-              alt="Etomart introduction"
-              effect="blur"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div className="flex mt-8 md:hidden  justify-center">
-      <button
-        className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
-        onClick={handleWatchVideo}
-        aria-label="Watch video about Etomart"
+      {/* What is Etomart Section */}
+      <section
+        aria-labelledby="what-is-etomart-title"
+        className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]"
       >
-        Watch Video
-      </button>
-    </div>
-  </div>
-</section>
-
-
-          {/* Video Modal */}
-          {state.isVideoVisible && (
-            <div
-              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-              onClick={handleOverlayClick}
-            >
-              <div
-                className="bg-white p-4 rounded-lg max-w-3xl w-full"
-                onClick={(e) => e.stopPropagation()} // Prevents the overlay click event
-              >
-                <div className="text-center mb-4">
-                  <h3 className="text-4xl font-bold font-Agbalumo">This is Etomart!</h3>
-                </div>
-                <div className="relative aspect-w-16 aspect-h-9">
-                  <video
-                    ref={videoRef}
-                    className="w-full h-full object-cover rounded-lg"
-                    controls
-                    autoPlay
-                    onEnded={handleVideoEnded}
-                  >
-                    <source src="/videos/website_intro/etomart_Brand_Intro.mp4" type="video/mp4" />
-                    <source src="/videos/website_intro/etomart_Brand_Intro.webm" type="video/webm" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-                <div className="mt-4 flex justify-center">
-                  <button
-                    className="bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 transition-colors duration-300"
-                    onClick={handleGoBack}
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
- {/* Testimonials Section */}
-<section aria-labelledby="testimonials-title" className="py-8 md:py-16">
-  <div className="container mx-auto px-4 flex flex-col items-center">
-    <h2 id="testimonials-title" className="text-center text-3xl md:text-4xl font-bold font-shrikhand text-orange-500 mb-2 md:mb-4">
-      Testimonials
-    </h2>
-    <h3 className="text-center text-4xl md:text-5xl font-bold font-Agbalumo mb-4 md:mb-8">
-      What Others Are Saying
-    </h3>
-    <p className="text-center text-lg md:text-xl max-w-2xl mx-auto mb-8 md:mb-12 font-josefin_sans font-semibold">
-      Lorem ipsum dolor sit amet consectetur. Non tincidunt magna
-      non et elit. Dolor turpis molestie dui magnis facilisis at
-      fringilla quam.
-    </p>
-    <div className="p-4 md:p-6 relative w-full md:max-w-[745px] overflow-hidden">
-      <div className="flex w-full h-[400px] md:h-[580px]"> {/* Adjusted height for mobile */}
-        {testimonials.map((testimonial, index) => (
-          <div
-            key={index}
-            className={`absolute top-8 left-4 right-4 bg-white border border-slate-200 rounded-3xl md:rounded-[200px] shadow-md p-4 md:p-6 transition-all duration-500 ease-in-out ${
-              state.currentSlide === index
-                ? 'opacity-100 translate-x-0'
-                : state.currentSlide === (index + 1) % testimonials.length
-                ? 'opacity-0 translate-x-full'
-                : 'opacity-0 -translate-x-full'
-            }`}
-          >
-            <div className="flex flex-col items-center justify-center px-2 md:px-6 py-4 md:py-10 w-auto">
-              <LazyLoadImage
-                className="h-20 w-20 md:h-[117px] md:w-[117px] rounded-full"
-                src={testimonial.imageSrc}
-                alt={`${testimonial.testimonialAuthor}'s avatar`}
-                effect="blur"
-              />
-            </div>
-            <div className="flex flex-wrap justify-center gap-2 md:gap-4 items-center p-2 w-full">
-              <div className="flex flex-col items-center justify-center w-full md:w-auto">
-                <div className="flex items-center justify-center overflow-hidden w-full md:w-[550px] h-20 md:h-[100px]">
-                  <p className="text-center text-sm md:text-lg lg:text-2xl font-josefin_sans font-semibold line-clamp-3">
-                    {testimonial.textBelowImage}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-wrap justify-center gap-4 md:gap-6 items-center w-full mt-4">
-              <div className="flex flex-col items-center justify-center px-2 md:px-6 pb-2 md:pb-4 w-auto">
-                <div className="flex flex-wrap justify-center gap-2 md:gap-4 items-center p-2 md:p-2 md:mb-4 border border-slate-200 rounded-3xl md:rounded-[200px]  shadow-md md:shadow-bs3 w-full">
-                  {Array.from({ length: 5 }, (_, starIndex) => (
-                    <div
-                      key={starIndex}
-                      className={`flex justify-center items-center w-6 h-6 md:w-10 md:h-10 ${
-                        starIndex < testimonial.numStars ? 'text-orange-400' : 'text-gray-300'
-                      }`}
-                    >
-                      <svg fill="currentColor" viewBox="0 0 40 40" className="w-full h-full">
-                        <path d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z" />
-                      </svg>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex flex-col items-center justify-center px-2 py-2 w-auto mt-2">
-                  <p className="text-lg md:text-xl lg:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">
-                    {testimonial.testimonialAuthor}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <button
-        onClick={handlePrevSlide}
-        className="absolute left-0 md:left-8 top-1/2 transform -translate-y-1/2 p-2 md:p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-orange-500 z-10 rounded-full"
-        aria-label="Previous testimonial"
-      >
-        &lt;
-      </button>
-      <button
-        onClick={handleNextSlide}
-        className="absolute right-0 md:right-8 top-1/2 transform -translate-y-1/2 bg-white border border-slate-200 shadow-lg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-orange-500 z-10 rounded-full"
-        aria-label="Next testimonial"
-      >
-        &gt;
-      </button>
-    </div>
-  </div>
-</section>
-      {/* How it Works Section */}
-      <section aria-labelledby="how-it-works-title" className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]">
         <div className="container mx-auto px-4">
-          <h2 id="how-it-works-title" className="text-center text-5xl font-bold font-Agbalumo text-black mb-8">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="md:w-1/2 md:p-6">
+              <h2
+                id="what-is-etomart-title"
+                className="text-4xl md:text-5xl font-bold font-Agbalumo text-black mb-4 text-center md:text-left"
+              >
+                What is Etomart?
+              </h2>
+              <p className="text-xl text-white font-medium mb-8 text-center md:text-left">
+                Etomart makes it incredibly easy for you to discover and get
+                what you want. Delivered to you – quickly, reliably and
+                affordably.
+              </p>
+              <div className="hidden md:flex md:justify-center md:w-2/3">
+                <button
+                  className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
+                  onClick={handleWatchVideo}
+                  aria-label="Watch video about Etomart"
+                >
+                  Watch Video
+                </button>
+              </div>
+            </div>
+            <div className="md:w-1/2 flex justify-center items-center">
+              <div className="bg-white rounded-lg shadow-md p-1 md:p-4 w-full max-w-md">
+                <div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-lg">
+                  <LazyLoadImage
+                    className="w-full h-full object-cover"
+                    src="/images/website_intro/video-cover-image-4.jpg"
+                    alt="Etomart introduction"
+                    effect="blur"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex mt-8 md:hidden  justify-center">
+            <button
+              className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-300 hover:bg-orange-300"
+              onClick={handleWatchVideo}
+              aria-label="Watch video about Etomart"
+            >
+              Watch Video
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Modal */}
+      {state.isVideoVisible && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={handleOverlayClick}
+        >
+          <div
+            className="bg-white p-4 rounded-lg max-w-3xl w-full"
+            onClick={(e) => e.stopPropagation()} // Prevents the overlay click event
+          >
+            <div className="text-center mb-4">
+              <h3 className="text-4xl font-bold font-Agbalumo">
+                This is Etomart!
+              </h3>
+            </div>
+            <div className="relative aspect-w-16 aspect-h-9">
+              <video
+                ref={videoRef}
+                className="w-full h-full object-cover rounded-lg"
+                controls
+                autoPlay
+                onEnded={handleVideoEnded}
+              >
+                <source
+                  src="/videos/website_intro/etomart_Brand_Intro.mp4"
+                  type="video/mp4"
+                />
+                <source
+                  src="/videos/website_intro/etomart_Brand_Intro.webm"
+                  type="video/webm"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div className="mt-4 flex justify-center">
+              <button
+                className="bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 transition-colors duration-300"
+                onClick={handleGoBack}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Testimonials Section */}
+      <section aria-labelledby="testimonials-title" className="py-8 md:py-16">
+        <div className="container mx-auto px-4 flex flex-col items-center">
+          <h2
+            id="testimonials-title"
+            className="text-center text-3xl md:text-4xl font-bold font-shrikhand text-orange-500 mb-2 md:mb-4"
+          >
+            Testimonials
+          </h2>
+          <h3 className="text-center text-4xl md:text-5xl font-bold font-Agbalumo mb-4 md:mb-8">
+            What Others Are Saying
+          </h3>
+          <p className="text-center text-lg md:text-xl max-w-2xl mx-auto mb-8 md:mb-12 font-josefin_sans font-semibold">
+            Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et
+            elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.
+          </p>
+          <div className="p-4 md:p-6 relative w-full md:max-w-[745px] overflow-hidden">
+            <div className="flex w-full h-[400px] md:h-[580px]">
+              {" "}
+              {/* Adjusted height for mobile */}
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className={`absolute top-8 left-4 right-4 bg-white border border-slate-200 rounded-3xl md:rounded-[200px] shadow-md p-4 md:p-6 transition-all duration-500 ease-in-out ${
+                    state.currentSlide === index
+                      ? "opacity-100 translate-x-0"
+                      : state.currentSlide === (index + 1) % testimonials.length
+                      ? "opacity-0 translate-x-full"
+                      : "opacity-0 -translate-x-full"
+                  }`}
+                >
+                  <div className="flex flex-col items-center justify-center px-2 md:px-6 py-4 md:py-10 w-auto">
+                    <LazyLoadImage
+                      className="h-20 w-20 md:h-[117px] md:w-[117px] rounded-full"
+                      src={testimonial.imageSrc}
+                      alt={`${testimonial.testimonialAuthor}'s avatar`}
+                      effect="blur"
+                    />
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-2 md:gap-4 items-center p-2 w-full">
+                    <div className="flex flex-col items-center justify-center w-full md:w-auto">
+                      <div className="flex items-center justify-center overflow-hidden w-full md:w-[550px] h-20 md:h-[100px]">
+                        <p className="text-center text-sm md:text-lg lg:text-2xl font-josefin_sans font-semibold line-clamp-3">
+                          {testimonial.textBelowImage}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-4 md:gap-6 items-center w-full mt-4">
+                    <div className="flex flex-col items-center justify-center px-2 md:px-6 pb-2 md:pb-4 w-auto">
+                      <div className="flex flex-wrap justify-center gap-2 md:gap-4 items-center p-2 md:p-2 md:mb-4 border border-slate-200 rounded-3xl md:rounded-[200px]  shadow-md md:shadow-bs3 w-full">
+                        {Array.from({ length: 5 }, (_, starIndex) => (
+                          <div
+                            key={starIndex}
+                            className={`flex justify-center items-center w-6 h-6 md:w-10 md:h-10 ${
+                              starIndex < testimonial.numStars
+                                ? "text-orange-400"
+                                : "text-gray-300"
+                            }`}
+                          >
+                            <svg
+                              fill="currentColor"
+                              viewBox="0 0 40 40"
+                              className="w-full h-full"
+                            >
+                              <path d="M9.70801 36.6667L12.4163 24.9583L3.33301 17.0833L15.333 16.0417L19.9997 5L24.6663 16.0417L36.6663 17.0833L27.583 24.9583L30.2913 36.6667L19.9997 30.4583L9.70801 36.6667Z" />
+                            </svg>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex flex-col items-center justify-center px-2 py-2 w-auto mt-2">
+                        <p className="text-lg md:text-xl lg:text-3xl text-center text-gray-500 w-auto font-josefin_sans font-semibold">
+                          {testimonial.testimonialAuthor}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={handlePrevSlide}
+              className="absolute left-0 md:left-8 top-1/2 transform -translate-y-1/2 p-2 md:p-4 bg-white border border-slate-200 shadow-lg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-orange-500 z-10 rounded-full"
+              aria-label="Previous testimonial"
+            >
+              &lt;
+            </button>
+            <button
+              onClick={handleNextSlide}
+              className="absolute right-0 md:right-8 top-1/2 transform -translate-y-1/2 bg-white border border-slate-200 shadow-lg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-orange-500 z-10 rounded-full"
+              aria-label="Next testimonial"
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
+      </section>
+      {/* How it Works Section */}
+      <section
+        aria-labelledby="how-it-works-title"
+        className="bg-[#ee9613] py-16 rounded-bl-[150px] rounded-br-[150px]"
+      >
+        <div className="container mx-auto px-4">
+          <h2
+            id="how-it-works-title"
+            className="text-center text-5xl font-bold font-Agbalumo text-black mb-8"
+          >
             How it Works?
           </h2>
           <p className="text-center text-xl max-w-2xl mx-auto mb-12 text-white font-josefin_sans font-semibold">
-            Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non
-            et elit. Dolor turpis molestie dui magnis facilisis at fringilla
-            quam.
+            Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et
+            elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.
           </p>
           <div className="grid md:grid-cols-3 gap-8 p-6">
             {[
               {
                 icon: "/images/img_materialsymbol.svg",
                 title: "Order at Your convenience",
-                description: "Browse through a wide selection of restaurants and shops, and order your favorite meals, groceries, or other essentials."
+                description:
+                  "Browse through a wide selection of restaurants and shops, and order your favorite meals, groceries, or other essentials.",
               },
               {
                 icon: "/images/img_mdicursorpointer.svg",
                 title: "Fast Delivery",
-                description: "Etomart's fleet of delivery partners ensures your order arrives quickly, so you can enjoy your meals or items wherever and whenever."
+                description:
+                  "Etomart's fleet of delivery partners ensures your order arrives quickly, so you can enjoy your meals or items wherever and whenever.",
               },
               {
                 icon: "/images/img_mditruckdelivery.svg",
                 title: "Convenient Tracking",
-                description: "Track your order in real-time through the Etomart site, so you always know when your delivery is on its way."
-              }
+                description:
+                  "Track your order in real-time through the Etomart site, so you always know when your delivery is on its way.",
+              },
             ].map((item, index) => (
-              <div key={index} className="bg-white rounded-[20px] p-8 text-center">
+              <div
+                key={index}
+                className="bg-white rounded-[20px] p-8 text-center"
+              >
                 <LazyLoadImage
                   src={item.icon}
                   alt={item.title}
@@ -754,55 +984,64 @@ const LandingPage = () => {
       {/* Hungry for More Section */}
       <section aria-labelledby="hungry-for-more-title" className="py-16">
         <div className="container mx-auto px-4">
-          <h2 id="hungry-for-more-title" className="text-center text-5xl font-bold font-Agbalumo mb-12">
+          <h2
+            id="hungry-for-more-title"
+            className="text-center text-5xl font-bold font-Agbalumo mb-12"
+          >
             Hungry for more than food?
           </h2>
           <div className="grid md:grid-cols-3 gap-8 p-6">
-  {[
-    {
-      image: "https://consumer-static-assets.wolt.com/frontpage-assets/courier-card-image.jpg",
-      title: "Get paid as a courier partner.",
-      cta: "Apply now",
-      link: "https://careers.wolt.com"
-    },
-    {
-      image: "https://consumer-static-assets.wolt.com/frontpage-assets/restaurant-card-image.jpg",
-      title: "Serve more people as a restaurant partner",
-      cta: "Apply now",
-      link: "https://careers.wolt.com"
-    },
-    {
-      image: "https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg",
-      title: "Enter a new chapter and find a job at Etomart",
-      cta: "Apply now",
-      link: "https://careers.wolt.com"
-    }
-  ].map((item, index) => (
-    <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="h-80 bg-cover bg-center">
-        <LazyLoadImage
-          src={item.image}
-          alt={item.title}
-          effect="blur"
-          className="w-full h-full object-cover"
-          wrapperClassName="w-full h-full"
-        />
-      </div>
-      <div className="p-6 text-center">
-        <h3 className="text-xl font-bold mb-4 h-16">{item.title}</h3>
-        <a
-          href={item.link}
-          className="inline-block bg-orange-500 text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition-colors"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Apply now for ${item.title}`}
-        >
-          {item.cta}
-        </a>
-      </div>
-    </div>
-  ))}
-</div>
+            {[
+              {
+                image:
+                  "https://consumer-static-assets.wolt.com/frontpage-assets/courier-card-image.jpg",
+                title: "Get paid as a courier partner.",
+                cta: "Apply now",
+                link: "https://careers.wolt.com",
+              },
+              {
+                image:
+                  "https://consumer-static-assets.wolt.com/frontpage-assets/restaurant-card-image.jpg",
+                title: "Serve more people as a restaurant partner",
+                cta: "Apply now",
+                link: "https://careers.wolt.com",
+              },
+              {
+                image:
+                  "https://consumer-static-assets.wolt.com/frontpage-assets/jobs-card-image.jpg",
+                title: "Enter a new chapter and find a job at Etomart",
+                cta: "Apply now",
+                link: "https://careers.wolt.com",
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-md overflow-hidden"
+              >
+                <div className="h-80 bg-cover bg-center">
+                  <LazyLoadImage
+                    src={item.image}
+                    alt={item.title}
+                    effect="blur"
+                    className="w-full h-full object-cover"
+                    wrapperClassName="w-full h-full"
+                  />
+                </div>
+                <div className="p-6 text-center">
+                  <h3 className="text-xl font-bold mb-4 h-16">{item.title}</h3>
+                  <a
+                    href={item.link}
+                    className="inline-block bg-orange-500 text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Apply now for ${item.title}`}
+                  >
+                    {item.cta}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
       <Footer />

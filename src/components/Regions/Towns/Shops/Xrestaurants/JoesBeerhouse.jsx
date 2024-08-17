@@ -605,49 +605,50 @@ function JoesBeerhouse() {
                   </button>
                 </div>
                 <div className="flex flex-col overflow-y-auto h-[200px] md:h-[350px]">
-                 <div className="grid grid-cols-3 gap-4 py-2">
-                  {storescards1.map((store, index) => (
-                    <a
-                      key={index}
-                      href={store.href}
-                      className="flex items-start"
-                      data-test-id="merchant-container-link"
-                    >
-                      <div className="relative w-24">
-                        <img
-                          src={store.imgSrc}
-                          alt={store.name}
-                          className="object-cover w-full h-24 rounded-md"
-                          decoding="async"
-                          loading="lazy"
-                          fetchPriority="high"
-                        />
-                        {store.discount && (
-                          <div
-                            data-testid="venue-discount-label"
-                            className="absolute top-0 right-0 mt-2 mr-2 bg-yellow-400 text-black text-xs px-2 py-1 rounded"
-                          >
-                            -{store.discount}%
+                  <div className="grid grid-cols-3 gap-4 py-2">
+                    {storescards1.map((store, index) => (
+                      <a
+                        key={index}
+                        href={store.href}
+                        className="flex items-start"
+                        data-test-id="merchant-container-link"
+                      >
+                        <div className="relative w-24">
+                          <img
+                            src={store.imgSrc}
+                            alt={store.name}
+                            className="object-cover w-full h-24 rounded-md"
+                            decoding="async"
+                            loading="lazy"
+                            fetchPriority="high"
+                          />
+                          {store.discount && (
+                            <div
+                              data-testid="venue-discount-label"
+                              className="absolute top-0 right-0 mt-2 mr-2 bg-yellow-400 text-black text-xs px-2 py-1 rounded"
+                            >
+                              -{store.discount}%
+                            </div>
+                          )}
+                        </div>
+                        <div className="ml-4">
+                          <h3 data-testid="venue-name" className="font-bold">
+                            {store.name}
+                          </h3>
+                          <div className="flex items-center text-sm">
+                            <span>{store.priceRange}</span>
+                            <span className="mx-1">•</span>
+                            <span>{store.cuisine}</span>
                           </div>
-                        )}
-                      </div>
-                      <div className="ml-4">
-                        <h3 data-testid="venue-name" className="font-bold">
-                          {store.name}
-                        </h3>
-                        <div className="flex items-center text-sm">
-                          <span>{store.priceRange}</span>
-                          <span className="mx-1">•</span>
-                          <span>{store.cuisine}</span>
+                          <div className="text-xs text-gray-500">
+                            Pickup: {store.pickupTime}
+                          </div>
                         </div>
-                        <div className="text-xs text-gray-500">
-                          Pickup: {store.pickupTime}
-                        </div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-                </div> </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>{" "}
+              </div>
             </div>
 
             <div className="flex flex-row p-4 space-x-56">
