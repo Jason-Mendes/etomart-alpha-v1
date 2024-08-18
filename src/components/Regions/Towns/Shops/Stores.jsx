@@ -5,7 +5,6 @@ import Footer from "../../../Footer";
 import OPNavBar from "../../../OPNavBar";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-// Performance benchmarking
 const usePerformanceMeasure = (name) => {
   useEffect(() => {
     performance.mark(`${name}-start`);
@@ -20,19 +19,16 @@ const usePerformanceMeasure = (name) => {
 function Stores() {
   usePerformanceMeasure('Stores');
 
-  // Combined state
   const [state, setState] = useState({
     isLargeScreen: false,
   });
 
-  // Refs for carousels
   const iconscategoriescarouselscroll = useRef(null);
   const storescards1scroll = useRef(null);
   const supermarketsscroll = useRef(null);
 
-  // Icon categories with their respective links and images
   const iconscategories = useMemo(() => [
-    {
+     {
       name: "Grocery",
       imgSrc: "/images/websiteicons/grocery.png",
       href: "/en/discovery/category/grocery",
@@ -129,9 +125,8 @@ function Stores() {
     },
   ], []);
 
-  // List of store cards with details
   const storescards1 = useMemo(() => [
-    {
+ {
       name: "Checkers",
       imgSrc: "/images/supermarkets/checkers.png",
       href: "/en/discovery/category/checkers",
@@ -221,9 +216,8 @@ function Stores() {
       cuisine: "Supermarket",
       pickupTime: "15–30 min",
     },
-  ], []);
+], []);
 
-  // List of supermarkets
   const supermarkets = useMemo(() => [
     {
       name: "Checkers",
@@ -272,7 +266,6 @@ function Stores() {
     },
   ], []);
 
-  // Callbacks
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
@@ -293,7 +286,6 @@ function Stores() {
     return `${start}...${end}`;
   }, []);
 
-  // Effects
   useEffect(() => {
     const handleResize = () => {
       setState((prevState) => ({
@@ -306,105 +298,106 @@ function Stores() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Carousel Component
-const renderCarousel = useCallback((items, scrollRef, scrollLeft, scrollRight) => (
-  <div className="relative mt-4 sm:mt-6 md:mt-8">
-    <div className="container mx-auto px-2 sm:px-4 lg:px-6">
-      <div className="absolute left-0 top-0 bottom-0 w-4 sm:w-8 md:w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute right-0 top-0 bottom-0 w-4 sm:w-8 md:w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-      <button
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 rounded-br-[25px] rounded-tr-[25px] sm:rounded-br-[50px] sm:rounded-tr-[50px] z-20"
-        onClick={() => scrollLeft(scrollRef)}
-        aria-label="Scroll left"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 sm:w-6 sm:h-6 text-white">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <div
-        ref={scrollRef}
-        className="flex overflow-x-auto custom-scrollbar space-x-2 sm:space-x-4 p-2 sm:p-4"
-      >
-        {items.map((item, index) => (
-          <div key={index} className="flex-shrink-0 w-48 xs:w-56 sm:w-64 md:w-72 lg:w-80 p-1 sm:p-2">
-            <a href={item.href} className="block h-full w-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
-              <div className="relative h-28 xs:h-32 sm:h-36 md:h-40 lg:h-44 w-full overflow-hidden rounded-t-lg">
-                <LazyLoadImage
-                  src={item.imgSrc}
-                  alt={item.name}
-                  className="w-full h-full object-fill"
-                />
-              </div>
-              <div className="p-2 sm:p-3 flex flex-col">
-                <p className="text-center font-bold truncate w-full text-sm sm:text-base">{item.name}</p>
-              </div>
-            </a>
-          </div>
-        ))}
-      </div>
-      <button
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 rounded-bl-[25px] rounded-tl-[25px] sm:rounded-bl-[50px] sm:rounded-tl-[50px] z-20"
-        onClick={() => scrollRight(scrollRef)}
-        aria-label="Scroll right"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 sm:w-6 sm:h-6 text-white">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-    </div>
-  </div>
-), []);
-
-// Store Card Component
-const renderStoreCard = useCallback((category, index) => (
-  <div
-    key={index}
-    className="flex items-center justify-center w-full xs:w-full sm:w-full md:w-1/2 lg:w-1/4 p-2"
-  >
-    <a
-      href={category.href}
-      className="block w-64 xs:w-72 sm:w-80 md:w-full lg:w-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-    >
-      <div className="relative h-32 xs:h-36 sm:h-40 md:h-48 lg:h-56 w-full overflow-hidden rounded-t-lg">
-        <LazyLoadImage
-          src={category.imgSrc}
-          alt={category.name}
-          className="w-full h-full object-fill"
-        />
-        {category.isEtomartStore && (
-          <div className="absolute bottom-2 left-2 bg-slate-100 text-black text-xs px-2 py-1 rounded">
-            <span className="text-black">Etomart</span>{" "}
-            <span className="text-orange-500 font-bold">'~'</span>
-          </div>
-        )}
-      </div>
-      <div className="p-2 xs:p-3 sm:p-4 flex flex-col">
-        <p className="text-center font-bold truncate w-full text-sm sm:text-base">{category.name}</p>
-        <div className="flex items-start mt-1 text-xs sm:text-sm">
-          <span className="text-[#ee9613] font-bold">{category.priceRange}</span>
-          <span className="mx-1">•</span>
-          <span>{category.cuisine}</span>
+  const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
+    <div className="relative mt-4 sm:mt-6 md:mt-8">
+      <div className="container mx-auto px-2 sm:px-4 lg:px-6">
+        <div className="absolute left-0 top-0 bottom-0 w-4 sm:w-8 md:w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-4 sm:w-8 md:w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        <button
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 rounded-br-[25px] rounded-tr-[25px] sm:rounded-br-[50px] sm:rounded-tr-[50px] z-20"
+          onClick={() => scrollLeft(scrollRef)}
+          aria-label="Scroll left"
+        >
+          &#9664;
+        </button>
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto custom-scrollbar space-x-4 p-4 sm:p-6 md:p-8"
+        >
+          {items.map((item, index) => itemRenderer(item, index))}
         </div>
-        <div className="text-xs text-gray-500 text-left mt-1">{`Pickup: ${category.pickupTime}`}</div>
-        <div className="text-xs text-left mt-1">
-          <span className="text-black">Etomart </span>
-          {category.deliveryTime ? (
-            <span className="text-[#ee9613] font-bold">Delivery Available</span>
-          ) : (
-            <span className="text-[#ee1313] font-bold">Delivery Not Available</span>
+        <button
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 rounded-bl-[25px] rounded-tl-[25px] sm:rounded-bl-[50px] sm:rounded-tl-[50px] z-20"
+          onClick={() => scrollRight(scrollRef)}
+          aria-label="Scroll right"
+        >
+          &#9654;
+        </button>
+      </div>
+    </div>
+  ), [scrollLeft, scrollRight]);
+
+  const renderSupermarketCard = useCallback((supermarket, index) => (
+    <div key={index} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72 p-6">
+      <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+        <div className="relative w-full aspect-square overflow-hidden rounded-t-lg">
+          <LazyLoadImage
+            src={supermarket.imgSrc}
+            alt={supermarket.name}
+            width="100%"
+            height="100%"
+            className="w-full h-full object-fill" //Use object-contain to ensure the logo fits within the square container without distortion or use object-cover to ensure the image fills the container while maintaining its aspect ratio.
+            effect="opacity"
+          />
+        </div>
+        <div className="p-3 sm:p-4">
+          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{supermarket.name}</p>
+        </div>
+      </a>
+    </div>
+  ), []);
+  
+  const renderStoreCard = useCallback((category, index) => (
+    <div
+      key={index}
+      className="flex items-center justify-center w-full xs:w-full sm:w-full md:w-1/3 lg:w-1/4 p-2"
+    >
+      <a href={category.href}
+        className="block w-64 xs:w-72 sm:w-80 md:w-full lg:w-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
+      >
+        <div className="relative w-full aspect-video overflow-hidden rounded-t-lg">
+          <LazyLoadImage
+            src={category.imgSrc}
+            alt={category.name}
+            width="100%"
+            height="100%"
+            className="w-full h-full object-fill"
+            effect="opacity"
+          />
+          {category.isEtomartStore && (
+            <div className="absolute bottom-2 left-2 bg-slate-100 text-black text-xs px-2 py-1 rounded">
+              <span className="text-black">Etomart</span>{" "}
+              <span className="text-orange-500 font-bold">'~'</span>
+            </div>
           )}
         </div>
-      </div>
-    </a>
-  </div>
-), []);
+        <div className="p-2 xs:p-3 sm:p-4 flex flex-col">
+          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{category.name}</p>
+          <div className="flex items-start mt-1 text-xs sm:text-sm">
+            <span className="text-[#ee9613] font-bold">{category.priceRange}</span>
+            <span className="mx-1">•</span>
+            <span>{category.cuisine}</span>
+          </div>
+          <div className="text-xs text-gray-500 text-left mt-1">{`Pickup: ${category.pickupTime}`}</div>
+          <div className="text-xs text-left mt-1">
+            <span className="text-black">Etomart </span>
+            {category.deliveryTime ? (
+              <span className="text-[#ee9613] font-bold">Delivery Available</span>
+            ) : (
+              <span className="text-[#ee1313] font-bold">Delivery Not Available</span>
+            )}
+          </div>
+        </div>
+      </a>
+    </div>
+  ), []);
   return (
     <div className="bg-white">
       <OPNavBar />
       <main className="relative z-10">
         {/* Navigation Tabs */}
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-        <div
+          <div
             className="relative z-10 flex justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[50px] sm:rounded-bl-[100px] md:rounded-bl-[150px] rounded-br-[50px] sm:rounded-br-[100px] md:rounded-br-[150px] shadow-xl p-4 sm:p-6 md:p-10"
             style={{ width: "50%", maxWidth: "100vw", margin: "0 auto" }}
           >
@@ -478,49 +471,25 @@ const renderStoreCard = useCallback((category, index) => (
         </nav>
 
         {/* Icon Categories Carousel */}
-        <div className="relative mt-8 sm:mt-12 md:mt-16">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 md:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-12 md:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-            <button
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 sm:p-2 rounded-br-[50px] rounded-tr-[50px] sm:rounded-br-[100px] sm:rounded-tr-[100px] z-20"
-              onClick={() => scrollLeft(iconscategoriescarouselscroll)}
-              aria-label="Scroll left"
-            >
-              &#9664;
-            </button>
-            <div
-              ref={iconscategoriescarouselscroll}
-              className="flex overflow-x-auto custom-scrollbar space-x-4 p-4 sm:p-6 md:p-8"
-            >
-              {iconscategories.map((category, index) => (
-                <div key={index} className="flex-shrink-0">
-                  <a href={category.href} className="block">
-                    <div className="flex flex-col items-center w-16 sm:w-20 md:w-24">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center">
-                        <img
-                          src={category.imgSrc}
-                          alt={category.name}
-                          className="w-full h-full object-fill"
-                        />
-                      </div>
-                      <p className="text-center text-xs sm:text-sm mt-1 truncate w-full">
-                        {category.name}
-                      </p>
-                    </div>
-                  </a>
+        {renderCarousel(iconscategories, iconscategoriescarouselscroll, (category, index) => (
+          <div key={index} className="flex-shrink-0">
+            <a href={category.href} className="block">
+              <div className="flex flex-col items-center w-16 sm:w-20 md:w-24">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center">
+                  <LazyLoadImage
+                    src={category.imgSrc}
+                    alt={category.name}
+                    className="w-full h-full object-fill"
+                    effect="blur"
+                  />
                 </div>
-              ))}
-            </div>
-            <button
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 sm:p-2 rounded-bl-[50px] rounded-tl-[50px] sm:rounded-bl-[100px] sm:rounded-tl-[100px] z-20"
-              onClick={() => scrollRight(iconscategoriescarouselscroll)}
-              aria-label="Scroll right"
-            >
-              &#9654;
-            </button>
+                <p className="text-center text-xs sm:text-sm mt-1 truncate w-full">
+                  {truncateMiddle(category.name, 20)}
+                </p>
+              </div>
+            </a>
           </div>
-        </div>
+        ))}
 
         {/* Supermarkets Near Me Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
@@ -535,8 +504,7 @@ const renderStoreCard = useCallback((category, index) => (
         </section>
 
         {/* Supermarkets Carousel */}
-        
-        {renderCarousel(supermarkets, supermarketsscroll, renderStoreCard)}
+        {renderCarousel(supermarkets, supermarketsscroll, renderSupermarketCard)}
 
         {/* Supermarkets All Near Me Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
@@ -558,7 +526,6 @@ const renderStoreCard = useCallback((category, index) => (
         </div>
       </main>
       
-      {/* Footer */}
       <Footer />
     </div>
   );

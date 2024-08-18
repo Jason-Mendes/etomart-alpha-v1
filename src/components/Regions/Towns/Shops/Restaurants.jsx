@@ -1,11 +1,34 @@
-import React, { useState, useEffect, useRef } from "react";
-
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import PropTypes from 'prop-types';
 import Footer from "../../../Footer";
 import OPNavBar from "../../../OPNavBar";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
-const Restaurants = () => {
-  // Icon categories for carousel
-  const iconscategories = [
+const usePerformanceMeasure = (name) => {
+  useEffect(() => {
+    performance.mark(`${name}-start`);
+    return () => {
+      performance.mark(`${name}-end`);
+      performance.measure(name, `${name}-start`, `${name}-end`);
+      console.log(performance.getEntriesByName(name));
+    };
+  }, [name]);
+};
+
+function Restaurants() {
+  usePerformanceMeasure('Restaurants');
+
+  const [state, setState] = useState({
+    isLargeScreen: false,
+  });
+
+  const iconscategoriescarouselscroll = useRef(null);
+  const restaurantsscroll = useRef(null);
+  const storescards1scroll = useRef(null);
+
+  const iconscategories = useMemo(() => [
+   // Icon categories for carousel
     {
       name: "Grocery",
       imgSrc: "/images/websiteicons/grocery.png",
@@ -101,20 +124,10 @@ const Restaurants = () => {
       imgSrc: "/images/websiteicons/alcohol.png",
       href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
     },
-  ];
+  ], []);
 
-  // Truncate string in the middle
-  const truncateMiddle = (str, maxLength) => {
-    if (str.length <= maxLength) return str;
-    const middleIndex = Math.floor(maxLength / 2);
-    const start = str.substring(0, middleIndex);
-    const end = str.substring(str.length - middleIndex);
-    return `${start}...${end}`;
-  };
-
-  // Stores cards for restaurants
-  const storescards1 = [
-    {
+  const storescards1 = useMemo(() => [
+        {
       name: "The Stellenbosch Wine Bar",
       imgSrc: "/images/restaurants/stellenbosch.png",
       href: "/en/discovery/category/stellenbosch",
@@ -164,10 +177,10 @@ const Restaurants = () => {
       cuisine: "Coffee",
       pickupTime: "10–20 min",
     },
-  ];
+  ], []);
 
-  const restaurants = [
-    {
+  const restaurants = useMemo(() => [
+   {
       name: "Joe's Beerhouse",
       imgSrc: "/images/restaurants/joesbeerhouse.png",
       href: "/en/discovery/category/joesbeerhouse",
@@ -197,47 +210,145 @@ const Restaurants = () => {
       imgSrc: "/images/restaurants/slowtown.png",
       href: "/en/discovery/category/slowtown",
     },
-  ];
+  ], []);
 
-  // References for carousel scrolling
-  const iconscategoriescarouselscroll = useRef(null);
-  const restaurantsscroll = useRef(null);
-
-  // Scroll functions
-  const scrollLeft = (carouselRef) => {
+  const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
     }
-  };
+  }, []);
 
-  const scrollRight = (carouselRef) => {
+  const scrollRight = useCallback((carouselRef) => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: 200, behavior: "smooth" });
     }
-  };
+  }, []);
 
-  // Footer functions
-  const handleLanguageChange = () => {
-    // Handle language change logic here
-  };
+  const truncateMiddle = useCallback((str, maxLength) => {
+    if (str.length <= maxLength) return str;
+    const middleIndex = Math.floor(maxLength / 2);
+    const start = str.substring(0, middleIndex);
+    const end = str.substring(str.length - middleIndex);
+    return `${start}...${end}`;
+  }, []);
 
-  const handleAccessibilitySettingsOpen = () => {
-    // Handle accessibility settings opening logic here
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setState((prevState) => ({
+        ...prevState,
+        isLargeScreen: window.innerWidth >= 640,
+      }));
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
+    <div className="relative mt-8 sm:mt-12 md:mt-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 md:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-12 md:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        <button
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 sm:p-2 rounded-br-[50px] rounded-tr-[50px] sm:rounded-br-[100px] sm:rounded-tr-[100px] z-20"
+          onClick={() => scrollLeft(scrollRef)}
+          aria-label="Scroll left"
+        >
+          &#9664;
+        </button>
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto custom-scrollbar space-x-4 p-4 sm:p-6 md:p-8"
+        >
+          {items.map((item, index) => itemRenderer(item, index))}
+        </div>
+        <button
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 sm:p-2 rounded-bl-[50px] rounded-tl-[50px] sm:rounded-bl-[100px] sm:rounded-tl-[100px] z-20"
+          onClick={() => scrollRight(scrollRef)}
+          aria-label="Scroll right"
+        >
+          &#9654;
+        </button>
+      </div>
+    </div>
+  ), [scrollLeft, scrollRight]);
+
+  const renderRestaurantCard = useCallback((restaurant, index) => (
+    <div key={index} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72 p-2">
+      <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+        <div className="relative w-full aspect-video overflow-hidden rounded-t-lg">
+          <LazyLoadImage
+            src={restaurant.imgSrc}
+            alt={restaurant.name}
+            width="100%"
+            height="100%"
+            className="w-full h-full object-fill"
+            effect="opacity"
+          />
+        </div>
+        <div className="p-3 sm:p-4">
+          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{restaurant.name}</p>
+        </div>
+      </a>
+    </div>
+  ), []);
+  
+  const renderStoreCard = useCallback((category, index) => (
+    <div
+      key={index}
+      className="flex items-center justify-center w-full xs:w-full sm:w-full md:w-1/2 lg:w-1/4 p-2"
+    >
+      <a href={category.href}
+        className="block w-64 xs:w-72 sm:w-80 md:w-full lg:w-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
+      >
+        <div className="relative w-full aspect-video overflow-hidden rounded-t-lg">
+          <LazyLoadImage
+            src={category.imgSrc}
+            alt={category.name}
+            width="100%"
+            height="100%"
+            className="w-full h-full object-fill"
+            effect="opacity"
+          />
+          {category.storetype && (
+            <div className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-1 rounded-tr-full rounded-br-full">
+              {category.storetype}
+            </div>
+          )}
+          {category.isEtomartStore && (
+            <div className="absolute bottom-2 left-2 bg-slate-100 text-black text-xs px-2 py-1 rounded">
+              <span className="text-black">Etomart</span>{" "}
+              <span className="text-orange-500 font-bold">'~'</span>
+            </div>
+          )}
+        </div>
+        <div className="p-2 xs:p-3 sm:p-4 flex flex-col">
+          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{category.name}</p>
+          <div className="flex items-start mt-1 text-xs sm:text-sm">
+            <span className="text-[#ee9613] font-bold">{category.priceRange}</span>
+            <span className="mx-1">•</span>
+            <span>{category.cuisine}</span>
+          </div>
+          <div className="text-xs text-gray-500 text-left mt-1">{`Pickup: ${category.pickupTime}`}</div>
+        </div>
+      </a>
+    </div>
+  ), []);
+  
 
   return (
-    <div>
+    <div className="bg-white">
       <OPNavBar />
-      <div className="relative z-10">
-        {/* Main Section */}
-        <div
-          id="LP_section_5_orange"
-          className="relative z-10 flex justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[150px] rounded-br-[150px] shadow-xl md:h-auto md:p-10 h-auto p-10"
-          style={{ width: "65%", maxWidth: "100vw", margin: "0 auto" }}
-        >
-          <div className="relative z-10 flex items-center justify-center w-full mb-0">
-            <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
-              <div role="tablist" className="flex space-x-2 gap-2">
+      <main className="relative z-10">
+        {/* Navigation Tabs */}
+        <nav className="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+          <div
+            className="relative z-10 flex justify-center bg-[#ee9613] border border-solid border-white-A700_19 rounded-bl-[50px] sm:rounded-bl-[100px] md:rounded-bl-[150px] rounded-br-[50px] sm:rounded-br-[100px] md:rounded-br-[150px] shadow-xl p-4 sm:p-6 md:p-10"
+            style={{ width: "50%", maxWidth: "100vw", margin: "0 auto" }}
+          >
+            <div className="relative z-10 flex items-center justify-center w-full mb-0">
+              <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
+               <div role="tablist" className="flex space-x-2 gap-2">
                 <a
                   role="tab"
                   aria-selected="false"
@@ -299,197 +410,74 @@ const Restaurants = () => {
                   <span className="text-black">Pharmacies</span>
                 </a>
               </div>
+              </div>
             </div>
           </div>
-        </div>
+        </nav>
 
-        {/* Icon Carousel */}
-        <div className="relative">
-          {/* Left Fade */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          {/* Right Fade */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-          {/* Left Button */}
-          <button
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-2 rounded-br-[150px] rounded-tr-[150px] z-20"
-            onClick={() => scrollLeft(iconscategoriescarouselscroll)}
-          >
-            &#9664; {/* Left Arrow */}
-          </button>
-          {/* Icon Carousel Container */}
-          <div
-            ref={iconscategoriescarouselscroll}
-            className="flex space-x-4 p-4 mb-6 overflow-hidden custom-scrollbar"
-          >
-            {iconscategories.map((category, iconsindex) => (
-              <div key={iconsindex} className="navigationrefrencelink">
-                <a href={category.href}>
-                  <div className="min-w-[100px] flex-shrink-0 flex flex-col items-center">
-                    <div className="w-14 h-14 flex items-center justify-center">
-                      <img
-                        src={category.imgSrc}
-                        alt={category.name}
-                        className="w-14 h-14 object-cover"
-                      />
-                    </div>
-                    <div className="w-32 overflow-hidden">
-                      <p className="text-center mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                        {truncateMiddle(category.name, 30)}
-                      </p>
-                    </div>
-                  </div>
-                </a>
+        {/* Icon Categories Carousel */}
+        {renderCarousel(iconscategories, iconscategoriescarouselscroll, (category, index) => (
+          <div key={index} className="flex-shrink-0">
+            <a href={category.href} className="block">
+              <div className="flex flex-col items-center w-16 sm:w-20 md:w-24">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center">
+                  <LazyLoadImage
+                    src={category.imgSrc}
+                    alt={category.name}
+                    className="w-full h-full object-fill"
+                    effect="blur"
+                  />
+                </div>
+                <p className="text-center text-xs sm:text-sm mt-1 truncate w-full">
+                  {truncateMiddle(category.name, 20)}
+                </p>
               </div>
-            ))}
+            </a>
           </div>
-          {/* Right Button */}
-          <button
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] rounded-bl-[150px] rounded-tl-[150px] p-2 z-20"
-            onClick={() => scrollRight(iconscategoriescarouselscroll)}
-          >
-            &#9654; {/* Right Arrow */}
-          </button>
-        </div>
-        {/* Carousel ends*/}
+        ))}
 
         {/* Restaurants Near Me Section */}
-        <div
-          id="another_section"
-          className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10"
-          style={{ width: "35%", maxWidth: "1000px" }}
-        >
-          <p className="flex items-start justify-start text-left md:text-4xl text-5xl text-black w-auto font-bold font-Agbalumo ">
-            Restaurants Near Me
-          </p>
-        </div>
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
+          <div
+            className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
+            style={{ width: "50%", maxWidth: "1000px" }}
+          >
+            <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
+              Restaurants Near Me
+            </h2>
+          </div>
+        </section>
 
         {/* Restaurants Carousel */}
-        <div className="relative">
-          {/* Left Fade */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          {/* Right Fade */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-          {/* Left Button */}
-          <button
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-2 rounded-br-[150px] rounded-tr-[150px] z-20"
-            onClick={() => scrollLeft(restaurantsscroll)}
-          >
-            &#9664; {/* Left Arrow */}
-          </button>
-          {/* Restaurants Carousel Container */}
+        {renderCarousel(restaurants, restaurantsscroll, renderRestaurantCard)}
+
+        {/* All Restaurants Near Me Section */}
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
-            ref={restaurantsscroll}
-            className="flex overflow-hidden custom-scrollbar space-x-4 m-4 p-10"
+            className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
+            style={{ width: "60%", maxWidth: "1000px" }}
           >
-            {restaurants.map((category, shopsindex) => (
-              <div key={shopsindex} className="navigationrefrencelink">
-                <a href={category.href}>
-                  <div className="flex-col items-center justify-center rounded-t-lg bg-slate-50 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
-                    <div className="w-52 h-48 overflow-hidden">
-                      <img
-                        src={category.imgSrc}
-                        alt={category.name}
-                        loading="lazy"
-                        decoding="async"
-                        sizes="(min-width: 1200px) 17vw, (min-width: 1000px) 20vw, (min-width: 640px) 25vw, (min-width: 0px) 30vw, 100vw"
-                        className="w-52 h-48 object-fill rounded-t-lg"
-                      />
-                    </div>
-                    <p className="text-center text-lg mt-2 whitespace-nowrap overflow-hidden overflow-ellipsis font-bold p-4">
-                      {truncateMiddle(category.name, 20)}
-                    </p>
-                  </div>
-                </a>
-              </div>
-            ))}
+            <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
+              All Restaurants Near Me
+            </h2>
           </div>
-          {/* Right Button */}
-          <button
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] rounded-bl-[150px] rounded-tl-[150px] p-2 z-20"
-            onClick={() => scrollRight(restaurantsscroll)}
-          >
-            &#9654; {/* Right Arrow */}
-          </button>
-        </div>
-        {/* Restaurants Carousel ends*/}
+        </section>
 
-        {/* Restaurants All Near Me Section */}
-        <div
-          id="another_section"
-          className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[150px] rounded-br-[150px] shadow-xl relative md:h-auto md:p-10 h-auto p-10"
-          style={{ width: "100%", maxWidth: "1000px" }}
-        >
-          <p className="flex items-start justify-start text-left md:text-4xl text-5xl text-black w-auto font-bold font-Agbalumo ">
-            Restaurants All Near Me
-          </p>
+        {/* Restaurant Cards Container */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+          <div className="flex flex-wrap -mx-2">
+            {storescards1.map((category, index) => renderStoreCard(category, index))}
+          </div>
         </div>
-
-        {/* Stores Cards */}
-        <div ref={storescards1} className="flex flex-wrap justify-start">
-          {storescards1.map((category, shopsindex) => (
-            <div
-              key={shopsindex}
-              className="navigationrefrencelink flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
-            >
-              <a
-                href={category.href}
-                className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-              >
-                <div className="flex flex-col items-start justify-start h-full">
-                  <div className="relative w-full h-full">
-                    <img
-                      src={category.imgSrc}
-                      alt={category.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="object-fill w-full h-full rounded-t-lg"
-                      fetchPriority="high"
-                    />
-                    {category.storetype && (
-                      <div
-                        data-testid="venue-storetype-label"
-                        className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-2 rounded-tr-full rounded-br-full"
-                      >
-                        {category.storetype}
-                      </div>
-                    )}
-                    {category.isEtomartStore && (
-                      <div
-                        data-test-id="venue-badges"
-                        className="absolute bottom-0 left-0 ml-2 mb-2 bg-slate-100 text-black text-xs px-2 py-1 rounded"
-                      >
-                        <span className="text-black">Etomart</span>{" "}
-                        <span className="text-orange-500 font-bold">'~'</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-2 w-full">
-                    <h3 data-testid="venue-name" className="font-bold">
-                      {category.name}
-                    </h3>
-                    <div className="flex items-center text-sm">
-                      <div className="text-[#ee9613] text-sm font-bold">
-                        <span>{category.priceRange}</span>
-                      </div>
-                      <span className="mx-1">•</span>
-                      <span>{category.cuisine}</span>
-                    </div>
-                    <div className="text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          ))}
-        </div>
-        {/* Stores Cards ends*/}
-
-        {/* Footer */}
-        <footer>
-          <Footer />
-        </footer>
-      </div>
+      </main>
+      
+      <Footer />
     </div>
   );
+}
+
+Restaurants.propTypes = {
+  // Add prop types here if needed
 };
 
 export default Restaurants;
