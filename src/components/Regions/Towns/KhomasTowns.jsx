@@ -1191,20 +1191,20 @@ function KhomasTowns() {
   ), [scrollLeft, scrollRight]);
 
   const renderStoreCard = useCallback((category, index) => (
+    
     <div
-      key={index}
-      className="flex-shrink-0 w-48 sm:w-56 md:w-64 h-72 sm:h-80 md:h-88"
+    key={index}
+    className="flex-shrink-0 w-48 sm:w-56 md:w-64 h-72 sm:h-80 md:h-96"
+  >
+    <a href={category.href}
+      className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
     >
-      
-       <a href={category.href}
-        className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-      >
-        <div className="relative h-3/5 overflow-hidden rounded-t-lg">
-          <LazyLoadImage
+      <div className="relative h-40 sm:h-52 md:h-64 lg:h-64 w-full overflow-hidden rounded-t-lg">
+  
+          <img
             src={category.imgSrc}
             alt={category.name}
-            className="w-full h-full object-cover"
-            effect="blur"
+            className="w-full h-full object-fill" // Ensure image fits the card properly
           />
           {category.storetype && (
             <div data-testid="venue-storetype-label" className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-2 rounded-tr-full rounded-br-full">
@@ -1238,6 +1238,7 @@ function KhomasTowns() {
       </a>
     </div>
   ), [truncateMiddle]);
+
 
   return (
     <div className="bg-white">
@@ -1459,7 +1460,7 @@ function KhomasTowns() {
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
             className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
-            style={{ width: "45%", maxWidth: "1000px" }}
+            style={{ width: "50%", maxWidth: "1000px" }}
           >
             <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
               Supermarkets Near Me
@@ -1474,7 +1475,7 @@ function KhomasTowns() {
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
             className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
-            style={{ width: "45%", maxWidth: "1000px" }}
+            style={{ width: "50%", maxWidth: "1000px" }}
           >
             <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
               Restaurants Near Me
@@ -1489,7 +1490,7 @@ function KhomasTowns() {
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
             className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
-            style={{ width: "45%", maxWidth: "1000px" }}
+            style={{ width: "50%", maxWidth: "1000px" }}
           >
             <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
               Pharmacies Near Me
