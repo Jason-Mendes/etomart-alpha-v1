@@ -139,7 +139,7 @@ function Pharmacies() {
     {
       name: "Clicks Pharmacy",
       imgSrc: "/images/pharmacies/clicks.png",
-      href: "/en/discovery/category/clicks",
+      href: "/LP/Khomas/Towns/Pharmacy/Clicks",
       discount: 5,
       isEtomartStore: false,
       priceRange: "N$$",
@@ -197,7 +197,7 @@ function Pharmacies() {
     {
       name: "Clicks Pharmacy",
       imgSrc: "/images/pharmacies/clicks.png",
-      href: "/en/discovery/category/clicks",
+      href: "/LP/Khomas/Towns/Pharmacy/Clicks",
     },
     {
       name: "Nampharm Pharmacy",

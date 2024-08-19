@@ -332,7 +332,7 @@ function JoesBeerhouse() {
     {
        name: "Joe's Beerhouse",
        imgSrc: "/images/restaurants/joesbeerhouse.png",
-       href: "/en/discovery/category/joesbeerhouse",
+       href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
      },
      {
        name: "The Stellenbosch Wine Bar",
@@ -829,7 +829,7 @@ const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
           </div>
           <section className="my-8">
             <div className="container mx-auto px-4">
-              <div className="overflow-y-auto h-[350px] sm:h-[350px] md:h-[350px] lg:h-[450px]">
+              <div className="overflow-y-auto h-[450px] sm:h-[450px] md:h-[450px] lg:h-[450px]">
                 <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                   {storescards1.map((store, index) => (
                     <a

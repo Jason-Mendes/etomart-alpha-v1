@@ -183,7 +183,7 @@ function Restaurants() {
    {
       name: "Joe's Beerhouse",
       imgSrc: "/images/restaurants/joesbeerhouse.png",
-      href: "/en/discovery/category/joesbeerhouse",
+      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
     },
     {
       name: "The Stellenbosch Wine Bar",

@@ -129,7 +129,7 @@ function Stores() {
  {
       name: "Checkers",
       imgSrc: "/images/supermarkets/checkers.png",
-      href: "/en/discovery/category/checkers",
+      href: "/LP/Khomas/Towns/Store/Checkers",
       discount: 10,
       isEtomartStore: false,
       priceRange: "N$$",
@@ -222,7 +222,7 @@ function Stores() {
     {
       name: "Checkers",
       imgSrc: "/images/supermarkets/checkers.png",
-      href: "/en/discovery/category/checkers",
+      href: "/LP/Khomas/Towns/Store/Checkers",
     },
     {
       name: "Shoprite",

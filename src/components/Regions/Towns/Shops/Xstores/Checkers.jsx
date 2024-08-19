@@ -912,7 +912,7 @@ function Checkers() {
 
            
               {/* Products grid */}
-              <section className="w-3/4">
+              <section className="w-full md:w-3/4">
       <div className="px-4">
         <div className="flex items-center p-4">
           <h2 className="text-2xl font-bold">All Products</h2>
@@ -931,14 +931,14 @@ function Checkers() {
           </div>
         </div>
 
-        <div className="overflow-y-auto h-[600px] md:h-[850px]">
+        <div className="overflow-y-auto h-[600px] sm:h-[700px] md:h-[850px]">
           <div className="px-2 pb-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-              {storescards1.map((category, shopsindex) => (
-                <div
-                  key={shopsindex}
-                  className="w-full"
-                >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+  {storescards1.map((category, shopsindex) => (
+    <div
+      key={shopsindex}
+      className="w-full max-w-[180px] sm:max-w-[400px] mx-auto sm:mx-0"
+    >
                   <a href={category.href}
                     className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
                   >
@@ -950,14 +950,14 @@ function Checkers() {
                           width="100%"
                           height="100%"
                           effect="blur"
-                          className="object-fill w-full h-full"
+                          className="object-cover w-full h-full"
                         />
                         {category.discount && (
                           <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#ee9613] text-white text-xs px-2 py-1 rounded">
                             {`-${category.discount}%`}
                           </div>
                         )}
-                        <div className="absolute bottom-2 right-2 bg-[#ee9613] text-white text-lg w-12 h-8 flex items-center justify-center rounded">
+                       <div className="absolute bottom-2 right-2 bg-[#ee9613] text-white text-lg w-12 h-8 flex items-center justify-center rounded">
                           +
                         </div>
                       </div>
