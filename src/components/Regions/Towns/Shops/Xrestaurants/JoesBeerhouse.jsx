@@ -37,6 +37,7 @@ function JoesBeerhouse() {
   const containerRef = useRef(null);
   const dropdownRef = useRef(null);
   const mapContainerRef = useRef(null);
+  const restaurantsscroll = useRef(null);
 
   // Memoized data
   const cards = useMemo(() => [
@@ -98,7 +99,7 @@ function JoesBeerhouse() {
     // Add more cards as needed
   ], []);
 
-  const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
+ 
 
   const storescards1 = useMemo(() => [
     {
@@ -327,15 +328,57 @@ function JoesBeerhouse() {
     // Add more items as needed
   ], []);
 
-  // Mapbox setup
-  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+  const restaurants = useMemo(() => [
+    {
+       name: "Joe's Beerhouse",
+       imgSrc: "/images/restaurants/joesbeerhouse.png",
+       href: "/en/discovery/category/joesbeerhouse",
+     },
+     {
+       name: "The Stellenbosch Wine Bar",
+       imgSrc: "/images/restaurants/stellenbosch.png",
+       href: "/en/discovery/category/stellenbosch",
+     },
+     {
+       name: "O Portuga",
+       imgSrc: "/images/restaurants/oportuga.png",
+       href: "/en/discovery/category/oportuga",
+     },
+     {
+       name: "The Social",
+       imgSrc: "/images/restaurants/thesocial.png",
+       href: "/en/discovery/category/thesocial",
+     },
+     {
+       name: "Sardinia Blue Olive",
+       imgSrc: "/images/restaurants/sardiniablueolive.png",
+       href: "/en/discovery/category/sardiniablueolive",
+     },
+     {
+       name: "Slowtown Coffee Roasters",
+       imgSrc: "/images/restaurants/slowtown.png",
+       href: "/en/discovery/category/slowtown",
+     },
+   ], []);
+ 
 
-  const MARKER_COORDINATES = [
-    { lng: 17.090396711968985, lat: -22.550459904783143 }, // Joe's Beerhouse
-    { lng: 17.073723364157306, lat: -22.561939983264068 }, // User's home
-  ];
+  const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
+
+  
 
   // Callbacks
+ const scrollLeft = useCallback((carouselRef) => {
+  if (carouselRef.current) {
+    carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
+  }
+}, []);
+
+const scrollRight = useCallback((carouselRef) => {
+  if (carouselRef.current) {
+    carouselRef.current.scrollBy({ left: 200, behavior: "smooth" });
+  }
+}, []);
+
   const handleNext = useCallback(() => {
     setState(prevState => ({ ...prevState, currentIndex: prevState.currentIndex + 1 }));
   }, []);
@@ -372,13 +415,25 @@ function JoesBeerhouse() {
     pauseScroll();
   }, [pauseScroll]);
 
-  const addToFavorites = useCallback(() => {
-    toast.success("Store added to favorites");
+  const toggleFavorite = useCallback(() => {
+    setState(prevState => {
+      const newIsFavorite = !prevState.isFavorite;
+      toast.success(newIsFavorite ? "Store added to favorites" : "Store removed from favorites");
+      return { ...prevState, isFavorite: newIsFavorite };
+    });
   }, []);
 
   const getMoreInfo = useCallback(() => {
     alert("More information about the store");
   }, []);
+
+  // Mapbox setup
+  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+
+  const MARKER_COORDINATES = [
+    { lng: 17.090396711968985, lat: -22.550459904783143 }, // Joe's Beerhouse
+    { lng: 17.073723364157306, lat: -22.561939983264068 }, // User's home
+  ];
 
   const initializeMap = useCallback((mapContainer) => {
     if (!mapContainer) return;
@@ -482,6 +537,86 @@ function JoesBeerhouse() {
     };
   }, [state.isDropdownOpen]);
 
+  // Render helpers
+const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
+  <div className="relative mt-4 sm:mt-6 md:mt-8">
+    <div className="container mx-auto px-2 sm:px-4 lg:px-6">
+      <div className="absolute left-0 top-0 bottom-0 w-4 sm:w-8 md:w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-4 sm:w-8 md:w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+      <button
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 rounded-br-[25px] rounded-tr-[25px] sm:rounded-br-[50px] sm:rounded-tr-[50px] z-20"
+        onClick={() => scrollLeft(scrollRef)}
+        aria-label="Scroll left"
+      >
+        &#9664;
+      </button>
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-auto custom-scrollbar space-x-4 p-4 sm:p-6 md:p-8"
+      >
+        {items.map((item, index) => itemRenderer(item, index))}
+      </div>
+      <button
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 rounded-bl-[25px] rounded-tl-[25px] sm:rounded-bl-[50px] sm:rounded-tl-[50px] z-20"
+        onClick={() => scrollRight(scrollRef)}
+        aria-label="Scroll right"
+      >
+        &#9654;
+      </button>
+    </div>
+  </div>
+), [scrollLeft, scrollRight]);
+
+const renderRestaurantCard = useCallback((restaurant, index) => (
+  <div key={index} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72 p-6">
+    <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+      <div className="relative w-full aspect-square overflow-hidden rounded-t-lg">
+        <LazyLoadImage
+          src={restaurant.imgSrc}
+          alt={restaurant.name}
+          width="100%"
+          height="100%"
+          className="w-full h-full object-fill"
+          effect="opacity"
+        />
+      </div>
+      <div className="p-3 sm:p-4">
+        <p className="text-center font-bold truncate w-full text-sm sm:text-base">{restaurant.name}</p>
+      </div>
+    </a>
+  </div>
+), []);
+
+const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
+  const words = text.split(" ");
+  let truncatedText = "";
+  let lineCount = 2;
+  let charCount = 3;
+
+  for (const word of words) {
+    if (lineCount < maxLines) {
+      if (charCount + word.length + 1 <= maxCharsPerLine) {
+        truncatedText += " " + word;
+        charCount += word.length + 1;
+      } else {
+        truncatedText += "\n" + word;
+        charCount = word.length + 1;
+        lineCount++;
+      }
+    } else {
+      break;
+    }
+  }
+
+  if (lineCount >= maxLines) {
+    truncatedText += "...";
+  }
+
+  return truncatedText;
+}, []);
+
+
+
   // JSX
   return (
     <div className="bg-white">
@@ -489,69 +624,75 @@ function JoesBeerhouse() {
       <main className="relative z-10">
         {/* Header section */}
         <header className="relative">
-          <div className="relative">
-            <LazyLoadImage
+        <div className="relative">
+        <LazyLoadImage
               src="/images/restaurants/joesbeerhouse.png"
               alt="Joe's Beerhouse"
               effect="blur"
               className="w-full h-[510px] object-scale-down"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+        <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
+          <div className="px-4">
+            <h1 className="text-white text-4xl font-bold">Joe's Beerhouse</h1>
+            <p className="text-white text-lg">Est 1991</p>
+            {/* Favorite Button */}
+            <button
+              data-test-id="venue-favorite"
+              aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+              onClick={toggleFavorite}
+              className="mt-2 text-white p-2 rounded-full hover:bg-white hover:text-black transition duration-200"
+            >
+              <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                {state.isFavorite ? (
+                  <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498Z" />
+                ) : (
+                  <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498ZM20.657 11.151L12.357 19.696C12.2628 19.7928 12.1335 19.8474 11.9985 19.8474C11.8634 19.8474 11.7341 19.7928 11.64 19.696L3.32699 11.136C1.94998 9.78618 1.60717 7.69937 2.47999 5.97998C3.13326 4.68428 4.37197 3.78375 5.80599 3.56198C7.26664 3.31621 8.75572 3.79456 9.79999 4.84498L11.33 6.24498C11.7117 6.59273 12.2953 6.59273 12.677 6.24498L14.238 4.82198C15.278 3.7873 16.7534 3.3181 18.2 3.56198C19.6323 3.78494 20.869 4.68536 21.521 5.97998C22.3943 7.7072 22.0444 9.8015 20.657 11.151Z" />
+                )}
+              </svg>
+            </button>
           </div>
-          <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
-            <div className="px-4">
-              <h1 className="text-white text-4xl font-bold">Joe's Beerhouse</h1>
-              <p className="text-white text-lg">Est 1991</p>
-              <button
-                data-test-id="venue-favorite"
-                aria-label="Add to Favorites"
-                onClick={addToFavorites}
-                className="mt-2 text-white p-2 rounded-full hover:bg-white hover:text-black transition duration-200"
+          <div className="px-4">
+            <button
+              aria-label="More options"
+              className="text-white p-2"
+              onClick={toggleDropdown}
+            >
+              <svg
+                ref={dropdownRef}
+                viewBox="0 0 24 24"
+                className="w-8 h-8 text-white fill-current rounded-full hover:bg-white hover:text-black transition duration-200"
               >
-                <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-                  <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498ZM20.657 11.151L12.357 19.696C12.2628 19.7928 12.1335 19.8474 11.9985 19.8474C11.8634 19.8474 11.7341 19.7928 11.64 19.696L3.32699 11.136C1.94998 9.78618 1.60717 7.69937 2.47999 5.97998C3.13326 4.68428 4.37197 3.78375 5.80599 3.56198C7.26664 3.31621 8.75572 3.79456 9.79999 4.84498L11.33 6.24498C11.7117 6.59273 12.2953 6.59273 12.677 6.24498L14.238 4.82198C15.278 3.7873 16.7534 3.3181 18.2 3.56198C19.6323 3.78494 20.869 4.68536 21.521 5.97998C22.3943 7.7072 22.0444 9.8015 20.657 11.151Z"></path>
-                </svg>
-              </button>
-            </div>
-            <div className="px-4">
-              <button
-                aria-label="More options"
-                className="text-white p-2"
-                onClick={toggleDropdown}
-              >
-                <svg
-                  ref={dropdownRef}
-                  viewBox="0 0 24 24"
-                  className="w-8 h-8 text-white fill-current rounded-full hover:bg-white hover:text-black transition duration-200"
-                >
-                  <circle cx="12" cy="5" r="2"></circle>
-                  <circle cx="12" cy="12" r="2"></circle>
-                  <circle cx="12" cy="19" r="2"></circle>
-                </svg>
-              </button>
-              {state.isDropdownOpen && (
-                <div className="absolute right-4 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                  <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                    <button
-                      onClick={addToFavorites}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                      role="menuitem"
-                    >
-                      Add to Favorites
-                    </button>
-                    <button
-                      onClick={getMoreInfo}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                      role="menuitem"
-                    >
-                      More Information
-                    </button>
-                  </div>
+                <circle cx="12" cy="5" r="2"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+                <circle cx="12" cy="19" r="2"></circle>
+              </svg>
+            </button>
+            {state.isDropdownOpen && (
+              <div className="absolute right-4 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <button
+                    aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                    onClick={toggleFavorite}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                    role="menuitem"
+                  >
+                    {state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                  </button>
+                  <button
+                    onClick={getMoreInfo}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                    role="menuitem"
+                  >
+                    More Information
+                  </button>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-        </header>
+        </div>
+      </header>
 
         {/* Carousel section */}
         <section className="my-8">
@@ -631,89 +772,74 @@ function JoesBeerhouse() {
           </div>
         </section>
 
-        {/* Store Information */}
-        <section className="container mx-auto px-4">
-          <div className="flex items-center justify-between space-x-28 px-4">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-1">
-                <svg viewBox="0 0 16 16" width="16" aria-hidden="true" className="text-primary">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C15.9949 3.58385 12.4161 0.00514317 8 0ZM8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8C1.33333 4.3181 4.3181 1.33333 8 1.33333C11.6819 1.33333 14.6667 4.3181 14.6667 8C14.6626 11.6802 11.6802 14.6626 8 14.6667ZM11.4227 10.54L8.33333 7.70733V4.33333C8.33333 3.96514 8.03486 3.66667 7.66667 3.66667C7.29848 3.66667 7 3.96514 7 4.33333V8C6.99979 8.18704 7.07817 8.36556 7.216 8.492L10.522 11.522C10.7947 11.7672 11.2135 11.7492 11.464 11.4813C11.7123 11.2099 11.6938 10.7886 11.4227 10.54Z"></path>
-                </svg>
-                <span>Opens today at 10:00</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <svg viewBox="0 0 24 24" width="16" aria-hidden="true" className="text-[#ee9613]">
-                  <circle cx="12" cy="12" r="12" fill="orange" />
-                </svg>
-                <span>9.8</span>
-              </div>
-              <button type="button" className="text-[#ee9613] flex items-center space-x-1">
-                <svg viewBox="0 0 24 24" width="16">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
-                </svg>
-                <span>See more information</span>
-              </button>
+      {/* Store Information */}
+      <section className="container mx-auto px-4 mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 px-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+            <div className="flex items-center space-x-1">
+              <svg viewBox="0 0 16 16" width="16" aria-hidden="true" className="text-primary">
+                <path fillRule="evenodd" clipRule="evenodd" d="M8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C15.9949 3.58385 12.4161 0.00514317 8 0ZM8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8C1.33333 4.3181 4.3181 1.33333 8 1.33333C11.6819 1.33333 14.6667 4.3181 14.6667 8C14.6626 11.6802 11.6802 14.6626 8 14.6667ZM11.4227 10.54L8.33333 7.70733V4.33333C8.33333 3.96514 8.03486 3.66667 7.66667 3.66667C7.29848 3.66667 7 3.96514 7 4.33333V8C6.99979 8.18704 7.07817 8.36556 7.216 8.492L10.522 11.522C10.7947 11.7672 11.2135 11.7492 11.464 11.4813C11.7123 11.2099 11.6938 10.7886 11.4227 10.54Z"></path>
+              </svg>
+              <span>Opens today at 10:00</span>
             </div>
-            <div className="flex items-end justify-end border-solid p-1 space-x-2 bg-gray-200 rounded-full">
-              <button
-                className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-white" : "bg-gray-200"}`}
-                onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
-              >
-                Delivery
-              </button>
-              <button
-                className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-white"}`}
-                onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
-              >
-                Pickup
-              </button>
+            <div className="flex items-center space-x-1">
+              <svg viewBox="0 0 24 24" width="16" aria-hidden="true" className="text-[#ee9613]">
+                <circle cx="12" cy="12" r="12" fill="orange" />
+              </svg>
+              <span>9.8</span>
             </div>
+            <button type="button" className="text-[#ee9613] flex items-center space-x-1">
+              <svg viewBox="0 0 24 24" width="16">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
+              </svg>
+              <span>See more information</span>
+            </button>
           </div>
-          <div className="text-gray-700 px-4">
-            The store isn't delivering to your location, but you can still place an order for pickup.
+          <div className="flex items-center justify-end border-solid p-1 space-x-2 bg-gray-200 rounded-full">
+            <button
+              className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-white" : "bg-gray-200"}`}
+              onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
+            >
+              Delivery
+            </button>
+            <button
+              className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-white"}`}
+              onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
+            >
+              Pickup
+            </button>
           </div>
-        </section>
+        </div>
+        <div className="text-gray-700 px-4 mt-4">
+          The store isn't delivering to your location, but you can still place an order for pickup.
+        </div>
+      </section>
 
-        {/* Venues List */}
-        <section className="container mx-auto px-4 pb-4" data-test-id="discovery.venuesList">
-          <div className="py-4 border-b border-gray-200">
-            <div data-testid="venue-list-header" className="flex items-center p-4">
-              <h2 className="text-lg font-bold">All venues</h2>
-              <button
-                data-test-id="venue-list-header-sort"
-                className="ml-auto text-blue-600 hover:underline"
-              >
-                Sort by
-              </button>
-            </div>
-            <section className="my-8">
-              <div className="container mx-auto px-4">
-                <div className="overflow-y-auto h-[200px] md:h-[350px] ">
-                  <div
-                    className="grid gap-6 py-2"
-                    style={{
-                      '--img-width': '134px',  // Adjust this value to change image width
-                      '--img-height': '134px', // Adjust this value to change image height
-                      gridTemplateColumns: 'repeat(auto-fill, minmax(calc(var(--img-width) * 2.5), 1fr))'
-                    }}
-                  >
-                    {storescards1.map((store, index) => (
-
-                      <a key={index}
-                        href={store.href}
-                        className="flex bg-white rounded-lgshadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-                        data-test-id="merchant-container-link"
-                        style={{
-                          minHeight: 'var(--img-height)'
-                        }}
-                      >
-                        <div
-                          className="relative flex-shrink-0 rounded-l-lg overflow-hidden"
-                          style={{
-                            width: 'var(--img-width)',
-                            height: 'var(--img-height)'
-                          }}
-                        >
+      {/* Venues List */}
+      <section className="container mx-auto px-4 pb-4" data-test-id="discovery.venuesList">
+        <div className="py-4 border-b border-gray-200">
+          <div data-testid="venue-list-header" className="flex items-center p-4">
+            <h2 className="text-lg font-bold">All venues</h2>
+            <button
+              data-test-id="venue-list-header-sort"
+              className="ml-auto text-blue-600 hover:underline"
+            >
+              Sort by
+            </button>
+          </div>
+          <section className="my-8">
+            <div className="container mx-auto px-4">
+              <div className="overflow-y-auto h-[350px] sm:h-[350px] md:h-[350px] lg:h-[450px]">
+                <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+                  {storescards1.map((store, index) => (
+                    <a
+                      key={index}
+                      href={store.href}
+                      className="flex w-full max-w-[450px] mx-auto  rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
+                      data-test-id="merchant-container-link"
+                    >
+                      <div className="relative flex-shrink-0 w-1/3 min-w-[100px]">
+                        <div className="absolute inset-0 bg-gray-200">
                           <LazyLoadImage
                             src={store.imgSrc}
                             alt={store.name}
@@ -722,71 +848,62 @@ function JoesBeerhouse() {
                             className="object-cover w-full h-full"
                             effect="blur"
                           />
-                          {store.discount && (
-                            <div
-                              data-testid="venue-discount-label"
-                              className="absolute top-1 right-1 bg-yellow-400 text-black text-xs px-1 py-0.5 rounded"
-                            >
-                              -{store.discount}%
-                            </div>
-                          )}
                         </div>
-                        <div className="p-3 flex flex-col justify-between flex-grow min-w-0">
-                          <div>
-                            <h3 data-testid="venue-name" className="font-bold text-base mb-1 truncate">
-                              {store.name}
-                            </h3>
-                            <div className="flex items-center text-sm mb-1 text-gray-600">
-                              <span className="text-[#ee9613] font-semibold">{store.priceRange}</span>
-                              <span className="mx-2">•</span>
-                              <span className="truncate">{store.cuisine}</span>
-                            </div>
-                            <p className="text-xs text-gray-600 line-clamp-2">{store.description}</p>
+                        {store.discount && (
+                          <div
+                            data-testid="venue-discount-label"
+                            className="absolute top-1 right-1 bg-yellow-400 text-black text-xs px-1 py-0.5 rounded"
+                          >
+                            -{store.discount}%
                           </div>
-                          <div className="text-xs text-gray-500 mt-1">
-                            Pickup: {store.pickupTime}
+                        )}
+                      </div>
+                      <div className="p-3 flex flex-col justify-between flex-grow min-w-0">
+                        <div>
+                          <h3 data-testid="venue-name" className="font-bold text-sm sm:text-base mb-1 truncate">
+                            {store.name}
+                          </h3>
+                          <div className="flex items-center text-xs sm:text-sm mb-1 text-gray-600">
+                            <span className="text-[#ee9613] font-semibold">{store.priceRange}</span>
+                            <span className="mx-2">•</span>
+                            <span className="truncate">{store.cuisine}</span>
                           </div>
+                          <p className="text-xs text-gray-600 line-clamp-2">{store.description}</p>
                         </div>
-                      </a>
-                    ))}
-                  </div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          Pickup: {store.pickupTime}
+                        </div>
+                        <div className="absolute top-2 right-2 bg-[#ee9613] text-white text-lg w-10 h-8 flex items-center justify-center rounded">
+                          +
+                        </div>
+                      </div>
+                    </a>
+                  ))}
                 </div>
-                </div>
-                </section>
-                </div>
-            </section>
-
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+   
 
             {/* Information Section */}
             <section className="container mx-auto p-4 mt-8">
-              <div className="flex flex-col md:flex-row md:space-x-8">
-                <div className="md:w-1/4 space-y-8">
-                  <div>
-                    <h3 className="text-lg font-bold">Joe's Beerhouse</h3>
-                    <div>
-                      <h4 className="text-md font-semibold">See similar restaurants</h4>
-                      <ul className="list-none space-y-1">
-                        <li>
-                          <a href="/en/restaurants/steakhouse" className="text-[#ee9613] font-bold hover:underline">
-                            Steakhouse
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/en/restaurants/german" className="text-[#ee9613] font-bold hover:underline">
-                            German Cuisine
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+          <div className="flex flex-col md:flex-row md:space-x-8">
+            <div className="md:w-1/3 space-y-8">
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-md font-semibold">Store Information</h3>
+                  <p className="text-[#ee9613] font-bold">Joe's Beerhouse</p>
+                  <p>German Cuisine</p>
+                  <p>Steakhouse</p>
                 </div>
-
-                <div className="md:w-1/4 space-y-4">
+                <div>
+                  <h3 className="text-md font-semibold">Address</h3>
                   <div>
-                    <h4 className="text-md font-semibold">Address</h4>
                     <p>Windhoek West</p>
-                    <p>8850603 Windhoek</p>
-
+                    <p>8850603 Eilat</p>
+                    
                     <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -796,41 +913,48 @@ function JoesBeerhouse() {
                     </a>
                   </div>
                 </div>
-
-                <div className="md:w-1/4 space-y-4">
-                  <div>
-                    <h4 className="text-md font-semibold">Opening hours</h4>
-                    <table className="table-auto">
-                      <tbody>
-                        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
-                          <tr key={day}>
-                            <td className="pr-4">{day}</td>
-                            <td>11:00–23:00</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div className="md:w-1/4 space-y-4">
-                  <div>
-                    <h4 className="text-md font-semibold">Contact</h4>
-                    <a href="tel:+264061232457" className="text-[#ee9613] font-bold hover:underline">
-                      +264 61 232 457
-                    </a>
-                  </div>
-                </div>
               </div>
-            </section>
-
-            {/* Map Section */}
-            <section className="container mx-auto p-4 mt-8">
-              <div className="w-full h-96 relative">
-                <div ref={mapContainerRef} className="absolute inset-0" />
+            </div>
+            <div className="md:w-1/3 space-y-8">
+              <h3 className="text-md font-semibold">More information</h3>
+              <a href="tel:+972543131665" className="text-[#ee9613] font-bold hover:underline">
+                +972543131665
+              </a>
+              <div>
+                <h3 className="text-md font-semibold">Opening hours</h3>
+                <table className="table-auto">
+                  <tbody>
+                    {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                      <tr key={day}>
+                        <td className="pr-4">{day}</td>
+                        <td>09:00–22:30</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            </section>
-          </main>
+            </div>
+            <div className="w-full h-64 md:h-96 relative">
+              <div ref={mapContainerRef} className="absolute inset-0" />
+            </div>
+          </div>
+        </section>
+
+           {/* Restaurants Near Me Section */}
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
+          <div
+            className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
+            style={{ width: "50%", maxWidth: "1000px" }}
+          >
+            <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
+              Similar Restaurants
+            </h2>
+          </div>
+        </section>
+
+        {/* Restaurants Carousel */}
+        {renderCarousel(restaurants, restaurantsscroll, renderRestaurantCard)}
+      </main>
           <Footer />
         </div>
         );

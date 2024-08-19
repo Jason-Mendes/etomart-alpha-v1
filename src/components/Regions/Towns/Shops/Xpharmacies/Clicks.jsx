@@ -42,7 +42,7 @@ function Clicks() {
 
   // Memoized data
   const navcategories = useMemo(() => [
-     {
+    {
       name: "Prescription Medications",
       imgSrc: "/images/pharmacies/pm.png",
       href: "/pharmacy/prescription-medications",
@@ -457,51 +457,51 @@ function Clicks() {
 
   const renderStoreCard = useCallback((category, index) => (
     <div key={index} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72 p-6">
-    <a href={category.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
-      <div className="relative w-full aspect-square overflow-hidden rounded-t-lg">
-        <LazyLoadImage
-          src={category.imgSrc}
-          alt={category.name}
-          width="100%"
-          height="100%"
-          className="w-full h-full object-fill"
-          effect="opacity"
-        />
-      </div>
-      <div className="p-3 sm:p-4">
-        <p className="text-center font-bold truncate w-full text-sm sm:text-base">{category.name}</p>
-      </div>
-    </a>
-  </div>
-), []);
+      <a href={category.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+        <div className="relative w-full aspect-square overflow-hidden rounded-t-lg">
+          <LazyLoadImage
+            src={category.imgSrc}
+            alt={category.name}
+            width="100%"
+            height="100%"
+            className="w-full h-full object-fill"
+            effect="opacity"
+          />
+        </div>
+        <div className="p-3 sm:p-4">
+          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{category.name}</p>
+        </div>
+      </a>
+    </div>
+  ), []);
 
-const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
-  const words = text.split(" ");
-  let truncatedText = "";
-  let lineCount = 2;
-  let charCount = 3;
+  const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
+    const words = text.split(" ");
+    let truncatedText = "";
+    let lineCount = 2;
+    let charCount = 3;
 
-  for (const word of words) {
-    if (lineCount < maxLines) {
-      if (charCount + word.length + 1 <= maxCharsPerLine) {
-        truncatedText += " " + word;
-        charCount += word.length + 1;
+    for (const word of words) {
+      if (lineCount < maxLines) {
+        if (charCount + word.length + 1 <= maxCharsPerLine) {
+          truncatedText += " " + word;
+          charCount += word.length + 1;
+        } else {
+          truncatedText += "\n" + word;
+          charCount = word.length + 1;
+          lineCount++;
+        }
       } else {
-        truncatedText += "\n" + word;
-        charCount = word.length + 1;
-        lineCount++;
+        break;
       }
-    } else {
-      break;
     }
-  }
 
-  if (lineCount >= maxLines) {
-    truncatedText += "...";
-  }
+    if (lineCount >= maxLines) {
+      truncatedText += "...";
+    }
 
-  return truncatedText;
-}, []);
+    return truncatedText;
+  }, []);
   const filteredCategories = useMemo(() =>
     navcategories.filter((category) =>
       category.name.toLowerCase().includes(state.searchTerm.toLowerCase())
@@ -525,7 +525,7 @@ const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
             />
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           </div>
-         <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
+          <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
             <div className="px-4">
               <h1 className="text-white text-4xl font-bold">Clicks</h1>
               <p className="text-white text-lg">Feel Good Pay Less</p>
@@ -651,9 +651,8 @@ const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
                 {cards.map((_, index) => (
                   <button
                     key={index}
-                    className={`h-2 w-2 rounded-full ${
-                      index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
-                    }`}
+                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
+                      }`}
                     onClick={() => handleDotClick(index)}
                     aria-label={`Go to slide ${index + 1}`}
                   ></button>
@@ -726,8 +725,8 @@ const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
                 </div>
                 <div className="flex flex-col overflow-y-auto" style={{ height: "800px" }}>
                   {filteredCategories.slice(0, 20).map((category, index) => (
-                    
-                     <a key={index}
+
+                    <a key={index}
                       href={category.href}
                       className="flex items-center p-2 mb-4 bg-white rounded-lg shadow hover:bg-gray-100"
                     >
@@ -744,98 +743,88 @@ const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
               </div>
             </aside>
 
-            {/* Products grid */}
-          <div className="w-3/4 px-4">
-            <div className="flex items-center p-4">
-              <h2 className="text-2xl font-bold">All Products</h2>
-              <div className="ml-auto">
-                <button className="flex items-center px-4 py-2 border rounded-md">
-                <div className="flex items-center">
-                      Sorted by
-                      <span className="ml-2 font-semibold">Recommended</span>
-                    </div>
-                    <div className="ml-2">
-                      <svg viewBox="0 0 20 21" className="w-5 h-5">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M5.41703 10.7133V17.085C5.41703 17.306 5.50483 17.5179 5.66111 17.6742C5.81739 17.8305 6.02935 17.9183 6.25037 17.9183C6.47138 17.9183 6.68334 17.8305 6.83962 17.6742C6.9959 17.5179 7.0837 17.306 7.0837 17.085L7.0837 10.7133C7.68556 10.5338 8.2134 10.1648 8.58871 9.66122C8.96402 9.15763 9.16675 8.54635 9.16675 7.91829C9.16675 7.29024 8.96402 6.67896 8.58871 6.17537C8.2134 5.67179 7.68556 5.3028 7.0837 5.12329V2.91829C7.0837 2.69728 6.9959 2.48532 6.83962 2.32904C6.68334 2.17276 6.47138 2.08496 6.25037 2.08496C6.02935 2.08496 5.81739 2.17276 5.66111 2.32904C5.50483 2.48532 5.41703 2.69728 5.41703 2.91829V5.12329C4.81518 5.3028 4.28734 5.67179 3.91203 6.17537C3.53672 6.67896 3.33398 7.29024 3.33398 7.91829C3.33398 8.54635 3.53672 9.15763 3.91203 9.66122C4.28734 10.1648 4.81518 10.5338 5.41703 10.7133Z" fill="#121E28"></path>
-                      </svg>
-                    </div>
-                  </button>
-                </div>
+            <section className="w-3/4">
+      <div className="px-4">
+        <div className="flex items-center p-4">
+          <h2 className="text-2xl font-bold">All Products</h2>
+          <div className="ml-auto">
+            <button className="flex items-center px-4 py-2 border rounded-md">
+              <div className="flex items-center">
+                Sorted by
+                <span className="ml-2 font-semibold">Recommended</span>
               </div>
+              <div className="ml-2">
+                <svg viewBox="0 0 20 21" className="w-5 h-5">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M5.41703 10.7133V17.085C5.41703 17.306 5.50483 17.5179 5.66111 17.6742C5.81739 17.8305 6.02935 17.9183 6.25037 17.9183C6.47138 17.9183 6.68334 17.8305 6.83962 17.6742C6.9959 17.5179 7.0837 17.306 7.0837 17.085L7.0837 10.7133C7.68556 10.5338 8.2134 10.1648 8.58871 9.66122C8.96402 9.15763 9.16675 8.54635 9.16675 7.91829C9.16675 7.29024 8.96402 6.67896 8.58871 6.17537C8.2134 5.67179 7.68556 5.3028 7.0837 5.12329V2.91829C7.0837 2.69728 6.9959 2.48532 6.83962 2.32904C6.68334 2.17276 6.47138 2.08496 6.25037 2.08496C6.02935 2.08496 5.81739 2.17276 5.66111 2.32904C5.50483 2.48532 5.41703 2.69728 5.41703 2.91829V5.12329C4.81518 5.3028 4.28734 5.67179 3.91203 6.17537C3.53672 6.67896 3.33398 7.29024 3.33398 7.91829C3.33398 8.54635 3.53672 9.15763 3.91203 9.66122C4.28734 10.1648 4.81518 10.5338 5.41703 10.7133Z" fill="#121E28"></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
 
-              <div className="flex flex-col overflow-y-auto h-[600px] md:h-[850px]">
-                <div className="px-2 pb-4">
-                  <div className="flex flex-wrap justify-start">
-                    {storescards1.map((category, shopsindex) => (
-                      <div
-                        key={shopsindex}
-                        className="flex-shrink-0 w-full  md:w-2/3 lg:w-1/4 p-4"
-                        style={{ height: "340px", width: "220px" }}
-                      >
-                        
-                          <a href={category.href}
-                          className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200"
-                        >
-                          <div className="flex flex-col h-full">
-                            <div className="relative w-full h-52 overflow-hidden rounded-t-lg">
-                              <LazyLoadImage
-                                src={category.imgSrc}
-                                alt={category.name}
-                                width="100%"
-                                height="100%"
-                                effect="blur"
-                                className="object-fill w-full h-full"
-                              />
-                              {category.discount && (
-                                <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#ee9613] text-white text-xs px-2 py-1 rounded">
-                                  {`-${category.discount}%`}
-                                </div>
-                              )}
-                              <div className="absolute bottom-2 right-0 mt-2 mr-2 bg-[#ee9613] text-white text-lg px-5 py-0 rounded">
-                                +
-                              </div>
-                            </div>
-                            <div className="flex flex-col w-full p-2">
-                              <div className="flex flex-col w-full ">
-                                <div className="flex flex-col w-full">
-                                  <h3 className="font-bold">{category.name}</h3>
-                                  <div className="flex items-center text-sm mt-4 ">
-                                    <div className="text-[#ee9613] text-sm font-bold">
-                                      <span>{category.priceRange}</span>
-                                    </div>
-                                    <span className="mx-1">•</span>
-                                    <span>{category.category}</span>
-                                  </div>
-                                  <div className="flex flex-col h-full">
-                                    <div className="text-xs text-gray-500 mr-2">{`Pickup: ${category.pickupTime}`}</div>
-                                    <div
-                                      className="text-xs text-gray-500 flex-grow mb-2"
-                                      style={{ height: "35px" }}
-                                    >
-                                      {truncateText(category.description, 4, 30)}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="m-auto w-full">
-                                <div className="text-black text-xs py-1 rounded">
-                                  <span className="text-black">Etomart </span>
-                                  {category.deliveryTime ? (
-                                    <span className="text-[#ee9613] font-bold">Delivery Available</span>
-                                  ) : (
-                                    <span className="text-[#ee1313] font-bold">Delivery Not Available</span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
+        <div className="overflow-y-auto h-[600px] md:h-[850px]">
+          <div className="px-2 pb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+              {storescards1.map((category, shopsindex) => (
+                <div
+                  key={shopsindex}
+                  className="w-full"
+                >
+                  <a href={category.href}
+                    className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
+                  >
+                    <div className="flex flex-col h-full">
+                      <div className="relative w-full aspect-square overflow-hidden">
+                        <LazyLoadImage
+                          src={category.imgSrc}
+                          alt={category.name}
+                          width="100%"
+                          height="100%"
+                          effect="blur"
+                          className="object-fill w-full h-full"
+                        />
+                        {category.discount && (
+                          <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#ee9613] text-white text-xs px-2 py-1 rounded">
+                            {`-${category.discount}%`}
                           </div>
-                        </a>
+                        )}
+                        <div className="absolute bottom-2 right-2 bg-[#ee9613] text-white text-lg w-12 h-8 flex items-center justify-center rounded">
+                          +
+                        </div>
                       </div>
-                    ))}
-                  </div>
+                      <div className="flex flex-col w-full p-2 flex-grow">
+                        <h3 className="font-bold truncate">{category.name}</h3>
+                        <div className="flex items-center text-sm mt-2">
+                          <div className="text-[#ee9613] text-sm font-bold">
+                            <span>{category.priceRange}</span>
+                          </div>
+                          <span className="mx-1">•</span>
+                          <span className="truncate">{category.category}</span>
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">{`Pickup: ${category.pickupTime}`}</div>
+                        <div className="text-xs text-gray-500 mt-1 line-clamp-2">
+                          {category.description}
+                        </div>
+                        <div className="mt-auto">
+                          <div className="text-black text-xs py-1 rounded">
+                            <span className="text-black">Etomart </span>
+                            {category.deliveryTime ? (
+                              <span className="text-[#ee9613] font-bold">Delivery Available</span>
+                            ) : (
+                              <span className="text-[#ee1313] font-bold">Delivery Not Available</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
                 </div>
-              </div>
+              ))}
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
           </div>
         </section>
 
@@ -853,8 +842,8 @@ const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
                   <div>
                     <p>Windhoek West</p>
                     <p>8850603 Eilat</p>
-                    
-                      <a href="https://maps.google.com/?q=29.56134350459979,34.95609347009179"
+
+                    <a href="https://maps.google.com/?q=29.56134350459979,34.95609347009179"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#ee9613] font-bold hover:underline"
@@ -889,8 +878,8 @@ const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
             </div>
           </div>
         </section>
-      {/* Supermarkets Near Me Section */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
+        {/* Supermarkets Near Me Section */}
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
             className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
             style={{ width: "50%", maxWidth: "1000px" }}
