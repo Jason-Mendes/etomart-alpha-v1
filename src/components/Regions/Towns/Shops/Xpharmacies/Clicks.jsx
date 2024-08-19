@@ -402,7 +402,7 @@ function Clicks() {
 
     // Fit the map to the bounds with padding
     mapInstance.fitBounds(bounds, {
-      padding: { top: 40, bottom: 300, left: 20, right: 20 },
+      padding: { top: 40, bottom: 30, left: 20, right: 20 },
       maxZoom: 13, // Limit maximum zoom level
       linear: true,
     });
