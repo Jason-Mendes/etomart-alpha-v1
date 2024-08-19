@@ -641,8 +641,8 @@ const renderSupermarketCard = useCallback((supermarket, index) => (
 const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
   const words = text.split(" ");
   let truncatedText = "";
-  let lineCount = 0;
-  let charCount = 0;
+  let lineCount = 2;
+  let charCount = 3;
 
   for (const word of words) {
     if (lineCount < maxLines) {
@@ -931,13 +931,13 @@ return (
               </div>
 
               <div className="flex flex-col overflow-y-auto h-[600px] md:h-[850px]">
-                <div className="px-4 pb-4">
+                <div className="px-2 pb-4">
                   <div className="flex flex-wrap justify-start">
                     {storescards1.map((category, shopsindex) => (
                       <div
                         key={shopsindex}
                         className="flex-shrink-0 w-full  md:w-2/3 lg:w-1/4 p-4"
-                        style={{ height: "380px" }}
+                        style={{ height: "340px", width: "220px" }}
                       >
                         
                           <a href={category.href}
@@ -976,10 +976,10 @@ return (
                                   <div className="flex flex-col h-full">
                                     <div className="text-xs text-gray-500 mr-2">{`Pickup: ${category.pickupTime}`}</div>
                                     <div
-                                      className="text-xs text-gray-500 flex-grow -mb-6"
-                                      style={{ height: "50px" }}
+                                      className="text-xs text-gray-500 flex-grow mb-2"
+                                      style={{ height: "35px" }}
                                     >
-                                      {truncateText(category.description, 3, 30)}
+                                      {truncateText(category.description, 4, 30)}
                                     </div>
                                   </div>
                                 </div>
