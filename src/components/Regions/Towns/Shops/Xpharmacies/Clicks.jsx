@@ -344,13 +344,8 @@ function Clicks() {
     MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
 
     mapInstance.fitBounds(bounds, {
-<<<<<<< HEAD
       padding: { top: 40, bottom: 30, left: 20, right: 20 },
       maxZoom: 13, // Limit maximum zoom level
-=======
-      padding: { top: 30, bottom: 30, left: 20, right: 20 },
-      maxZoom: 13,
->>>>>>> 5b82f555eecd9359e95416cba462f990b425c10b
       linear: true,
     });
 
