@@ -181,7 +181,7 @@ function Checkers() {
 
   // Array of store cards
 
-  const storescards1 = useMemo(() => [
+  const storecards = useMemo(() => [
     {
       name: "Bread",
       imgSrc: "/images/supermarkets/bread.png",
@@ -934,7 +934,7 @@ function Checkers() {
         <div className="overflow-y-auto h-[600px] sm:h-[700px] md:h-[850px]">
           <div className="px-2 pb-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-  {storescards1.map((category, shopsindex) => (
+  {storecards.map((category, shopsindex) => (
     <div
       key={shopsindex}
       className="w-full max-w-[180px] sm:max-w-[400px] mx-auto sm:mx-0"

@@ -38,7 +38,7 @@ function Clicks() {
   const containerRef = useRef(null);
   const dropdownRef = useRef(null);
   const mapContainerRef = useRef(null);
-  const storescards1scroll = useRef(null);
+  const pharmaciesscroll = useRef(null);
 
   // Memoized data
   const navcategories = useMemo(() => [
@@ -179,9 +179,7 @@ function Clicks() {
     // Add more cards as needed
   ], []);
 
-  const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
-
-  const storescards1 = useMemo(() => [
+  const pharmacycards = useMemo(() => [
     {
       name: "Aspirin",
       imgSrc: "/images/pharmacies/a.png",
@@ -249,6 +247,41 @@ function Clicks() {
     },
     // Add more cards as needed
   ], []);
+
+  const pharmacies = useMemo(() => [
+    {
+    name: "Dis-Chem",
+    imgSrc: "/images/pharmacies/dischem.png",
+    href: "/en/discovery/category/dischem",
+  },
+  {
+    name: "Clicks Pharmacy",
+    imgSrc: "/images/pharmacies/clicks.png",
+    href: "/LP/Khomas/Towns/Pharmacy/Clicks",
+  },
+  {
+    name: "Nampharm Pharmacy",
+    imgSrc: "/images/pharmacies/nampharm.png",
+    href: "/en/discovery/category/nampharm",
+  },
+  {
+    name: "Alpha Pharm",
+    imgSrc: "/images/pharmacies/alphapharm.png",
+    href: "/en/discovery/category/alphapharm",
+  },
+  {
+    name: "Medicine World",
+    imgSrc: "/images/pharmacies/medicineworld.png",
+    href: "/en/discovery/category/medicineworld",
+  },
+  {
+    name: "City Pharmacy",
+    imgSrc: "/images/pharmacies/citypharmacy.png",
+    href: "/en/discovery/category/citypharmacy",
+  },
+], []);
+
+const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
   // Callbacks
   const scrollLeft = useCallback((carouselRef) => {
@@ -764,7 +797,7 @@ function Clicks() {
         <div className="overflow-y-auto h-[600px] sm:h-[700px] md:h-[850px]">
           <div className="px-2 pb-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-  {storescards1.map((category, shopsindex) => (
+  {pharmacycards.map((category, shopsindex) => (
     <div
       key={shopsindex}
       className="w-full max-w-[180px] sm:max-w-[400px] mx-auto sm:mx-0"
@@ -890,7 +923,7 @@ function Clicks() {
         </section>
 
         {/* Supermarkets Carousel */}
-        {renderCarousel(storescards1, storescards1scroll, renderStoreCard)}
+        {renderCarousel(pharmacies, pharmaciesscroll, renderStoreCard)}
       </main>
       <Footer />
     </div>

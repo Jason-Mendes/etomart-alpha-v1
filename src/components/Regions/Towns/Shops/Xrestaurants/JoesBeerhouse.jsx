@@ -99,9 +99,7 @@ function JoesBeerhouse() {
     // Add more cards as needed
   ], []);
 
- 
-
-  const storescards1 = useMemo(() => [
+  const restuarantcards = useMemo(() => [
     {
       name: "Vennes",
       imgSrc: "/images/restaurants/v.png",
@@ -831,7 +829,7 @@ const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
             <div className="container mx-auto px-4">
               <div className="overflow-y-auto h-[450px] sm:h-[450px] md:h-[450px] lg:h-[450px]">
                 <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-                  {storescards1.map((store, index) => (
+                  {restuarantcards.map((store, index) => (
                     <a
                       key={index}
                       href={store.href}
