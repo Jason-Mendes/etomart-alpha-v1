@@ -5,10 +5,11 @@ import mapboxgl from "mapbox-gl";
 import { toast } from "react-toastify";
 import Footer from "../../../../Footer";
 import OPNavBar from "../../../../OPNavBar";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
+
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import PropTypes from 'prop-types';
 
-// Performance measurement hook
 const usePerformanceMeasure = (name) => {
   useEffect(() => {
     performance.mark(`${name}-start`);
@@ -23,7 +24,6 @@ const usePerformanceMeasure = (name) => {
 function JoesBeerhouse() {
   usePerformanceMeasure('JoesBeerhouse');
 
-  // Combined state
   const [state, setState] = useState({
     isDelivery: true,
     searchTerm: "",
@@ -34,11 +34,23 @@ function JoesBeerhouse() {
     isFavorite: false,
   });
 
-  // Refs
+  const [isSticky, setIsSticky] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [visibleCategories, setVisibleCategories] = useState([]);
+  const [hiddenCategories, setHiddenCategories] = useState([]);
+  const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const VISIBLE_CATEGORIES_COUNT = 8;
+
   const containerRef = useRef(null);
   const dropdownRef = useRef(null);
   const mapContainerRef = useRef(null);
   const restaurantsscroll = useRef(null);
+  const stickyRef = useRef(null);
+  const productsSectionRef = useRef(null);
+  const categoriesContainerRef = useRef(null);
+  const searchAndFilterRef = useRef(null);
 
   // Memoized data
   const cards = useMemo(() => [
@@ -100,50 +112,196 @@ function JoesBeerhouse() {
     // Add more cards as needed
   ], []);
 
+  const restaurantCards = useMemo(() => [
+    {
+      name: "Vennes",
+      imgSrc: "/images/restaurants/v.png",
+      href: "/en/stores/vennes-cafe/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Cafe",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "10–30 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Istanbul Kebab House",
+      imgSrc: "/images/restaurants/i.png",
+      href: "/en/stores/istanbul-kebab-house/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Kebab",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Teater Kvarteret Barista",
+      imgSrc: "/images/restaurants/t.png",
+      href: "/en/stores/teater-kvarteret-barista/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Coffee",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "15–35 min",
+      deliveryTime: false,
+    },
+    {
+      name: "Nordic Food",
+      imgSrc: "/images/restaurants/n.png",
+      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
+      discount: 20,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Nordic",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Italian Cuisine",
+      imgSrc: "/images/restaurants/ic.png",
+      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
+      discount: 20,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Italian",
+      description: "Delicious pasta with tomato sauce and fresh basil",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Sushi Delight",
+      imgSrc: "/images/restaurants/i.png", // Reusing image
+      href: "/en/stores/sushi-delight/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Sushi",
+      description: "Fresh sushi rolls with wasabi and soy sauce",
+      pickupTime: "25–45 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Taco Fiesta",
+      imgSrc: "/images/restaurants/n.png", // Reusing image
+      href: "/en/stores/taco-fiesta/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€",
+      cuisine: "Mexican",
+      description: "Spicy tacos with beef, cheese, and guacamole",
+      pickupTime: "15–30 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Curry Corner",
+      imgSrc: "/images/restaurants/v.png", // Reusing image
+      href: "/en/stores/curry-corner/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Indian",
+      description: "Flavorful chicken curry with basmati rice",
+      pickupTime: "20–35 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Peking Duck",
+      imgSrc: "/images/restaurants/t.png", // Reusing image
+      href: "/en/stores/peking-duck/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Chinese",
+      description: "Crispy Peking duck with hoisin sauce",
+      pickupTime: "30–50 min",
+      deliveryTime: true,
+    },
+    {
+      name: "BBQ Nation",
+      imgSrc: "/images/restaurants/n.png", // Reusing image
+      href: "/en/stores/bbq-nation/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Barbecue",
+      description: "Smoked ribs with a tangy barbecue sauce",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    }
+  ], []);
+  
   const restaurants = useMemo(() => [
     {
-       name: "Joe's Beerhouse",
-       imgSrc: "/images/restaurants/joesbeerhouse.png",
-       href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-     },
-     {
-       name: "The Stellenbosch Wine Bar",
-       imgSrc: "/images/restaurants/stellenbosch.png",
-       href: "/en/discovery/category/stellenbosch",
-     },
-     {
-       name: "O Portuga",
-       imgSrc: "/images/restaurants/oportuga.png",
-       href: "/en/discovery/category/oportuga",
-     },
-     {
-       name: "The Social",
-       imgSrc: "/images/restaurants/thesocial.png",
-       href: "/en/discovery/category/thesocial",
-     },
-     {
-       name: "Sardinia Blue Olive",
-       imgSrc: "/images/restaurants/sardiniablueolive.png",
-       href: "/en/discovery/category/sardiniablueolive",
-     },
-     {
-       name: "Slowtown Coffee Roasters",
-       imgSrc: "/images/restaurants/slowtown.png",
-       href: "/en/discovery/category/slowtown",
-     },
-   ], []);
+      name: "Joe's Beerhouse",
+      imgSrc: "/images/restaurants/joesbeerhouse.png",
+      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
+    },
+    {
+      name: "The Stellenbosch Wine Bar",
+      imgSrc: "/images/restaurants/stellenbosch.png",
+      href: "/en/discovery/category/stellenbosch",
+    },
+    {
+      name: "O Portuga",
+      imgSrc: "/images/restaurants/oportuga.png",
+      href: "/en/discovery/category/oportuga",
+    },
+    {
+      name: "The Social",
+      imgSrc: "/images/restaurants/thesocial.png",
+      href: "/en/discovery/category/thesocial",
+    },
+    {
+      name: "Sardinia Blue Olive",
+      imgSrc: "/images/restaurants/sardiniablueolive.png",
+      href: "/en/discovery/category/sardiniablueolive",
+    },
+    {
+      name: "Slowtown Coffee Roasters",
+      imgSrc: "/images/restaurants/slowtown.png",
+      href: "/en/discovery/category/slowtown",
+    },
+  ], []);
 
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
-  // Mapbox setup
-  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set(restaurantCards.map(card => card.cuisine));
+    return Array.from(uniqueCategories);
+  }, [restaurantCards]);
 
-  const MARKER_COORDINATES = [
-    { lng: 17.090396711968985, lat: -22.550459904783143 }, // Joe's Beerhouse
-    { lng: 17.073723364157306, lat: -22.561939983264068 }, // User's home
-  ];
+  const filteredProducts = useMemo(() => {
+    return restaurantCards.filter(product => {
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === "" || product.cuisine === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [restaurantCards, searchTerm, selectedCategory]);
 
-  // Callbacks
+  const scrollToProducts = useCallback(() => {
+    if (productsSectionRef.current) {
+      const yOffset = -100;
+      const y = productsSectionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }, []);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    scrollToProducts();
+  };
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    scrollToProducts();
+  };
+
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
@@ -204,76 +362,44 @@ function JoesBeerhouse() {
     alert("More information about the store");
   }, []);
 
-  const initializeMap = useCallback((mapContainer) => {
-    if (!mapContainer) return;
 
-    const mapInstance = new mapboxgl.Map({
-      container: mapContainer,
-      style: "mapbox://styles/mapbox/streets-v11",
-      zoom: 12,
-    });
+  useEffect(() => {
+    let lastScrollY = window.pageYOffset;
+    const handleScroll = () => {
+      const currentScrollY = window.pageYOffset;
+      const searchAndFilterRect = searchAndFilterRef.current?.getBoundingClientRect();
+      const productsSectionRect = productsSectionRef.current?.getBoundingClientRect();
 
-    mapInstance.addControl(new mapboxgl.NavigationControl());
+      if (searchAndFilterRect && productsSectionRect) {
+        if (currentScrollY > lastScrollY && currentScrollY > searchAndFilterRect.top) {
+          setIsNavbarVisible(false);
+        } else if (currentScrollY < lastScrollY || currentScrollY <= searchAndFilterRect.top) {
+          setIsNavbarVisible(true);
+        }
 
-    MARKER_COORDINATES.forEach((coord) => {
-      new mapboxgl.Marker({ color: "#ee9613" })
-        .setLngLat([coord.lng, coord.lat])
-        .addTo(mapInstance);
-    });
+        if (currentScrollY >= searchAndFilterRect.top && currentScrollY < productsSectionRect.bottom) {
+          setIsSticky(true);
+        } else {
+          setIsSticky(false);
+        }
+      }
 
-    const bounds = new mapboxgl.LngLatBounds();
-    MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
+      lastScrollY = currentScrollY;
+    };
 
-    mapInstance.fitBounds(bounds, {
-      padding: { top: 20, bottom: 30, left: 20, right: 20 },
-      maxZoom: 13,
-      linear: true,
-    });
-
-    fetchAndDisplayRoute(mapInstance);
-
-    setState(prevState => ({ ...prevState, map: mapInstance }));
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const fetchAndDisplayRoute = useCallback(async (mapInstance) => {
-    try {
-      const response = await axios.get(
-        `https://api.mapbox.com/directions/v5/mapbox/driving/${MARKER_COORDINATES[0].lng},${MARKER_COORDINATES[0].lat};${MARKER_COORDINATES[1].lng},${MARKER_COORDINATES[1].lat}?geometries=geojson&access_token=${mapboxgl.accessToken}`
-      );
+  useEffect(() => {
+    setVisibleCategories(categories.slice(0, VISIBLE_CATEGORIES_COUNT));
+    setHiddenCategories(categories.slice(VISIBLE_CATEGORIES_COUNT));
+  }, [categories]);
 
-      const routeLine = response.data.routes[0].geometry;
+  const toggleMoreDropdown = () => {
+    setIsMoreDropdownOpen(!isMoreDropdownOpen);
+  };
 
-      mapInstance.on("load", () => {
-        mapInstance.addSource("route", {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            properties: {},
-            geometry: routeLine,
-          },
-        });
-
-        mapInstance.addLayer({
-          id: "route",
-          type: "line",
-          source: "route",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#ee9613",
-            "line-width": 8,
-          },
-        });
-      });
-    } catch (error) {
-      console.error("Error fetching route:", error);
-      toast.error("Failed to fetch route. Please try again later.");
-    }
-  }, []);
-
-  // Effects
   useEffect(() => {
     let interval;
     if (!state.isPaused) {
@@ -306,7 +432,83 @@ function JoesBeerhouse() {
     };
   }, [state.isDropdownOpen]);
 
-  // Render helpers
+  // Mapbox setup
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+
+const MARKER_COORDINATES = [
+  { lng: 17.090396711968985, lat: -22.550459904783143 }, // Joe's Beerhouse
+  { lng: 17.073723364157306, lat: -22.561939983264068 }, // User's home
+];
+
+const initializeMap = useCallback((mapContainer) => {
+  if (!mapContainer) return;
+
+  const mapInstance = new mapboxgl.Map({
+    container: mapContainer,
+    style: "mapbox://styles/mapbox/streets-v11",
+    zoom: 12,
+  });
+
+  mapInstance.addControl(new mapboxgl.NavigationControl());
+
+  MARKER_COORDINATES.forEach((coord) => {
+    new mapboxgl.Marker({ color: "#ee9613" })
+      .setLngLat([coord.lng, coord.lat])
+      .addTo(mapInstance);
+  });
+
+  const bounds = new mapboxgl.LngLatBounds();
+  MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
+
+  mapInstance.fitBounds(bounds, {
+    padding: { top: 20, bottom: 30, left: 20, right: 20 },
+    maxZoom: 13,
+    linear: true,
+  });
+
+  fetchAndDisplayRoute(mapInstance);
+
+  setState(prevState => ({ ...prevState, map: mapInstance }));
+}, []);
+
+const fetchAndDisplayRoute = useCallback(async (mapInstance) => {
+  try {
+    const response = await axios.get(
+      `https://api.mapbox.com/directions/v5/mapbox/driving/${MARKER_COORDINATES[0].lng},${MARKER_COORDINATES[0].lat};${MARKER_COORDINATES[1].lng},${MARKER_COORDINATES[1].lat}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+    );
+
+    const routeLine = response.data.routes[0].geometry;
+
+    mapInstance.on("load", () => {
+      mapInstance.addSource("route", {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: routeLine,
+        },
+      });
+
+      mapInstance.addLayer({
+        id: "route",
+        type: "line",
+        source: "route",
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#ee9613",
+          "line-width": 8,
+        },
+      });
+    });
+  } catch (error) {
+    console.error("Error fetching route:", error);
+    toast.error("Failed to fetch route. Please try again later.");
+  }
+}, []);
+
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
       <div className="container mx-auto px-2 sm:px-4 lg:px-6">
@@ -354,13 +556,14 @@ function JoesBeerhouse() {
     </div>
   ), []);
 
-  // JSX
   return (
     <div className="bg-white">
-      <OPNavBar />
+      <div className={`transition-transform duration-300 ${isNavbarVisible ? 'transform translate-y-0' : 'transform -translate-y-full'}`}>
+        <OPNavBar />
+      </div>
       <main className="relative z-10">
-        {/* Header section */}
-        <header className="relative w-full h-[510px]">
+         {/* Header section */}
+         <header className="relative w-full h-[510px]">
           <div className="relative w-full h-full">
             <LazyLoadImage
               src="/images/restaurants/joesbeerhouse.png"
@@ -434,20 +637,21 @@ function JoesBeerhouse() {
         {/* Carousel section */}
         <section className="my-8">
           <div className="container mx-auto px-4">
-            <div className="relative mt-8 overflow-hidden" style={{ height: '276px' }}>
+            <div className="relative mt-8 overflow-hidden">
               <div
                 ref={containerRef}
                 className="flex transition-transform duration-500 ease-in-out"
                 style={{
-                  transform: `translateX(-${state.currentIndex * 100}%)`,
-                  width: `${extendedCards.length * 100}%`,
+                  transform: `translateX(-${state.currentIndex * 576}px)`,
+                  width: `${extendedCards.length * 576}px`,
                 }}
                 onTransitionEnd={handleTransitionEnd}
               >
                 {extendedCards.map((card, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 w-full h-full"
+                    className="p-2 flex-shrink-0"
+                    style={{ width: "576px", height: "276px" }}
                   >
                     <div
                       className="h-full w-full rounded-md overflow-hidden bg-cover bg-center"
@@ -497,7 +701,8 @@ function JoesBeerhouse() {
                 {cards.map((_, index) => (
                   <button
                     key={index}
-                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"}`}
+                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
+                      }`}
                     onClick={() => handleDotClick(index)}
                     aria-label={`Go to slide ${index + 1}`}
                   ></button>
@@ -550,21 +755,137 @@ function JoesBeerhouse() {
           </div>
         </section>
 
-        {/* Venues List */}
-        <section className="container mx-auto px-4 pb-4" data-test-id="discovery.venuesList">
+        {/* Search and Filter Section */}
+        <section
+          ref={searchAndFilterRef}
+          className={`py-4 transition-all duration-300 ease-in-out ${
+            isSticky
+              ? 'fixed left-0 right-0 z-50 bg-white shadow-md'
+              : ''
+          }`}
+          style={{ top: 0 }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
+              <div className="w-full md:w-2/3 overflow-x-auto">
+                <div className="flex items-center space-x-2 pb-2 md:pb-0">
+                  <button
+                    onClick={() => handleCategorySelect("")}
+                    className={`px-4 py-2 rounded-md transition-colors duration-300 whitespace-nowrap ${
+                      selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
+                  >
+                    All
+                  </button>
+                  {visibleCategories.map((category) => (
+                    <button
+                      key={category}
+                      data-category={category}
+                      onClick={() => handleCategorySelect(category)}
+                      className={`px-4 py-2 rounded-md transition-colors duration-300 whitespace-nowrap ${
+                        selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                  {hiddenCategories.length > 0 && (
+                    <div className="relative">
+                      <button
+                        onClick={toggleMoreDropdown}
+                        className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center whitespace-nowrap"
+                      >
+                        More <ChevronDownIcon className="w-4 h-4 ml-1" />
+                      </button>
+                      {isMoreDropdownOpen && (
+                        <div className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md overflow-hidden z-50">
+                          {hiddenCategories.map((category) => (
+                            <button
+                              key={category}
+                              onClick={() => {
+                                handleCategorySelect(category);
+                                setIsMoreDropdownOpen(false);
+                              }}
+                              className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap"
+                            >
+                              {category}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={handleSearch}
+                className="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Restaurant Products Section */}
+        <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
           <div className="py-4 border-b border-gray-200">
-            <div data-testid="venue-list-header" className="flex items-center p-4">
-              <h2 className="text-lg font-bold">All venues</h2>
+            <div data-testid="product-list-header" className="flex items-center p-4">
+              <h2 className="text-lg font-bold">Restaurant Products</h2>
               <button
-                data-test-id="venue-list-header-sort"
+                data-test-id="product-list-header-sort"
                 className="ml-auto text-blue-600 hover:underline"
               >
                 Sort by
               </button>
             </div>
-            <div className="overflow-y-auto h-[450px] sm:h-[450px] md:h-[450px] lg:h-[450px]">
-              <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {restaurants.map((restaurant, index) => renderRestaurantCard(restaurant, index))}
+            <div className="overflow-y-auto h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px]">
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
+                {filteredProducts.map((product, index) => (
+                  
+                  <a key={index}
+                    href={product.href}
+                    className="flex w-full max-w-[550px] min-h-[150px] mx-auto rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
+                    data-test-id="product-card-link"
+                  >
+                    <div className="relative w-1/3 overflow-hidden">
+                      <LazyLoadImage
+                        src={product.imgSrc}
+                        alt={product.name}
+                        className="absolute top-0 left-0 w-full h-full object-cover"
+                        effect="opacity"
+                      />
+                      {product.discount && (
+                        <div
+                          data-testid="product-discount-label"
+                          className="absolute top-2 right-2 bg-yellow-400 text-black text-xs px-2 py-1 rounded-full"
+                        >
+                          -{product.discount}%
+                        </div>
+                      )}
+                    </div>
+                    <div className="w-2/3 p-4 flex flex-col justify-between">
+                      <div>
+                        <h3 data-testid="product-name" className="font-bold text-sm sm:text-base mb-1 truncate">
+                          {product.name}
+                        </h3>
+                        <div className="flex items-center text-xs sm:text-sm mb-2 text-gray-600">
+                          <span className="text-[#ee9613] font-semibold">{product.priceRange}</span>
+                          <span className="mx-2">•</span>
+                          <span className="truncate">{product.cuisine}</span>
+                        </div>
+                        <p className="text-xs text-gray-600 mb-2 line-clamp-2">{product.description}</p>
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        Pickup: {product.pickupTime}
+                      </div>
+                    </div>
+                    <div className="absolute top-2 right-2 bg-[#ee9613] text-white text-lg w-12 h-8 flex items-center justify-center rounded">
+                      +
+                    </div>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -586,8 +907,8 @@ function JoesBeerhouse() {
                   <div>
                     <p>Windhoek West</p>
                     <p>8850603 Eilat</p>
-                    <a 
-                      href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
+                    
+                    <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#ee9613] font-bold hover:underline"
@@ -607,7 +928,7 @@ function JoesBeerhouse() {
                 <h3 className="text-md font-semibold">Opening hours</h3>
                 <table className="table-auto">
                   <tbody>
-                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                    {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
                       <tr key={day}>
                         <td className="pr-4">{day}</td>
                         <td>09:00–22:30</td>
@@ -617,7 +938,7 @@ function JoesBeerhouse() {
                 </table>
               </div>
             </div>
-            <div className="w-full md:w-1/3 h-64 md:h-96 relative">
+            <div className="w-full md:w-2/3 h-64 md:h-96 relative">
               <div ref={mapContainerRef} className="absolute inset-0" />
             </div>
           </div>
