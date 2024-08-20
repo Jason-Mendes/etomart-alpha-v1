@@ -60,7 +60,7 @@ export default [
         "args": "after-used",
         "ignoreRestSiblings": false
       }],
-      'prettier/prettier': 'error',
+      'prettier/prettier': 'off', // Disable Prettier checks
       'import/order': [
         'error',
         {
@@ -73,10 +73,11 @@ export default [
             },
           ],
           pathGroupsExcludedImportTypes: ['react'],
-          'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
+          // 'newlines-between': 'always', // This line is removed or set to 'off'
+          // Disable alphabetize if you don't want it to enforce import order
+    alphabetize: {
+      order: 'off', // Turn off alphabetical ordering of imports
+      caseInsensitive: true,
           },
         },
       ],

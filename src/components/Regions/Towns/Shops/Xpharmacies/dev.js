@@ -100,265 +100,38 @@ function JoesBeerhouse() {
     // Add more cards as needed
   ], []);
 
-  const restaurantCards = useMemo(() => [
-    {
-      name: "Vennes",
-      imgSrc: "/images/restaurants/v.png",
-      href: "/en/stores/vennes-cafe/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Cafe",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Istanbul Kebab House",
-      imgSrc: "/images/restaurants/i.png",
-      href: "/en/stores/istanbul-kebab-house/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Kebab",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Teater Kvarteret Barista",
-      imgSrc: "/images/restaurants/t.png",
-      href: "/en/stores/teater-kvarteret-barista/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Coffee",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "15–35 min",
-      deliveryTime: false,
-    },
-    {
-      name: "Nordic Food",
-      imgSrc: "/images/restaurants/n.png",
-      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Nordic",
-      description:
-        "Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and onionsTasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Italian Cuisine",
-      imgSrc: "/images/restaurants/ic.png",
-      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Nordic",
-      description:
-        "Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and onionsTasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Vennes",
-      imgSrc: "/images/restaurants/v.png",
-      href: "/en/stores/vennes-cafe/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Cafe",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Vennes",
-      imgSrc: "/images/restaurants/v.png",
-      href: "/en/stores/vennes-cafe/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Cafe",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Istanbul Kebab House",
-      imgSrc: "/images/restaurants/i.png",
-      href: "/en/stores/istanbul-kebab-house/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Kebab",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Teater Kvarteret Barista",
-      imgSrc: "/images/restaurants/t.png",
-      href: "/en/stores/teater-kvarteret-barista/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Coffee",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "15–35 min",
-      deliveryTime: false,
-    },
-    {
-      name: "Nordic Food",
-      imgSrc: "/images/restaurants/n.png",
-      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Nordic",
-      description:
-        "Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and onionsTasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Italian Cuisine",
-      imgSrc: "/images/restaurants/ic.png",
-      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Nordic",
-      description:
-        "Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and onionsTasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Vennes",
-      imgSrc: "/images/restaurants/v.png",
-      href: "/en/stores/vennes-cafe/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Cafe",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Vennes",
-      imgSrc: "/images/restaurants/v.png",
-      href: "/en/stores/vennes-cafe/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Cafe",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Istanbul Kebab House",
-      imgSrc: "/images/restaurants/i.png",
-      href: "/en/stores/istanbul-kebab-house/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Kebab",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Teater Kvarteret Barista",
-      imgSrc: "/images/restaurants/t.png",
-      href: "/en/stores/teater-kvarteret-barista/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Coffee",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "15–35 min",
-      deliveryTime: false,
-    },
-    {
-      name: "Nordic Food",
-      imgSrc: "/images/restaurants/n.png",
-      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Nordic",
-      description:
-        "Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and onionsTasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Italian Cuisine",
-      imgSrc: "/images/restaurants/ic.png",
-      href: "/en/stores/nordic-food/?show_wolt_plus_offer=true",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Nordic",
-      description:
-        "Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and Tasty burger with tomato cheese and onionsTasty burger with tomato cheese and onionsTasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Vennes",
-      imgSrc: "/images/restaurants/v.png",
-      href: "/en/stores/vennes-cafe/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Cafe",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-
-    // Add more items as needed
-  ], []);
-
   const restaurants = useMemo(() => [
     {
-      name: "Joe's Beerhouse",
-      imgSrc: "/images/restaurants/joesbeerhouse.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "The Stellenbosch Wine Bar",
-      imgSrc: "/images/restaurants/stellenbosch.png",
-      href: "/en/discovery/category/stellenbosch",
-    },
-    {
-      name: "O Portuga",
-      imgSrc: "/images/restaurants/oportuga.png",
-      href: "/en/discovery/category/oportuga",
-    },
-    {
-      name: "The Social",
-      imgSrc: "/images/restaurants/thesocial.png",
-      href: "/en/discovery/category/thesocial",
-    },
-    {
-      name: "Sardinia Blue Olive",
-      imgSrc: "/images/restaurants/sardiniablueolive.png",
-      href: "/en/discovery/category/sardiniablueolive",
-    },
-    {
-      name: "Slowtown Coffee Roasters",
-      imgSrc: "/images/restaurants/slowtown.png",
-      href: "/en/discovery/category/slowtown",
-    },
-  ], []);
+       name: "Joe's Beerhouse",
+       imgSrc: "/images/restaurants/joesbeerhouse.png",
+       href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
+     },
+     {
+       name: "The Stellenbosch Wine Bar",
+       imgSrc: "/images/restaurants/stellenbosch.png",
+       href: "/en/discovery/category/stellenbosch",
+     },
+     {
+       name: "O Portuga",
+       imgSrc: "/images/restaurants/oportuga.png",
+       href: "/en/discovery/category/oportuga",
+     },
+     {
+       name: "The Social",
+       imgSrc: "/images/restaurants/thesocial.png",
+       href: "/en/discovery/category/thesocial",
+     },
+     {
+       name: "Sardinia Blue Olive",
+       imgSrc: "/images/restaurants/sardiniablueolive.png",
+       href: "/en/discovery/category/sardiniablueolive",
+     },
+     {
+       name: "Slowtown Coffee Roasters",
+       imgSrc: "/images/restaurants/slowtown.png",
+       href: "/en/discovery/category/slowtown",
+     },
+   ], []);
 
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
@@ -661,21 +434,20 @@ function JoesBeerhouse() {
         {/* Carousel section */}
         <section className="my-8">
           <div className="container mx-auto px-4">
-            <div className="relative mt-8 overflow-hidden">
+            <div className="relative mt-8 overflow-hidden" style={{ height: '276px' }}>
               <div
                 ref={containerRef}
                 className="flex transition-transform duration-500 ease-in-out"
                 style={{
-                  transform: `translateX(-${state.currentIndex * 576}px)`,
-                  width: `${extendedCards.length * 576}px`,
+                  transform: `translateX(-${state.currentIndex * 100}%)`,
+                  width: `${extendedCards.length * 100}%`,
                 }}
                 onTransitionEnd={handleTransitionEnd}
               >
                 {extendedCards.map((card, index) => (
                   <div
                     key={index}
-                    className="p-2 flex-shrink-0"
-                    style={{ width: "576px", height: "276px" }}
+                    className="flex-shrink-0 w-full h-full"
                   >
                     <div
                       className="h-full w-full rounded-md overflow-hidden bg-cover bg-center"
@@ -725,8 +497,7 @@ function JoesBeerhouse() {
                 {cards.map((_, index) => (
                   <button
                     key={index}
-                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
-                      }`}
+                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"}`}
                     onClick={() => handleDotClick(index)}
                     aria-label={`Go to slide ${index + 1}`}
                   ></button>
@@ -779,68 +550,25 @@ function JoesBeerhouse() {
           </div>
         </section>
 
-        {/* Restaurant Products Section */}
-<section className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
-  <div className="py-4 border-b border-gray-200">
-    <div data-testid="product-list-header" className="flex items-center p-4">
-      <h2 className="text-lg font-bold">Restaurant Products</h2>
-      <button
-        data-test-id="product-list-header-sort"
-        className="ml-auto text-blue-600 hover:underline"
-      >
-        Sort by
-      </button>
-    </div>
-    <div className="overflow-y-auto h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px]">
-      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
-        {restaurantCards.map((product, index) => (
-          <a
-            key={index}
-            href={product.href}
-            className="flex w-full max-w-[550px] min-h-[150px] mx-auto rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
-            data-test-id="product-card-link"
-          >
-            <div className="relative w-1/3 overflow-hidden">
-              <LazyLoadImage
-                src={product.imgSrc}
-                alt={product.name}
-                className="absolute top-0 left-0 w-full h-full object-cover"
-                effect="opacity"
-              />
-              {product.discount && (
-                <div
-                  data-testid="product-discount-label"
-                  className="absolute top-2 right-2 bg-yellow-400 text-black text-xs px-2 py-1 rounded-full"
-                >
-                  -{product.discount}%
-                </div>
-              )}
+        {/* Venues List */}
+        <section className="container mx-auto px-4 pb-4" data-test-id="discovery.venuesList">
+          <div className="py-4 border-b border-gray-200">
+            <div data-testid="venue-list-header" className="flex items-center p-4">
+              <h2 className="text-lg font-bold">All venues</h2>
+              <button
+                data-test-id="venue-list-header-sort"
+                className="ml-auto text-blue-600 hover:underline"
+              >
+                Sort by
+              </button>
             </div>
-            <div className="w-2/3 p-4 flex flex-col justify-between">
-              <div>
-                <h3 data-testid="product-name" className="font-bold text-sm sm:text-base mb-1 truncate">
-                  {product.name}
-                </h3>
-                <div className="flex items-center text-xs sm:text-sm mb-2 text-gray-600">
-                  <span className="text-[#ee9613] font-semibold">{product.priceRange}</span>
-                  <span className="mx-2">•</span>
-                  <span className="truncate">{product.cuisine}</span>
-                </div>
-                <p className="text-xs text-gray-600 mb-2 line-clamp-2">{product.description}</p>
-              </div>
-              <div className="text-xs text-gray-500">
-                Pickup: {product.pickupTime}
+            <div className="overflow-y-auto h-[450px] sm:h-[450px] md:h-[450px] lg:h-[450px]">
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {restaurants.map((restaurant, index) => renderRestaurantCard(restaurant, index))}
               </div>
             </div>
-            <div className="absolute top-2 right-2 bg-[#ee9613] text-white text-lg w-12 h-8 flex items-center justify-center rounded">
-              +
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
+          </div>
+        </section>
 
         {/* Information Section */}
         <section className="container mx-auto p-4 mt-8">
@@ -858,7 +586,7 @@ function JoesBeerhouse() {
                   <div>
                     <p>Windhoek West</p>
                     <p>8850603 Eilat</p>
-                    <a
+                    <a 
                       href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -879,7 +607,7 @@ function JoesBeerhouse() {
                 <h3 className="text-md font-semibold">Opening hours</h3>
                 <table className="table-auto">
                   <tbody>
-                    {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
                       <tr key={day}>
                         <td className="pr-4">{day}</td>
                         <td>09:00–22:30</td>
@@ -889,7 +617,7 @@ function JoesBeerhouse() {
                 </table>
               </div>
             </div>
-            <div className="w-full md:w-2/3 h-64 md:h-96 relative">
+            <div className="w-full md:w-1/3 h-64 md:h-96 relative">
               <div ref={mapContainerRef} className="absolute inset-0" />
             </div>
           </div>

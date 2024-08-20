@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
+import PropTypes from 'prop-types';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { toast } from "react-toastify";
+
 import Footer from "../../../../Footer";
 import OPNavBar from "../../../../OPNavBar";
+
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import PropTypes from 'prop-types';
+
 
 // Performance measurement hook
 const usePerformanceMeasure = (name) => {
