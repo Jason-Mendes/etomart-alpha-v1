@@ -54,6 +54,7 @@ function JoesBeerhouse() {
     scrollYOPNavbar: true,
   isSticky: false,
   showOPNavbar: true,
+  isOPNavbarSticky: false,
   });
 
   // Refs
@@ -66,8 +67,9 @@ function JoesBeerhouse() {
   const searchAndFilterRef = useRef(null);
   const moreButtonRef = useRef(null);
   const dropdownRef = useRef(null);
-  const storeInfoRef = useRef(null);
 const informationSectionRef = useRef(null);
+const storeInfoRef = useRef(null);
+const restaurantProductsRef = useRef(null);
 
   // Memoized data
   const cards = useMemo(() => [
@@ -495,17 +497,22 @@ useEffect(() => {
   const handleOPNavbarVisibility = () => {
     const currentScrollPos = window.pageYOffset;
     const storeInfoTop = storeInfoRef.current?.getBoundingClientRect().top;
-    const infoSectionTop = informationSectionRef.current?.getBoundingClientRect().top;
+    const storeInfoBottom = storeInfoRef.current?.getBoundingClientRect().bottom;
+    const restaurantProductsTop = restaurantProductsRef.current?.getBoundingClientRect().top;
 
-    if (storeInfoTop !== undefined && infoSectionTop !== undefined) {
-      const storeInfoPosition = storeInfoTop + window.pageYOffset;
-      const infoSectionPosition = infoSectionTop + window.pageYOffset;
+    if (storeInfoTop !== undefined && storeInfoBottom !== undefined && restaurantProductsTop !== undefined) {
+      const storeInfoTopPosition = storeInfoTop + window.pageYOffset;
+      const storeInfoBottomPosition = storeInfoBottom + window.pageYOffset;
+      const restaurantProductsTopPosition = restaurantProductsTop + window.pageYOffset;
 
       setState(prevState => ({
         ...prevState,
         showOPNavbar: 
-          currentScrollPos < storeInfoPosition || 
-          currentScrollPos > infoSectionPosition
+          currentScrollPos < storeInfoTopPosition || 
+          currentScrollPos > storeInfoBottomPosition,
+        isOPNavbarSticky:
+          (currentScrollPos >= storeInfoTopPosition && currentScrollPos < storeInfoBottomPosition) ||
+          currentScrollPos >= restaurantProductsTopPosition
       }));
     }
     prevScrollPos = currentScrollPos;
@@ -650,8 +657,8 @@ useEffect(() => {
       <Suspense fallback={<div>Loading...</div>}>
       <div 
   className={`
-    transition-all duration-300 fixed top-0 left-0 right-0 z-50
-    ${state.showOPNavbar ? 'transform translate-y-0' : 'transform -translate-y-full'}
+    transition-all duration-300 ${state.showOPNavbar ? 'transform translate-y-0' : 'transform -translate-y-full'}
+    ${state.isOPNavbarSticky ? 'fixed top-0 left-0 right-0 z-50' : 'relative'}
   `}
 >
   <OPNavBar />
@@ -808,7 +815,7 @@ useEffect(() => {
           </section>
 
           {/* Store Information */}
-          <section className="container mx-auto px-4 mb-2">
+          <section ref={storeInfoRef} className="container mx-auto px-4 mb-2">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 px-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <div className="flex items-center space-x-1">
@@ -943,7 +950,8 @@ useEffect(() => {
           </section>
 
           {/* Restaurant Products Section */}
-          <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
+          <section ref={restaurantProductsRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
+ 
             <div className="py-4 border-b border-gray-200">
               <div data-testid="product-list-header" className="flex items-center px-4">
                 <h2 className="text-lg font-bold">Restaurant Products</h2>
