@@ -54,22 +54,16 @@ function JoesBeerhouse() {
     scrollYOPNavbar: true,
   isSticky: false,
   showOPNavbar: true,
-  isOPNavbarSticky: false,
   });
 
   // Refs
   const containerRef = useRef(null);
   const mapContainerRef = useRef(null);
   const restaurantsscroll = useRef(null);
-  const stickyRef = useRef(null);
   const productsSectionRef = useRef(null);
-  const categoriesContainerRef = useRef(null);
   const searchAndFilterRef = useRef(null);
   const moreButtonRef = useRef(null);
   const dropdownRef = useRef(null);
-const informationSectionRef = useRef(null);
-const storeInfoRef = useRef(null);
-const restaurantProductsRef = useRef(null);
 
   // Memoized data
   const cards = useMemo(() => [
@@ -490,38 +484,6 @@ const restaurantProductsRef = useRef(null);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-// OPNavbar 
-useEffect(() => {
-  let prevScrollPos = window.pageYOffset;
-  
-  const handleOPNavbarVisibility = () => {
-    const currentScrollPos = window.pageYOffset;
-    const storeInfoTop = storeInfoRef.current?.getBoundingClientRect().top;
-    const storeInfoBottom = storeInfoRef.current?.getBoundingClientRect().bottom;
-    const restaurantProductsTop = restaurantProductsRef.current?.getBoundingClientRect().top;
-
-    if (storeInfoTop !== undefined && storeInfoBottom !== undefined && restaurantProductsTop !== undefined) {
-      const storeInfoTopPosition = storeInfoTop + window.pageYOffset;
-      const storeInfoBottomPosition = storeInfoBottom + window.pageYOffset;
-      const restaurantProductsTopPosition = restaurantProductsTop + window.pageYOffset;
-
-      setState(prevState => ({
-        ...prevState,
-        showOPNavbar: 
-          currentScrollPos < storeInfoTopPosition || 
-          currentScrollPos > storeInfoBottomPosition,
-        isOPNavbarSticky:
-          (currentScrollPos >= storeInfoTopPosition && currentScrollPos < storeInfoBottomPosition) ||
-          currentScrollPos >= restaurantProductsTopPosition
-      }));
-    }
-    prevScrollPos = currentScrollPos;
-  };
-
-  window.addEventListener('scroll', handleOPNavbarVisibility, { passive: true });
-  return () => window.removeEventListener('scroll', handleOPNavbarVisibility);
-}, []);
-
   useEffect(() => {
     setState(prevState => ({
       ...prevState,
@@ -656,9 +618,9 @@ useEffect(() => {
     <div className="bg-white">
       <Suspense fallback={<div>Loading...</div>}>
       <div 
-  className={`
-    transition-all duration-300 ${state.showOPNavbar ? 'transform translate-y-0' : 'transform -translate-y-full'}
-    ${state.isOPNavbarSticky ? 'fixed top-0 left-0 right-0 z-50' : 'relative'}
+  className={`hidden
+    transition-all duration-300 fixed top-0 left-0 right-0 z-50
+    ${state.showOPNavbar ? 'transform translate-y-0' : 'transform -translate-y-full'}
   `}
 >
   <OPNavBar />
@@ -815,7 +777,7 @@ useEffect(() => {
           </section>
 
           {/* Store Information */}
-          <section ref={storeInfoRef} className="container mx-auto px-4 mb-2">
+          <section className="container mx-auto px-4 mb-2">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 px-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <div className="flex items-center space-x-1">
@@ -839,13 +801,13 @@ useEffect(() => {
               </div>
               <div className="flex items-center justify-end border-solid p-1 space-x-2 bg-gray-200 rounded-full">
   <button
-    className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-white" : "bg-gray-200"}`}
+    className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-[#ee9613] text-white" : "bg-gray-200"}`}
     onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
   >
     Delivery
   </button>
   <button
-    className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-white"}`}
+    className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
     onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
   >
     Pickup
@@ -950,8 +912,7 @@ useEffect(() => {
           </section>
 
           {/* Restaurant Products Section */}
-          <section ref={restaurantProductsRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
- 
+          <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
             <div className="py-4 border-b border-gray-200">
               <div data-testid="product-list-header" className="flex items-center px-4">
                 <h2 className="text-lg font-bold">Restaurant Products</h2>
