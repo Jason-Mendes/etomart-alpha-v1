@@ -41,7 +41,7 @@ function JoesBeerhouse() {
   const [hiddenCategories, setHiddenCategories] = useState([]);
   const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
-  const VISIBLE_CATEGORIES_COUNT = 5; // Number of categories to show in search section
+  const VISIBLE_CATEGORIES_COUNT = 8; // Number of categories to show in search section
 
   const containerRef = useRef(null);
   const mapContainerRef = useRef(null);
@@ -767,145 +767,143 @@ function JoesBeerhouse() {
           </div>
         </section>
 
-     {/* Store Information */}
-<section className="container mx-auto px-4 mb-8">
-  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 px-4">
-    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
-      <div className="flex items-center space-x-1">
-        <svg viewBox="0 0 16 16" width="16" aria-hidden="true" className="text-primary">
-          <path fillRule="evenodd" clipRule="evenodd" d="M8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C15.9949 3.58385 12.4161 0.00514317 8 0ZM8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8C1.33333 4.3181 4.3181 1.33333 8 1.33333C11.6819 1.33333 14.6667 4.3181 14.6667 8C14.6626 11.6802 11.6802 14.6626 8 14.6667ZM11.4227 10.54L8.33333 7.70733V4.33333C8.33333 3.96514 8.03486 3.66667 7.66667 3.66667C7.29848 3.66667 7 3.96514 7 4.33333V8C6.99979 8.18704 7.07817 8.36556 7.216 8.492L10.522 11.522C10.7947 11.7672 11.2135 11.7492 11.464 11.4813C11.7123 11.2099 11.6938 10.7886 11.4227 10.54Z"></path>
-        </svg>
-        <span>Opens today at 10:00</span>
-      </div>
-      <div className="flex items-center space-x-1">
-        <svg viewBox="0 0 24 24" width="16" aria-hidden="true" className="text-[#ee9613]">
-          <circle cx="12" cy="12" r="12" fill="orange" />
-        </svg>
-        <span>9.8</span>
-      </div>
-      <button type="button" className="text-[#ee9613] flex items-center space-x-1">
-        <svg viewBox="0 0 24 24" width="16">
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
-        </svg>
-        <span>See more information</span>
-      </button>
-    </div>
-    <div className="flex items-center justify-end border-solid p-1 space-x-2 bg-gray-200 rounded-full">
-      <button
-        className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-white" : "bg-gray-200"}`}
-        onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
-      >
-        Delivery
-      </button>
-      <button
-        className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-white"}`}
-        onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
-      >
-        Pickup
-      </button>
-    </div>
-  </div>
-  <div className="text-gray-700 px-4 mt-4">
-    The store isn't delivering to your location, but you can still place an order for pickup.
-  </div>
-</section>
-
-{/* Search and Filter Section */}
-<section
-  ref={searchAndFilterRef}
-  className={`py-4 transition-all duration-300 ease-in-out ${isSticky ? 'fixed left-0 right-0 z-50 bg-white shadow-md' : ''
-    }`}
-  style={{ top: isSticky ? 0 : 'auto' }}
->
-  <div className="container mx-auto px-4">
-    <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
-      {/* Category Buttons Container */}
-      <div className="w-full md:w-2/3 overflow-x-auto">
-        <div className="flex items-center space-x-2 pb-2 md:pb-0">
-          <button
-            onClick={() => handleCategorySelect("")}
-            className={`px-4 py-2 rounded-md transition-colors duration-300 whitespace-nowrap ${selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
-          >
-            All
-          </button>
-          {visibleCategories.map((category) => (
-            <button
-              key={category}
-              data-category={category}
-              onClick={() => handleCategorySelect(category)}
-              className={`px-4 py-2 rounded-md transition-colors duration-300 whitespace-nowrap ${selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* More Button Container */}
-      <div className="relative w-full md:w-auto min-w-[150px] md:min-w-[150px] lg:min-w-[150px]">
-        {hiddenCategories.length > 0 && (
-          <div className="relative">
-            <button
-              ref={moreButtonRef}
-              onClick={toggleMoreDropdown}
-              className="px-8 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center whitespace-nowrap"
-            >
-              More <ChevronDownIcon className="w-4 h-4 ml-6" />
-            </button>
-
-         {/* Dropdown Menu */}
-{isMoreDropdownOpen && (
-  <div
-    ref={dropdownRef}
-    className="absolute left-0 mt-1 bg-white shadow-lg rounded-md z-50 w-auto min-w-[150px] md:min-w-[150px] lg:min-w-[120px] overflow-visible"
-  >
-    <div className="p-2 grid grid-cols-1 gap-2">
-      {hiddenCategories.map((category) => (
-        <button
-          key={category}
-          onClick={() => {
-            handleCategorySelect(category);
-            setIsMoreDropdownOpen(false);
-          }}
-          className="px-6 py-4 text-left hover:bg-gray-100 rounded whitespace-nowrap text-ellipsis"
-          style={{ minWidth: '180px', minHeight: '60px' }}
-        >
-          {category}
-        </button>
-      ))}
-    </div>
-  </div>
-)}
-
-
+        {/* Store Information */}
+        <section className="container mx-auto px-4 mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 px-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+              <div className="flex items-center space-x-1">
+                <svg viewBox="0 0 16 16" width="16" aria-hidden="true" className="text-primary">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C15.9949 3.58385 12.4161 0.00514317 8 0ZM8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8C1.33333 4.3181 4.3181 1.33333 8 1.33333C11.6819 1.33333 14.6667 4.3181 14.6667 8C14.6626 11.6802 11.6802 14.6626 8 14.6667ZM11.4227 10.54L8.33333 7.70733V4.33333C8.33333 3.96514 8.03486 3.66667 7.66667 3.66667C7.29848 3.66667 7 3.96514 7 4.33333V8C6.99979 8.18704 7.07817 8.36556 7.216 8.492L10.522 11.522C10.7947 11.7672 11.2135 11.7492 11.464 11.4813C11.7123 11.2099 11.6938 10.7886 11.4227 10.54Z"></path>
+                </svg>
+                <span>Opens today at 10:00</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <svg viewBox="0 0 24 24" width="16" aria-hidden="true" className="text-[#ee9613]">
+                  <circle cx="12" cy="12" r="12" fill="orange" />
+                </svg>
+                <span>9.8</span>
+              </div>
+              <button type="button" className="text-[#ee9613] flex items-center space-x-1">
+                <svg viewBox="0 0 24 24" width="16">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
+                </svg>
+                <span>See more information</span>
+              </button>
+            </div>
+            <div className="flex items-center justify-end border-solid p-1 space-x-2 bg-gray-200 rounded-full">
+              <button
+                className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-white" : "bg-gray-200"}`}
+                onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
+              >
+                Delivery
+              </button>
+              <button
+                className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-white"}`}
+                onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
+              >
+                Pickup
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+          <div className="text-gray-700 px-4 mt-4">
+            The store isn't delivering to your location, but you can still place an order for pickup.
+          </div>
+        </section>
 
-      {/* Search Input */}
-      <div className="relative w-full md:w-1/3">
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
-        />
-        <svg
-          viewBox="0 0 24 24"
-          className="w-6 h-6 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2"
+        {/* Search and Filter Section */}
+        <section
+          ref={searchAndFilterRef}
+          className={`py-4 transition-all duration-300 ease-in-out ${isSticky ? 'fixed left-0 right-0 z-50 bg-white shadow-md' : ''
+            }`}
+          style={{ top: isSticky ? 0 : 'auto' }}
         >
-          <path
-            d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
-            fill="#ee9613"
-          />
-        </svg>
-      </div>
-    </div>
-  </div>
-</section>
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
+              {/* Category Buttons Container */}
+              <div className="w-full md:w-2/3 overflow-x-auto">
+                <div className="flex items-center space-x-2 pb-2 md:pb-0">
+                  <button
+                    onClick={() => handleCategorySelect("")}
+                    className={`px-4 py-2 rounded-md transition-colors duration-300 whitespace-nowrap ${selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
+                  >
+                    All
+                  </button>
+                  {visibleCategories.map((category) => (
+                    <button
+                      key={category}
+                      data-category={category}
+                      onClick={() => handleCategorySelect(category)}
+                      className={`px-4 py-2 rounded-md transition-colors duration-300 whitespace-nowrap ${selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* More Button Container */}
+              <div className="relative w-full md:w-auto min-w-[150px] md:min-w-[150px] lg:min-w-[150px]">
+                {hiddenCategories.length > 0 && (
+                  <div className="relative">
+                    <button
+                      ref={moreButtonRef}
+                      onClick={toggleMoreDropdown}
+                      className="px-8 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center whitespace-nowrap"
+                    >
+                      More <ChevronDownIcon className="w-4 h-4 ml-6" />
+                    </button>
+
+                    {/* Dropdown Menu */}
+                    {isMoreDropdownOpen && (
+                      <div
+                        ref={dropdownRef}
+                        className="absolute left-0 mt-1 bg-white shadow-lg rounded-md z-50 w-auto min-w-[200px] overflow-visible"
+                        style={{ top: 'calc(100% + 2px)' }}
+                      >
+                        <div className="p-2 grid grid-cols-2 gap-2">
+                          {hiddenCategories.map((category) => (
+                            <button
+                              key={category}
+                              onClick={() => {
+                                handleCategorySelect(category);
+                                setIsMoreDropdownOpen(false);
+                              }}
+                              className="px-3 py-2 text-left hover:bg-gray-100 rounded whitespace-nowrap"
+                            >
+                              {category}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Search Input */}
+              <div className="relative w-full md:w-1/3">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613] transform hover:bg-gray-200 hover:scale-105 transition-transform duration-200"
+                />
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-6 h-6 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2"
+                >
+                  <path
+                    d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
+                    fill="#ee9613"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Restaurant Products Section */}
         <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
