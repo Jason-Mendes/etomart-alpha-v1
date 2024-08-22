@@ -453,6 +453,13 @@ function JoesBeerhouse() {
 
   // Effects
   //OPNavbar scroll effect
+  {/*Changes for (OPNavbar): Update visibility behavior based on scroll position
+
+  - Adjusted the navbar's visibility logic to enhance user experience:
+    - Navbar remains sticky and visible while scrolling down until passing the 'opInformation' section (`opInformationOffset`).
+    - After passing 'opInformation', the navbar hides and remains hidden until:
+      - The user starts scrolling up/The scroll position surpasses the 'opMoreInformation' section (`opMoreInformationOffset`). and Navbar becomes visible again after passing 'opMoreInformation' or when scrolling up, and remains sticky until the top of the page is reached.
+  - Maintained the previous behaviors for consistent functionality.*/}
   useEffect(() => {
     let lastScrollYOPNavbar = window.pageYOffset;
     let initialTopOPNavbar = null;
