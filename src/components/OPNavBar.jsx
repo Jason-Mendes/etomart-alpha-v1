@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { CgMenuRound, CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
 
@@ -11,45 +10,22 @@ import SearchBar from "./SearchBar";
 import UserProfileIcon from "./UserProfileIcon";
 
 // OPNavBar Component
-const OPNavBar = () => {
+const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [nav, setNav] = useState(false);
 
   const handleLocationClick = () => setShowLocationModal(true);
-  const handleNav = () => setNav(!nav);
+
   const closeModals = () => setShowLocationModal(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const navbar = document.getElementById("opnavbar");
-      const scrollPosition = window.scrollY;
-      if (scrollPosition > 0) {
-        navbar.classList.add("sticky");
-      } else {
-        navbar.classList.remove("sticky");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
-    <div className="relative z-20">
-      <style>
-        {`.sticky {
-          position: fixed;
-          z-index: 20;
-          width: 100%;
-          top: 0;
-        }`}
-      </style>
+    <div >
+
       <div className="font-josefin_sans">
         <nav id="opnavbar" className="bg-[#f9f9f9] text-[#ee9613] px-4">
           <div className="flex items-center justify-between mx-auto max-w-7xl">
-            <div className="flex items-center mt-4 mb-4">
+            <div className="flex items-center mt-4 mb-2">
               <h1 className="-mt-2 text-3xl pt-1 font-shrikhand text-[#ee9613] whitespace-nowrap">
                 <Link to="/LP">Etomart</Link>
               </h1>
@@ -71,7 +47,7 @@ const OPNavBar = () => {
                 <UserProfileIcon />
               </div>
             </div>
-            <div className="xl:hidden cursor-pointer" onClick={handleNav}>
+            <div className="xl:hidden cursor-pointer">
               {nav ? <CgClose size={30} /> : <CgMenuRound size={30} />}
             </div>
           </div>
@@ -87,9 +63,8 @@ const OPNavBar = () => {
       </div>
 
       <div
-        className={`absolute z-20 w-full bg-[#f9f9f9] xl:hidden ${
-          nav ? "block" : "hidden"
-        } transition-all duration-500 ease-in-out`}
+        className={`absolute z-20 w-full bg-[#f9f9f9] xl:hidden ${nav ? "block" : "hidden"
+          } transition-all duration-500 ease-in-out`}
       ></div>
       {nav && (
         <div

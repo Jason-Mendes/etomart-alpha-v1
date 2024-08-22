@@ -5,12 +5,13 @@ import mapboxgl from "mapbox-gl";
 import { toast } from "react-toastify";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import PropTypes from 'prop-types';
+import OPNavBar from "../../../../OPNavBar";
 
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Lazy-loaded components
 const Footer = lazy(() => import("../../../../Footer"));
-const OPNavBar = lazy(() => import("../../../../OPNavBar"));
+
 
 // Custom hook for performance measurement
 const usePerformanceMeasure = (name) => {
@@ -34,9 +35,9 @@ const MARKER_COORDINATES = [
 function JoesBeerhouse() {
   usePerformanceMeasure('JoesBeerhouse');
 
-  // Combined state// In the state object, add:
+  // Combined state
   const [state, setState] = useState({
-    isDelivery: false, // Set pickup as default
+    isDelivery: false,
     stickyOffset: 0,
     searchTerm: "",
     currentIndex: 0,
@@ -51,10 +52,17 @@ function JoesBeerhouse() {
     isMoreDropdownOpen: false,
     isNavbarVisible: true,
     filteredProducts: [],
-    scrollYOPNavbar: true,
-  isSticky: false,
-  showOPNavbar: true,
   });
+
+  const [isOPNavbarSticky, setIsOPNavbarSticky] = useState(false);
+  const [isOPNavbarVisible, setIsOPNavbarVisible] = useState(true);
+
+  const opInformationRef = useRef(null);
+  const opMoreInformationRef = useRef(null);
+
+
+  const productsRef = useRef(null);
+
 
   // Refs
   const containerRef = useRef(null);
@@ -291,15 +299,6 @@ function JoesBeerhouse() {
   // Mapbox setup
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-  // Callbacks
-  // Function to calculate the sticky offset
-// const calculateStickyOffset = useCallback(() => {
-//   if (searchAndFilterRef.current) {
-//     const rect = searchAndFilterRef.current.getBoundingClientRect();
-//     setState(prevState => ({ ...prevState, stickyOffset: rect.top + window.pageYOffset }));
-//   }
-// }, []);
-
   const initializeMap = useCallback((mapContainer) => {
     if (!mapContainer) return;
 
@@ -453,6 +452,36 @@ function JoesBeerhouse() {
   }, []);
 
   // Effects
+  //OPNavbar scroll effect
+  useEffect(() => {
+    let lastScrollYOPNavbar = window.pageYOffset;
+    let initialTopOPNavbar = null;
+
+    const handleScrollOPNavbar = () => {
+      const currentScrollYOPNavbar = window.pageYOffset;
+      const opInformationRect = opInformationRef.current?.getBoundingClientRect();
+      const opMoreInformationRect = opMoreInformationRef.current?.getBoundingClientRect();
+
+      if (opInformationRect && opMoreInformationRect) {
+        if (initialTopOPNavbar === null) {
+          initialTopOPNavbar = opInformationRect.top + currentScrollYOPNavbar;
+        }
+
+        const opInformationOffset = initialTopOPNavbar;
+        const opMoreInformationOffset = opMoreInformationRect.bottom + currentScrollYOPNavbar;
+
+        setIsOPNavbarVisible(currentScrollYOPNavbar <= lastScrollYOPNavbar || currentScrollYOPNavbar <= opInformationOffset);
+        setIsOPNavbarSticky(currentScrollYOPNavbar >= opInformationOffset && currentScrollYOPNavbar < opMoreInformationOffset - opInformationRect.height);
+
+        lastScrollYOPNavbar = currentScrollYOPNavbar;
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollOPNavbar, { passive: true });
+    return () => window.removeEventListener('scroll', handleScrollOPNavbar);
+  }, []);
+
+  //scroll effect
   useEffect(() => {
     let lastScrollY = window.pageYOffset;
     let initialTop = null;
@@ -617,15 +646,14 @@ function JoesBeerhouse() {
   return (
     <div className="bg-white">
       <Suspense fallback={<div>Loading...</div>}>
-      <div 
-  className={`hidden
-    transition-all duration-300 fixed top-0 left-0 right-0 z-50
-    ${state.showOPNavbar ? 'transform translate-y-0' : 'transform -translate-y-full'}
-  `}
->
-  <OPNavBar />
-</div>
-        <main className="relative z-10">
+        <nav
+          id="navbarOPNavbar"
+          className={`fixed top-0 left-0 right-0 z-50 shadow-md transition-transform duration-300 ${isOPNavbarVisible ? '' : '-translate-y-full'} ${isOPNavbarSticky ? 'sticky' : ''}`}
+        >
+          <OPNavBar />
+        </nav>
+
+        <main className="relative z-10 pt-20"> {/* Add pt-16 to account for the fixed navbar */}
           {/* Header section */}
           <header className="relative w-full h-[510px]">
             <div className="relative w-full h-full">
@@ -633,7 +661,7 @@ function JoesBeerhouse() {
                 src="/images/restaurants/joesbeerhouse.png"
                 alt="Joe's Beerhouse"
                 effect="blur"
-                className="w-full h-full object-cover"
+                className="w-[510px] h-[510px] object-fill"
               />
               <div className="absolute inset-0 bg-black bg-opacity-50"></div>
             </div>
@@ -777,7 +805,8 @@ function JoesBeerhouse() {
           </section>
 
           {/* Store Information */}
-          <section className="container mx-auto px-4 mb-2">
+          <section ref={opInformationRef} id="information" className="container mx-auto px-4 mb-2">
+            {/* <section id="products" ref={productsRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products"> */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 px-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <div className="flex items-center space-x-1">
@@ -794,25 +823,25 @@ function JoesBeerhouse() {
                 </div>
                 <button type="button" className="text-[#ee9613] flex items-center space-x-1">
                   <svg viewBox="0 0 24 24" width="16">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
                   </svg>
                   <span>See more information</span>
                 </button>
               </div>
               <div className="flex items-center justify-end border-solid p-1 space-x-2 bg-gray-200 rounded-full">
-  <button
-    className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-[#ee9613] text-white" : "bg-gray-200"}`}
-    onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
-  >
-    Delivery
-  </button>
-  <button
-    className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
-    onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
-  >
-    Pickup
-  </button>
-</div>
+                <button
+                  className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-[#ee9613] text-white" : "bg-gray-200"}`}
+                  onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
+                >
+                  Delivery
+                </button>
+                <button
+                  className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
+                  onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
+                >
+                  Pickup
+                </button>
+              </div>
             </div>
             <div className="text-gray-700 px-4 mt-4">
               The store isn't delivering to your location, but you can still place an order for pickup.
@@ -983,8 +1012,8 @@ function JoesBeerhouse() {
             </div>
           </section>
 
-          {/* Information Section */}
-          <section className="container mx-auto p-4 mt-8">
+          {/*More Information Section */}
+          <section ref={opMoreInformationRef} id="moreInformation" className="container mx-auto p-4 mt-8">
             <div className="flex flex-col md:flex-row md:space-x-8">
               <div className="md:w-1/3 space-y-8">
                 <div className="space-y-8">
@@ -1030,10 +1059,10 @@ function JoesBeerhouse() {
                 </div>
               </div>
               <div className="w-full md:w-2/3 h-64 md:h-96 relative">
-              <div ref={mapContainerRef} className="absolute inset-0" />
+                <div ref={mapContainerRef} className="absolute inset-0" />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
           {/* Similar Restaurants Section */}
           <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
