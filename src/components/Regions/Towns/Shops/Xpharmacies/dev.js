@@ -453,33 +453,44 @@ function JoesBeerhouse() {
 
   // Effects
   //OPNavbar scroll effect
+  {/*Changes for (OPNavbar): Update visibility behavior based on scroll position
+
+  - Adjusted the navbar's visibility logic to enhance user experience:
+    - Navbar remains sticky and visible while scrolling down until passing the 'opInformation' section (`opInformationOffset`).
+    - After passing 'opInformation', the navbar hides and remains hidden until:
+      - The user starts scrolling up/The scroll position surpasses the 'opMoreInformation' section (`opMoreInformationOffset`). and Navbar becomes visible again after passing 'opMoreInformation' or when scrolling up, and remains sticky until the top of the page is reached.
+  - Maintained the previous behaviors for consistent functionality.*/}
   useEffect(() => {
     let lastScrollYOPNavbar = window.pageYOffset;
     let initialTopOPNavbar = null;
-
+  
     const handleScrollOPNavbar = () => {
       const currentScrollYOPNavbar = window.pageYOffset;
       const opInformationRect = opInformationRef.current?.getBoundingClientRect();
       const opMoreInformationRect = opMoreInformationRef.current?.getBoundingClientRect();
-
+  
       if (opInformationRect && opMoreInformationRect) {
         if (initialTopOPNavbar === null) {
           initialTopOPNavbar = opInformationRect.top + currentScrollYOPNavbar;
         }
-
+  
         const opInformationOffset = initialTopOPNavbar;
         const opMoreInformationOffset = opMoreInformationRect.bottom + currentScrollYOPNavbar;
-
-        setIsOPNavbarVisible(currentScrollYOPNavbar <= lastScrollYOPNavbar || currentScrollYOPNavbar <= opInformationOffset);
+  
+        const isScrollingUp = currentScrollYOPNavbar <= lastScrollYOPNavbar;
+        const hasPassedOpMoreInformation = currentScrollYOPNavbar >= opMoreInformationOffset;
+  
+        setIsOPNavbarVisible(isScrollingUp || currentScrollYOPNavbar <= opInformationOffset || hasPassedOpMoreInformation);
         setIsOPNavbarSticky(currentScrollYOPNavbar >= opInformationOffset && currentScrollYOPNavbar < opMoreInformationOffset - opInformationRect.height);
-
+  
         lastScrollYOPNavbar = currentScrollYOPNavbar;
       }
     };
-
+  
     window.addEventListener('scroll', handleScrollOPNavbar, { passive: true });
     return () => window.removeEventListener('scroll', handleScrollOPNavbar);
   }, []);
+  
 
   //scroll effect
   useEffect(() => {
@@ -648,7 +659,7 @@ function JoesBeerhouse() {
       <Suspense fallback={<div>Loading...</div>}>
         <nav
           id="navbarOPNavbar"
-          className={`hidden fixed top-0 left-0 right-0 z-40 bg-blue-500 shadow-md transition-transform duration-300 ${isOPNavbarVisible ? '' : '-translate-y-full'} ${isOPNavbarSticky ? 'sticky' : ''}`}
+          className={`fixed top-0 left-0 right-0 z-50 shadow-md transition-transform duration-300 ${isOPNavbarVisible ? '' : '-translate-y-full'} ${isOPNavbarSticky ? 'sticky' : ''}`}
         >
           <OPNavBar />
         </nav>
@@ -661,7 +672,7 @@ function JoesBeerhouse() {
                 src="/images/restaurants/joesbeerhouse.png"
                 alt="Joe's Beerhouse"
                 effect="blur"
-                className="w-full h-full object-cover"
+                className="w-[510px] h-[510px] object-fill"
               />
               <div className="absolute inset-0 bg-black bg-opacity-50"></div>
             </div>
