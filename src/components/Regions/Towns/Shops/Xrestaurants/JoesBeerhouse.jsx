@@ -456,30 +456,34 @@ function JoesBeerhouse() {
   useEffect(() => {
     let lastScrollYOPNavbar = window.pageYOffset;
     let initialTopOPNavbar = null;
-
+  
     const handleScrollOPNavbar = () => {
       const currentScrollYOPNavbar = window.pageYOffset;
       const opInformationRect = opInformationRef.current?.getBoundingClientRect();
       const opMoreInformationRect = opMoreInformationRef.current?.getBoundingClientRect();
-
+  
       if (opInformationRect && opMoreInformationRect) {
         if (initialTopOPNavbar === null) {
           initialTopOPNavbar = opInformationRect.top + currentScrollYOPNavbar;
         }
-
+  
         const opInformationOffset = initialTopOPNavbar;
         const opMoreInformationOffset = opMoreInformationRect.bottom + currentScrollYOPNavbar;
-
-        setIsOPNavbarVisible(currentScrollYOPNavbar <= lastScrollYOPNavbar || currentScrollYOPNavbar <= opInformationOffset);
+  
+        const isScrollingUp = currentScrollYOPNavbar <= lastScrollYOPNavbar;
+        const hasPassedOpMoreInformation = currentScrollYOPNavbar >= opMoreInformationOffset;
+  
+        setIsOPNavbarVisible(isScrollingUp || currentScrollYOPNavbar <= opInformationOffset || hasPassedOpMoreInformation);
         setIsOPNavbarSticky(currentScrollYOPNavbar >= opInformationOffset && currentScrollYOPNavbar < opMoreInformationOffset - opInformationRect.height);
-
+  
         lastScrollYOPNavbar = currentScrollYOPNavbar;
       }
     };
-
+  
     window.addEventListener('scroll', handleScrollOPNavbar, { passive: true });
     return () => window.removeEventListener('scroll', handleScrollOPNavbar);
   }, []);
+  
 
   //scroll effect
   useEffect(() => {
