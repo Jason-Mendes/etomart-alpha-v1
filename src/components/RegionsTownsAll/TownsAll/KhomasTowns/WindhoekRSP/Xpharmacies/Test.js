@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { CgMenuRound, CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
 
-import CartIcon from "../../../../CartIcon";
-import HomeIcon from "../../../../HomeIcon";
-import LocationButton from "../../../../LocationButton";
-import LocationModal from "../../../../LocationModal";
-import UserProfileIcon from "../../../../UserProfileIcon";
+import CartIcon from "../../../../../CartIcon";
+import HomeIcon from "../../../../../HomeIcon";
+import LocationButton from "../../../../../LocationButton";
+import LocationModal from "../../../../../LocationModal";
+import UserProfileIcon from "../../../../../UserProfileIcon";
 
-const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
+const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [nav, setNav] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -82,7 +82,7 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   return (
     <div className="font-josefin_sans">
       <nav
-        id="opnavbar"
+        id="KhomasOPNavBar"
         className={`bg-[#f9f9f9] text-[#ee9613] px-4 transition-all duration-300 ${isExpanded ? 'py-6' : 'py-4'} relative z-50`}
       >
         <div className="flex items-center justify-between mx-auto max-w-7xl">
@@ -232,4 +232,4 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   );
 };
 
-export default OPNavBar;
+export default KhomasOPNavBar;

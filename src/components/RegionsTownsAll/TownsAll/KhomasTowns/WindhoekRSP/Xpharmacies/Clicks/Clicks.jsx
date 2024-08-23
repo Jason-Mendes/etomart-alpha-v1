@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
-import PropTypes from 'prop-types';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { toast } from "react-toastify";
-
-import Footer from "../../../../Footer";
-import OPNavBar from "../../../../OPNavBar";
-
+import Footer from "../../../../../../Footer";
+import KhomasOPNavBar from "../../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import { useNavcategories, useCards, usePharmacycards, usePharmacies  } from "./cardsDataClicks";
 import 'react-lazy-load-image-component/src/effects/blur.css';
-
+import PropTypes from 'prop-types';
 
 // Performance measurement hook
 const usePerformanceMeasure = (name) => {
@@ -24,8 +21,8 @@ const usePerformanceMeasure = (name) => {
   }, [name]);
 };
 
-function Checkers() {
-  usePerformanceMeasure('Checkers');
+function Clicks() {
+  usePerformanceMeasure('Clicks');
 
   // Combined state
   const [state, setState] = useState({
@@ -42,381 +39,15 @@ function Checkers() {
   const containerRef = useRef(null);
   const dropdownRef = useRef(null);
   const mapContainerRef = useRef(null);
-  const supermarketsscroll = useRef(null);
+  const pharmaciesscroll = useRef(null);
 
   // Memoized data
-  const navcategories = useMemo(() => [
-    {
-      name: "Fruits & Vegetables",
-      imgSrc: "/images/1.webp",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "Dairy & Eggs",
-      imgSrc: "/images/2.webp",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-    {
-      name: "Meat & Seafood",
-      imgSrc: "/images/meat.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "Bakery",
-      imgSrc: "/images/bread.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-    {
-      name: "Frozen Foods",
-      imgSrc: "/images/frozen.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "Snacks & Sweets",
-      imgSrc: "/images/sweets.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-    {
-      name: "Beverages",
-      imgSrc: "/images/beverages.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "Pantry Staples",
-      imgSrc: "/images/pantry.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-    {
-      name: "Household Supplies",
-      imgSrc: "/images/hh.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "Personal Care",
-      imgSrc: "/images/pc.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-    {
-      name: "Health & Wellness",
-      imgSrc: "/images/hw.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "Pet Supplies",
-      imgSrc: "/images/ps.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-    {
-      name: "Baby Products",
-      imgSrc: "/images/bp.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "Cleaning Supplies",
-      imgSrc: "/images/CS.PNG",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-    {
-      name: "Paper Goods",
-      imgSrc: "/images/pg.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "International Foods",
-      imgSrc: "/images/if.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-    {
-      name: "Organic & Natural",
-      imgSrc: "/images/on.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "Alcohol & Wine",
-      imgSrc: "/images/aw.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-    {
-      name: "Baking Supplies",
-      imgSrc: "/images/bs.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-0",
-    },
-    {
-      name: "Canned & Jarred Goods",
-      imgSrc: "/images/cjg.png",
-      href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
-    },
-  ], []);
+const navcategories = useNavcategories();
+const cards = useCards();
+const pharmacycards = usePharmacycards();
+const pharmacies = usePharmacies();
 
-  const cards = useMemo(() => [
-    {
-      title: "Fresh Produce",
-      description:
-        "Get farm-fresh fruits and vegetables delivered to your doorstep. Quality you can trust, convenience you will love.",
-      image: "/images/1.webp",
-    },
-    {
-      title: "Dairy Products",
-      description:
-        "Order fresh milk, cheese, yogurt, and more. Fast delivery and reliable service at your fingertips.",
-      image: "/images/2.webp",
-    },
-    {
-      title: "Bakery Goods",
-      description:
-        "Craving fresh bread and pastries? Get delicious bakery items delivered from local bakers. Quick and easy.",
-      image: "/images/3.webp",
-    },
-    {
-      title: "Pantry Staples",
-      description:
-        "Stock up on pantry essentials with our fast and convenient delivery service. Everything you need in one place.",
-      image:
-        "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-    },
-    {
-      title: "Beverages",
-      description:
-        "Shop a wide range of beverages, from juices to sodas. Refresh your day with our top selections.",
-      image: "/images/4.webp",
-    },
-    // Add more cards as needed
-  ], []);
-
-  // Array of store cards
-
-  const storecards = useMemo(() => [
-    {
-      name: "Bread",
-      imgSrc: "/images/supermarkets/bread.png",
-      href: "/en/stores/bread/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Bakery",
-      description: "Freshly baked bread loaf",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Milk",
-      imgSrc: "/images/supermarkets/milk.png",
-      href: "/en/stores/milk/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Dairy",
-      description: "1 liter of whole milk",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Eggs",
-      imgSrc: "/images/supermarkets/eggs.png",
-      href: "/en/stores/eggs/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Dairy",
-      description: "A dozen large eggs",
-      pickupTime: "15–35 min",
-      deliveryTime: false,
-    },
-    {
-      name: "Chicken Breast",
-      imgSrc: "/images/supermarkets/chicken-breast.png",
-      href: "/en/stores/chicken-breast/",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€",
-      cuisine: "Meat",
-      description: "1 kg of fresh chicken breast",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Apples",
-      imgSrc: "/images/supermarkets/apples.png",
-      href: "/en/stores/apples/",
-      discount: 10,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Produce",
-      description: "A bag of fresh apples",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Butter",
-      imgSrc: "/images/supermarkets/butter.png",
-      href: "/en/stores/butter/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Dairy",
-      description: "250g of unsalted butter",
-      pickupTime: "15–35 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Orange Juice",
-      imgSrc: "/images/supermarkets/orange-juice.png",
-      href: "/en/stores/orange-juice/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Beverages",
-      description: "1 liter of fresh orange juice",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Cereal",
-      imgSrc: "/images/supermarkets/cereal.png",
-      href: "/en/stores/cereal/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Grocery",
-      description: "500g box of breakfast cereal",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Rice",
-      imgSrc: "/images/supermarkets/rice.png",
-      href: "/en/stores/rice/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Grocery",
-      description: "1 kg of long grain rice",
-      pickupTime: "15–35 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Tomatoes",
-      imgSrc: "/images/supermarkets/tomatoes.png",
-      href: "/en/stores/tomatoes/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Produce",
-      description: "A bag of fresh tomatoes",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Pasta",
-      imgSrc: "/images/supermarkets/pasta.png",
-      href: "/en/stores/pasta/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Grocery",
-      description: "500g pack of spaghetti",
-      pickupTime: "15–35 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Cheese",
-      imgSrc: "/images/supermarkets/cheese.png",
-      href: "/en/stores/cheese/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€",
-      cuisine: "Dairy",
-      description: "200g of cheddar cheese",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Bananas",
-      imgSrc: "/images/supermarkets/bananas.png",
-      href: "/en/stores/bananas/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Produce",
-      description: "A bunch of ripe bananas",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Yogurt",
-      imgSrc: "/images/supermarkets/yogurt.png",
-      href: "/en/stores/yogurt/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Dairy",
-      description: "500g tub of plain yogurt",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Potatoes",
-      imgSrc: "/images/supermarkets/potatoes.png",
-      href: "/en/stores/potatoes/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Produce",
-      description: "A bag of fresh potatoes",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-  ], []);
-
-  const supermarkets = useMemo(() => [
-    {
-      name: "Checkers",
-      imgSrc: "/images/supermarkets/checkers.png",
-      href: "/en/discovery/category/checkers",
-    },
-    {
-      name: "Shoprite",
-      imgSrc: "/images/supermarkets/shoprite.png",
-      href: "/en/discovery/category/shoprite",
-    },
-    {
-      name: "Pick n Pay",
-      imgSrc: "/images/supermarkets/picknpay.png",
-      href: "/en/discovery/category/picknpay",
-    },
-    {
-      name: "Spar",
-      imgSrc: "/images/supermarkets/spar.png",
-      href: "/en/discovery/category/spar",
-    },
-    {
-      name: "Woermann Brock",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
-      href: "/en/discovery/category/woermannbrock",
-    },
-    {
-      name: "OK Foods",
-      imgSrc: "/images/supermarkets/okfoods.png",
-      href: "/en/discovery/category/okfoods",
-    },
-    {
-      name: "Choppies",
-      imgSrc: "/images/supermarkets/choppies.png",
-      href: "/en/discovery/category/choppies",
-    },
-    {
-      name: "Food Lover's Market",
-      imgSrc: "/images/supermarkets/foodlovers.png",
-      href: "/en/discovery/category/foodloversmarket",
-    },
-    {
-      name: "Metro",
-      imgSrc: "/images/supermarkets/metro.png",
-      href: "/en/discovery/category/metro",
-    },
-  ], []);
-
-  const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
+const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
   // Callbacks
   const scrollLeft = useCallback((carouselRef) => {
@@ -487,7 +118,7 @@ function Checkers() {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
   const MARKER_COORDINATES = [
-    { lng: 17.09449450474923, lat: -22.584210677171924 },
+    { lng: 17.094332562419833, lat: -22.583743666790397 },
     { lng: 17.073723364157306, lat: -22.561939983264068 },
   ];
 
@@ -512,8 +143,8 @@ function Checkers() {
     MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
 
     mapInstance.fitBounds(bounds, {
-      padding: { top: 30, bottom: 30, left: 20, right: 20 },
-      maxZoom: 13,
+      padding: { top: 40, bottom: 30, left: 20, right: 20 },
+      maxZoom: 13, // Limit maximum zoom level
       linear: true,
     });
 
@@ -592,6 +223,7 @@ function Checkers() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [state.isDropdownOpen]);
+
   // Render helpers
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
@@ -622,13 +254,13 @@ function Checkers() {
     </div>
   ), [scrollLeft, scrollRight]);
 
-  const renderSupermarketCard = useCallback((supermarket, index) => (
+  const renderStoreCard = useCallback((category, index) => (
     <div key={index} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72 p-6">
-      <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+      <a href={category.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
         <div className="relative w-full aspect-square overflow-hidden rounded-t-lg">
           <LazyLoadImage
-            src={supermarket.imgSrc}
-            alt={supermarket.name}
+            src={category.imgSrc}
+            alt={category.name}
             width="100%"
             height="100%"
             className="w-full h-full object-fill"
@@ -636,7 +268,7 @@ function Checkers() {
           />
         </div>
         <div className="p-3 sm:p-4">
-          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{supermarket.name}</p>
+          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{category.name}</p>
         </div>
       </a>
     </div>
@@ -669,7 +301,6 @@ function Checkers() {
 
     return truncatedText;
   }, []);
-
   const filteredCategories = useMemo(() =>
     navcategories.filter((category) =>
       category.name.toLowerCase().includes(state.searchTerm.toLowerCase())
@@ -680,14 +311,14 @@ function Checkers() {
   // JSX
   return (
     <div className="bg-white">
-      <OPNavBar />
+      <KhomasOPNavBar />
       <main className="relative z-10">
         {/* Header section */}
         <header className="relative">
           <div className="relative">
             <LazyLoadImage
-              src="/images/supermarkets/checkers.png"
-              alt="Checkers supermarket"
+              src="/images/pharmacies/clicks.png"
+              alt="Clicks Pharmacy"
               effect="blur"
               className="w-full h-[510px] object-cover"
             />
@@ -695,9 +326,8 @@ function Checkers() {
           </div>
           <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
             <div className="px-4">
-              <h1 className="text-white text-4xl font-bold">Checkers</h1>
-              <p className="text-white text-lg">Better and Better</p>
-              {/* Favorite Button */}
+              <h1 className="text-white text-4xl font-bold">Clicks</h1>
+              <p className="text-white text-lg">Feel Good Pay Less</p>
               <button
                 data-test-id="venue-favorite"
                 aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
@@ -733,7 +363,6 @@ function Checkers() {
                 <div className="absolute right-4 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                   <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                     <button
-                      aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                       onClick={toggleFavorite}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
                       role="menuitem"
@@ -821,9 +450,7 @@ function Checkers() {
                 {cards.map((_, index) => (
                   <button
                     key={index}
-                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length
-                        ? "bg-white"
-                        : "bg-gray-400"
+                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
                       }`}
                     onClick={() => handleDotClick(index)}
                     aria-label={`Go to slide ${index + 1}`}
@@ -897,6 +524,7 @@ function Checkers() {
                 </div>
                 <div className="flex flex-col overflow-y-auto" style={{ height: "800px" }}>
                   {filteredCategories.slice(0, 20).map((category, index) => (
+
                     <a key={index}
                       href={category.href}
                       className="flex items-center p-2 mb-4 bg-white rounded-lg shadow hover:bg-gray-100"
@@ -913,10 +541,7 @@ function Checkers() {
                 </div>
               </div>
             </aside>
-
-           
-              {/* Products grid */}
-              <section className="w-full md:w-3/4">
+            <section className="w-full md:w-3/4">
       <div className="px-4">
         <div className="flex items-center p-4">
           <h2 className="text-2xl font-bold">All Products</h2>
@@ -938,7 +563,7 @@ function Checkers() {
         <div className="overflow-y-auto h-[600px] sm:h-[700px] md:h-[850px]">
           <div className="px-2 pb-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-  {storecards.map((category, shopsindex) => (
+  {pharmacycards.map((category, shopsindex) => (
     <div
       key={shopsindex}
       className="w-full max-w-[180px] sm:max-w-[400px] mx-auto sm:mx-0"
@@ -1007,8 +632,8 @@ function Checkers() {
               <div className="space-y-8">
                 <div>
                   <h3 className="text-md font-semibold">Store Information</h3>
-                  <p className="text-[#ee9613] font-bold">Checkers</p>
-                  <p>Better and Better</p>
+                  <p className="text-[#ee9613] font-bold">Clicks</p>
+                  <p>Feel Good Pay Less</p>
                 </div>
                 <div>
                   <h3 className="text-md font-semibold">Address</h3>
@@ -1051,7 +676,6 @@ function Checkers() {
             </div>
           </div>
         </section>
-
         {/* Supermarkets Near Me Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
@@ -1059,21 +683,21 @@ function Checkers() {
             style={{ width: "50%", maxWidth: "1000px" }}
           >
             <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
-              Similar Supermarkets
+              Similar Pharmacies
             </h2>
           </div>
         </section>
 
         {/* Supermarkets Carousel */}
-        {renderCarousel(supermarkets, supermarketsscroll, renderSupermarketCard)}
+        {renderCarousel(pharmacies, pharmaciesscroll, renderStoreCard)}
       </main>
       <Footer />
     </div>
   );
 }
 
-Checkers.propTypes = {
+Clicks.propTypes = {
   // Add prop types here if needed
 };
 
-export default Checkers;
+export default Clicks;

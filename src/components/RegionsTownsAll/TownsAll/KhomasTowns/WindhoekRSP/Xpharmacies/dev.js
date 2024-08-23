@@ -5,11 +5,11 @@ import mapboxgl from "mapbox-gl";
 import { toast } from "react-toastify";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import PropTypes from 'prop-types';
-import OPNavBar from "../../../../OPNavBar";
+import KhomasOPNavBar from "../../OPNavBarRegions/OPNavBar";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Lazy-loaded components
-const Footer = lazy(() => import("../../../../Footer"));
+const Footer = lazy(() => import("../../../../../Footer"));
 
 // Custom hook for performance measurement
 const usePerformanceMeasure = (name) => {
@@ -52,10 +52,9 @@ function JoesBeerhouse() {
     filteredProducts: [],
   });
 
-  const [isOPNavbarSticky, setIsOPNavbarSticky] = useState(false);
-  const [isOPNavbarVisible, setIsOPNavbarVisible] = useState(true);
+  const [isKhomasOPNavBarSticky, setIsKhomasOPNavBarSticky] = useState(false);
+  const [isKhomasOPNavBarVisible, setIsKhomasOPNavBarVisible] = useState(true);
   const [sortCriteria, setSortCriteria] = useState('default');
-
   // Refs
   const opInformationRef = useRef(null);
   const opMoreInformationRef = useRef(null);
@@ -284,7 +283,6 @@ function JoesBeerhouse() {
     },
   ], []);
 
-
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
   const categories = useMemo(() => {
@@ -292,8 +290,8 @@ function JoesBeerhouse() {
     return Array.from(uniqueCategories);
   }, [restaurantCards]);
 
-   // Sort functionality
-   const sortProducts = useCallback((products, criteria) => {
+  // Sort functionality
+  const sortProducts = useCallback((products, criteria) => {
     switch (criteria) {
       case 'priceAsc':
         return [...products].sort((a, b) => a.priceRange.length - b.priceRange.length);
@@ -308,86 +306,85 @@ function JoesBeerhouse() {
     }
   }, []);
 
+  // Mapbox setup
+  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
- // Mapbox setup
- mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+  const initializeMap = useCallback((mapContainer) => {
+    if (!mapContainer) return;
 
- const initializeMap = useCallback((mapContainer) => {
-   if (!mapContainer) return;
+    const mapInstance = new mapboxgl.Map({
+      container: mapContainer,
+      style: "mapbox://styles/mapbox/streets-v11",
+      zoom: 12,
+    });
 
-   const mapInstance = new mapboxgl.Map({
-     container: mapContainer,
-     style: "mapbox://styles/mapbox/streets-v11",
-     zoom: 12,
-   });
+    mapInstance.addControl(new mapboxgl.NavigationControl());
 
-   mapInstance.addControl(new mapboxgl.NavigationControl());
+    MARKER_COORDINATES.forEach((coord) => {
+      new mapboxgl.Marker({ color: "#ee9613" })
+        .setLngLat([coord.lng, coord.lat])
+        .addTo(mapInstance);
+    });
 
-   MARKER_COORDINATES.forEach((coord) => {
-     new mapboxgl.Marker({ color: "#ee9613" })
-       .setLngLat([coord.lng, coord.lat])
-       .addTo(mapInstance);
-   });
+    const bounds = new mapboxgl.LngLatBounds();
+    MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
 
-   const bounds = new mapboxgl.LngLatBounds();
-   MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
+    mapInstance.fitBounds(bounds, {
+      padding: { top: 20, bottom: 30, left: 20, right: 20 },
+      maxZoom: 13,
+      linear: true,
+    });
 
-   mapInstance.fitBounds(bounds, {
-     padding: { top: 20, bottom: 30, left: 20, right: 20 },
-     maxZoom: 13,
-     linear: true,
-   });
+    fetchAndDisplayRoute(mapInstance);
 
-   fetchAndDisplayRoute(mapInstance);
+    setState(prevState => ({ ...prevState, map: mapInstance }));
+  }, []);
 
-   setState(prevState => ({ ...prevState, map: mapInstance }));
- }, []);
+  const fetchAndDisplayRoute = useCallback(async (mapInstance) => {
+    try {
+      const response = await axios.get(
+        `https://api.mapbox.com/directions/v5/mapbox/driving/${MARKER_COORDINATES[0].lng},${MARKER_COORDINATES[0].lat};${MARKER_COORDINATES[1].lng},${MARKER_COORDINATES[1].lat}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+      );
 
- const fetchAndDisplayRoute = useCallback(async (mapInstance) => {
-   try {
-     const response = await axios.get(
-       `https://api.mapbox.com/directions/v5/mapbox/driving/${MARKER_COORDINATES[0].lng},${MARKER_COORDINATES[0].lat};${MARKER_COORDINATES[1].lng},${MARKER_COORDINATES[1].lat}?geometries=geojson&access_token=${mapboxgl.accessToken}`
-     );
+      const routeLine = response.data.routes[0].geometry;
 
-     const routeLine = response.data.routes[0].geometry;
+      mapInstance.on("load", () => {
+        mapInstance.addSource("route", {
+          type: "geojson",
+          data: {
+            type: "Feature",
+            properties: {},
+            geometry: routeLine,
+          },
+        });
 
-     mapInstance.on("load", () => {
-       mapInstance.addSource("route", {
-         type: "geojson",
-         data: {
-           type: "Feature",
-           properties: {},
-           geometry: routeLine,
-         },
-       });
+        mapInstance.addLayer({
+          id: "route",
+          type: "line",
+          source: "route",
+          layout: {
+            "line-join": "round",
+            "line-cap": "round",
+          },
+          paint: {
+            "line-color": "#ee9613",
+            "line-width": 8,
+          },
+        });
+      });
+    } catch (error) {
+      console.error("Error fetching route:", error);
+      toast.error("Failed to fetch route. Please try again later.");
+    }
+  }, []);
 
-       mapInstance.addLayer({
-         id: "route",
-         type: "line",
-         source: "route",
-         layout: {
-           "line-join": "round",
-           "line-cap": "round",
-         },
-         paint: {
-           "line-color": "#ee9613",
-           "line-width": 8,
-         },
-       });
-     });
-   } catch (error) {
-     console.error("Error fetching route:", error);
-     toast.error("Failed to fetch route. Please try again later.");
-   }
- }, []);
-
- const scrollToProducts = useCallback(() => {
-  if (productsSectionRef.current) {
-    const yOffset = -100;
-    const y = productsSectionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  }
-}, []);
+  const scrollToProducts = useCallback(() => {
+    if (productsSectionRef.current) {
+      const yOffset = -100;
+      const y = productsSectionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }, []);
 
   const handleSearch = useCallback((event) => {
     const searchTerm = event.target.value;
@@ -465,8 +462,8 @@ function JoesBeerhouse() {
   }, []);
 
   // Effects
-  //OPNavbar scroll effect
-  {/*Changes for (OPNavbar): Update visibility behavior based on scroll position
+  //KhomasOPNavBar scroll effect
+  {/*Changes for (KhomasOPNavBar): Update visibility behavior based on scroll position
 
   - Adjusted the navbar's visibility logic to enhance user experience:
     - Navbar remains sticky and visible while scrolling down until passing the 'opInformation' section (`opInformationOffset`).
@@ -474,42 +471,42 @@ function JoesBeerhouse() {
       - The user starts scrolling up/The scroll position surpasses the 'opMoreInformation' section (`opMoreInformationOffset`). and Navbar becomes visible again after passing 'opMoreInformation' or when scrolling up, and remains sticky until the top of the page is reached.
   - Maintained the previous behaviors for consistent functionality.*/}
 
- 
   useEffect(() => {
     let lastScrollY = window.pageYOffset;
-    let initialTopOPNavbar = null;
+    let initialTopKhomasOPNavBar = null;
 
-    const handleScrollOPNavbar = () => {
+    const handleScrollKhomasOPNavBar = () => {
       const currentScrollY = window.pageYOffset;
       const opInformationRect = opInformationRef.current?.getBoundingClientRect();
       const opMoreInformationRect = opMoreInformationRef.current?.getBoundingClientRect();
 
       if (opInformationRect && opMoreInformationRect) {
-        if (initialTopOPNavbar === null) {
-          initialTopOPNavbar = opInformationRect.top + currentScrollY;
+        if (initialTopKhomasOPNavBar === null) {
+          initialTopKhomasOPNavBar = opInformationRect.top + currentScrollY;
         }
 
-        const opInformationOffset = initialTopOPNavbar;
+        const opInformationOffset = initialTopKhomasOPNavBar;
         const opMoreInformationOffset = opMoreInformationRect.bottom + currentScrollY;
 
         const isScrollingUp = currentScrollY < lastScrollY;
         const hasPassedOpMoreInformation = currentScrollY >= opMoreInformationOffset;
 
-        setIsOPNavbarVisible(
+        setIsKhomasOPNavBarVisible(
           currentScrollY <= opInformationOffset ||
           isScrollingUp ||
           hasPassedOpMoreInformation
         );
-        setIsOPNavbarSticky(currentScrollY > 0);
+        setIsKhomasOPNavBarSticky(currentScrollY > 0);
 
         lastScrollY = currentScrollY;
       }
     };
 
-    window.addEventListener('scroll', handleScrollOPNavbar, { passive: true });
-    return () => window.removeEventListener('scroll', handleScrollOPNavbar);
+    window.addEventListener('scroll', handleScrollKhomasOPNavBar, { passive: true });
+    return () => window.removeEventListener('scroll', handleScrollKhomasOPNavBar);
   }, []);
 
+  //scroll effect
   useEffect(() => {
     let lastScrollY = window.pageYOffset;
     let initialTop = null;
@@ -606,6 +603,8 @@ function JoesBeerhouse() {
     }
   }, [initializeMap]);
 
+  // Filter products based on search term and selected category
+
   useEffect(() => {
     const filteredProducts = restaurantCards.filter(product => {
       const lowerCaseSearchTerm = state.searchTerm.toLowerCase();
@@ -622,6 +621,7 @@ function JoesBeerhouse() {
     const sortedProducts = sortProducts(filteredProducts, sortCriteria);
     setState(prevState => ({ ...prevState, filteredProducts: sortedProducts }));
   }, [state.searchTerm, state.selectedCategory, state.isDelivery, restaurantCards, sortCriteria, sortProducts]);
+
 
   // Render functions
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
@@ -663,7 +663,7 @@ function JoesBeerhouse() {
             className="absolute top-0 left-0 w-full h-full object-cover"
             effect="opacity"
           />
-          </div>
+        </div>
         <div className="p-3 sm:p-4">
           <p className="text-center font-bold truncate w-full text-sm sm:text-base">{restaurant.name}</p>
         </div>
@@ -675,21 +675,21 @@ function JoesBeerhouse() {
     <div className="bg-white">
       <Suspense fallback={<div>Loading...</div>}>
         <nav
-          id="navbarOPNavbar"
-          className={`fixed top-0 left-0 right-0 z-50 shadow-md transition-transform duration-300 ${isOPNavbarVisible ? '' : '-translate-y-full'
-            } ${isOPNavbarSticky ? 'sticky' : ''}`}
+          id="navbarKhomasOPNavBar"
+          className={`fixed top-0 left-0 right-0 z-50 shadow-md transition-transform duration-300 ${isKhomasOPNavBarVisible ? '' : '-translate-y-full'
+            } ${isKhomasOPNavBarSticky ? 'sticky' : ''}`}
         >
-          <OPNavBar />
+          <KhomasOPNavBar />
         </nav>
         <main className="relative z-10 pt-20">
           {/* Header section */}
-          <header className="relative w-full">
-            <div className="p-4 max-w-xs mx-auto relative">
+          <header className="relative w-full h-full">
+          <div className="p-4 max-w-xs mx-auto relative">
               <LazyLoadImage
                 src="/images/restaurants/joesbeerhouse.png"
                 alt="Joe's Beerhouse"
                 effect="blur"
-                className="w-full h-auto object-contain"
+                className="w-[250px] h-[250px] object-fit"
               />
             </div>
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -713,9 +713,8 @@ function JoesBeerhouse() {
                   </svg>
                 </button>
               </div>
-              <div ref={dropdownRef} className="px-4 relative">
-                <button
-                  ref={dropdownRef}
+              <div  ref={dropdownRef} className="px-4 relative">
+                <button ref={dropdownRef}
                   aria-label="More options"
                   className="text-white p-2"
                   onClick={toggleDropdown}
@@ -730,8 +729,8 @@ function JoesBeerhouse() {
                   </svg>
                 </button>
                 {state.isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
-                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <div  className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                    <div  className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                       <button
                         aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                         onClick={toggleFavorite}
@@ -755,86 +754,82 @@ function JoesBeerhouse() {
           </header>
 
           {/* Carousel section */}
-<section className="my-8">
-  <div className="container mx-auto px-4">
-    <div className="relative mt-8 overflow-hidden">
-      <div
-        ref={containerRef}
-        className="flex transition-transform duration-500 ease-in-out"
-        style={{
-          transform: `translateX(-${state.currentIndex * 576}px)`,
-          width: `${extendedCards.length * 576}px`,
-        }}
-        onTransitionEnd={handleTransitionEnd}
-      >
-        {extendedCards.map((card, index) => (
-          <div
-            key={index}
-            className="p-2 flex-shrink-0"
-            style={{ width: "576px", height: "276px" }}
-          >
-            <div
-              className="h-full w-full rounded-md overflow-hidden relative"
-            >
-              <img
-                src={card.image}
-                alt={card.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center">
-                <div className="px-10 max-w-xl">
-                  <h2 className="text-2xl text-white font-semibold">
-                    {card.title}
-                  </h2>
-                  <p className="mt-2 text-gray-400">{card.description}</p>
-                  <button className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
-                    <span>Shop Now</span>
-                    <svg
-                      className="h-5 w-5 ml-2"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+          <section className="my-8">
+            <div className="container mx-auto px-4">
+              <div className="relative mt-8 overflow-hidden">
+                <div
+                  ref={containerRef}
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{
+                    transform: `translateX(-${state.currentIndex * 576}px)`,
+                    width: `${extendedCards.length * 576}px`,
+                  }}
+                  onTransitionEnd={handleTransitionEnd}
+                >
+                  {extendedCards.map((card, index) => (
+                    <div
+                      key={index}
+                      className="p-2 flex-shrink-0"
+                      style={{ width: "576px", height: "276px" }}
                     >
-                      <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                  </button>
+                      <div
+                        className="h-full w-full rounded-md overflow-hidden bg-cover bg-center"
+                        style={{ backgroundImage: `url(${card.image})` }}
+                      >
+                        <div className="bg-gray-900 bg-opacity-50 flex items-center h-full">
+                          <div className="px-10 max-w-xl">
+                            <h2 className="text-2xl text-white font-semibold">
+                              {card.title}
+                            </h2>
+                            <p className="mt-2 text-gray-400">{card.description}</p>
+                            <button className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
+                              <span>Shop Now</span>
+                              <svg
+                                className="h-5 w-5 ml-2"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
+                  onClick={handlePrev}
+                  aria-label="Previous slide"
+                >
+                  &lt;
+                </button>
+                <button
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
+                  onClick={handleNext}
+                  aria-label="Next slide"
+                >
+                  &gt;
+                </button>
+                <div className="absolute bottom-4 w-full flex justify-center space-x-2">
+                  {cards.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
+                        }`}
+                      onClick={() => handleDotClick(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                    ></button>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <button
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
-        onClick={handlePrev}
-        aria-label="Previous slide"
-      >
-        &lt;
-      </button>
-      <button
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
-        onClick={handleNext}
-        aria-label="Next slide"
-      >
-        &gt;
-      </button>
-      <div className="absolute bottom-4 w-full flex justify-center space-x-2">
-        {cards.map((_, index) => (
-          <button
-            key={index}
-            className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
-              }`}
-            onClick={() => handleDotClick(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          ></button>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
+          </section>
 
           {/* Store Information */}
           <section ref={opInformationRef} id="information" className="container mx-auto px-4 mb-2">
@@ -867,259 +862,259 @@ function JoesBeerhouse() {
                   Delivery
                 </button>
                 <button
-                 className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
-                 onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
-               >
-                 Pickup
-               </button>
-             </div>
-           </div>
-           <div className="text-gray-700 px-4 mt-4">
-             The store isn't delivering to your location, but you can still place an order for pickup.
-           </div>
-         </section>
+                  className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
+                  onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
+                >
+                  Pickup
+                </button>
+              </div>
+            </div>
+            <div className="text-gray-700 px-4 mt-4">
+              The store isn't delivering to your location, but you can still place an order for pickup.
+            </div>
+          </section>
 
-         {/* Search and Filter Section */}
-         <section
-           ref={searchAndFilterRef}
-           className={`p-4 transition-all duration-300 ease-in-out ${state.isSticky ? 'fixed left-0 right-0 z-50 bg-white shadow-md' : ''}`}
-           style={{ top: state.isSticky ? 0 : 'auto' }}
-         >
-           <div className="container mx-auto px-4">
-             {/* Mobile layout (smaller than md) */}
-             <div className="md:hidden">
-               {/* Search Input */}
-               <div className="relative w-full mb-4">
-                 <input
-                   type="text"
-                   placeholder="Search products..."
-                   value={state.searchTerm}
-                   onChange={handleSearch}
-                   className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613] transform hover:bg-gray-200 hover:scale-105 transition-transform duration-200"
-                 />
-                 <svg
-                   viewBox="0 0 24 24"
-                   className="w-6 h-6 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2"
-                 >
-                   <path
-                     d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
-                     fill="#ee9613"
-                   />
-                 </svg>
-               </div>
+          {/* Search and Filter Section */}
+          <section
+  ref={searchAndFilterRef}
+  className={`p-4 transition-all duration-300 ease-in-out ${state.isSticky ? 'fixed left-0 right-0 z-50 bg-white shadow-md' : ''}`}
+  style={{ top: state.isSticky ? 0 : 'auto' }}
+>
+  <div className="container mx-auto px-4">
+    {/* Mobile layout (smaller than md) */}
+    <div className="md:hidden">
+      {/* Search Input */}
+      <div className="relative w-full mb-4">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={state.searchTerm}
+          onChange={handleSearch}
+          className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613] transform hover:bg-gray-200 hover:scale-105 transition-transform duration-200"
+        />
+        <svg
+          viewBox="0 0 24 24"
+          className="w-6 h-6 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2"
+        >
+          <path
+            d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
+            fill="#ee9613"
+          />
+        </svg>
+      </div>
 
-               {/* Category Buttons and More Button */}
-               <div className="flex items-center space-x-4">
-                 {/* Category Buttons Container */}
-                 <div className="flex-1 overflow-x-auto">
-                   <div className="grid grid-flow-col auto-cols-max gap-2 pb-2">
-                     <button
-                       onClick={() => handleCategorySelect("")}
-                       className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                     >
-                       All
-                     </button>
-                     {state.visibleCategories.map((category) => (
-                       <button
-                         key={category}
-                         data-category={category}
-                         onClick={() => handleCategorySelect(category)}
-                         className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                       >
-                         {category}
-                       </button>
-                     ))}
-                   </div>
-                 </div>
+      {/* Category Buttons and More Button */}
+      <div className="flex items-center space-x-4">
+        {/* Category Buttons Container */}
+        <div className="flex-1 overflow-x-auto">
+          <div className="grid grid-flow-col auto-cols-max gap-2 pb-2">
+            <button
+              onClick={() => handleCategorySelect("")}
+              className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+            >
+              All
+            </button>
+            {state.visibleCategories.map((category) => (
+              <button
+                key={category}
+                data-category={category}
+                onClick={() => handleCategorySelect(category)}
+                className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
 
-                 {/* More Button Container */}
-                 <div className="flex-shrink-0">
-                   {state.hiddenCategories.length > 0 && (
-                     <div className="relative">
-                       <button
-                         ref={moreButtonRef}
-                         onClick={toggleMoreDropdown}
-                         className="px-4 py-2 w-[130px] rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center justify-between whitespace-nowrap"
-                       >
-                         More <ChevronDownIcon className="w-4 h-4" />
-                       </button>
+        {/* More Button Container */}
+        <div className="flex-shrink-0">
+          {state.hiddenCategories.length > 0 && (
+            <div className="relative">
+              <button
+                ref={moreButtonRef}
+                onClick={toggleMoreDropdown}
+                className="px-4 py-2 w-[130px] rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center justify-between whitespace-nowrap"
+              >
+                More <ChevronDownIcon className="w-4 h-4" />
+              </button>
 
-                       {/* Dropdown Menu */}
-                       {state.isMoreDropdownOpen && (
-                         <div
-                           ref={dropdownRef}
-                           className="absolute right-0 mt-1 bg-white shadow-lg rounded-md z-50 w-[130px] overflow-visible"
-                           style={{ top: 'calc(100% + 2px)' }}
-                         >
-                           <div className="p-2 flex flex-col gap-2">
-                             {state.hiddenCategories.map((category) => (
-                               <button
-                                 key={category}
-                                 onClick={() => {
-                                   handleCategorySelect(category);
-                                   setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                                 }}
-                                 className="px-3 py-2 text-left hover:bg-gray-100 rounded whitespace-nowrap"
-                               >
-                                 {category}
-                               </button>
-                             ))}
-                           </div>
-                         </div>
-                       )}
-                     </div>
-                   )}
-                 </div>
-               </div>
-             </div>
+              {/* Dropdown Menu */}
+              {state.isMoreDropdownOpen && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute right-0 mt-1 bg-white shadow-lg rounded-md z-50 w-[130px] overflow-visible"
+                  style={{ top: 'calc(100% + 2px)' }}
+                >
+                  <div className="p-2 flex flex-col gap-2">
+                    {state.hiddenCategories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          handleCategorySelect(category);
+                          setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+                        }}
+                        className="px-3 py-2 text-left hover:bg-gray-100 rounded whitespace-nowrap"
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
 
-             {/* Desktop layout (md and above) */}
-             <div className="hidden md:flex md:flex-col md:space-y-4">
-               <div className="flex items-center justify-between space-x-4">
-                 {/* Category Buttons Container */}
-                 <div className="w-2/3 overflow-x-auto">
-                   <div className="flex items-center space-x-2">
-                     <button
-                       onClick={() => handleCategorySelect("")}
-                       className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                     >
-                       All
-                     </button>
-                     {state.visibleCategories.map((category) => (
-                       <button
-                         key={category}
-                         data-category={category}
-                         onClick={() => handleCategorySelect(category)}
-                         className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                       >
-                         {category}
-                       </button>
-                     ))}
-                   </div>
-                 </div>
+    {/* Desktop layout (md and above) */}
+    <div className="hidden md:flex md:flex-col md:space-y-4">
+      <div className="flex items-center justify-between space-x-4">
+        {/* Category Buttons Container */}
+        <div className="w-2/3 overflow-x-auto">
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => handleCategorySelect("")}
+              className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+            >
+              All
+            </button>
+            {state.visibleCategories.map((category) => (
+              <button
+                key={category}
+                data-category={category}
+                onClick={() => handleCategorySelect(category)}
+                className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
 
-                 {/* More Button Container */}
-                 <div className="relative w-auto min-w-[150px]">
-                   {state.hiddenCategories.length > 0 && (
-                     <div className="relative">
-                       <button
-                         ref={moreButtonRef}
-                         onClick={toggleMoreDropdown}
-                         className="px-4 py-2 w-auto max-w-[130px] rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center whitespace-nowrap"
-                       >
-                         More <ChevronDownIcon className="w-4 h-4 mx-2" />
-                       </button>
+        {/* More Button Container */}
+        <div className="relative w-auto min-w-[150px]">
+          {state.hiddenCategories.length > 0 && (
+            <div className="relative">
+              <button
+                ref={moreButtonRef}
+                onClick={toggleMoreDropdown}
+                className="px-4 py-2 w-auto max-w-[130px] rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center whitespace-nowrap"
+              >
+                More <ChevronDownIcon className="w-4 h-4 mx-2" />
+              </button>
 
-                       {/* Dropdown Menu */}
-                       {state.isMoreDropdownOpen && (
-                         <div
-                           ref={dropdownRef}
-                           className="absolute left-0 mt-1 bg-white shadow-lg rounded-md z-50 w-auto min-w-[200px] overflow-visible"
-                           style={{ top: 'calc(100% + 2px)' }}
-                         >
-                           <div className="p-2 grid grid-cols-2 gap-2">
-                             {state.hiddenCategories.map((category) => (
-                               <button
-                                 key={category}
-                                 onClick={() => {
-                                   handleCategorySelect(category);
-                                   setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                                 }}
-                                 className="px-3 py-2 text-left hover:bg-gray-100 rounded whitespace-nowrap"
-                               >
-                                 {category}
-                               </button>
-                             ))}
-                           </div>
-                         </div>
-                       )}
-                     </div>
-                   )}
-                 </div>
+              {/* Dropdown Menu */}
+              {state.isMoreDropdownOpen && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute left-0 mt-1 bg-white shadow-lg rounded-md z-50 w-auto min-w-[200px] overflow-visible"
+                  style={{ top: 'calc(100% + 2px)' }}
+                >
+                  <div className="p-2 grid grid-cols-2 gap-2">
+                    {state.hiddenCategories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          handleCategorySelect(category);
+                          setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+                        }}
+                        className="px-3 py-2 text-left hover:bg-gray-100 rounded whitespace-nowrap"
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
-                 {/* Search Input */}
-                 <div className="relative w-1/3">
-                   <input
-                     type="text"
-                     placeholder="Search products..."
-                     value={state.searchTerm}
-                     onChange={handleSearch}
-                     className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613] transform hover:bg-gray-200 hover:scale-105 transition-transform duration-200"
-                   />
-                   <svg
-                     viewBox="0 0 24 24"
-                     className="w-6 h-6 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2"
-                   >
-                     <path
-                       d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
-                       fill="#ee9613"
-                     />
-                   </svg>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </section>
+        {/* Search Input */}
+        <div className="relative w-1/3">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={state.searchTerm}
+            onChange={handleSearch}
+            className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613] transform hover:bg-gray-200 hover:scale-105 transition-transform duration-200"
+          />
+          <svg
+            viewBox="0 0 24 24"
+            className="w-6 h-6 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2"
+          >
+            <path
+              d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
+              fill="#ee9613"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-         {/* Restaurant Products Section */}
-         <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
-           <div className="py-4 border-b border-gray-200">
-             <div data-testid="product-list-header" className="flex items-center px-4">
-               <h2 className="text-lg font-bold">Restaurant Products</h2>
-               <select
-                 value={sortCriteria}
-                 onChange={(e) => setSortCriteria(e.target.value)}
-                 className="ml-auto text-[#ee9613] hover:underline cursor-pointer"
-               >
-                 <option value="default">Sort by</option>
-                 <option value="priceAsc">Price: Low to High</option>
-                 <option value="priceDesc">Price: High to Low</option>
-                 <option value="nameAsc">Name: A to Z</option>
-                 <option value="nameDesc">Name: Z to A</option>
-               </select>
-             </div>
-             <div className="overflow-y-auto h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px]">
-               <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
-                 {state.filteredProducts.map((product, index) => (
-                   <a key={index}
-                     href={product.href}
-                     className="flex w-full max-w-[550px] min-h-[150px] mx-auto rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
-                     data-test-id="product-card-link"
-                   >
-                     <div className="relative w-1/3 overflow-hidden">
-                       <LazyLoadImage
-                         src={product.imgSrc}
-                         alt={product.name}
-                         className="absolute top-0 left-0 w-full h-full object-cover"
-                         effect="opacity"
-                       />
-                       {product.discount && (
-                         <div
-                           data-testid="product-discount-label"
-                           className="absolute top-2 right-2 bg-yellow-400 text-black text-xs px-2 py-1 rounded-full"
-                         >
-                           -{product.discount}%
-                         </div>
-                       )}
-                     </div>
-                     <div className="w-2/3 p-4 flex flex-col justify-between">
-                       <div>
-                         <h3 data-testid="product-name" className="font-bold text-sm sm:text-base mb-1 truncate">
-                           {product.name}
-                         </h3>
-                         <div className="flex items-center text-xs sm:text-sm mb-2 text-gray-600">
-                           <span className="text-[#ee9613] font-semibold">{product.priceRange}</span>
-                           <span className="mx-2">•</span>
-                           <span className="truncate">{product.cuisine}</span>
-                         </div>
-                         <p className="text-xs text-gray-600 mb-2 line-clamp-2">{product.description}</p>
-                       </div>
-                       <div className="text-xs text-gray-500">
-                         Pickup: {product.pickupTime}
-                       </div>
-                       <div className="mt-auto">
-                         <div className="text-black text-xs py-1 rounded">
-                         <span className="text-black">Etomart </span>
+          {/* Restaurant Products Section */}
+          <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
+            <div className="py-4 border-b border-gray-200">
+              <div data-testid="product-list-header" className="flex items-center px-4">
+                <h2 className="text-lg font-bold">Restaurant Products</h2>
+                <select
+                  value={sortCriteria}
+                  onChange={(e) => setSortCriteria(e.target.value)}
+                  className="ml-auto text-[#ee9613] hover:underline cursor-pointer"
+                >
+                  <option value="default">Sort by</option>
+                  <option value="priceAsc">Price: Low to High</option>
+                  <option value="priceDesc">Price: High to Low</option>
+                  <option value="nameAsc">Name: A to Z</option>
+                  <option value="nameDesc">Name: Z to A</option>
+                </select>
+              </div>
+              <div className="overflow-y-auto h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px]">
+                <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
+                  {state.filteredProducts.map((product, index) => (
+                    <a key={index}
+                      href={product.href}
+                      className="flex w-full max-w-[550px] min-h-[150px] mx-auto rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
+                      data-test-id="product-card-link"
+                    >
+                      <div className="relative w-1/3 overflow-hidden">
+                        <LazyLoadImage
+                          src={product.imgSrc}
+                          alt={product.name}
+                          className="absolute top-0 left-0 w-full h-full object-cover"
+                          effect="opacity"
+                        />
+                        {product.discount && (
+                          <div
+                            data-testid="product-discount-label"
+                            className="absolute top-2 right-2 bg-yellow-400 text-black text-xs px-2 py-1 rounded-full"
+                          >
+                            -{product.discount}%
+                          </div>
+                        )}
+                      </div>
+                      <div className="w-2/3 p-4 flex flex-col justify-between">
+                        <div>
+                          <h3 data-testid="product-name" className="font-bold text-sm sm:text-base mb-1 truncate">
+                            {product.name}
+                          </h3>
+                          <div className="flex items-center text-xs sm:text-sm mb-2 text-gray-600">
+                            <span className="text-[#ee9613] font-semibold">{product.priceRange}</span>
+                            <span className="mx-2">•</span>
+                            <span className="truncate">{product.cuisine}</span>
+                          </div>
+                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{product.description}</p>
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Pickup: {product.pickupTime}
+                        </div>
+                        <div className="mt-auto">
+                          <div className="text-black text-xs py-1 rounded">
+                            <span className="text-black">Etomart </span>
                             {product.deliveryTime ? (
                               <span className="text-[#ee9613] font-bold">Delivery Available</span>
                             ) : (

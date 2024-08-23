@@ -9,10 +9,10 @@ import React, {
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
 
-import XClearButton from "./componentsCalled/XClearButton";
-import Footer from "./Footer";
-import LPNavBar from "./LPNavBar";
-import RegionsBanner from "./RegionsBanner";
+import XClearButton from "../componentsCalled/XClearButton";
+import Footer from "../Footer";
+import LPNavBar from "../LPNavBar";
+import RegionsBanner from "../RegionsBanner";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 /**

@@ -3,13 +3,14 @@ import { CgMenuRound, CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { Search, X } from 'lucide-react';
 
-import CartIcon from "./CartIcon";
-import HomeIcon from "./HomeIcon";
-import LocationButton from "./LocationButton";
-import LocationModal from "./LocationModal";
-import UserProfileIcon from "./UserProfileIcon";
+import CartIcon from "../../CartIcon";
+import HomeIcon from "../../HomeIcon";
+import LocationButton from "../../LocationButton";
+import LocationModal from "../../LocationModal";
+import UserProfileIcon from "../../UserProfileIcon";
+import { useStoresCards, useRestaurantsCards, useProductsCards } from "./KhomasDataOPNavBarSearch";
 
-const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
+const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [nav, setNav] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -19,323 +20,60 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
     food: []
   });
 
-  const storesCards = useMemo(
-    () => [
-      {
-        name: "Checkers",
-        imgSrc: "/images/supermarkets/checkers.png",
-        href: "/LP/Khomas/Towns/Store/Checkers",
-        storetype: "Supermarket",
-        isEtomartStore: false,
-        priceRange: "N$$",
-        cuisine: "Supermarket",
-        pickupTime: "15–30 min",
-        deliveryTime: false,
-      },
-      {
-        name: "Shoprite",
-        imgSrc: "/images/supermarkets/shoprite.png",
-        href: "/en/discovery/category/shoprite",
-        storetype: "Supermarket",
-        isEtomartStore: false,
-        priceRange: "N$$",
-        cuisine: "Supermarket",
-        pickupTime: "15–30 min",
-        deliveryTime: false,
-      },
-      {
-        name: "Pick n Pay",
-        imgSrc: "/images/supermarkets/picknpay.png",
-        href: "/en/discovery/category/picknpay",
-        storetype: "Supermarket",
-        isEtomartStore: true,
-        priceRange: "N$$",
-        cuisine: "Supermarket",
-        pickupTime: "15–30 min",
-        deliveryTime: false,
-      },
-      {
-        name: "Spar",
-        imgSrc: "/images/supermarkets/spar.png",
-        href: "/en/discovery/category/spar",
-        storetype: "Supermarket",
-        isEtomartStore: true,
-        priceRange: "N$$",
-        cuisine: "Supermarket",
-        pickupTime: "15–30 min",
-        deliveryTime: false,
-      },
-    ],
-    []
-  );
+  // Use custom hooks to get data
+  const storesCards = useStoresCards();
+  const restaurantsCards = useRestaurantsCards();
+  const productsCards = useProductsCards();
 
-  const restaurantCards = useMemo(() => [
-    {
-      name: "Vennes",
-      imgSrc: "/images/restaurants/v.png",
-      href: "/en/stores/vennes-cafe/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Cafe",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Istanbul Kebab House",
-      imgSrc: "/images/restaurants/i.png",
-      href: "/en/stores/istanbul-kebab-house/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Kebab",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Teater Kvarteret Barista",
-      imgSrc: "/images/restaurants/t.png",
-      href: "/en/stores/teater-kvarteret-barista/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Coffee",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "15–35 min",
-      deliveryTime: false,
-    },
-    {
-      name: "Istanbul Kebab House",
-      imgSrc: "/images/restaurants/i.png",
-      href: "/en/stores/istanbul-kebab-house/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Kebab",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Teater Kvarteret Barista",
-      imgSrc: "/images/restaurants/t.png",
-      href: "/en/stores/teater-kvarteret-barista/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€€€",
-      cuisine: "Coffee",
-      description: "Tasty burger with tomato cheese and onions",
-      pickupTime: "15–35 min",
-      deliveryTime: false,
-    }
-  ], []);
-
-  const productCards = useMemo(() => [
-    {
-      name: "Aspirin",
-      imgSrc: "/images/pharmacies/a.png",
-      href: "/en/stores/aspirin/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      category: "Pain Relief",
-      description:
-        "Effective pain reliever for headaches, muscle pain, and minor arthritis. Trusted relief you can count on.",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Tomatoes",
-      imgSrc: "/images/supermarkets/tomatoes.png",
-      href: "/en/stores/tomatoes/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Produce",
-      description: "A bag of fresh tomatoes",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Ibuprofen",
-      imgSrc: "/images/pharmacies/Ibuprofen.png",
-      href: "/en/stores/ibuprofen/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      category: "Anti-inflammatory",
-      description:
-        "Powerful anti-inflammatory medication for reducing pain and swelling. Ideal for back pain, toothaches, and menstrual cramps.",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Acetaminophen",
-      imgSrc: "/images/pharmacies/Acetaminophen.png",
-      href: "/en/stores/acetaminophen/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      category: "Pain Relief",
-      description:
-        "Safe and effective pain reliever and fever reducer. Perfect for all ages and common ailments.",
-      pickupTime: "15–35 min",
-      deliveryTime: false,
-    },
-    {
-      name: "Milk",
-      imgSrc: "/images/supermarkets/milk.png",
-      href: "/en/stores/milk/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Dairy",
-      description: "1 liter of whole milk",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Eggs",
-      imgSrc: "/images/supermarkets/eggs.png",
-      href: "/en/stores/eggs/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Dairy",
-      description: "A dozen large eggs",
-      pickupTime: "15–35 min",
-      deliveryTime: false,
-    },
-    {
-      name: "Chicken Breast",
-      imgSrc: "/images/supermarkets/chicken-breast.png",
-      href: "/en/stores/chicken-breast/",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€€",
-      cuisine: "Meat",
-      description: "1 kg of fresh chicken breast",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Apples",
-      imgSrc: "/images/supermarkets/apples.png",
-      href: "/en/stores/apples/",
-      discount: 10,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Produce",
-      description: "A bag of fresh apples",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Butter",
-      imgSrc: "/images/supermarkets/butter.png",
-      href: "/en/stores/butter/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Dairy",
-      description: "250g of unsalted butter",
-      pickupTime: "15–35 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Orange Juice",
-      imgSrc: "/images/supermarkets/orange-juice.png",
-      href: "/en/stores/orange-juice/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Beverages",
-      description: "1 liter of fresh orange juice",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Cereal",
-      imgSrc: "/images/supermarkets/cereal.png",
-      href: "/en/stores/cereal/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Grocery",
-      description: "500g box of breakfast cereal",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Rice",
-      imgSrc: "/images/supermarkets/rice.png",
-      href: "/en/stores/rice/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Grocery",
-      description: "1 kg of long grain rice",
-      pickupTime: "15–35 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Tomatoes",
-      imgSrc: "/images/supermarkets/tomatoes.png",
-      href: "/en/stores/tomatoes/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      cuisine: "Produce",
-      description: "A bag of fresh tomatoes",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Antihistamines",
-      imgSrc: "/images/pharmacies/Antihistamines.png",
-      href: "/en/stores/antihistamines/",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€",
-      category: "Allergy Relief",
-      description:
-        "Relieve allergy symptoms such as runny nose, sneezing, and itchy eyes. Fast-acting and long-lasting.",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-  ], []);
+  function shuffleArray(array) {
+    return array
+      .map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+  }
+  
 
   useEffect(() => {
     if (searchQuery) {
       const storeResults = storesCards.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.storetype.toLowerCase().includes(searchQuery.toLowerCase())
+        (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item.storetype && item.storetype.toLowerCase().includes(searchQuery.toLowerCase()))
       );
-      const foodResults = restaurantCards.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.cuisine.toLowerCase().includes(searchQuery.toLowerCase())
+      const foodResults = restaurantsCards.filter(item =>
+        (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item.cuisine && item.cuisine.toLowerCase().includes(searchQuery.toLowerCase()))
       );
-      const productResults = productCards.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      const productResults = productsCards.filter(item =>
+        (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()))
       );
       setSearchResults({ stores: storeResults, food: foodResults, product: productResults });
     } else {
-      setSearchResults({ stores: [], food: [], product: [] });
+      // Shuffle and set results when search query is empty
+      setSearchResults({
+        stores: shuffleArray(storesCards),
+        food: shuffleArray(restaurantsCards),
+        product: shuffleArray(productsCards)
+      });
     }
-  }, [searchQuery, storesCards, restaurantCards, productCards]);
+  }, [searchQuery, storesCards, restaurantsCards, productsCards]);
+  
+  const handleCollapseNavbar = () => {
+    setIsExpanded(false);
+    setSearchQuery("");
+    setSearchResults({
+      stores: shuffleArray(storesCards),
+      food: shuffleArray(restaurantsCards),
+      product: shuffleArray(productsCards)
+    });
+  };
   
 
   const handleExpandNavbar = () => {
     setIsExpanded(true);
   };
 
-  const handleCollapseNavbar = () => {
-    setIsExpanded(false);
-    setSearchQuery("");
-  };
+
 
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
@@ -352,9 +90,9 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   const closeModals = () => setShowLocationModal(false);
 
   const renderStoreCard = (store) => (
-    <div className="flex-shrink-0 w-[230px] h-[160px]">
+    <div className="flex-shrink-0 w-[280px] h-[200px]">
       <a href={store.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
-        <div className="relative h-[100px] w-full overflow-hidden rounded-t-lg">
+        <div className="relative h-[120px] w-full overflow-hidden rounded-t-lg">
           <img src={store.imgSrc} alt={store.name} className="w-full h-full object-cover" />
           <div data-testid="venue-storetype-label" className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-2 rounded-tr-full rounded-br-full">{store.storetype}</div>
         </div>
@@ -434,7 +172,7 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   return (
     <div className="font-josefin_sans">
       <nav
-        id="opnavbar"
+        id="KhomasOPNavBar"
         className={`bg-[#f9f9f9] text-[#ee9613] px-4 transition-all duration-300 ${isExpanded ? 'py-6' : 'py-4'} relative z-50`}
       >
         <div className="flex items-center justify-between mx-auto max-w-7xl">
@@ -507,7 +245,7 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
                   <h2 className="text-xl font-bold">Stores, Restaurants and Pharmacies</h2>
                   <button className="text-[#ee9613] hover:underline">See all</button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
                   {searchResults.stores.slice(0, 4).map((store, index) => (
                     <div key={index}>{renderStoreCard(store)}</div>
                   ))}
@@ -601,4 +339,4 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
     </div>
   );
 };
-export default OPNavBar;
+export default KhomasOPNavBar;

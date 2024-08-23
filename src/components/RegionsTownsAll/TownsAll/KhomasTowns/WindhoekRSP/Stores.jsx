@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PropTypes from 'prop-types';
-import Footer from "../../../Footer";
-import OPNavBar from "../../../OPNavBar";
+import Footer from "../../../../Footer";
+import KhomasOPNavBar from "../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import { useIconsCategories } from "../cardsDataKhomasTowns/cardsDataKhomasTowns";
+import { useSupermarketsStoresCards1, useSupermarkets } from "./CardsDataWindhoekRSP/cardsDataStores";
+
+
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const usePerformanceMeasure = (name) => {
@@ -24,247 +28,13 @@ function Stores() {
   });
 
   const iconscategoriescarouselscroll = useRef(null);
-  const storescards1scroll = useRef(null);
   const supermarketsscroll = useRef(null);
 
-  const iconscategories = useMemo(() => [
-     {
-      name: "Grocery",
-      imgSrc: "/images/websiteicons/grocery.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Bakery",
-      imgSrc: "/images/websiteicons/bakery.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Healthy",
-      imgSrc: "/images/websiteicons/healthy-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Desserts",
-      imgSrc: "/images/websiteicons/desserts.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Fruits & Vegetables",
-      imgSrc: "/images/websiteicons/fruit-and-vegetables.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Dairy & Eggs",
-      imgSrc: "/images/websiteicons/dairy-and-eggs.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Meat",
-      imgSrc: "/images/websiteicons/meat.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Seafood",
-      imgSrc: "/images/websiteicons/seafood.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Beverages",
-      imgSrc: "/images/websiteicons/beverages.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Snacks & Sweets",
-      imgSrc: "/images/websiteicons/snacks-and-sweets.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Household Essentials",
-      imgSrc: "/images/websiteicons/household-essentials.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Pharmaceuticals",
-      imgSrc: "/images/websiteicons/pharmaceuticals.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Baby",
-      imgSrc: "/images/websiteicons/baby.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Pet Supplies",
-      imgSrc: "/images/websiteicons/pet-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Frozen Foods",
-      imgSrc: "/images/websiteicons/frozen-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Fast Food",
-      imgSrc: "/images/websiteicons/fast-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Restaurant",
-      imgSrc: "/images/websiteicons/restaurant.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "International Foods",
-      imgSrc: "/images/websiteicons/international-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Alcohol",
-      imgSrc: "/images/websiteicons/alcohol.png",
-      href: "/en/discovery/category/grocery",
-    },
-  ], []);
+  // Use custom hooks to get data
+  const iconscategories = useIconsCategories();
+  const supermarketsstorescards1 = useSupermarketsStoresCards1();
+  const supermarkets = useSupermarkets();
 
-  const storescards1 = useMemo(() => [
- {
-      name: "Checkers",
-      imgSrc: "/images/supermarkets/checkers.png",
-      href: "/LP/Khomas/Towns/Store/Checkers",
-      discount: 10,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Supermarket",
-      pickupTime: "15–30 min",
-    },
-    {
-      name: "Shoprite",
-      imgSrc: "/images/supermarkets/shoprite.png",
-      href: "/en/discovery/category/shoprite",
-      discount: 5,
-      isEtomartStore: false,
-      priceRange: "N$",
-      cuisine: "Supermarket",
-      pickupTime: "10–25 min",
-    },
-    {
-      name: "Pick n Pay",
-      imgSrc: "/images/supermarkets/picknpay.png",
-      href: "/en/discovery/category/picknpay",
-      discount: 15,
-      isEtomartStore: true,
-      priceRange: "N$$",
-      cuisine: "Supermarket",
-      pickupTime: "20–35 min",
-    },
-    {
-      name: "Spar",
-      imgSrc: "/images/supermarkets/spar.png",
-      href: "/en/discovery/category/spar",
-      discount: 10,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Supermarket",
-      pickupTime: "15–30 min",
-    },
-    {
-      name: "Woermann Brock",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
-      href: "/en/discovery/category/woermannbrock",
-      discount: 5,
-      isEtomartStore: false,
-      priceRange: "N$",
-      cuisine: "Supermarket",
-      pickupTime: "10–25 min",
-    },
-    {
-      name: "OK Foods",
-      imgSrc: "/images/supermarkets/okfoods.png",
-      href: "/en/discovery/category/okfoods",
-      discount: 10,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Supermarket",
-      pickupTime: "15–30 min",
-    },
-    {
-      name: "Choppies",
-      imgSrc: "/images/supermarkets/choppies.png",
-      href: "/en/discovery/category/choppies",
-      discount: 5,
-      isEtomartStore: false,
-      priceRange: "N$",
-      cuisine: "Supermarket",
-      pickupTime: "10–25 min",
-    },
-    {
-      name: "Food Lover's Market",
-      imgSrc: "/images/supermarkets/foodlovers.png",
-      href: "/en/discovery/category/foodloversmarket",
-      discount: 15,
-      isEtomartStore: true,
-      priceRange: "N$$",
-      cuisine: "Supermarket",
-      pickupTime: "20–35 min",
-    },
-    {
-      name: "Metro",
-      imgSrc: "/images/supermarkets/metro.png",
-      href: "/en/discovery/category/metro",
-      discount: 10,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Supermarket",
-      pickupTime: "15–30 min",
-    },
-], []);
-
-  const supermarkets = useMemo(() => [
-    {
-      name: "Checkers",
-      imgSrc: "/images/supermarkets/checkers.png",
-      href: "/LP/Khomas/Towns/Store/Checkers",
-    },
-    {
-      name: "Shoprite",
-      imgSrc: "/images/supermarkets/shoprite.png",
-      href: "/en/discovery/category/shoprite",
-    },
-    {
-      name: "Pick n Pay",
-      imgSrc: "/images/supermarkets/picknpay.png",
-      href: "/en/discovery/category/picknpay",
-    },
-    {
-      name: "Spar",
-      imgSrc: "/images/supermarkets/spar.png",
-      href: "/en/discovery/category/spar",
-    },
-    {
-      name: "Woermann Brock",
-      imgSrc: "/images/supermarkets/woermannbrock.png",
-      href: "/en/discovery/category/woermannbrock",
-    },
-    {
-      name: "OK Foods",
-      imgSrc: "/images/supermarkets/okfoods.png",
-      href: "/en/discovery/category/okfoods",
-    },
-    {
-      name: "Choppies",
-      imgSrc: "/images/supermarkets/choppies.png",
-      href: "/en/discovery/category/choppies",
-    },
-    {
-      name: "Food Lover's Market",
-      imgSrc: "/images/supermarkets/foodlovers.png",
-      href: "/en/discovery/category/foodloversmarket",
-    },
-    {
-      name: "Metro",
-      imgSrc: "/images/supermarkets/metro.png",
-      href: "/en/discovery/category/metro",
-    },
-  ], []);
 
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
@@ -393,7 +163,7 @@ function Stores() {
   ), []);
   return (
     <div className="bg-white">
-      <OPNavBar />
+      <KhomasOPNavBar />
       <main className="relative z-10">
         {/* Navigation Tabs */}
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
@@ -521,7 +291,7 @@ function Stores() {
         {/* Store Cards Container */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           <div className="flex flex-wrap -mx-2">
-            {storescards1.map((category, index) => renderStoreCard(category, index))}
+            {supermarketsstorescards1.map((category, index) => renderStoreCard(category, index))}
           </div>
         </div>
       </main>

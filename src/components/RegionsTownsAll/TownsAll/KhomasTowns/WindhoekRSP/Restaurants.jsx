@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PropTypes from 'prop-types';
-import Footer from "../../../Footer";
-import OPNavBar from "../../../OPNavBar";
+import Footer from "../../../../Footer";
+import KhomasOPNavBar from "../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import { useIconsCategories} from "../cardsDataKhomasTowns/cardsDataKhomasTowns";
+import { useRestaurantsStoresCards1, useRestaurants } from "./CardsDataWindhoekRSP/cardsDataRestaurants";
+
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const usePerformanceMeasure = (name) => {
@@ -16,210 +19,20 @@ const usePerformanceMeasure = (name) => {
   }, [name]);
 };
 
-function Pharmacies() {
-  usePerformanceMeasure('Pharmacies');
+function Restaurants() {
+  usePerformanceMeasure('Restaurants');
 
   const [state, setState] = useState({
     isLargeScreen: false,
   });
 
   const iconscategoriescarouselscroll = useRef(null);
-  const pharmaciesscroll = useRef(null);
-  const storescards1scroll = useRef(null);
+  const restaurantsscroll = useRef(null);
 
-  const iconscategories = useMemo(() => [
-    {
-      name: "Grocery",
-      imgSrc: "/images/websiteicons/grocery.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Bakery",
-      imgSrc: "/images/websiteicons/bakery.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Healthy",
-      imgSrc: "/images/websiteicons/healthy-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Desserts",
-      imgSrc: "/images/websiteicons/desserts.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Fruits & Vegetables",
-      imgSrc: "/images/websiteicons/fruit-and-vegetables.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Dairy & Eggs",
-      imgSrc: "/images/websiteicons/dairy-and-eggs.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Meat",
-      imgSrc: "/images/websiteicons/meat.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Seafood",
-      imgSrc: "/images/websiteicons/seafood.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Beverages",
-      imgSrc: "/images/websiteicons/beverages.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Snacks & Sweets",
-      imgSrc: "/images/websiteicons/snacks-and-sweets.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Household Essentials",
-      imgSrc: "/images/websiteicons/household-essentials.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Pharmaceuticals",
-      imgSrc: "/images/websiteicons/pharmaceuticals.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Baby",
-      imgSrc: "/images/websiteicons/baby.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Pet Supplies",
-      imgSrc: "/images/websiteicons/pet-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Frozen Foods",
-      imgSrc: "/images/websiteicons/frozen-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Fast Food",
-      imgSrc: "/images/websiteicons/fast-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Restaurant",
-      imgSrc: "/images/websiteicons/restaurant.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "International Foods",
-      imgSrc: "/images/websiteicons/international-food.png",
-      href: "/en/discovery/category/grocery",
-    },
-    {
-      name: "Alcohol",
-      imgSrc: "/images/websiteicons/alcohol.png",
-      href: "/en/discovery/category/grocery",
-    },
-  ], []);
-
-  const storescards1 = useMemo(() => [
-     {
-      name: "Dis-Chem",
-      imgSrc: "/images/pharmacies/dischem.png",
-      href: "/en/discovery/category/dischem",
-      discount: 5,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Pharmacy",
-      pickupTime: "10–20 min",
-    },
-    {
-      name: "Clicks Pharmacy",
-      imgSrc: "/images/pharmacies/clicks.png",
-      href: "/LP/Khomas/Towns/Pharmacy/Clicks",
-      discount: 5,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Pharmacy",
-      pickupTime: "10–20 min",
-    },
-    {
-      name: "Nampharm Pharmacy",
-      imgSrc: "/images/pharmacies/nampharm.png",
-      href: "/en/discovery/category/nampharm",
-      discount: 5,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Pharmacy",
-      pickupTime: "10–20 min",
-    },
-    {
-      name: "Alpha Pharm",
-      imgSrc: "/images/pharmacies/alphapharm.png",
-      href: "/en/discovery/category/alphapharm",
-      discount: 5,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Pharmacy",
-      pickupTime: "10–20 min",
-    },
-    {
-      name: "Medicine World",
-      imgSrc: "/images/pharmacies/medicineworld.png",
-      href: "/en/discovery/category/medicineworld",
-      discount: 5,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Pharmacy",
-      pickupTime: "10–20 min",
-    },
-    {
-      name: "City Pharmacy",
-      imgSrc: "/images/pharmacies/citypharmacy.png",
-      href: "/en/discovery/category/citypharmacy",
-      discount: 5,
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Pharmacy",
-      pickupTime: "10–20 min",
-    },
-  ], []);
-
-  const pharmacies = useMemo(() => [
-      {
-      name: "Dis-Chem",
-      imgSrc: "/images/pharmacies/dischem.png",
-      href: "/en/discovery/category/dischem",
-    },
-    {
-      name: "Clicks Pharmacy",
-      imgSrc: "/images/pharmacies/clicks.png",
-      href: "/LP/Khomas/Towns/Pharmacy/Clicks",
-    },
-    {
-      name: "Nampharm Pharmacy",
-      imgSrc: "/images/pharmacies/nampharm.png",
-      href: "/en/discovery/category/nampharm",
-    },
-    {
-      name: "Alpha Pharm",
-      imgSrc: "/images/pharmacies/alphapharm.png",
-      href: "/en/discovery/category/alphapharm",
-    },
-    {
-      name: "Medicine World",
-      imgSrc: "/images/pharmacies/medicineworld.png",
-      href: "/en/discovery/category/medicineworld",
-    },
-    {
-      name: "City Pharmacy",
-      imgSrc: "/images/pharmacies/citypharmacy.png",
-      href: "/en/discovery/category/citypharmacy",
-    },
-  ], []);
+ // Use custom hooks to get data
+ const iconscategories = useIconsCategories();
+ const restaurantsstorescards1 = useRestaurantsStoresCards1();
+ const restaurants = useRestaurants();
 
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
@@ -282,13 +95,13 @@ function Pharmacies() {
     </div>
   ), [scrollLeft, scrollRight]);
 
-  const renderPharmacyCard = useCallback((pharmacy, index) => (
+  const renderRestaurantCard = useCallback((restaurant, index) => (
     <div key={index} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72 p-2">
-      <a href={pharmacy.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+      <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
         <div className="relative w-full aspect-video overflow-hidden rounded-t-lg">
           <LazyLoadImage
-            src={pharmacy.imgSrc}
-            alt={pharmacy.name}
+            src={restaurant.imgSrc}
+            alt={restaurant.name}
             width="100%"
             height="100%"
             className="w-full h-full object-fill"
@@ -296,12 +109,12 @@ function Pharmacies() {
           />
         </div>
         <div className="p-3 sm:p-4">
-          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{pharmacy.name}</p>
+          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{restaurant.name}</p>
         </div>
       </a>
     </div>
   ), []);
-
+  
   const renderStoreCard = useCallback((category, index) => (
     <div
       key={index}
@@ -347,7 +160,7 @@ function Pharmacies() {
 
   return (
     <div className="bg-white">
-      <OPNavBar />
+      <KhomasOPNavBar />
       <main className="relative z-10">
         {/* Navigation Tabs */}
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
@@ -357,8 +170,8 @@ function Pharmacies() {
           >
             <div className="relative z-10 flex items-center justify-center w-full mb-0">
               <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
-                <div role="tablist" className="flex space-x-2 gap-2">
-                  <a
+               <div role="tablist" className="flex space-x-2 gap-2">
+                <a
                   role="tab"
                   aria-selected="false"
                   className="flex items-center space-x-2 gap-2 px-4 py-2 rounded-full bg-white shadow-md hover:bg-orange-300 transition duration-150"
@@ -385,7 +198,7 @@ function Pharmacies() {
                 <a
                   role="tab"
                   aria-selected="false"
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md transition-all hover:bg-orange-300 duration-150"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full shadow-md transition-all bg-orange-300 duration-150"
                   href="/LP/Khomas/Towns/Restaurants"
                 >
                   <svg
@@ -403,7 +216,7 @@ function Pharmacies() {
                 <a
                   role="tab"
                   aria-selected="false"
-                  className="flex items-center space-x-2 gap-2 px-4 py-2 rounded-full shadow-md bg-orange-300 transition duration-150"
+                  className="flex items-center space-x-2 gap-2 px-4 py-2 rounded-full shadow-md bg-white hover:bg-orange-300 transition duration-150"
                   href="/LP/Khomas/Towns/Pharmacies"
                 >
                   <svg
@@ -445,37 +258,37 @@ function Pharmacies() {
           </div>
         ))}
 
-        {/* Pharmacies Near Me Section */}
+        {/* Restaurants Near Me Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
             className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
             style={{ width: "50%", maxWidth: "1000px" }}
           >
             <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
-              Pharmacies Near Me
+              Restaurants Near Me
             </h2>
           </div>
         </section>
 
-        {/* Pharmacies Carousel */}
-        {renderCarousel(pharmacies, pharmaciesscroll, renderPharmacyCard)}
+        {/* Restaurants Carousel */}
+        {renderCarousel(restaurants, restaurantsscroll, renderRestaurantCard)}
 
-        {/* All Pharmacies Near Me Section */}
+        {/* All Restaurants Near Me Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
             className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
             style={{ width: "60%", maxWidth: "1000px" }}
           >
             <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
-              All Pharmacies Near Me
+              All Restaurants Near Me
             </h2>
           </div>
         </section>
 
-        {/* Pharmacy Cards Container */}
+        {/* Restaurant Cards Container */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           <div className="flex flex-wrap -mx-2">
-            {storescards1.map((category, index) => renderStoreCard(category, index))}
+            {restaurantsstorescards1.map((category, index) => renderStoreCard(category, index))}
           </div>
         </div>
       </main>
@@ -485,8 +298,8 @@ function Pharmacies() {
   );
 }
 
-Pharmacies.propTypes = {
+Restaurants.propTypes = {
   // Add prop types here if needed
 };
 
-export default Pharmacies;
+export default Restaurants;

@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
-import { toast } from "react-toastify";
-import Footer from "../../../../Footer";
-import OPNavBar from "../../../../OPNavBar";
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import PropTypes from 'prop-types';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { toast } from "react-toastify";
+
+import Footer from "../../../../../../Footer";
+import KhomasOPNavBar from "../../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import { useNavcategories, useCards, useStoresCards, useSupermarkets  } from "./cardsDataCheckers";
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 // Performance measurement hook
 const usePerformanceMeasure = (name) => {
@@ -20,8 +24,8 @@ const usePerformanceMeasure = (name) => {
   }, [name]);
 };
 
-function Clicks() {
-  usePerformanceMeasure('Clicks');
+function Checkers() {
+  usePerformanceMeasure('Checkers');
 
   // Combined state
   const [state, setState] = useState({
@@ -38,250 +42,17 @@ function Clicks() {
   const containerRef = useRef(null);
   const dropdownRef = useRef(null);
   const mapContainerRef = useRef(null);
-  const pharmaciesscroll = useRef(null);
+  const supermarketsscroll = useRef(null);
 
   // Memoized data
-  const navcategories = useMemo(() => [
-    {
-      name: "Prescription Medications",
-      imgSrc: "/images/pharmacies/pm.png",
-      href: "/pharmacy/prescription-medications",
-    },
-    {
-      name: "Over-the-Counter Medications",
-      imgSrc: "/images/pharmacies/ocm.png",
-      href: "/pharmacy/over-the-counter-medications",
-    },
-    {
-      name: "Vitamins & Supplements",
-      imgSrc: "/images/pharmacies/vs.png",
-      href: "/pharmacy/vitamins-supplements",
-    },
-    {
-      name: "Personal Care",
-      imgSrc: "/images/pharmacies/pc.png",
-      href: "/pharmacy/personal-care",
-    },
-    {
-      name: "Health & Wellness",
-      imgSrc: "/images/pharmacies/hw.png",
-      href: "/pharmacy/health-wellness",
-    },
-    {
-      name: "Baby & Child Care",
-      imgSrc: "/images/pharmacies/bcc.png",
-      href: "/pharmacy/baby-child-care",
-    },
-    {
-      name: "Medical Equipment",
-      imgSrc: "/images/pharmacies/me.png",
-      href: "/pharmacy/medical-equipment",
-    },
-    {
-      name: "First Aid",
-      imgSrc: "/images/pharmacies/fa.png",
-      href: "/pharmacy/first-aid",
-    },
-    {
-      name: "Skincare",
-      imgSrc: "/images/pharmacies/sc.png",
-      href: "/pharmacy/skincare",
-    },
-    {
-      name: "Oral Care",
-      imgSrc: "/images/pharmacies/oc.png",
-      href: "/pharmacy/oral-care",
-    },
-    {
-      name: "Hair Care",
-      imgSrc: "/images/pharmacies/hc.png",
-      href: "/pharmacy/hair-care",
-    },
-    {
-      name: "Foot Care",
-      imgSrc: "/images/pharmacies/fc.png",
-      href: "/pharmacy/foot-care",
-    },
-    {
-      name: "Allergy & Sinus",
-      imgSrc: "/images/pharmacies/as.png",
-      href: "/pharmacy/allergy-sinus",
-    },
-    //   {
-    //     name: "Eye Care",
-    //     imgSrc: "/images/pharmacies/",
-    //     href: "/pharmacy/eye-care"
-    //  },
-    {
-      name: "Pain Relief",
-      imgSrc: "/images/pharmacies/pr.png",
-      href: "/pharmacy/pain-relief",
-    },
-    {
-      name: "Digestive Health",
-      imgSrc: "/images/pharmacies/dh.png",
-      href: "/pharmacy/digestive-health",
-    },
-    {
-      name: "Cold & Flu",
-      imgSrc: "/images/pharmacies/cf.png",
-      href: "/pharmacy/cold-flu",
-    },
-    {
-      name: "Diabetes Care",
-      imgSrc: "/images/pharmacies/dc.png",
-      href: "/pharmacy/diabetes-care",
-    },
-    {
-      name: "Women's Health",
-      imgSrc: "/images/pharmacies/wh.png",
-      href: "/pharmacy/womens-health",
-    },
-    {
-      name: "Men's Health",
-      imgSrc: "/images/pharmacies/mh.png",
-      href: "/pharmacy/mens-health",
-    },
-    // Add more categories as needed
-  ], []);
 
-  const cards = useMemo(() => [
-    {
-      title: "Aspirin",
-      description:
-        "Effective pain reliever for headaches, muscle pain, and minor arthritis. Trusted relief you can count on.",
-      image: "/images/pharmacies/alphapharm.png",
-    },
-    {
-      title: "Ibuprofen",
-      description:
-        "Powerful anti-inflammatory medication for reducing pain and swelling. Ideal for back pain, toothaches, and menstrual cramps.",
-      image: "/images/pharmacies/Ibuprofen.png",
-    },
-    {
-      title: "Acetaminophen",
-      description:
-        "Safe and effective pain reliever and fever reducer. Perfect for all ages and common ailments.",
-      image: "/images/pharmacies/Acetaminophen.png",
-    },
-    {
-      title: "Antihistamines",
-      description:
-        "Relieve allergy symptoms such as runny nose, sneezing, and itchy eyes. Fast-acting and long-lasting.",
-      image: "/images/pharmacies/Antihistamines.png",
-    },
-    {
-      title: "Cough Syrup",
-      description:
-        "Soothe your throat and ease your cough with our effective cough syrups. Available for both adults and children.",
-      image: "/images/pharmacies/CoughSyrup.png",
-    },
-    // Add more cards as needed
-  ], []);
+    // Use custom hooks to get data
+    const navcategories = useNavcategories();
+    const cards = useCards();
+    const storecards = useStoresCards();
+    const supermarkets = useSupermarkets();
 
-  const pharmacycards = useMemo(() => [
-    {
-      name: "Aspirin",
-      imgSrc: "/images/pharmacies/a.png",
-      href: "/en/stores/aspirin/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      category: "Pain Relief",
-      description:
-        "Effective pain reliever for headaches, muscle pain, and minor arthritis. Trusted relief you can count on.",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Ibuprofen",
-      imgSrc: "/images/pharmacies/Ibuprofen.png",
-      href: "/en/stores/ibuprofen/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      category: "Anti-inflammatory",
-      description:
-        "Powerful anti-inflammatory medication for reducing pain and swelling. Ideal for back pain, toothaches, and menstrual cramps.",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Acetaminophen",
-      imgSrc: "/images/pharmacies/Acetaminophen.png",
-      href: "/en/stores/acetaminophen/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      category: "Pain Relief",
-      description:
-        "Safe and effective pain reliever and fever reducer. Perfect for all ages and common ailments.",
-      pickupTime: "15–35 min",
-      deliveryTime: false,
-    },
-    {
-      name: "Antihistamines",
-      imgSrc: "/images/pharmacies/Antihistamines.png",
-      href: "/en/stores/antihistamines/",
-      discount: 20,
-      isEtomartStore: false,
-      priceRange: "€",
-      category: "Allergy Relief",
-      description:
-        "Relieve allergy symptoms such as runny nose, sneezing, and itchy eyes. Fast-acting and long-lasting.",
-      pickupTime: "20–40 min",
-      deliveryTime: true,
-    },
-    {
-      name: "Cough Syrup",
-      imgSrc: "/images/pharmacies/CoughSyrup.png",
-      href: "/en/stores/cough-syrup/",
-      discount: null,
-      isEtomartStore: false,
-      priceRange: "€",
-      category: "Cough Relief",
-      description:
-        "Soothe your throat and ease your cough with our effective cough syrups. Available for both adults and children.",
-      pickupTime: "10–30 min",
-      deliveryTime: true,
-    },
-    // Add more cards as needed
-  ], []);
-
-  const pharmacies = useMemo(() => [
-    {
-    name: "Dis-Chem",
-    imgSrc: "/images/pharmacies/dischem.png",
-    href: "/en/discovery/category/dischem",
-  },
-  {
-    name: "Clicks Pharmacy",
-    imgSrc: "/images/pharmacies/clicks.png",
-    href: "/LP/Khomas/Towns/Pharmacy/Clicks",
-  },
-  {
-    name: "Nampharm Pharmacy",
-    imgSrc: "/images/pharmacies/nampharm.png",
-    href: "/en/discovery/category/nampharm",
-  },
-  {
-    name: "Alpha Pharm",
-    imgSrc: "/images/pharmacies/alphapharm.png",
-    href: "/en/discovery/category/alphapharm",
-  },
-  {
-    name: "Medicine World",
-    imgSrc: "/images/pharmacies/medicineworld.png",
-    href: "/en/discovery/category/medicineworld",
-  },
-  {
-    name: "City Pharmacy",
-    imgSrc: "/images/pharmacies/citypharmacy.png",
-    href: "/en/discovery/category/citypharmacy",
-  },
-], []);
-
-const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
+  const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
   // Callbacks
   const scrollLeft = useCallback((carouselRef) => {
@@ -352,7 +123,7 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
   const MARKER_COORDINATES = [
-    { lng: 17.094332562419833, lat: -22.583743666790397 },
+    { lng: 17.09449450474923, lat: -22.584210677171924 },
     { lng: 17.073723364157306, lat: -22.561939983264068 },
   ];
 
@@ -377,8 +148,8 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
     MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
 
     mapInstance.fitBounds(bounds, {
-      padding: { top: 40, bottom: 30, left: 20, right: 20 },
-      maxZoom: 13, // Limit maximum zoom level
+      padding: { top: 30, bottom: 30, left: 20, right: 20 },
+      maxZoom: 13,
       linear: true,
     });
 
@@ -457,7 +228,6 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [state.isDropdownOpen]);
-
   // Render helpers
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
@@ -488,13 +258,13 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
     </div>
   ), [scrollLeft, scrollRight]);
 
-  const renderStoreCard = useCallback((category, index) => (
+  const renderSupermarketCard = useCallback((supermarket, index) => (
     <div key={index} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72 p-6">
-      <a href={category.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+      <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
         <div className="relative w-full aspect-square overflow-hidden rounded-t-lg">
           <LazyLoadImage
-            src={category.imgSrc}
-            alt={category.name}
+            src={supermarket.imgSrc}
+            alt={supermarket.name}
             width="100%"
             height="100%"
             className="w-full h-full object-fill"
@@ -502,7 +272,7 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
           />
         </div>
         <div className="p-3 sm:p-4">
-          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{category.name}</p>
+          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{supermarket.name}</p>
         </div>
       </a>
     </div>
@@ -535,6 +305,7 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
     return truncatedText;
   }, []);
+
   const filteredCategories = useMemo(() =>
     navcategories.filter((category) =>
       category.name.toLowerCase().includes(state.searchTerm.toLowerCase())
@@ -545,14 +316,14 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
   // JSX
   return (
     <div className="bg-white">
-      <OPNavBar />
+      <KhomasOPNavBar />
       <main className="relative z-10">
         {/* Header section */}
         <header className="relative">
           <div className="relative">
             <LazyLoadImage
-              src="/images/pharmacies/clicks.png"
-              alt="Clicks Pharmacy"
+              src="/images/supermarkets/checkers.png"
+              alt="Checkers supermarket"
               effect="blur"
               className="w-full h-[510px] object-cover"
             />
@@ -560,8 +331,9 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
           </div>
           <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
             <div className="px-4">
-              <h1 className="text-white text-4xl font-bold">Clicks</h1>
-              <p className="text-white text-lg">Feel Good Pay Less</p>
+              <h1 className="text-white text-4xl font-bold">Checkers</h1>
+              <p className="text-white text-lg">Better and Better</p>
+              {/* Favorite Button */}
               <button
                 data-test-id="venue-favorite"
                 aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
@@ -597,6 +369,7 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
                 <div className="absolute right-4 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                   <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                     <button
+                      aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                       onClick={toggleFavorite}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
                       role="menuitem"
@@ -684,7 +457,9 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
                 {cards.map((_, index) => (
                   <button
                     key={index}
-                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
+                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length
+                        ? "bg-white"
+                        : "bg-gray-400"
                       }`}
                     onClick={() => handleDotClick(index)}
                     aria-label={`Go to slide ${index + 1}`}
@@ -758,7 +533,6 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
                 </div>
                 <div className="flex flex-col overflow-y-auto" style={{ height: "800px" }}>
                   {filteredCategories.slice(0, 20).map((category, index) => (
-
                     <a key={index}
                       href={category.href}
                       className="flex items-center p-2 mb-4 bg-white rounded-lg shadow hover:bg-gray-100"
@@ -775,7 +549,10 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
                 </div>
               </div>
             </aside>
-            <section className="w-full md:w-3/4">
+
+           
+              {/* Products grid */}
+              <section className="w-full md:w-3/4">
       <div className="px-4">
         <div className="flex items-center p-4">
           <h2 className="text-2xl font-bold">All Products</h2>
@@ -797,7 +574,7 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
         <div className="overflow-y-auto h-[600px] sm:h-[700px] md:h-[850px]">
           <div className="px-2 pb-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-  {pharmacycards.map((category, shopsindex) => (
+  {storecards.map((category, shopsindex) => (
     <div
       key={shopsindex}
       className="w-full max-w-[180px] sm:max-w-[400px] mx-auto sm:mx-0"
@@ -866,8 +643,8 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
               <div className="space-y-8">
                 <div>
                   <h3 className="text-md font-semibold">Store Information</h3>
-                  <p className="text-[#ee9613] font-bold">Clicks</p>
-                  <p>Feel Good Pay Less</p>
+                  <p className="text-[#ee9613] font-bold">Checkers</p>
+                  <p>Better and Better</p>
                 </div>
                 <div>
                   <h3 className="text-md font-semibold">Address</h3>
@@ -910,6 +687,7 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
             </div>
           </div>
         </section>
+
         {/* Supermarkets Near Me Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
@@ -917,21 +695,21 @@ const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
             style={{ width: "50%", maxWidth: "1000px" }}
           >
             <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
-              Similar Pharmacies
+              Similar Supermarkets
             </h2>
           </div>
         </section>
 
         {/* Supermarkets Carousel */}
-        {renderCarousel(pharmacies, pharmaciesscroll, renderStoreCard)}
+        {renderCarousel(supermarkets, supermarketsscroll, renderSupermarketCard)}
       </main>
       <Footer />
     </div>
   );
 }
 
-Clicks.propTypes = {
+Checkers.propTypes = {
   // Add prop types here if needed
 };
 
-export default Clicks;
+export default Checkers;

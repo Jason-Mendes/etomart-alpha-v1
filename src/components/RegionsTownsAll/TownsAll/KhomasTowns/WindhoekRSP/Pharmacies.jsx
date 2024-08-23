@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PropTypes from 'prop-types';
-import Footer from "../../../Footer";
-import OPNavBar from "../../../OPNavBar";
+import Footer from "../../../../Footer";
+import KhomasOPNavBar from "../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import { useIconsCategories} from "../cardsDataKhomasTowns/cardsDataKhomasTowns";
+import { usePharmaciesStoresCards1, usePharmacies } from "./CardsDataWindhoekRSP/cardsDataPharmacies";
+
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const usePerformanceMeasure = (name) => {
@@ -16,201 +19,21 @@ const usePerformanceMeasure = (name) => {
   }, [name]);
 };
 
-function Restaurants() {
-  usePerformanceMeasure('Restaurants');
+function Pharmacies() {
+  usePerformanceMeasure('Pharmacies');
 
   const [state, setState] = useState({
     isLargeScreen: false,
   });
 
   const iconscategoriescarouselscroll = useRef(null);
-  const restaurantsscroll = useRef(null);
-  const storescards1scroll = useRef(null);
+  const pharmaciesscroll = useRef(null);
 
-  const iconscategories = useMemo(() => [
-   // Icon categories for carousel
-    {
-      name: "Grocery",
-      imgSrc: "/images/websiteicons/grocery.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Bakery",
-      imgSrc: "/images/websiteicons/bakery.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Healthy",
-      imgSrc: "/images/websiteicons/healthy-food.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Desserts",
-      imgSrc: "/images/websiteicons/desserts.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Fruits & Vegetables",
-      imgSrc: "/images/websiteicons/fruit-and-vegetables.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Dairy & Eggs",
-      imgSrc: "/images/websiteicons/dairy-and-eggs.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Meat",
-      imgSrc: "/images/websiteicons/meat.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Seafood",
-      imgSrc: "/images/websiteicons/seafood.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Beverages",
-      imgSrc: "/images/websiteicons/beverages.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Snacks & Sweets",
-      imgSrc: "/images/websiteicons/snacks-and-sweets.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Household Essentials",
-      imgSrc: "/images/websiteicons/household-essentials.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Pharmaceuticals",
-      imgSrc: "/images/websiteicons/pharmaceuticals.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Baby",
-      imgSrc: "/images/websiteicons/baby.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Pet Supplies",
-      imgSrc: "/images/websiteicons/pet-food.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Frozen Foods",
-      imgSrc: "/images/websiteicons/frozen-food.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Fast Food",
-      imgSrc: "/images/websiteicons/fast-food.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Restaurant",
-      imgSrc: "/images/websiteicons/restaurant.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "International Foods",
-      imgSrc: "/images/websiteicons/international-food.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "Alcohol",
-      imgSrc: "/images/websiteicons/alcohol.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-  ], []);
+   // Use custom hooks to get data
+   const iconscategories = useIconsCategories();
+   const pharmaciesstorescards1 = usePharmaciesStoresCards1();
+   const pharmacies = usePharmacies();
 
-  const storescards1 = useMemo(() => [
-        {
-      name: "The Stellenbosch Wine Bar",
-      imgSrc: "/images/restaurants/stellenbosch.png",
-      href: "/en/discovery/category/stellenbosch",
-      discount: 15,
-      isEtomartStore: true,
-      priceRange: "N$$",
-      cuisine: "Wine Bar",
-      pickupTime: "25–45 min",
-    },
-    {
-      name: "O Portuga",
-      imgSrc: "/images/restaurants/oportuga.png",
-      href: "/en/discovery/category/oportuga",
-      storetype: "Restaurant",
-      isEtomartStore: false,
-      priceRange: "N$$$",
-      cuisine: "Portuguese",
-      pickupTime: "20–40 min",
-    },
-    {
-      name: "The Social",
-      imgSrc: "/images/restaurants/thesocial.png",
-      href: "/en/discovery/category/thesocial",
-      storetype: "Restaurant",
-      isEtomartStore: true,
-      priceRange: "N$$$",
-      cuisine: "Bar & Grill",
-      pickupTime: "20–40 min",
-    },
-    {
-      name: "Sardinia Blue Olive",
-      imgSrc: "/images/restaurants/sardiniablueolive.png",
-      href: "/en/discovery/category/sardiniablueolive",
-      storetype: "Restaurant",
-      isEtomartStore: false,
-      priceRange: "N$$$",
-      cuisine: "Mediterranean",
-      pickupTime: "20–40 min",
-    },
-    {
-      name: "Slowtown Coffee Roasters",
-      imgSrc: "/images/restaurants/slowtown.png",
-      href: "/en/discovery/category/slowtown",
-      storetype: "Café",
-      isEtomartStore: false,
-      priceRange: "N$$",
-      cuisine: "Coffee",
-      pickupTime: "10–20 min",
-    },
-  ], []);
-
-  const restaurants = useMemo(() => [
-   {
-      name: "Joe's Beerhouse",
-      imgSrc: "/images/restaurants/joesbeerhouse.png",
-      href: "/LP/Khomas/Towns/Restaurant/JoesBeerhouse",
-    },
-    {
-      name: "The Stellenbosch Wine Bar",
-      imgSrc: "/images/restaurants/stellenbosch.png",
-      href: "/en/discovery/category/stellenbosch",
-    },
-    {
-      name: "O Portuga",
-      imgSrc: "/images/restaurants/oportuga.png",
-      href: "/en/discovery/category/oportuga",
-    },
-    {
-      name: "The Social",
-      imgSrc: "/images/restaurants/thesocial.png",
-      href: "/en/discovery/category/thesocial",
-    },
-    {
-      name: "Sardinia Blue Olive",
-      imgSrc: "/images/restaurants/sardiniablueolive.png",
-      href: "/en/discovery/category/sardiniablueolive",
-    },
-    {
-      name: "Slowtown Coffee Roasters",
-      imgSrc: "/images/restaurants/slowtown.png",
-      href: "/en/discovery/category/slowtown",
-    },
-  ], []);
 
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
@@ -273,13 +96,13 @@ function Restaurants() {
     </div>
   ), [scrollLeft, scrollRight]);
 
-  const renderRestaurantCard = useCallback((restaurant, index) => (
+  const renderPharmacyCard = useCallback((pharmacy, index) => (
     <div key={index} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72 p-2">
-      <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+      <a href={pharmacy.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
         <div className="relative w-full aspect-video overflow-hidden rounded-t-lg">
           <LazyLoadImage
-            src={restaurant.imgSrc}
-            alt={restaurant.name}
+            src={pharmacy.imgSrc}
+            alt={pharmacy.name}
             width="100%"
             height="100%"
             className="w-full h-full object-fill"
@@ -287,12 +110,12 @@ function Restaurants() {
           />
         </div>
         <div className="p-3 sm:p-4">
-          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{restaurant.name}</p>
+          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{pharmacy.name}</p>
         </div>
       </a>
     </div>
   ), []);
-  
+
   const renderStoreCard = useCallback((category, index) => (
     <div
       key={index}
@@ -338,7 +161,7 @@ function Restaurants() {
 
   return (
     <div className="bg-white">
-      <OPNavBar />
+      <KhomasOPNavBar />
       <main className="relative z-10">
         {/* Navigation Tabs */}
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
@@ -348,8 +171,8 @@ function Restaurants() {
           >
             <div className="relative z-10 flex items-center justify-center w-full mb-0">
               <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
-               <div role="tablist" className="flex space-x-2 gap-2">
-                <a
+                <div role="tablist" className="flex space-x-2 gap-2">
+                  <a
                   role="tab"
                   aria-selected="false"
                   className="flex items-center space-x-2 gap-2 px-4 py-2 rounded-full bg-white shadow-md hover:bg-orange-300 transition duration-150"
@@ -376,7 +199,7 @@ function Restaurants() {
                 <a
                   role="tab"
                   aria-selected="false"
-                  className="flex items-center gap-2 px-4 py-2 rounded-full shadow-md transition-all bg-orange-300 duration-150"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md transition-all hover:bg-orange-300 duration-150"
                   href="/LP/Khomas/Towns/Restaurants"
                 >
                   <svg
@@ -394,7 +217,7 @@ function Restaurants() {
                 <a
                   role="tab"
                   aria-selected="false"
-                  className="flex items-center space-x-2 gap-2 px-4 py-2 rounded-full shadow-md bg-white hover:bg-orange-300 transition duration-150"
+                  className="flex items-center space-x-2 gap-2 px-4 py-2 rounded-full shadow-md bg-orange-300 transition duration-150"
                   href="/LP/Khomas/Towns/Pharmacies"
                 >
                   <svg
@@ -436,37 +259,37 @@ function Restaurants() {
           </div>
         ))}
 
-        {/* Restaurants Near Me Section */}
+        {/* Pharmacies Near Me Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
             className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
             style={{ width: "50%", maxWidth: "1000px" }}
           >
             <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
-              Restaurants Near Me
+              Pharmacies Near Me
             </h2>
           </div>
         </section>
 
-        {/* Restaurants Carousel */}
-        {renderCarousel(restaurants, restaurantsscroll, renderRestaurantCard)}
+        {/* Pharmacies Carousel */}
+        {renderCarousel(pharmacies, pharmaciesscroll, renderPharmacyCard)}
 
-        {/* All Restaurants Near Me Section */}
+        {/* All Pharmacies Near Me Section */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
           <div
             className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
             style={{ width: "60%", maxWidth: "1000px" }}
           >
             <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
-              All Restaurants Near Me
+              All Pharmacies Near Me
             </h2>
           </div>
         </section>
 
-        {/* Restaurant Cards Container */}
+        {/* Pharmacy Cards Container */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           <div className="flex flex-wrap -mx-2">
-            {storescards1.map((category, index) => renderStoreCard(category, index))}
+            {pharmaciesstorescards1.map((category, index) => renderStoreCard(category, index))}
           </div>
         </div>
       </main>
@@ -476,8 +299,8 @@ function Restaurants() {
   );
 }
 
-Restaurants.propTypes = {
+Pharmacies.propTypes = {
   // Add prop types here if needed
 };
 
-export default Restaurants;
+export default Pharmacies;
