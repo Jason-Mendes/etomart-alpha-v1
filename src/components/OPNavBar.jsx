@@ -1,71 +1,198 @@
 import React, { useEffect, useState } from "react";
 import { CgMenuRound, CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
+import { Search, X } from 'lucide-react';
 
 import CartIcon from "./CartIcon";
 import HomeIcon from "./HomeIcon";
 import LocationButton from "./LocationButton";
 import LocationModal from "./LocationModal";
-import SearchBar from "./SearchBar";
 import UserProfileIcon from "./UserProfileIcon";
 
-// OPNavBar Component
 const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [nav, setNav] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState({
+    stores: [],
+    food: []
+  });
+
+  const items = {
+    stores: [
+      { name: "Burger King", type: "Fast Food Restaurant" },
+      { name: "Pizza Hut", type: "Pizza Restaurant" },
+      { name: "Subway", type: "Sandwich Shop" },
+      { name: "CVS Pharmacy", type: "Pharmacy" },
+      { name: "Walgreens", type: "Pharmacy" },
+      { name: "7-Eleven", type: "Convenience Store" }
+    ],
+    food: [
+      { name: "Burger", type: "Fast Food" },
+      { name: "Pizza", type: "Italian" },
+      { name: "Salad", type: "Healthy" },
+      { name: "Pasta", type: "Italian" },
+      { name: "Steak", type: "American" },
+      { name: "Sushi", type: "Japanese" },
+      { name: "Tacos", type: "Mexican" },
+      { name: "Ice Cream", type: "Dessert" },
+      { name: "Fried Chicken", type: "Fast Food" }
+    ]
+  };
+
+  useEffect(() => {
+    if (searchQuery) {
+      const storeResults = items.stores.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.type.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      const foodResults = items.food.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.type.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSearchResults({ stores: storeResults, food: foodResults });
+    } else {
+      setSearchResults({ stores: [], food: [] });
+    }
+  }, [searchQuery]);
+
+  const handleExpandNavbar = () => {
+    setIsExpanded(true);
+  };
+
+  const handleCollapseNavbar = () => {
+    setIsExpanded(false);
+    setSearchQuery("");
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleCollapseNavbar();
+    }
+  };
 
   const handleLocationClick = () => setShowLocationModal(true);
 
   const closeModals = () => setShowLocationModal(false);
 
-
   return (
-    <div >
-
-      <div className="font-josefin_sans">
-        <nav id="opnavbar" className="bg-[#f9f9f9] text-[#ee9613] px-4">
-          <div className="flex items-center justify-between mx-auto max-w-7xl">
-            <div className="flex items-center mt-4 mb-2">
-              <h1 className="-mt-2 text-3xl pt-1 font-shrikhand text-[#ee9613] whitespace-nowrap">
-                <Link to="/LP">Etomart</Link>
-              </h1>
-              <div className="ml-4">
-                <LocationButton onClick={handleLocationClick} />
-              </div>
+    <div className="font-josefin_sans">
+      <nav
+        id="opnavbar"
+        className={`bg-[#f9f9f9] text-[#ee9613] px-4 transition-all duration-300 ${isExpanded ? 'py-6' : 'py-4'} relative z-50`}
+      >
+        <div className="flex items-center justify-between mx-auto max-w-7xl">
+          <div className="flex items-center">
+            <h1 className={`text-3xl pt-1 font-shrikhand text-[#ee9613] whitespace-nowrap mr-4`}>
+              <Link to="/LP">Etomart</Link>
+            </h1>
+            <div className={`${isExpanded ? 'hidden' : ''}`}>
+              <LocationButton onClick={handleLocationClick} />
             </div>
-            <div className="hidden md:flex flex-grow md:flex-none md:w-auto mr-4 w-full">
-              <SearchBar />
+          </div>
+          <div className={`flex-grow flex justify-center relative ${isExpanded ? 'w-full' : ''}`}>
+            <div className={`relative ${isExpanded ? 'w-full max-w-[700px]' : 'w-[300px]'} transition-all duration-300`}>
+              <input
+                placeholder="Search in Etomart..."
+                data-test-id="SearchInput"
+                className="w-full pl-12 pr-10 py-2 rounded-full border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                style={{ height: '40px' }}
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+                onFocus={handleExpandNavbar}
+              />
+              <Search
+                size={20}
+                className={`absolute right-4 top-1/2 transform -translate-y-1/2 text-orange-500 ${isExpanded ? 'hidden' : ''}`}
+              />
+              <Search
+                size={20}
+                className={`absolute left-4 top-1/2 transform -translate-y-1/2 text-orange-500 ${!isExpanded ? 'hidden' : ''}`} />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                  <X size={20} />
+                </button>
+              )}
             </div>
-            <div className="hidden md:flex items-center space-x-4">
-              <div className="md:block">
-                <HomeIcon />
-              </div>
-              <div className="hidden lg:block">
-                <CartIcon />
-              </div>
-              <div className="hidden xl:block">
-                <UserProfileIcon />
-              </div>
+          </div>
+          <div className={`flex items-center space-x-4 ${isExpanded ? 'hidden' : ''}`}>
+            <div className="hidden md:block">
+              <HomeIcon />
             </div>
-            <div className="xl:hidden cursor-pointer">
+            <div className="hidden lg:block">
+              <CartIcon />
+            </div>
+            <div className="hidden xl:block">
+              <UserProfileIcon />
+            </div>
+            <div className="xl:hidden cursor-pointer" onClick={() => setNav(!nav)}>
               {nav ? <CgClose size={30} /> : <CgMenuRound size={30} />}
             </div>
           </div>
-        </nav>
+          {isExpanded && (
+            <button
+              className="ml-4 p-1 rounded-full focus:outline-none text-gray-500 hover:text-black"
+              onClick={handleCollapseNavbar}
+            >
+              <X size={20} />
+            </button>
+          )}
+        </div>
+      </nav>
 
-        {/* Conditionally render modals */}
-        {showLocationModal && (
-          <LocationModal
-            showModal={showLocationModal}
-            closeModal={closeModals}
-          />
-        )}
-      </div>
+      {isExpanded && (
+        <>
+          <div className="bg-white shadow-md z-40 relative">
+            <div className="mx-auto max-w-7xl p-4 overflow-y-auto max-h-[calc(100vh-5rem)]">
+              <div className="mb-8">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Stores, restaurants and pharmacies</h2>
+                  <button className="text-[#ee9613] hover:underline">See all</button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {searchResults.stores.slice(0, 4).map((item, index) => (
+                    <div key={index} className="bg-gray-100 rounded-lg p-4">
+                      <h3 className="text-lg font-semibold">{item.name}</h3>
+                      <p>{item.type}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Food products and groceries</h2>
+                  <button className="text-[#ee9613] hover:underline">See all</button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {searchResults.food.slice(0, 9).map((item, index) => (
+                    <div key={index} className="bg-gray-100 rounded-lg p-4">
+                      <h3 className="text-lg font-semibold">{item.name}</h3>
+                      <p>{item.type}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-30 mt-[calc(5rem+1px)]" onClick={handleOverlayClick}></div>
+        </>
+      )}
 
-      <div
-        className={`absolute z-20 w-full bg-[#f9f9f9] xl:hidden ${nav ? "block" : "hidden"
-          } transition-all duration-500 ease-in-out`}
-      ></div>
+      {showLocationModal && (
+        <LocationModal
+          showModal={showLocationModal}
+          closeModal={closeModals}
+        />
+      )}
+
       {nav && (
         <div
           className="absolute top-24 right-0 z-20 w-56 bg-[#fdfdfd] rounded-lg shadow-lg transition-opacity duration-200"
@@ -103,7 +230,6 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
                   <option value="es">Español</option>
                   <option value="ru">Русский</option>
                   <option value="zh">中文</option>
-                  {/* Add more options as needed */}
                 </select>
               </div>
               <div className="mt-2">

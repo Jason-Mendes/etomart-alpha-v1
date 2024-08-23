@@ -1,732 +1,235 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { CgMenuRound, CgClose } from "react-icons/cg";
+import { Link } from "react-router-dom";
 
-import { useNavigate, useLocation } from "react-router-dom";
+import CartIcon from "../../../../CartIcon";
+import HomeIcon from "../../../../HomeIcon";
+import LocationButton from "../../../../LocationButton";
+import LocationModal from "../../../../LocationModal";
+import UserProfileIcon from "../../../../UserProfileIcon";
 
-import XClearButton from "../../../../componentsCalled/XClearButton";
-import Footer from "../../../../Footer";
-import LPNavBar from "../../../../LPNavBar";
+const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  const [nav, setNav] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState({
+    stores: [],
+    food: []
+  });
 
-const Test = () => {
-  const [selectedTown, setSelectedTown] = useState(null);
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [location, setLocation] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const [userLocation, setUserLocation] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [userRegion, setUserRegion] = useState(null);
-  const [confirmRegion, setConfirmRegion] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const dropdownRef = useRef(null);
-  const inputRef = useRef(null);
-  const navigate = useNavigate();
-  const showButtonLocation = useLocation();
-  const selectedRegionButton = showButtonLocation.state?.selectedRegion;
-
-  // Define the region data as a constant outside the component
-  const townsData = {
-    Khomas: [
-      {
-        code: "ALB",
-        name: "Windhoek",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -22.559722,
-        longitude: 17.083611,
-      },
-      {
-        code: "BUK",
-        name: "Brakwater",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -22.580278,
-        longitude: 17.122222,
-      },
-      {
-        code: "DOE",
-        name: "Dordabis",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -22.870833,
-        longitude: 17.405278,
-      },
-      {
-        code: "GBN",
-        name: "Gobabis",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -22.442778,
-        longitude: 18.980833,
-      },
-      {
-        code: "GRS",
-        name: "Groendrift",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -22.764722,
-        longitude: 17.069722,
-      },
-      {
-        code: "HCH",
-        name: "Hochfeld",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -22.425278,
-        longitude: 17.072222,
-      },
-      {
-        code: "KHR",
-        name: "Khorixas",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -20.379722,
-        longitude: 14.791111,
-      },
-      {
-        code: "OJO",
-        name: "Ojozondjupa",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -21.263056,
-        longitude: 16.806111,
-      },
-      {
-        code: "RHN",
-        name: "Rehoboth",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -23.318056,
-        longitude: 17.090278,
-      },
-      {
-        code: "WSN",
-        name: "Witvlei",
-        flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
-        latitude: -22.809722,
-        longitude: 18.423611,
-      },
+  const items = {
+    stores: [
+      { name: "Burger King", type: "Fast Food Restaurant" },
+      { name: "Pizza Hut", type: "Pizza Restaurant" },
+      { name: "Subway", type: "Sandwich Shop" },
+      { name: "CVS Pharmacy", type: "Pharmacy" },
+      { name: "Walgreens", type: "Pharmacy" },
+      { name: "7-Eleven", type: "Convenience Store" }
     ],
-    Erongo: [
-      {
-        code: "ARA",
-        name: "Arandis",
-        flagPath: "/images/regions/erongo.jpeg",
-        path: "/LP/Erongo/Towns",
-        latitude: -22.359722,
-        longitude: 15.659722,
-      },
-      {
-        code: "HEN",
-        name: "Henties Bay",
-        flagPath: "/images/regions/erongo.jpeg",
-        path: "/LP/Erongo/Towns",
-        latitude: -22.119444,
-        longitude: 14.280833,
-      },
-      {
-        code: "KAR",
-        name: "Karibib",
-        flagPath: "/images/regions/erongo.jpeg",
-        path: "/LP/Erongo/Towns",
-        latitude: -21.945833,
-        longitude: 15.582222,
-      },
-      {
-        code: "OMA",
-        name: "Omaruru",
-        flagPath: "/images/regions/erongo.jpeg",
-        path: "/LP/Erongo/Towns",
-        latitude: -21.833056,
-        longitude: 15.945833,
-      },
-      {
-        code: "SWA",
-        name: "Swakopmund",
-        flagPath: "/images/regions/erongo.jpeg",
-        path: "/LP/Erongo/Towns",
-        latitude: -22.680833,
-        longitude: 14.532222,
-      },
-      {
-        code: "UIS",
-        name: "Uis",
-        flagPath: "/images/regions/erongo.jpeg",
-        path: "/LP/Erongo/Towns",
-        latitude: -21.2675,
-        longitude: 14.9344,
-      },
-      {
-        code: "WAL",
-        name: "Walvis Bay",
-        flagPath: "/images/regions/erongo.jpeg",
-        path: "/LP/Erongo/Towns",
-        latitude: -22.957222,
-        longitude: 14.5125,
-      },
-    ],
-    Oshana: [
-      {
-        code: "ONG",
-        name: "Ongwediva",
-        flagPath: "/images/regions/oshana.jpeg",
-        path: "/LP/Oshana/Towns",
-        latitude: -17.827778,
-        longitude: 15.969444,
-      },
-      {
-        code: "OSH",
-        name: "Oshakati",
-        flagPath: "/images/regions/oshana.jpeg",
-        path: "/LP/Oshana/Towns",
-        latitude: -17.762222,
-        longitude: 15.677222,
-      },
-      {
-        code: "OND",
-        name: "Ondangwa",
-        flagPath: "/images/regions/oshana.jpeg",
-        path: "/LP/Oshana/Towns",
-        latitude: -17.891111,
-        longitude: 15.8525,
-      },
-    ],
-    Omusati: [
-      {
-        code: "OUT",
-        name: "Outapi",
-        flagPath: "/images/regions/omusati.jpeg",
-        path: "/LP/Omusati/Towns",
-        latitude: -17.531111,
-        longitude: 14.968056,
-      },
-      {
-        code: "OKA",
-        name: "Okahao",
-        flagPath: "/images/regions/omusati.jpeg",
-        path: "/LP/Omusati/Towns",
-        latitude: -17.429444,
-        longitude: 14.850833,
-      },
-      {
-        code: "OZO",
-        name: "Oshifo",
-        flagPath: "/images/regions/omusati.jpeg",
-        path: "/LP/Omusati/Towns",
-        latitude: -17.539444,
-        longitude: 14.7725,
-      },
-    ],
-    Karas: [
-      {
-        code: "KHB",
-        name: "Keetmanshoop",
-        flagPath: "/images/regions/kharas2.jpeg",
-        path: "/LP/Karas/Towns",
-        latitude: -26.583056,
-        longitude: 16.924444,
-      },
-      {
-        code: "LUD",
-        name: "Luderitz",
-        flagPath: "/images/regions/kharas2.jpeg",
-        path: "/LP/Karas/Towns",
-        latitude: -26.641944,
-        longitude: 15.159444,
-      },
-      {
-        code: "RSH",
-        name: "Rosh Pinah",
-        flagPath: "/images/regions/kharas2.jpeg",
-        path: "/LP/Karas/Towns",
-        latitude: -27.488333,
-        longitude: 16.370833,
-      },
-      {
-        code: "ORM",
-        name: "Oranjemund",
-        flagPath: "/images/regions/kharas2.jpeg",
-        path: "/LP/Karas/Towns",
-        latitude: -28.665278,
-        longitude: 16.553611,
-      },
-    ],
-    Ohangwena: [
-      {
-        code: "ENH",
-        name: "Eenhana",
-        flagPath: "/images/regions/ohangwena.jpeg",
-        path: "/LP/Ohangwena/Towns",
-        latitude: -17.627222,
-        longitude: 15.949444,
-      },
-      {
-        code: "HNM",
-        name: "Helao Nafidi",
-        flagPath: "/images/regions/ohangwena.jpeg",
-        path: "/LP/Ohangwena/Towns",
-        latitude: -17.5925,
-        longitude: 15.8742,
-      },
-      {
-        code: "OHS",
-        name: "Ohangwena",
-        flagPath: "/images/regions/ohangwena.jpeg",
-        path: "/LP/Ohangwena/Towns",
-        latitude: -17.684722,
-        longitude: 15.919444,
-      },
-      {
-        code: "OKG",
-        name: "Okongo",
-        flagPath: "/images/regions/ohangwena.jpeg",
-        path: "/LP/Ohangwena/Towns",
-        latitude: -17.368611,
-        longitude: 15.601111,
-      },
-    ],
-    Zambezi: [
-      {
-        code: "KAT",
-        name: "Katima Mulilo",
-        flagPath: "/images/regions/zambezi.jpeg",
-        path: "/LP/Zambezi/Towns",
-        latitude: -17.498333,
-        longitude: 24.315833,
-      },
-      {
-        code: "BUK",
-        name: "Bukalo",
-        flagPath: "/images/regions/zambezi.jpeg",
-        path: "/LP/Zambezi/Towns",
-        latitude: -17.571944,
-        longitude: 24.291389,
-      },
-    ],
-    Oshikoto: [
-      {
-        code: "TSU",
-        name: "Tsumeb",
-        flagPath: "/images/regions/oshikoto.jpeg",
-        path: "/LP/Oshikoto/Towns",
-        latitude: -19.233333,
-        longitude: 17.733333,
-      },
-      {
-        code: "ONK",
-        name: "Onankali",
-        flagPath: "/images/regions/oshikoto.jpeg",
-        path: "/LP/Oshikoto/Towns",
-        latitude: -18.755833,
-        longitude: 17.685833,
-      },
-      {
-        code: "OMU",
-        name: "Omuthiya",
-        flagPath: "/images/regions/oshikoto.jpeg",
-        path: "/LP/Oshikoto/Towns",
-        latitude: -18.694444,
-        longitude: 17.588056,
-      },
-    ],
-    Omaheke: [
-      {
-        code: "GOB",
-        name: "Gobabis",
-        flagPath: "/images/regions/omaheke.jpeg",
-        path: "/LP/Omaheke/Towns",
-        latitude: -22.442778,
-        longitude: 18.980833,
-      },
-      {
-        code: "WIT",
-        name: "Witvlei",
-        flagPath: "/images/regions/omaheke.jpeg",
-        path: "/LP/Omaheke/Towns",
-        latitude: -22.809722,
-        longitude: 18.423611,
-      },
-      {
-        code: "LEO",
-        name: "Leonardville",
-        flagPath: "/images/regions/omaheke.jpeg",
-        path: "/LP/Omaheke/Towns",
-        latitude: -22.591944,
-        longitude: 19.134444,
-      },
-    ],
-    Hardap: [
-      {
-        code: "MAR",
-        name: "Mariental",
-        flagPath: "/images/regions/hardap.jpeg",
-        path: "/LP/Hardap/Towns",
-        latitude: -24.573611,
-        longitude: 17.961389,
-      },
-      {
-        code: "REH",
-        name: "Rehoboth",
-        flagPath: "/images/regions/hardap.jpeg",
-        path: "/LP/Hardap/Towns",
-        latitude: -23.318056,
-        longitude: 17.090278,
-      },
-      {
-        code: "GIB",
-        name: "Gibeon",
-        flagPath: "/images/regions/hardap.jpeg",
-        path: "/LP/Hardap/Towns",
-        latitude: -24.823333,
-        longitude: 17.329722,
-      },
-    ],
-    Otjozondjupa: [
-      {
-        code: "OKA",
-        name: "Okahandja",
-        flagPath: "/images/regions/otjozondjupa.jpeg",
-        path: "/LP/Otjozondjupa/Towns",
-        latitude: -21.816944,
-        longitude: 15.973611,
-      },
-      {
-        code: "GRD",
-        name: "Grootfontein",
-        flagPath: "/images/regions/otjozondjupa.jpeg",
-        path: "/LP/Otjozondjupa/Towns",
-        latitude: -19.550833,
-        longitude: 17.082222,
-      },
-      {
-        code: "OTJ",
-        name: "Otjiwarongo",
-        flagPath: "/images/regions/otjozondjupa.jpeg",
-        path: "/LP/Otjozondjupa/Towns",
-        latitude: -20.4625,
-        longitude: 16.645,
-      },
-      {
-        code: "OTV",
-        name: "Otavi",
-        flagPath: "/images/regions/otjozondjupa.jpeg",
-        path: "/LP/Otjozondjupa/Towns",
-        latitude: -19.666111,
-        longitude: 17.400833,
-      },
-    ],
-    Kunene: [
-      {
-        code: "OPO",
-        name: "Opuwo",
-        flagPath: "/images/regions/kunene2.jpeg",
-        path: "/LP/Kunene/Towns",
-        latitude: -18.059722,
-        longitude: 13.842222,
-      },
-      {
-        code: "KHX",
-        name: "Khorixas",
-        flagPath: "/images/regions/kunene2.jpeg",
-        path: "/LP/Kunene/Towns",
-        latitude: -20.379722,
-        longitude: 14.791111,
-      },
-      {
-        code: "SES",
-        name: "Sesfontein",
-        flagPath: "/images/regions/kunene2.jpeg",
-        path: "/LP/Kunene/Towns",
-        latitude: -19.964167,
-        longitude: 14.655833,
-      },
-    ],
-    KavangoEast: [
-      {
-        code: "RUN",
-        name: "Rundu",
-        flagPath: "/images/regions/kavango_east.jpeg",
-        path: "/LP/KavangoEast/Towns",
-        latitude: -17.930833,
-        longitude: 19.774444,
-      },
-      {
-        code: "DIV",
-        name: "Divundu",
-        flagPath: "/images/regions/kavango_east.jpeg",
-        path: "/LP/KavangoEast/Towns",
-        latitude: -17.470833,
-        longitude: 19.063611,
-      },
-    ],
-    KavangoWest: [
-      {
-        code: "NKU",
-        name: "Nkurenkuru",
-        flagPath: "/images/regions/kavango_west.jpeg",
-        path: "/LP/KavangoWest/Towns",
-        latitude: -17.8325,
-        longitude: 19.0842,
-      },
-      {
-        code: "MPU",
-        name: "Mpungu",
-        flagPath: "/images/regions/kavango_west.jpeg",
-        path: "/LP/KavangoWest/Towns",
-        latitude: -17.8361,
-        longitude: 19.0761,
-      },
-    ],
-    // Add other towns similarly...
+    food: [
+      { name: "Burger", type: "Fast Food" },
+      { name: "Pizza", type: "Italian" },
+      { name: "Salad", type: "Healthy" },
+      { name: "Pasta", type: "Italian" },
+      { name: "Steak", type: "American" },
+      { name: "Sushi", type: "Japanese" },
+      { name: "Tacos", type: "Mexican" },
+      { name: "Ice Cream", type: "Dessert" },
+      { name: "Fried Chicken", type: "Fast Food" }
+    ]
   };
 
-  const clearLocation = () => {
-    setLocation("");
-    setIsDropdownOpen(false);
-    setIsEditing(false);
-  };
-
-  const handleSelect = (option) => {
-    setSelectedTown(option);
-    setLocation(option.name);
-    setIsEditing(false);
-    if (option) {
-      navigate(option.path, {
-        state: { selectedRegion: option.region, selectedTown: option.name },
-      });
-    }
-  };
-
-  const handleUseCurrentLocation = () => {
-    if (navigator.geolocation) {
-      setIsLoading(true);
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setUserLocation({ latitude, longitude });
-
-          const { region, town } = determineRegionAndTown(latitude, longitude);
-          setUserRegion(region);
-          setLocation(town);
-          setConfirmRegion(true);
-          setIsLoading(false);
-        },
-        (error) => {
-          console.error("Error getting location", error);
-          alert("Error getting location");
-          setIsLoading(false);
-        }
+  useEffect(() => {
+    if (searchQuery) {
+      const storeResults = items.stores.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.type.toLowerCase().includes(searchQuery.toLowerCase())
       );
+      const foodResults = items.food.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.type.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSearchResults({ stores: storeResults, food: foodResults });
     } else {
-      alert("Geolocation is not supported by this browser");
+      setSearchResults({ stores: [], food: [] });
+    }
+  }, [searchQuery]);
+
+  const handleExpandNavbar = () => {
+    setIsExpanded(true);
+  };
+
+  const handleCollapseNavbar = () => {
+    setIsExpanded(false);
+    setSearchQuery("");
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleCollapseNavbar();
     }
   };
 
-  const determineRegionAndTown = (latitude, longitude) => {
-    let closestRegion = null;
-    let closestTown = null;
-    let closestDistance = Infinity;
+  const handleLocationClick = () => setShowLocationModal(true);
 
-    Object.entries(townsData).forEach(([regionName, towns]) => {
-      towns.forEach((town) => {
-        const distance = getDistance(
-          latitude,
-          longitude,
-          town.latitude,
-          town.longitude
-        );
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestRegion = regionName;
-          closestTown = town.name;
-        }
-      });
-    });
-
-    return { region: closestRegion, town: closestTown };
-  };
-
-  const getDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371; // Radius of the Earth in km
-    const dLat = (lat2 - lat1) * (Math.PI / 180);
-    const dLon = (lon2 - lon1) * (Math.PI / 180);
-    const a =
-      0.5 -
-      Math.cos(dLat) / 2 +
-      (Math.cos(lat1 * (Math.PI / 180)) *
-        Math.cos(lat2 * (Math.PI / 180)) *
-        (1 - Math.cos(dLon))) /
-        2;
-
-    return R * 2 * Math.asin(Math.sqrt(a));
-  };
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setLocation(value);
-
-    if (value.length > 0) {
-      const newSuggestions = [];
-      Object.entries(townsData).forEach(([regionName, towns]) => {
-        towns.forEach((town) => {
-          if (town.name.toLowerCase().includes(value.toLowerCase())) {
-            newSuggestions.push({
-              ...town,
-              region: regionName,
-            });
-          }
-        });
-      });
-      setSuggestions(newSuggestions);
-      setIsDropdownOpen(true);
-    } else {
-      setSuggestions([]);
-      setIsDropdownOpen(false);
-    }
-  };
-
-  const confirmRegionSelection = () => {
-    if (userRegion) {
-      const region = townsData[userRegion];
-      navigate(region[0].path, { state: { selectedRegion: userRegion } });
-    }
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target) &&
-        !event.target.closest("#protected-div")
-      ) {
-        setIsDropdownOpen(false);
-        setIsEditing(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 640);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const closeModals = () => setShowLocationModal(false);
 
   return (
-    <div>
-      <LPNavBar />
-      <div id="LP_location_buttons_container_2" className="flex relative m-8">
-        <div
-          id="button-group"
-          className="flex flex-row items-center container justify-between w-auto"
-        >
-          <div className="flex flex-col items-center pr-8">
-            <div className="flex flex-col max-w-sm items-center space-y-4">
-              <div
-                id="protected-div"
-                className="flex items-center bg-white text-gray-600 px-8 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 relative"
-                onClick={() => {
-                  setIsEditing(true);
-                  setIsDropdownOpen(true);
-                }}
-              >
-                <img
-                  className="h-7 mr-2"
-                  src="/images/img_linkedin.svg"
-                  alt="LinkedIn"
-                  loading="lazy"
+    <div className="font-josefin_sans">
+      <nav
+        id="opnavbar"
+        className={`bg-[#f9f9f9] text-[#ee9613] px-4 transition-all duration-300 ${isExpanded ? 'py-6' : 'py-4'} relative z-50`}
+      >
+        <div className="flex items-center justify-between mx-auto max-w-7xl">
+          <div className="flex items-center mt-4 mb-2">
+            <h1 className="-mt-2 text-3xl pt-1 font-shrikhand text-[#ee9613] whitespace-nowrap">
+              <Link to="/LP">Etomart</Link>
+            </h1>
+            <div className="ml-4">
+              <LocationButton onClick={handleLocationClick} />
+            </div>
+          </div>
+          <div className="hidden md:flex flex-grow md:flex-none md:w-auto mr-4 w-full">
+            <div
+              className={`flex items-center bg-white bg-opacity-20 rounded-full p-2 transition-all duration-300 ${
+                isExpanded ? 'w-96' : 'w-72'
+              }`}
+            >
+              <input
+                type="text"
+                placeholder="Search..."
+                id="searchInput"
+                className="bg-transparent border-none text-[#ee9613] placeholder-[#ee9613] placeholder-opacity-80 w-full mr-2"
+                onFocus={handleExpandNavbar}
+                onChange={handleSearchInputChange}
+                value={searchQuery}
+              />
+              <svg viewBox="0 0 24 24" width="20" height="20">
+                <path
+                  fill="#ee9613"
+                  d="M23.384 21.619l-6.529-6.529c2.957-3.887 2.397-9.408-1.321-12.62-4.243-3.213-9.781-3.026-14.235.418-4.453 3.444-4.64 8.983-1.429 12.662 3.213 3.679 8.726 4.239 12.613 1.282l6.529 6.529c.492.48 1.276.48 1.768 0 .488-.488.488-1.28 0-1.768zm-20.634-12.119c0-3.728 3.022-6.75 6.75-6.75s6.75 3.022 6.75 6.75-3.022 6.75-6.75 6.75-6.75-3.022-6.75-6.75z"
                 />
-                {isEditing ? (
-                  <input
-                    ref={inputRef}
-                    className="text-md bg-transparent border-none focus:outline-none flex-grow"
-                    type="text"
-                    value={location}
-                    placeholder="Search for a town"
-                    autoFocus
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  <span className="text-md flex-grow">
-                    {location || "Search for a town"}
-                  </span>
-                )}
-                {location && (
-                  <XClearButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      clearLocation();
-                    }}
-                    className="absolute right-2 top-2/2 transform -translate-y-2.5"
-                  />
-                )}
-              </div>
-              {isDropdownOpen && suggestions.length > 0 && (
-                <div
-                  ref={dropdownRef}
-                  className="flex flex-col max-w-sm items-center space-y-2 bg-white border border-gray-300 shadow-md w-full max-h-60 overflow-y-auto z-10"
-                >
-                  {suggestions.map((town) => (
-                    <div
-                      key={`${town.region}-${town.name}`}
-                      onClick={() => handleSelect(town)}
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer w-full text-left"
-                    >
-                      {town.name} ({town.region})
+              </svg>
+            </div>
+          </div>
+          <div className="hidden md:flex items-center space-x-4">
+            <div className="md:block">
+              <HomeIcon />
+            </div>
+            <div className="hidden lg:block">
+              <CartIcon />
+            </div>
+            <div className="hidden xl:block">
+              <UserProfileIcon />
+            </div>
+          </div>
+          <div className="xl:hidden cursor-pointer" onClick={() => setNav(!nav)}>
+            {nav ? <CgClose size={30} /> : <CgMenuRound size={30} />}
+          </div>
+        </div>
+      </nav>
+
+      {isExpanded && (
+        <>
+          <div className="bg-white shadow-md z-40 relative">
+            <div className="mx-auto max-w-7xl p-4 overflow-y-auto max-h-[calc(100vh-5rem)]">
+              <div className="mb-8">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Stores, restaurants and pharmacies</h2>
+                  <button className="text-[#ee9613] hover:underline">See all</button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {searchResults.stores.slice(0, 4).map((item, index) => (
+                    <div key={index} className="bg-gray-100 rounded-lg p-4">
+                      <h3 className="text-lg font-semibold">{item.name}</h3>
+                      <p>{item.type}</p>
                     </div>
                   ))}
                 </div>
-              )}
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Food products and groceries</h2>
+                  <button className="text-[#ee9613] hover:underline">See all</button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {searchResults.food.slice(0, 9).map((item, index) => (
+                    <div key={index} className="bg-gray-100 rounded-lg p-4">
+                      <h3 className="text-lg font-semibold">{item.name}</h3>
+                      <p>{item.type}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <button
-              className="flex items-center bg-white text-black px-4 py-2 rounded-full shadow-md border border-gray-300 transition-transform transform hover:scale-105 mt-4"
-              onClick={handleUseCurrentLocation}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2"></div>
-              ) : (
-                <img
-                  className="h-5 mr-2"
-                  src="/images/img_save.svg"
-                  alt="save"
-                  loading="lazy"
-                />
-              )}
-              <p className="text-base font-bold">
-                {isLoading ? "Getting Location..." : "Use Current Location"}
-              </p>
-            </button>
           </div>
-          <div className="flex flex-col items-center">
-            {!isLoading && confirmRegion && userRegion && (
-              <div className="text-center">
-                <p>
-                  Are you in <b>{location}</b>, from <b>{userRegion}</b> region?
-                </p>
-                <button
-                  className="flex items-center justify-center m-2 hover:bg-black hover:text-white font-josefin_sans px-4 py-2 bg-[#ff9f10] text-black rounded-full"
-                  onClick={confirmRegionSelection}
-                >
-                  Confirm Location
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-30 mt-[calc(5rem+1px)]" onClick={handleOverlayClick}></div>
+        </>
+      )}
+
+      {showLocationModal && (
+        <LocationModal
+          showModal={showLocationModal}
+          closeModal={closeModals}
+        />
+      )}
+
+{nav && (
+        <div
+          className="absolute top-24 right-0 z-20 w-56 bg-[#fdfdfd] rounded-lg shadow-lg transition-opacity duration-200"
+          role="dialog"
+          style={{ opacity: nav ? 1 : 0 }}
+        >
+          <div className="relative">
+            <div className="absolute -top-2.5 right-3 z-20">
+              <svg viewBox="0 0 32 16" className="w-4 h-4 text-white">
+                <path className="fill-white" d="M 16,0 L32,16 H0 Z"></path>
+                <path fill="#fdfdfd" d="M 16,1 L31,16 H1 Z"></path>
+              </svg>
+            </div>
+            <div className="p-4">
+              <div className="flex items-center justify-center mb-2">
+                <HomeIcon />
+              </div>
+              <div className="flex items-center justify-center mb-2">
+                <CartIcon />
+              </div>
+              <div className="mb-2">
+                <button className="w-full py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md">
+                  Login or register
                 </button>
               </div>
-            )}
+              <hr className="border-gray-200" />
+              <div className="mt-2 w-full py-2 text-center">
+                <select
+                  id="language-selector"
+                  className="w-full mt-1 block py-2 px-3 border bg-[#ffaf5e4b] bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                >
+                  <option value="en">English</option>
+                  <option value="de">Deutsch</option>
+                  <option value="fr">Français</option>
+                  <option value="es">Español</option>
+                  <option value="ru">Русский</option>
+                  <option value="zh">中文</option>
+                  {/* Add more options as needed */}
+                </select>
+              </div>
+              <div className="mt-2">
+                <button className="w-full px-4 py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md">
+                  Support
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <Footer />
+      )}
     </div>
   );
 };
 
-export default Test;
+export default OPNavBar;
