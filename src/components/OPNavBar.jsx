@@ -96,7 +96,7 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
             </div>
           </div>
           <div className={`flex-grow flex justify-center relative ${isExpanded ? 'w-full' : ''}`}>
-            <div className={`relative ${isExpanded ? 'w-full max-w-[700px]' : 'w-[300px]'} transition-all duration-300`}>
+            <div className={`relative ${isExpanded ? 'w-full max-w-[700px]' : 'w-[400px]'} transition-all duration-300`}>
               <input
                 placeholder="Search in Etomart..."
                 data-test-id="SearchInput"
