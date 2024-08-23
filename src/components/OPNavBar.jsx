@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { CgMenuRound, CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { Search, X } from 'lucide-react';
@@ -19,43 +19,314 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
     food: []
   });
 
-  const items = {
-    stores: [
-      { name: "Burger King", type: "Fast Food Restaurant" },
-      { name: "Pizza Hut", type: "Pizza Restaurant" },
-      { name: "Subway", type: "Sandwich Shop" },
-      { name: "CVS Pharmacy", type: "Pharmacy" },
-      { name: "Walgreens", type: "Pharmacy" },
-      { name: "7-Eleven", type: "Convenience Store" }
+  const storesCards = useMemo(
+    () => [
+      {
+        name: "Checkers",
+        imgSrc: "/images/supermarkets/checkers.png",
+        href: "/LP/Khomas/Towns/Store/Checkers",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
+      },
+      {
+        name: "Shoprite",
+        imgSrc: "/images/supermarkets/shoprite.png",
+        href: "/en/discovery/category/shoprite",
+        storetype: "Supermarket",
+        isEtomartStore: false,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
+      },
+      {
+        name: "Pick n Pay",
+        imgSrc: "/images/supermarkets/picknpay.png",
+        href: "/en/discovery/category/picknpay",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
+      },
+      {
+        name: "Spar",
+        imgSrc: "/images/supermarkets/spar.png",
+        href: "/en/discovery/category/spar",
+        storetype: "Supermarket",
+        isEtomartStore: true,
+        priceRange: "N$$",
+        cuisine: "Supermarket",
+        pickupTime: "15–30 min",
+        deliveryTime: false,
+      },
     ],
-    food: [
-      { name: "Burger", type: "Fast Food" },
-      { name: "Pizza", type: "Italian" },
-      { name: "Salad", type: "Healthy" },
-      { name: "Pasta", type: "Italian" },
-      { name: "Steak", type: "American" },
-      { name: "Sushi", type: "Japanese" },
-      { name: "Tacos", type: "Mexican" },
-      { name: "Ice Cream", type: "Dessert" },
-      { name: "Fried Chicken", type: "Fast Food" }
-    ]
-  };
+    []
+  );
+
+  const restaurantCards = useMemo(() => [
+    {
+      name: "Vennes",
+      imgSrc: "/images/restaurants/v.png",
+      href: "/en/stores/vennes-cafe/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Cafe",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "10–30 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Istanbul Kebab House",
+      imgSrc: "/images/restaurants/i.png",
+      href: "/en/stores/istanbul-kebab-house/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Kebab",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Teater Kvarteret Barista",
+      imgSrc: "/images/restaurants/t.png",
+      href: "/en/stores/teater-kvarteret-barista/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Coffee",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "15–35 min",
+      deliveryTime: false,
+    },
+    {
+      name: "Istanbul Kebab House",
+      imgSrc: "/images/restaurants/i.png",
+      href: "/en/stores/istanbul-kebab-house/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Kebab",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Teater Kvarteret Barista",
+      imgSrc: "/images/restaurants/t.png",
+      href: "/en/stores/teater-kvarteret-barista/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€€€",
+      cuisine: "Coffee",
+      description: "Tasty burger with tomato cheese and onions",
+      pickupTime: "15–35 min",
+      deliveryTime: false,
+    }
+  ], []);
+
+  const productCards = useMemo(() => [
+    {
+      name: "Aspirin",
+      imgSrc: "/images/pharmacies/a.png",
+      href: "/en/stores/aspirin/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      category: "Pain Relief",
+      description:
+        "Effective pain reliever for headaches, muscle pain, and minor arthritis. Trusted relief you can count on.",
+      pickupTime: "10–30 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Tomatoes",
+      imgSrc: "/images/supermarkets/tomatoes.png",
+      href: "/en/stores/tomatoes/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      cuisine: "Produce",
+      description: "A bag of fresh tomatoes",
+      pickupTime: "10–30 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Ibuprofen",
+      imgSrc: "/images/pharmacies/Ibuprofen.png",
+      href: "/en/stores/ibuprofen/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      category: "Anti-inflammatory",
+      description:
+        "Powerful anti-inflammatory medication for reducing pain and swelling. Ideal for back pain, toothaches, and menstrual cramps.",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Acetaminophen",
+      imgSrc: "/images/pharmacies/Acetaminophen.png",
+      href: "/en/stores/acetaminophen/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      category: "Pain Relief",
+      description:
+        "Safe and effective pain reliever and fever reducer. Perfect for all ages and common ailments.",
+      pickupTime: "15–35 min",
+      deliveryTime: false,
+    },
+    {
+      name: "Milk",
+      imgSrc: "/images/supermarkets/milk.png",
+      href: "/en/stores/milk/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      cuisine: "Dairy",
+      description: "1 liter of whole milk",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Eggs",
+      imgSrc: "/images/supermarkets/eggs.png",
+      href: "/en/stores/eggs/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      cuisine: "Dairy",
+      description: "A dozen large eggs",
+      pickupTime: "15–35 min",
+      deliveryTime: false,
+    },
+    {
+      name: "Chicken Breast",
+      imgSrc: "/images/supermarkets/chicken-breast.png",
+      href: "/en/stores/chicken-breast/",
+      discount: 20,
+      isEtomartStore: false,
+      priceRange: "€€",
+      cuisine: "Meat",
+      description: "1 kg of fresh chicken breast",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Apples",
+      imgSrc: "/images/supermarkets/apples.png",
+      href: "/en/stores/apples/",
+      discount: 10,
+      isEtomartStore: false,
+      priceRange: "€",
+      cuisine: "Produce",
+      description: "A bag of fresh apples",
+      pickupTime: "10–30 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Butter",
+      imgSrc: "/images/supermarkets/butter.png",
+      href: "/en/stores/butter/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      cuisine: "Dairy",
+      description: "250g of unsalted butter",
+      pickupTime: "15–35 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Orange Juice",
+      imgSrc: "/images/supermarkets/orange-juice.png",
+      href: "/en/stores/orange-juice/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      cuisine: "Beverages",
+      description: "1 liter of fresh orange juice",
+      pickupTime: "10–30 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Cereal",
+      imgSrc: "/images/supermarkets/cereal.png",
+      href: "/en/stores/cereal/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      cuisine: "Grocery",
+      description: "500g box of breakfast cereal",
+      pickupTime: "10–30 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Rice",
+      imgSrc: "/images/supermarkets/rice.png",
+      href: "/en/stores/rice/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      cuisine: "Grocery",
+      description: "1 kg of long grain rice",
+      pickupTime: "15–35 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Tomatoes",
+      imgSrc: "/images/supermarkets/tomatoes.png",
+      href: "/en/stores/tomatoes/",
+      discount: null,
+      isEtomartStore: false,
+      priceRange: "€",
+      cuisine: "Produce",
+      description: "A bag of fresh tomatoes",
+      pickupTime: "10–30 min",
+      deliveryTime: true,
+    },
+    {
+      name: "Antihistamines",
+      imgSrc: "/images/pharmacies/Antihistamines.png",
+      href: "/en/stores/antihistamines/",
+      discount: 20,
+      isEtomartStore: false,
+      priceRange: "€",
+      category: "Allergy Relief",
+      description:
+        "Relieve allergy symptoms such as runny nose, sneezing, and itchy eyes. Fast-acting and long-lasting.",
+      pickupTime: "20–40 min",
+      deliveryTime: true,
+    },
+  ], []);
 
   useEffect(() => {
     if (searchQuery) {
-      const storeResults = items.stores.filter(item =>
+      const storeResults = storesCards.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.type.toLowerCase().includes(searchQuery.toLowerCase())
+        item.storetype.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      const foodResults = items.food.filter(item =>
+      const foodResults = restaurantCards.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.type.toLowerCase().includes(searchQuery.toLowerCase())
+        item.cuisine.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setSearchResults({ stores: storeResults, food: foodResults });
+      const productResults = productCards.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+      setSearchResults({ stores: storeResults, food: foodResults, product: productResults });
     } else {
-      setSearchResults({ stores: [], food: [] });
+      setSearchResults({ stores: [], food: [], product: [] });
     }
-  }, [searchQuery]);
+  }, [searchQuery, storesCards, restaurantCards, productCards]);
+  
 
   const handleExpandNavbar = () => {
     setIsExpanded(true);
@@ -80,6 +351,86 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
 
   const closeModals = () => setShowLocationModal(false);
 
+  const renderStoreCard = (store) => (
+    <div className="flex-shrink-0 w-[230px] h-[160px]">
+      <a href={store.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
+        <div className="relative h-[100px] w-full overflow-hidden rounded-t-lg">
+          <img src={store.imgSrc} alt={store.name} className="w-full h-full object-cover" />
+          <div data-testid="venue-storetype-label" className="absolute top-0 left-0 mt-2 mr-2 bg-[#ee9613] text-black text-xs px-2 py-2 rounded-tr-full rounded-br-full">{store.storetype}</div>
+        </div>
+        <div className="p-2 flex flex-col">
+          <p className="text-sm font-bold truncate w-full">{store.name}</p>
+          <div className="flex items-start mt-1 text-xs">
+            <span className="text-[#ee9613] font-bold">{store.priceRange}</span>
+            <span className="mx-1">•</span>
+            <span>{store.cuisine}</span>
+          </div>
+          <div className="text-xs text-gray-500 text-left mt-1">Pickup: {store.pickupTime}</div>
+        </div>
+      </a>
+    </div>
+  );
+
+  const renderFoodCard = (food) => (
+    <a href={food.href} className="flex w-full h-[160px] rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden" data-test-id="food-card-link">
+      <div className="relative w-1/3 overflow-hidden">
+        <img src={food.imgSrc} alt={food.name} className="absolute top-0 left-0 w-full h-full object-cover" />
+      </div>
+      <div className="w-2/3 p-3 flex flex-col justify-between">
+        <div>
+          <h3 data-testid="food-name" className="font-bold text-sm mb-1 truncate">{food.name}</h3>
+          <div className="flex items-center text-xs mb-1 text-gray-600">
+            <span className="text-[#ee9613] font-semibold">{food.priceRange}</span>
+            <span className="mx-2">•</span>
+            <span className="truncate">{food.cuisine}</span>
+          </div>
+          <p className="text-xs text-gray-600 mb-1 line-clamp-2">{food.description}</p>
+        </div>
+        <div className="text-xs text-gray-500">Pickup: {food.pickupTime}</div>
+        <div className="mt-auto">
+          <div className="text-black text-xs py-1 rounded">
+            <span className="text-black">Etomart </span>
+            <span className={`text-[#${food.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
+              {food.deliveryTime ? 'Delivery Available' : 'Delivery Not Available'}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="absolute top-2 right-2 bg-[#ee9613] text-white text-lg w-8 h-6 flex items-center justify-center rounded">+</div>
+    </a>
+  );
+
+  
+  const renderPharmacyCard = (product) => (
+    <a href={product.href} className="flex w-full h-[160px] rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden" data-test-id="product-card-link">
+      <div className="relative w-1/3 overflow-hidden">
+        <img src={product.imgSrc} alt={product.name} className="absolute top-0 left-0 w-full h-full object-cover" />
+      </div>
+      <div className="w-2/3 p-3 flex flex-col justify-between">
+        <div>
+          <h3 data-testid="product-name" className="font-bold text-sm mb-1 truncate">{product.name}</h3>
+          <div className="flex items-center text-xs mb-1 text-gray-600">
+            <span className="text-[#ee9613] font-semibold">{product.priceRange}</span>
+            <span className="mx-2">•</span>
+            <span className="truncate">{product.category}</span>
+          </div>
+          <p className="text-xs text-gray-600 mb-1 line-clamp-2">{product.description}</p>
+        </div>
+        <div className="text-xs text-gray-500">Pickup: {product.pickupTime}</div>
+        <div className="mt-auto">
+          <div className="text-black text-xs py-1 rounded">
+            <span className="text-black">Etomart </span>
+            <span className={`text-[#${product.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
+              {product.deliveryTime ? 'Delivery Available' : 'Delivery Not Available'}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="absolute top-2 right-2 bg-[#ee9613] text-white text-lg w-8 h-6 flex items-center justify-center rounded">+</div>
+    </a>
+  );
+
+  
   return (
     <div className="font-josefin_sans">
       <nav
@@ -147,37 +498,44 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
           )}
         </div>
       </nav>
-
       {isExpanded && (
         <>
           <div className="bg-white shadow-md z-40 relative">
             <div className="mx-auto max-w-7xl p-4 overflow-y-auto max-h-[calc(100vh-5rem)]">
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold">Stores, restaurants and pharmacies</h2>
+                  <h2 className="text-xl font-bold">Stores, Restaurants and Pharmacies</h2>
                   <button className="text-[#ee9613] hover:underline">See all</button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {searchResults.stores.slice(0, 4).map((item, index) => (
-                    <div key={index} className="bg-gray-100 rounded-lg p-4">
-                      <h3 className="text-lg font-semibold">{item.name}</h3>
-                      <p>{item.type}</p>
-                    </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {searchResults.stores.slice(0, 4).map((store, index) => (
+                    <div key={index}>{renderStoreCard(store)}</div>
                   ))}
                 </div>
               </div>
-              <div>
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold">Food products and groceries</h2>
-                  <button className="text-[#ee9613] hover:underline">See all</button>
+              <div className="">
+              <h2 className="text-xl font-bold py-2">Found what you are looking for?</h2>
+                <div className="mb-8">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold">Food</h2>
+                    <button className="text-[#ee9613] hover:underline">See all</button>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+                    {searchResults.food.slice(0, 3).map((food, index) => (
+                      <div key={index}>{renderFoodCard(food)}</div>
+                    ))}
+                  </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {searchResults.food.slice(0, 9).map((item, index) => (
-                    <div key={index} className="bg-gray-100 rounded-lg p-4">
-                      <h3 className="text-lg font-semibold">{item.name}</h3>
-                      <p>{item.type}</p>
-                    </div>
-                  ))}
+                <div>
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold">Products & Groceries</h2>
+                    <button className="text-[#ee9613] hover:underline">See all</button>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+                    {searchResults.product.slice(0, 3).map((product, index) => (
+                      <div key={index}>{renderPharmacyCard(product)}</div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -185,7 +543,6 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
           <div className="fixed inset-0 bg-black bg-opacity-50 z-30 mt-[calc(5rem+1px)]" onClick={handleOverlayClick}></div>
         </>
       )}
-
       {showLocationModal && (
         <LocationModal
           showModal={showLocationModal}
@@ -244,5 +601,4 @@ const OPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
     </div>
   );
 };
-
 export default OPNavBar;
