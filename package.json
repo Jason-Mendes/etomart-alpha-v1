@@ -29,8 +29,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
-    "lint:fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix"
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --cache",
+    "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix --cache",
+    "lint:debug": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --debug --fix --cache"
   },
   "eslintConfig": {
     "extends": [
@@ -72,6 +73,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-tailwindcss": "^3.17.4",
     "globals": "^15.9.0",
     "postcss": "^8.4.20",
     "prettier": "^2.8.8",

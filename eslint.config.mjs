@@ -6,6 +6,7 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
+import tailwindcssPlugin from 'eslint-plugin-tailwindcss';
 import globals from 'globals';
 
 export default [
@@ -47,6 +48,7 @@ export default [
       'jsx-a11y': jsxA11yPlugin,
       import: importPlugin,
       prettier: prettierPlugin,
+      tailwindcss: tailwindcssPlugin,
     },
     rules: {
       ...tseslint.configs.recommended.rules,
@@ -60,27 +62,25 @@ export default [
         "args": "after-used",
         "ignoreRestSiblings": false
       }],
-      'prettier/prettier': 'off', // Disable Prettier checks
-      'import/order': [
-        'error',
-        {
-          groups: ['builtin', 'external', 'internal'],
-          pathGroups: [
-            {
-              pattern: 'react',
-              group: 'external',
-              position: 'before',
-            },
-          ],
-          pathGroupsExcludedImportTypes: ['react'],
-          // 'newlines-between': 'always', // This line is removed or set to 'off'
-          // Disable alphabetize if you don't want it to enforce import order
-    alphabetize: {
-      order: 'off', // Turn off alphabetical ordering of imports
-      caseInsensitive: true,
-          },
-        },
-      ],
+      'prettier/prettier': 'off',
+      'import/order': 'off',
+      'jsx-a11y/anchor-is-valid': ['error', {
+        'components': ['Link'],
+        'specialLink': ['hrefLeft', 'hrefRight'],
+        'aspects': ['invalidHref', 'preferButton']
+      }],
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      // Disable Tailwind CSS linting rules
+      'tailwindcss/classnames-order': 'off',
+      'tailwindcss/no-custom-classname': 'off',
+      'tailwindcss/no-contradicting-classname': 'off',
+      'tailwindcss/migration-from-tailwind-2': 'off'
+      //  // Re-enable the Tailwind CSS linting rules
+      // 'tailwindcss/classnames-order': 'warn',
+      // 'tailwindcss/no-custom-classname': 'warn',
+      // 'tailwindcss/no-contradicting-classname': 'error'
+      //  'tailwindcss/migration-from-tailwind-2': 'warn'
     },
     settings: {
       react: {
@@ -90,6 +90,16 @@ export default [
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
+      },
+      tailwindcss: {
+        config: 'tailwind.config.js',
+        cssFiles: [
+          'src/**/*.css',
+          'src/**/*.scss',
+          'src/**/*.sass',
+          'src/**/*.less',
+          'src/**/*.styl',
+        ],
       },
     },
   },

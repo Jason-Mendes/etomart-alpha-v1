@@ -1,5 +1,4 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
-
 import {
   BrowserRouter as Router,
   Route,
@@ -109,7 +108,7 @@ const NavBar = () => {
 
 const Home = () => (
   <div className="p-4">
-    <h1 className="text-2xl font-bold mb-4">
+    <h1 className="mb-4 text-2xl font-bold">
       Welcome to Our Grocery Delivery App
     </h1>
     <p>Browse our products and get them delivered to your doorstep!</p>
@@ -126,13 +125,13 @@ const Products = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Our Products</h2>
+      <h2 className="mb-4 text-xl font-bold">Our Products</h2>
       <ul>
         {products.map((product) => (
           <li key={product.id} className="mb-2">
             {product.name} - ${product.price}
             {user && (
-              <button className="ml-2 bg-green-500 text-white px-2 py-1 rounded">
+              <button className="ml-2 rounded bg-green-500 px-2 py-1 text-white">
                 Add to Cart
               </button>
             )}
@@ -171,14 +170,14 @@ const Auth = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">{isLogin ? "Login" : "Signup"}</h2>
+      <h2 className="mb-4 text-xl font-bold">{isLogin ? "Login" : "Signup"}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full rounded border p-2"
           required
         />
         <input
@@ -186,12 +185,12 @@ const Auth = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full rounded border p-2"
           required
         />
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded"
+          className="w-full rounded bg-blue-500 p-2 text-white"
         >
           {isLogin ? "Login" : "Signup"}
         </button>

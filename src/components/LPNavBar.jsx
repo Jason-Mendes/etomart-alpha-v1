@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-
 import { Link } from "react-router-dom";
-
 import AuthenticatedLoginModal from "./AuthenticatedLoginModal";
 import AuthenticatedSignupModal from "./AuthenticatedSignupModal";
 import ForgotPasswordModal from "./ForgotPasswordModal";
@@ -50,10 +48,10 @@ const LPNavBar = () => {
           isNavbarSticky ? "sticky top-0 z-20 shadow-md" : ""
         }`}
       >
-        <div className="flex items-center justify-between mx-auto max-w-7xl py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between py-4">
           <Link
             to="/LP"
-            className="text-3xl font-shrikhand text-[#ee9613] whitespace-nowrap"
+            className="whitespace-nowrap font-shrikhand text-3xl text-[#ee9613]"
           >
             Etomart
           </Link>
@@ -61,14 +59,14 @@ const LPNavBar = () => {
           <div className="flex space-x-4">
             <button
               onClick={() => openModal("login")}
-              className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#f7a832] text-black rounded transition-colors duration-300"
+              className="rounded bg-[#f7a832] px-4 py-2 font-josefin_sans text-black transition-colors duration-300 hover:bg-black hover:text-white"
               aria-label="Log in"
             >
               Log in
             </button>
             <button
               onClick={() => openModal("signup")}
-              className="hover:bg-black hover:text-white font-josefin_sans py-2 px-4 bg-[#ff9f10] text-black rounded transition-colors duration-300"
+              className="rounded bg-[#ff9f10] px-4 py-2 font-josefin_sans text-black transition-colors duration-300 hover:bg-black hover:text-white"
               aria-label="Sign up"
             >
               Sign up

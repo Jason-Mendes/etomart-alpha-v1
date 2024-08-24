@@ -5,7 +5,7 @@ const UserProfileIcon = () => {
     <div>
       <a
         href="#"
-        className=" flex items-center justify-center  tab  w-10 h-9 overflow-hidden bg-[#ffaf5e4b] p-3 rounded-full cursor-pointer transition-all duration-300 hover:bg-[#ffaf5e9c] "
+        className=" tab flex h-9  w-10  cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#ffaf5e4b] p-3 transition-all duration-300 hover:bg-[#ffaf5e9c] "
       >
         <svg
           width="104"

@@ -63,6 +63,72 @@ You may also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `npx eslint --cache --debug --fix`
+## `or`
+### `npx eslint src --cache --fix`
+## `or`
+### `npx eslint src --cache --debug --fix`
+
+npx: This command is used to execute ESLint without having it installed globally. It will download and execute the latest version of ESLint from the npm registry.
+eslint: This is the command to run the ESLint linter.
+src: This specifies the directory to be linted.
+--cache: This flag tells ESLint to cache the linting results, which can improve performance for subsequent runs.
+--debug: This flag enables debug mode, which provides more detailed output about the linting process.
+--fix: This flag tells ESLint to automatically fix any linting errors it encounters.
+
+### `npm run lint`
+npm run lint to check your code
+### `npm run lint:fix`
+npm run lint:fix to check and automatically fix issues where possible
+### `npm run lint:debug`
+npm run lint:debug to run the linter with debug output for troubleshooting
+
+These run the scripts we defined in your package.json, which are for example:
+"lint:debug": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --debug --fix --cache"
+Running npm run lint:debug is generally safe and shouldn't break your code implementation. Here's what it will do:
+
+Analyze your code: It will check all JavaScript and TypeScript files in your src directory against the ESLint rules we've configured.
+Report issues: It will output any linting errors or warnings it finds. This includes things like unused variables, improper syntax, or violations of the rules we've set up (like Tailwind CSS class ordering).
+Attempt to fix issues: The --fix flag in the script means it will try to automatically correct issues that have safe, predetermined fixes. This includes things like:
+
+Formatting issues (indentation, whitespace)
+Simple syntax errors
+Reordering of Tailwind CSS classes
+
+
+Provide debug output: The --debug flag will give you detailed information about what ESLint is doing, which can be helpful for troubleshooting.
+Use caching: The --cache flag means it will cache results to speed up future linting runs.
+
+Important points:
+
+Code functionality: ESLint doesn't change the logic or functionality of your code. It focuses on style, potential errors, and best practices.
+Safe fixes: The automatic fixes applied are designed to be safe and not change the behavior of your code.
+No commits: This command doesn't commit any changes. You'll have the opportunity to review any modifications before committing them.
+Tailwind classes: It may reorder your Tailwind CSS classes, but this shouldn't affect their functionality.
+
+However, there are a few things to be aware of:
+
+Large number of changes: If this is the first time you're running ESLint on your project, you might see a large number of suggested changes. Don't be alarmed; this is normal.
+Review changes: Always review the changes ESLint makes, especially if you're running it for the first time on a large codebase.
+Custom code: If you have very custom or complex code, there's a small chance that some automatic fixes might not be appropriate for your specific use case.
+Performance: The debug output can be verbose. If your project is very large, the command might take some time to complete.
+
+In summary, npm run lint:debug is a safe command to run. It won't break your code implementation, but it may suggest or make style and best practice changes. Always review the output and any changes made to ensure they align with your project's needs. If you're unsure about any changes, you can always run without the --fix flag first to see what would be changed without actually making the changes.
+
+### `npm run lint:fix`
+
+To address these issues, you can:
+
+Run the linter with the --fix option to automatically fix some issues:
+npm run lint:fix
+
+Manually update Tailwind CSS class names as suggested in the warnings.
+Review and update React Hook dependencies.
+Address accessibility issues, particularly the invalid href in UserProfileIcon.js.
+Resolve conflicting Tailwind classes.
+Consider updating your Tailwind configuration to include custom class names that are frequently used in your project.
+For warnings about custom class names that you intentionally use, you might want to add them to the tailwindcss.whitelist in your ESLint configuration.
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\

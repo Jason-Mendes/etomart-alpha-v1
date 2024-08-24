@@ -1,5 +1,4 @@
 import React from "react";
-
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -13,7 +12,7 @@ const AuthenticatedLoginModal = ({ showModal, closeModal }) => {
       role="dialog"
       aria-modal="true"
     >
-      <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+      <div className="flex min-h-screen items-center justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
         <div
           className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
           aria-hidden="true"
@@ -21,31 +20,31 @@ const AuthenticatedLoginModal = ({ showModal, closeModal }) => {
         ></div>
 
         <span
-          className="hidden sm:inline-block sm:align-middle sm:h-screen"
+          className="hidden sm:inline-block sm:h-screen sm:align-middle"
           aria-hidden="true"
         >
           &#8203;
         </span>
 
-        <div className="inline-block align-bottom bg-[#ee9613] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
-          <div className="bg-[#ee9613] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div className="inline-block overflow-hidden rounded-lg bg-[#ee9613] text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:align-middle">
+          <div className="bg-[#ee9613] px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
             <div className="flex flex-col items-center justify-center">
               <h3
-                className="text-3xl leading-6 font-Agbalumo text-black mb-4 text-center"
+                className="mb-4 text-center font-Agbalumo text-3xl leading-6 text-black"
                 id="modal-title"
               >
                 Welcome Back!
               </h3>
-              <div className="mt-2 mb-6 text-center">
+              <div className="mb-6 mt-2 text-center">
                 <p className="text-sm text-gray-700">
                   You have successfully logged in. We're excited to have you
                   back!
                 </p>
               </div>
-              <div className="w-full max-w-md mb-6">
-                <div className="bg-white rounded-lg p-2 h-[450px] w-full overflow-hidden">
+              <div className="mb-6 w-full max-w-md">
+                <div className="h-[450px] w-full overflow-hidden rounded-lg bg-white p-2">
                   <LazyLoadImage
-                    className="w-full h-full rounded-lg object-cover"
+                    className="size-full rounded-lg object-cover"
                     src="/images/Mais_reverse.jpg"
                     alt="Welcome back"
                     effect="blur"
@@ -56,7 +55,7 @@ const AuthenticatedLoginModal = ({ showModal, closeModal }) => {
               </div>
               <button
                 type="button"
-                className="w-full max-w-xs inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                className="inline-flex w-full max-w-xs justify-center rounded-md border border-transparent bg-black px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
                 onClick={closeModal}
               >
                 Start Exploring

@@ -15,7 +15,7 @@ const RegionsBanner = ({ isVisible, imageSrc, closeBanner, goBack }) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-700 ease-in-out">
+    <div className="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-700 ease-in-out">
       <div
         className="absolute inset-0 bg-black bg-opacity-50"
         style={{
@@ -27,14 +27,14 @@ const RegionsBanner = ({ isVisible, imageSrc, closeBanner, goBack }) => {
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>
-      <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-xl">
+      <div className="relative mx-auto w-full max-w-4xl overflow-hidden rounded-lg shadow-xl">
         <button
-          className="absolute top-4 left-4 text-orange-500 hover:text-black transition-colors duration-300"
+          className="absolute left-4 top-4 text-orange-500 transition-colors duration-300 hover:text-black"
           onClick={goBack}
           aria-label="Go back"
         >
           <svg
-            className="h-6 w-6"
+            className="size-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -48,12 +48,12 @@ const RegionsBanner = ({ isVisible, imageSrc, closeBanner, goBack }) => {
           </svg>
         </button>
         <button
-          className="absolute top-4 right-4 text-orange-500 hover:text-black transition-colors duration-300"
+          className="absolute right-4 top-4 text-orange-500 transition-colors duration-300 hover:text-black"
           onClick={handleClose}
           aria-label="Close banner"
         >
           <svg
-            className="h-6 w-6"
+            className="size-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -69,7 +69,7 @@ const RegionsBanner = ({ isVisible, imageSrc, closeBanner, goBack }) => {
         <img
           src={imageSrc}
           alt="Region Banner"
-          className="w-full h-auto max-h-[85vh] object-cover"
+          className="h-auto max-h-[85vh] w-full object-cover"
         />
       </div>
     </div>

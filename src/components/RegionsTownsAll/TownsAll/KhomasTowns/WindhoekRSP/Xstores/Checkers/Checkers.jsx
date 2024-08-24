@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
-
+import PropTypes from 'prop-types';
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
-import PropTypes from 'prop-types';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { toast } from "react-toastify";
-
+import { useNavcategories, useCards, useStoresCards, useSupermarkets  } from "./cardsDataCheckers";
 import Footer from "../../../../../../Footer";
 import KhomasOPNavBar from "../../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
-import { useNavcategories, useCards, useStoresCards, useSupermarkets  } from "./cardsDataCheckers";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 
@@ -232,10 +230,10 @@ function Checkers() {
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
       <div className="container mx-auto px-2 sm:px-4 lg:px-6">
-        <div className="absolute left-0 top-0 bottom-0 w-4 sm:w-8 md:w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-4 sm:w-8 md:w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
         <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 rounded-br-[25px] rounded-tr-[25px] sm:rounded-br-[50px] sm:rounded-tr-[50px] z-20"
+          className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
           onClick={() => scrollLeft(scrollRef)}
           aria-label="Scroll left"
         >
@@ -243,12 +241,12 @@ function Checkers() {
         </button>
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto custom-scrollbar space-x-4 p-4 sm:p-6 md:p-8"
+          className="custom-scrollbar flex space-x-4 overflow-x-auto p-4 sm:p-6 md:p-8"
         >
           {items.map((item, index) => itemRenderer(item, index))}
         </div>
         <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#ee9613] p-1 rounded-bl-[25px] rounded-tl-[25px] sm:rounded-bl-[50px] sm:rounded-tl-[50px] z-20"
+          className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
           onClick={() => scrollRight(scrollRef)}
           aria-label="Scroll right"
         >
@@ -259,20 +257,20 @@ function Checkers() {
   ), [scrollLeft, scrollRight]);
 
   const renderSupermarketCard = useCallback((supermarket, index) => (
-    <div key={index} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72 p-6">
-      <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200">
-        <div className="relative w-full aspect-square overflow-hidden rounded-t-lg">
+    <div key={index} className="w-48 shrink-0 p-6 sm:w-56 md:w-64 lg:w-72">
+      <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+        <div className="relative aspect-square w-full overflow-hidden rounded-t-lg">
           <LazyLoadImage
             src={supermarket.imgSrc}
             alt={supermarket.name}
             width="100%"
             height="100%"
-            className="w-full h-full object-fill"
+            className="size-full object-fill"
             effect="opacity"
           />
         </div>
         <div className="p-3 sm:p-4">
-          <p className="text-center font-bold truncate w-full text-sm sm:text-base">{supermarket.name}</p>
+          <p className="w-full truncate text-center text-sm font-bold sm:text-base">{supermarket.name}</p>
         </div>
       </a>
     </div>
@@ -325,22 +323,22 @@ function Checkers() {
               src="/images/supermarkets/checkers.png"
               alt="Checkers supermarket"
               effect="blur"
-              className="w-full h-[510px] object-cover"
+              className="h-[510px] w-full object-cover"
             />
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           </div>
-          <div className="absolute bottom-0 left-0 p-4 flex justify-between items-center w-full">
+          <div className="absolute bottom-0 left-0 flex w-full items-center justify-between p-4">
             <div className="px-4">
-              <h1 className="text-white text-4xl font-bold">Checkers</h1>
-              <p className="text-white text-lg">Better and Better</p>
+              <h1 className="text-4xl font-bold text-white">Checkers</h1>
+              <p className="text-lg text-white">Better and Better</p>
               {/* Favorite Button */}
               <button
                 data-test-id="venue-favorite"
                 aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                 onClick={toggleFavorite}
-                className="mt-2 text-white p-2 rounded-full hover:bg-white hover:text-black transition duration-200"
+                className="mt-2 rounded-full p-2 text-white transition duration-200 hover:bg-white hover:text-black"
               >
-                <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                <svg viewBox="0 0 24 24" className="size-6 fill-current">
                   {state.isFavorite ? (
                     <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498Z" />
                   ) : (
@@ -352,13 +350,13 @@ function Checkers() {
             <div className="px-4">
               <button
                 aria-label="More options"
-                className="text-white p-2"
+                className="p-2 text-white"
                 onClick={toggleDropdown}
               >
                 <svg
                   ref={dropdownRef}
                   viewBox="0 0 24 24"
-                  className="w-8 h-8 text-white fill-current rounded-full hover:bg-white hover:text-black transition duration-200"
+                  className="size-8 rounded-full fill-current text-white transition duration-200 hover:bg-white hover:text-black"
                 >
                   <circle cx="12" cy="5" r="2"></circle>
                   <circle cx="12" cy="12" r="2"></circle>
@@ -366,19 +364,19 @@ function Checkers() {
                 </svg>
               </button>
               {state.isDropdownOpen && (
-                <div className="absolute right-4 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div className="absolute right-4 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                   <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                     <button
                       aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                       onClick={toggleFavorite}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                       role="menuitem"
                     >
                       {state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                     </button>
                     <button
                       onClick={getMoreInfo}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                       role="menuitem"
                     >
                       More Information
@@ -406,23 +404,23 @@ function Checkers() {
                 {extendedCards.map((card, index) => (
                   <div
                     key={index}
-                    className="p-2 flex-shrink-0"
+                    className="shrink-0 p-2"
                     style={{ width: "576px", height: "276px" }}
                   >
                     <div
-                      className="h-full w-full rounded-md overflow-hidden bg-cover bg-center"
+                      className="size-full overflow-hidden rounded-md bg-cover bg-center"
                       style={{ backgroundImage: `url(${card.image})` }}
                     >
-                      <div className="bg-gray-900 bg-opacity-50 flex items-center h-full">
-                        <div className="px-10 max-w-xl">
-                          <h2 className="text-2xl text-white font-semibold">
+                      <div className="flex h-full items-center bg-gray-900 bg-opacity-50">
+                        <div className="max-w-xl px-10">
+                          <h2 className="text-2xl font-semibold text-white">
                             {card.title}
                           </h2>
                           <p className="mt-2 text-gray-400">{card.description}</p>
-                          <button className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
+                          <button className="mt-4 flex items-center rounded text-sm font-medium uppercase text-white hover:underline focus:outline-none">
                             <span>Shop Now</span>
                             <svg
-                              className="h-5 w-5 ml-2"
+                              className="ml-2 size-5"
                               fill="none"
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -440,24 +438,24 @@ function Checkers() {
                 ))}
               </div>
               <button
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
+                className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
                 onClick={handlePrev}
                 aria-label="Previous slide"
               >
                 &lt;
               </button>
               <button
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
+                className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
                 onClick={handleNext}
                 aria-label="Next slide"
               >
                 &gt;
               </button>
-              <div className="absolute bottom-4 w-full flex justify-center space-x-2">
+              <div className="absolute bottom-4 flex w-full justify-center space-x-2">
                 {cards.map((_, index) => (
                   <button
                     key={index}
-                    className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length
+                    className={`size-2 rounded-full ${index === state.currentIndex % cards.length
                         ? "bg-white"
                         : "bg-gray-400"
                       }`}
@@ -486,29 +484,29 @@ function Checkers() {
                 </svg>
                 <span>9.8</span>
               </div>
-              <button type="button" className="text-[#ee9613] flex items-center space-x-1">
+              <button type="button" className="flex items-center space-x-1 text-[#ee9613]">
                 <svg viewBox="0 0 24 24" width="16">
                   <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
                 </svg>
                 <span>See more information</span>
               </button>
             </div>
-            <div className="flex items-end justify-end border-solid p-1 space-x-2 bg-gray-200 rounded-full">
+            <div className="flex items-end justify-end space-x-2 rounded-full border-solid bg-gray-200 p-1">
               <button
-                className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-white" : "bg-gray-200"}`}
+                className={`rounded-full border border-gray-300 px-2 py-1 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-white" : "bg-gray-200"}`}
                 onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
               >
                 Delivery
               </button>
               <button
-                className={`px-2 py-1 rounded-full border border-gray-300 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-white"}`}
+                className={`rounded-full border border-gray-300 px-2 py-1 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-white"}`}
                 onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
               >
                 Pickup
               </button>
             </div>
           </div>
-          <div className="text-gray-700 px-4">
+          <div className="px-4 text-gray-700">
             The store isn't delivering to your location, but you can still place an order for pickup.
           </div>
         </section>
@@ -519,15 +517,15 @@ function Checkers() {
             {/* Categories sidebar */}
             <aside className="w-1/4 p-4">
               <div className="flex flex-col">
-                <div className="flex items-center mb-4">
+                <div className="mb-4 flex items-center">
                   <input
                     type="text"
                     placeholder="Search..."
                     value={state.searchTerm}
                     onChange={handleSearch}
-                    className="p-2 rounded-full shadow bg-gray-200 border-solid w-full"
+                    className="w-full rounded-full border-solid bg-gray-200 p-2 shadow"
                   />
-                  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-6 h-16 ml-2 text-gray-500">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" className="ml-2 h-16 w-6 text-gray-500">
                     <path d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"></path>
                   </svg>
                 </div>
@@ -535,13 +533,13 @@ function Checkers() {
                   {filteredCategories.slice(0, 20).map((category, index) => (
                     <a key={index}
                       href={category.href}
-                      className="flex items-center p-2 mb-4 bg-white rounded-lg shadow hover:bg-gray-100"
+                      className="mb-4 flex items-center rounded-lg bg-white p-2 shadow hover:bg-gray-100"
                     >
                       <LazyLoadImage
                         src={category.imgSrc}
                         alt={category.name}
                         effect="blur"
-                        className="w-10 h-10 mr-4 rounded-full"
+                        className="mr-4 size-10 rounded-full"
                       />
                       <span>{category.name}</span>
                     </a>
@@ -557,13 +555,13 @@ function Checkers() {
         <div className="flex items-center p-4">
           <h2 className="text-2xl font-bold">All Products</h2>
           <div className="ml-auto">
-            <button className="flex items-center px-4 py-2 border rounded-md">
+            <button className="flex items-center rounded-md border px-4 py-2">
               <div className="flex items-center">
                 Sorted by
                 <span className="ml-2 font-semibold">Recommended</span>
               </div>
               <div className="ml-2">
-                <svg viewBox="0 0 20 21" className="w-5 h-5">
+                <svg viewBox="0 0 20 21" className="size-5">
                   <path fillRule="evenodd" clipRule="evenodd" d="M5.41703 10.7133V17.085C5.41703 17.306 5.50483 17.5179 5.66111 17.6742C5.81739 17.8305 6.02935 17.9183 6.25037 17.9183C6.47138 17.9183 6.68334 17.8305 6.83962 17.6742C6.9959 17.5179 7.0837 17.306 7.0837 17.085L7.0837 10.7133C7.68556 10.5338 8.2134 10.1648 8.58871 9.66122C8.96402 9.15763 9.16675 8.54635 9.16675 7.91829C9.16675 7.29024 8.96402 6.67896 8.58871 6.17537C8.2134 5.67179 7.68556 5.3028 7.0837 5.12329V2.91829C7.0837 2.69728 6.9959 2.48532 6.83962 2.32904C6.68334 2.17276 6.47138 2.08496 6.25037 2.08496C6.02935 2.08496 5.81739 2.17276 5.66111 2.32904C5.50483 2.48532 5.41703 2.69728 5.41703 2.91829V5.12329C4.81518 5.3028 4.28734 5.67179 3.91203 6.17537C3.53672 6.67896 3.33398 7.29024 3.33398 7.91829C3.33398 8.54635 3.53672 9.15763 3.91203 9.66122C4.28734 10.1648 4.81518 10.5338 5.41703 10.7133Z" fill="#121E28"></path>
                 </svg>
               </div>
@@ -571,56 +569,56 @@ function Checkers() {
           </div>
         </div>
 
-        <div className="overflow-y-auto h-[600px] sm:h-[700px] md:h-[850px]">
+        <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
           <div className="px-2 pb-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
   {storecards.map((category, shopsindex) => (
     <div
       key={shopsindex}
-      className="w-full max-w-[180px] sm:max-w-[400px] mx-auto sm:mx-0"
+      className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
     >
                   <a href={category.href}
-                    className="block w-full h-full rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
+                    className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
                   >
-                    <div className="flex flex-col h-full">
-                      <div className="relative w-full aspect-square overflow-hidden">
+                    <div className="flex h-full flex-col">
+                      <div className="relative aspect-square w-full overflow-hidden">
                         <LazyLoadImage
                           src={category.imgSrc}
                           alt={category.name}
                           width="100%"
                           height="100%"
                           effect="blur"
-                          className="object-cover w-full h-full"
+                          className="size-full object-cover"
                         />
                         {category.discount && (
-                          <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#ee9613] text-white text-xs px-2 py-1 rounded">
+                          <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
                             {`-${category.discount}%`}
                           </div>
                         )}
-                       <div className="absolute bottom-2 right-2 bg-[#ee9613] text-white text-lg w-12 h-8 flex items-center justify-center rounded">
+                       <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
                           +
                         </div>
                       </div>
-                      <div className="flex flex-col w-full p-2 flex-grow">
-                        <h3 className="font-bold truncate">{category.name}</h3>
-                        <div className="flex items-center text-sm mt-2">
-                          <div className="text-[#ee9613] text-sm font-bold">
+                      <div className="flex w-full grow flex-col p-2">
+                        <h3 className="truncate font-bold">{category.name}</h3>
+                        <div className="mt-2 flex items-center text-sm">
+                          <div className="text-sm font-bold text-[#ee9613]">
                             <span>{category.priceRange}</span>
                           </div>
                           <span className="mx-1">•</span>
                           <span className="truncate">{category.category}</span>
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">{`Pickup: ${category.pickupTime}`}</div>
-                        <div className="text-xs text-gray-500 mt-1 line-clamp-2">
+                        <div className="mt-1 text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
+                        <div className="mt-1 line-clamp-2 text-xs text-gray-500">
                           {category.description}
                         </div>
                         <div className="mt-auto">
-                          <div className="text-black text-xs py-1 rounded">
+                          <div className="rounded py-1 text-xs text-black">
                             <span className="text-black">Etomart </span>
                             {category.deliveryTime ? (
-                              <span className="text-[#ee9613] font-bold">Delivery Available</span>
+                              <span className="font-bold text-[#ee9613]">Delivery Available</span>
                             ) : (
-                              <span className="text-[#ee1313] font-bold">Delivery Not Available</span>
+                              <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
                             )}
                           </div>
                         </div>
@@ -637,13 +635,13 @@ function Checkers() {
           </div>
         </section>
 
-        <section className="container mx-auto p-4 mt-8">
+        <section className="container mx-auto mt-8 p-4">
           <div className="flex flex-col md:flex-row md:space-x-8">
-            <div className="md:w-1/3 space-y-8">
+            <div className="space-y-8 md:w-1/3">
               <div className="space-y-8">
                 <div>
                   <h3 className="text-md font-semibold">Store Information</h3>
-                  <p className="text-[#ee9613] font-bold">Checkers</p>
+                  <p className="font-bold text-[#ee9613]">Checkers</p>
                   <p>Better and Better</p>
                 </div>
                 <div>
@@ -655,7 +653,7 @@ function Checkers() {
                     <a href="https://maps.google.com/?q=29.56134350459979,34.95609347009179"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#ee9613] font-bold hover:underline"
+                      className="font-bold text-[#ee9613] hover:underline"
                     >
                       See map
                     </a>
@@ -663,9 +661,9 @@ function Checkers() {
                 </div>
               </div>
             </div>
-            <div className="md:w-1/3 space-y-8">
+            <div className="space-y-8 md:w-1/3">
               <h3 className="text-md font-semibold">More information</h3>
-              <a href="tel:+972543131665" className="text-[#ee9613] font-bold hover:underline">
+              <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">
                 +972543131665
               </a>
               <div>
@@ -682,19 +680,19 @@ function Checkers() {
                 </table>
               </div>
             </div>
-            <div className="w-full h-64 md:h-96 relative">
+            <div className="relative h-64 w-full md:h-96">
               <div ref={mapContainerRef} className="absolute inset-0" />
             </div>
           </div>
         </section>
 
         {/* Supermarkets Near Me Section */}
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 md:mt-16">
+        <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
           <div
-            className="bg-[#ee9613] border border-solid border-white-A700 rounded-tr-[50px] rounded-br-[50px] sm:rounded-tr-[100px] sm:rounded-br-[100px] md:rounded-tr-[150px] md:rounded-br-[150px] shadow-xl relative p-4 sm:p-6 md:p-10"
+            className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
             style={{ width: "50%", maxWidth: "1000px" }}
           >
-            <h2 className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-black font-bold font-Agbalumo">
+            <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
               Similar Supermarkets
             </h2>
           </div>

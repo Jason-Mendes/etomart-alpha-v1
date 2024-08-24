@@ -1,7 +1,5 @@
 import React, { useState, useCallback } from "react";
-
 import { GlobeAltIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"; // Importing icons from Heroicons
-
 import AccessibilityModal from "./Footer/AccessibilityModal";
 import LanguageModal from "./Footer/LanguageModal";
 
@@ -66,7 +64,7 @@ const Footer = () => {
     (title, links) => (
       <div className="flex flex-col items-center">
         <nav>
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-Agbalumo text-black mb-2">
+          <h2 className="mb-2 font-Agbalumo text-base text-black sm:text-lg md:text-xl lg:text-2xl">
             {title}
           </h2>
           <ul className="space-y-1">
@@ -76,7 +74,7 @@ const Footer = () => {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white text-sm sm:text-base md:text-lg font-josefin_sans hover:text-black transition duration-150 ease-in-out"
+                  className="font-josefin_sans text-sm text-white transition duration-150 ease-in-out hover:text-black sm:text-base md:text-lg"
                 >
                   {link.label}
                 </a>
@@ -90,17 +88,17 @@ const Footer = () => {
   );
 
   return (
-    <footer className="bg-[#ee9613] rounded-tl-[150px] rounded-tr-[150px] shadow-xl">
+    <footer className="rounded-t-[150px] bg-[#ee9613] shadow-xl">
       <div className="container mx-auto px-4 py-8">
         {/* Centered Etomart logo */}
-        <div className="flex justify-center mb-8">
-          <a href="/LP" className="text-3xl font-shrikhand text-black">
+        <div className="mb-8 flex justify-center">
+          <a href="/LP" className="font-shrikhand text-3xl text-black">
             Etomart
           </a>
         </div>
 
         {/* Link categories */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
           {renderLinkColumn("Company Links", linkCategories.companyLinks)}
           {renderLinkColumn("Useful Links", linkCategories.usefulLinks)}
           {renderLinkColumn("Get to Know Us", linkCategories.getToKnowUs)}
@@ -108,7 +106,7 @@ const Footer = () => {
         </div>
 
         {/* Mobile download tags - hidden on small screens, visible below links on larger screens */}
-        <div className="hidden md:flex justify-center gap-4 mb-8">
+        <div className="mb-8 hidden justify-center gap-4 md:flex">
           <a
             href="https://apps.apple.com/app/id943905271"
             target="_blank"
@@ -135,9 +133,9 @@ const Footer = () => {
           </a>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-8 pt-4 border-t border-white">
+        <div className="mt-8 flex flex-col items-center justify-between border-t border-white pt-4 sm:flex-row">
           {/* Mobile download tags for small screens */}
-          <div className="flex md:hidden gap-4 mb-4">
+          <div className="mb-4 flex gap-4 md:hidden">
             <a
               href="https://apps.apple.com/app/id943905271"
               target="_blank"
@@ -164,24 +162,24 @@ const Footer = () => {
             </a>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-4 sm:mb-0">
+          <div className="mb-4 flex flex-col gap-4 sm:mb-0 sm:flex-row">
             <button
               onClick={() => setIsLanguageModalOpen(true)}
               aria-label="Change language"
-              className="flex items-center text-black hover:text-white transition-colors"
+              className="flex items-center text-black transition-colors hover:text-white"
             >
-              <GlobeAltIcon className="h-4 w-4 mr-2" />
+              <GlobeAltIcon className="mr-2 size-4" />
               {language}
             </button>
             <button
               onClick={handleAccessibilitySettingsOpen}
               aria-label="Open accessibility settings"
-              className="flex items-center text-black hover:text-white transition-colors"
+              className="flex items-center text-black transition-colors hover:text-white"
             >
               {isHighContrastEnabled ? (
-                <EyeIcon className="h-4 w-4 mr-2" />
+                <EyeIcon className="mr-2 size-4" />
               ) : (
-                <EyeSlashIcon className="h-4 w-4 mr-2" />
+                <EyeSlashIcon className="mr-2 size-4" />
               )}
               Accessibility
             </button>
@@ -189,10 +187,10 @@ const Footer = () => {
 
           <div className="text-center sm:text-right">
             <p className="text-sm">&copy; 2024 Etomart. All Rights Reserved.</p>
-            <div className="flex justify-center sm:justify-end mt-2">
+            <div className="mt-2 flex justify-center sm:justify-end">
               <a
                 href="/privacy"
-                className="text-sm text-black hover:text-white mr-4"
+                className="mr-4 text-sm text-black hover:text-white"
               >
                 Privacy Statement
               </a>

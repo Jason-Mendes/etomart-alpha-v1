@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CgMenuRound, CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
-
 import CartIcon from "../../../../../CartIcon";
 import HomeIcon from "../../../../../HomeIcon";
 import LocationButton from "../../../../../LocationButton";
@@ -83,20 +82,20 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     <div className="font-josefin_sans">
       <nav
         id="KhomasOPNavBar"
-        className={`bg-[#f9f9f9] text-[#ee9613] px-4 transition-all duration-300 ${isExpanded ? 'py-6' : 'py-4'} relative z-50`}
+        className={`bg-[#f9f9f9] px-4 text-[#ee9613] transition-all duration-300 ${isExpanded ? 'py-6' : 'py-4'} relative z-50`}
       >
-        <div className="flex items-center justify-between mx-auto max-w-7xl">
-          <div className="flex items-center mt-4 mb-2">
-            <h1 className="-mt-2 text-3xl pt-1 font-shrikhand text-[#ee9613] whitespace-nowrap">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
+          <div className="mb-2 mt-4 flex items-center">
+            <h1 className="-mt-2 whitespace-nowrap pt-1 font-shrikhand text-3xl text-[#ee9613]">
               <Link to="/LP">Etomart</Link>
             </h1>
             <div className="ml-4">
               <LocationButton onClick={handleLocationClick} />
             </div>
           </div>
-          <div className="hidden md:flex flex-grow md:flex-none md:w-auto mr-4 w-full">
+          <div className="mr-4 hidden w-full grow md:flex md:w-auto md:flex-none">
             <div
-              className={`flex items-center bg-white bg-opacity-20 rounded-full p-2 transition-all duration-300 ${
+              className={`flex items-center rounded-full bg-white bg-opacity-20 p-2 transition-all duration-300 ${
                 isExpanded ? 'w-96' : 'w-72'
               }`}
             >
@@ -104,7 +103,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
                 type="text"
                 placeholder="Search..."
                 id="searchInput"
-                className="bg-transparent border-none text-[#ee9613] placeholder-[#ee9613] placeholder-opacity-80 w-full mr-2"
+                className="mr-2 w-full border-none bg-transparent text-[#ee9613] placeholder-[#ee9613] placeholder-opacity-80"
                 onFocus={handleExpandNavbar}
                 onChange={handleSearchInputChange}
                 value={searchQuery}
@@ -117,7 +116,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
               </svg>
             </div>
           </div>
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden items-center space-x-4 md:flex">
             <div className="md:block">
               <HomeIcon />
             </div>
@@ -128,7 +127,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
               <UserProfileIcon />
             </div>
           </div>
-          <div className="xl:hidden cursor-pointer" onClick={() => setNav(!nav)}>
+          <div className="cursor-pointer xl:hidden" onClick={() => setNav(!nav)}>
             {nav ? <CgClose size={30} /> : <CgMenuRound size={30} />}
           </div>
         </div>
@@ -136,16 +135,16 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
 
       {isExpanded && (
         <>
-          <div className="bg-white shadow-md z-40 relative">
-            <div className="mx-auto max-w-7xl p-4 overflow-y-auto max-h-[calc(100vh-5rem)]">
+          <div className="relative z-40 bg-white shadow-md">
+            <div className="mx-auto max-h-[calc(100vh-5rem)] max-w-7xl overflow-y-auto p-4">
               <div className="mb-8">
-                <div className="flex justify-between items-center mb-4">
+                <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-xl font-bold">Stores, restaurants and pharmacies</h2>
                   <button className="text-[#ee9613] hover:underline">See all</button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {searchResults.stores.slice(0, 4).map((item, index) => (
-                    <div key={index} className="bg-gray-100 rounded-lg p-4">
+                    <div key={index} className="rounded-lg bg-gray-100 p-4">
                       <h3 className="text-lg font-semibold">{item.name}</h3>
                       <p>{item.type}</p>
                     </div>
@@ -153,13 +152,13 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
                 </div>
               </div>
               <div>
-                <div className="flex justify-between items-center mb-4">
+                <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-xl font-bold">Food products and groceries</h2>
                   <button className="text-[#ee9613] hover:underline">See all</button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                   {searchResults.food.slice(0, 9).map((item, index) => (
-                    <div key={index} className="bg-gray-100 rounded-lg p-4">
+                    <div key={index} className="rounded-lg bg-gray-100 p-4">
                       <h3 className="text-lg font-semibold">{item.name}</h3>
                       <p>{item.type}</p>
                     </div>
@@ -168,7 +167,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
               </div>
             </div>
           </div>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-30 mt-[calc(5rem+1px)]" onClick={handleOverlayClick}></div>
+          <div className="fixed inset-0 z-30 mt-[calc(5rem+1px)] bg-black bg-opacity-50" onClick={handleOverlayClick}></div>
         </>
       )}
 
@@ -181,26 +180,26 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
 
 {nav && (
         <div
-          className="absolute top-24 right-0 z-20 w-56 bg-[#fdfdfd] rounded-lg shadow-lg transition-opacity duration-200"
+          className="absolute right-0 top-24 z-20 w-56 rounded-lg bg-[#fdfdfd] shadow-lg transition-opacity duration-200"
           role="dialog"
           style={{ opacity: nav ? 1 : 0 }}
         >
           <div className="relative">
             <div className="absolute -top-2.5 right-3 z-20">
-              <svg viewBox="0 0 32 16" className="w-4 h-4 text-white">
+              <svg viewBox="0 0 32 16" className="size-4 text-white">
                 <path className="fill-white" d="M 16,0 L32,16 H0 Z"></path>
                 <path fill="#fdfdfd" d="M 16,1 L31,16 H1 Z"></path>
               </svg>
             </div>
             <div className="p-4">
-              <div className="flex items-center justify-center mb-2">
+              <div className="mb-2 flex items-center justify-center">
                 <HomeIcon />
               </div>
-              <div className="flex items-center justify-center mb-2">
+              <div className="mb-2 flex items-center justify-center">
                 <CartIcon />
               </div>
               <div className="mb-2">
-                <button className="w-full py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md">
+                <button className="w-full rounded-md py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b]">
                   Login or register
                 </button>
               </div>
@@ -208,7 +207,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
               <div className="mt-2 w-full py-2 text-center">
                 <select
                   id="language-selector"
-                  className="w-full mt-1 block py-2 px-3 border bg-[#ffaf5e4b] bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border bg-[#ffaf5e4b] bg-white px-3 py-2 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                 >
                   <option value="en">English</option>
                   <option value="de">Deutsch</option>
@@ -220,7 +219,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
                 </select>
               </div>
               <div className="mt-2">
-                <button className="w-full px-4 py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b] rounded-md">
+                <button className="w-full rounded-md px-4 py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]">
                   Support
                 </button>
               </div>

@@ -3,20 +3,20 @@ import React from "react";
 const LocationButton = (props) => {
   return (
     <div className="pointer-events-auto opacity-100">
-      <div className="flex justify-center items-center">
+      <div className="flex items-center justify-center">
         <div className="flex items-center">
           <div style={{ opacity: 1 }}>
             <button
               data-test-id="header.address-select-button"
               aria-haspopup="dialog"
-              className="flex items-center p-2 bg-white rounded-md"
+              className="flex items-center rounded-md bg-white p-2"
               style={{ border: "none", backgroundColor: "transparent" }}
               onClick={props.onClick} // Add this line to call the onClick prop
             >
-              <div className="flex-shrink-0 bg-[#ffaf5e4b] rounded-full p-2">
+              <div className="shrink-0 rounded-full bg-[#ffaf5e4b] p-2">
                 <svg
                   viewBox="0 0 24 24"
-                  className="address-selector-icon w-6 h-5"
+                  className="address-selector-icon h-5 w-6"
                 >
                   <path
                     fillRule="evenodd"
@@ -29,12 +29,12 @@ const LocationButton = (props) => {
               <div className="ml-2">
                 <span
                   data-test-id="header.address-select-button.address-text"
-                  className="text-lg  text-black  font-bold  font-josefin_sans hover:text-[#ee9613]"
+                  className="font-josefin_sans  text-lg  font-bold  text-black hover:text-[#ee9613]"
                 >
                   Windhoek
                 </span>
               </div>
-              <svg viewBox="0 0 24 24" className="ml-2 w-6 h-6 ">
+              <svg viewBox="0 0 24 24" className="ml-2 size-6 ">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
