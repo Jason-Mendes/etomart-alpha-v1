@@ -4,11 +4,14 @@ import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { toast } from "react-toastify";
-import { useNavcategories, useCards, useStoresCards, useSupermarkets  } from "./cardsDataCheckers";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { Search, X } from 'lucide-react';
+import { useNavcategories, useCards, useStoresCards, useSupermarkets } from "./cardsDataCheckers";
 import Footer from "../../../../../../Footer";
 import KhomasOPNavBar from "../../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
+const VISIBLE_CATEGORIES_COUNT = 8;
 
 // Performance measurement hook
 const usePerformanceMeasure = (name) => {
@@ -34,6 +37,10 @@ function Checkers() {
     isDropdownOpen: false,
     map: null,
     isFavorite: false,
+    selectedCategories: [],
+    sortCriteria: 'recommended',
+    productSearchTerm: "", // New state for product search
+    searchTerm: "",
   });
 
   // Refs
@@ -41,16 +48,21 @@ function Checkers() {
   const dropdownRef = useRef(null);
   const mapContainerRef = useRef(null);
   const supermarketsscroll = useRef(null);
+  const productSearchRef = useRef(null);
+  const categoriesSearchRef = useRef(null);
 
   // Memoized data
-
-    // Use custom hooks to get data
-    const navcategories = useNavcategories();
-    const cards = useCards();
-    const storecards = useStoresCards();
-    const supermarkets = useSupermarkets();
+  const navcategories = useNavcategories();
+  const cards = useCards();
+  const storecards = useStoresCards();
+  const supermarkets = useSupermarkets();
 
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
+
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set(storecards.map(card => card.cuisine));
+    return Array.from(uniqueCategories);
+  }, [storecards]);
 
   // Callbacks
   const scrollLeft = useCallback((carouselRef) => {
@@ -67,6 +79,10 @@ function Checkers() {
 
   const handleSearch = useCallback((event) => {
     setState(prevState => ({ ...prevState, searchTerm: event.target.value }));
+  }, []);
+
+  const handleProductSearch = useCallback((event) => {
+    setState(prevState => ({ ...prevState, productSearchTerm: event.target.value }));
   }, []);
 
   const handleNext = useCallback(() => {
@@ -115,6 +131,19 @@ function Checkers() {
 
   const getMoreInfo = useCallback(() => {
     alert("More information about the store");
+  }, []);
+
+  const handleCategorySelect = useCallback((category) => {
+    setState(prevState => {
+      const newSelectedCategories = prevState.selectedCategories.includes(category)
+        ? prevState.selectedCategories.filter(c => c !== category)
+        : [...prevState.selectedCategories, category];
+      return { ...prevState, selectedCategories: newSelectedCategories };
+    });
+  }, []);
+
+  const handleSortChange = useCallback((event) => {
+    setState(prevState => ({ ...prevState, sortCriteria: event.target.value }));
   }, []);
 
   // Mapbox setup
@@ -214,18 +243,78 @@ function Checkers() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setState(prevState => ({ ...prevState, isDropdownOpen: false }));
       }
+      if (productSearchRef.current && !productSearchRef.current.contains(event.target)) {
+        setState(prevState => ({ ...prevState, productSearchTerm: "" }));
+      }
+      if (categoriesSearchRef.current && !categoriesSearchRef.current.contains(event.target)) {
+        setState(prevState => ({ ...prevState, searchTerm: "" }));
+      }
     };
 
-    if (state.isDropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [state.isDropdownOpen]);
+  }, []);
+
+  useEffect(() => {
+    setState(prevState => ({
+      ...prevState,
+      visibleCategories: categories.slice(0, VISIBLE_CATEGORIES_COUNT),
+      hiddenCategories: categories.slice(VISIBLE_CATEGORIES_COUNT),
+    }));
+  }, [categories]);
+
+  // Memoized values
+  const filteredAndSortedProducts = useMemo(() => {
+    let result = storecards;
+
+    // Filter by delivery/pickup
+    result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
+
+    // Filter by selected categories
+    if (state.selectedCategories.length > 0) {
+      result = result.filter(product => state.selectedCategories.includes(product.cuisine));
+    }
+
+    // Filter by product search term
+    if (state.productSearchTerm) {
+      result = result.filter(product =>
+        product.name.toLowerCase().includes(state.productSearchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(state.productSearchTerm.toLowerCase())
+      );
+    }
+
+    // Sort products
+    switch (state.sortCriteria) {
+      case 'priceAsc':
+        return result.sort((a, b) => a.priceRange.length - b.priceRange.length);
+      case 'priceDesc':
+        return result.sort((a, b) => b.priceRange.length - a.priceRange.length);
+      case 'nameAsc':
+        return result.sort((a, b) => a.name.localeCompare(b.name));
+      case 'nameDesc':
+        return result.sort((a, b) => b.name.localeCompare(a.name));
+      case 'recommended':
+      default:
+        // Implement your recommendation logic here
+        return result;
+    }
+  }, [storecards, state.isDelivery, state.selectedCategories, state.productSearchTerm, state.sortCriteria]);
+
+  const filteredCategories = useMemo(() =>
+    navcategories.filter((category) =>
+      category.name.toLowerCase().includes(state.searchTerm.toLowerCase())
+    ),
+    [navcategories, state.searchTerm]
+  );
+
+  const clearSelectedCategories = useCallback(() => {
+    setState(prevState => ({ ...prevState, selectedCategories: [] }));
+  }, []);
+
+
   // Render helpers
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
@@ -276,62 +365,26 @@ function Checkers() {
     </div>
   ), []);
 
-  const truncateText = useCallback((text, maxLines, maxCharsPerLine) => {
-    const words = text.split(" ");
-    let truncatedText = "";
-    let lineCount = 2;
-    let charCount = 3;
-
-    for (const word of words) {
-      if (lineCount < maxLines) {
-        if (charCount + word.length + 1 <= maxCharsPerLine) {
-          truncatedText += " " + word;
-          charCount += word.length + 1;
-        } else {
-          truncatedText += "\n" + word;
-          charCount = word.length + 1;
-          lineCount++;
-        }
-      } else {
-        break;
-      }
-    }
-
-    if (lineCount >= maxLines) {
-      truncatedText += "...";
-    }
-
-    return truncatedText;
-  }, []);
-
-  const filteredCategories = useMemo(() =>
-    navcategories.filter((category) =>
-      category.name.toLowerCase().includes(state.searchTerm.toLowerCase())
-    ),
-    [navcategories, state.searchTerm]
-  );
-
   // JSX
   return (
     <div className="bg-white">
       <KhomasOPNavBar />
       <main className="relative z-10">
         {/* Header section */}
-        <header className="relative">
-          <div className="relative">
+        <header className="relative w-full">
+          <div className="relative mx-auto max-w-xs p-4">
             <LazyLoadImage
               src="/images/supermarkets/checkers.png"
               alt="Checkers supermarket"
               effect="blur"
-              className="h-[510px] w-full object-cover"
+              className="h-auto w-full object-contain"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           </div>
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           <div className="absolute bottom-0 left-0 flex w-full items-center justify-between p-4">
             <div className="px-4">
-              <h1 className="text-4xl font-bold text-white">Checkers</h1>
-              <p className="text-lg text-white">Better and Better</p>
-              {/* Favorite Button */}
+              <h1 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">Checkers</h1>
+              <p className="text-sm text-white sm:text-base md:text-lg">Better and Better</p>
               <button
                 data-test-id="venue-favorite"
                 aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
@@ -347,14 +400,13 @@ function Checkers() {
                 </svg>
               </button>
             </div>
-            <div className="px-4">
+            <div ref={dropdownRef} className="relative px-4">
               <button
                 aria-label="More options"
                 className="p-2 text-white"
                 onClick={toggleDropdown}
               >
                 <svg
-                  ref={dropdownRef}
                   viewBox="0 0 24 24"
                   className="size-8 rounded-full fill-current text-white transition duration-200 hover:bg-white hover:text-black"
                 >
@@ -364,10 +416,9 @@ function Checkers() {
                 </svg>
               </button>
               {state.isDropdownOpen && (
-                <div className="absolute right-4 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                <div className="absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                   <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                     <button
-                      aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                       onClick={toggleFavorite}
                       className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                       role="menuitem"
@@ -491,15 +542,15 @@ function Checkers() {
                 <span>See more information</span>
               </button>
             </div>
-            <div className="flex items-end justify-end space-x-2 rounded-full border-solid bg-gray-200 p-1">
+            <div className="flex items-center justify-end space-x-2 rounded-full border-solid bg-gray-200 p-1">
               <button
-                className={`rounded-full border border-gray-300 px-2 py-1 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-white" : "bg-gray-200"}`}
+                className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-[#ee9613] text-white" : "bg-gray-200"}`}
                 onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
               >
                 Delivery
               </button>
               <button
-                className={`rounded-full border border-gray-300 px-2 py-1 text-gray-700 transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-white"}`}
+                className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
                 onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
               >
                 Pickup
@@ -507,7 +558,9 @@ function Checkers() {
             </div>
           </div>
           <div className="px-4 text-gray-700">
-            The store isn't delivering to your location, but you can still place an order for pickup.
+            {state.isDelivery
+              ? "Delivery is available for your location."
+              : "The store isn't delivering to your location, but you can still place an order for pickup."}
           </div>
         </section>
 
@@ -518,22 +571,32 @@ function Checkers() {
             <aside className="w-1/4 p-4">
               <div className="flex flex-col">
                 <div className="mb-4 flex items-center">
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    value={state.searchTerm}
-                    onChange={handleSearch}
-                    className="w-full rounded-full border-solid bg-gray-200 p-2 shadow"
-                  />
-                  <svg viewBox="0 0 24 24" aria-hidden="true" className="ml-2 h-16 w-6 text-gray-500">
-                    <path d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"></path>
-                  </svg>
+                  <div ref={categoriesSearchRef} className="mr-4 flex items-center rounded-full bg-gray-200 px-4 py-2">
+                    <input
+                      type="text"
+                      placeholder="Search Categories..."
+                      value={state.searchTerm}
+                      onChange={handleSearch}
+                      className="mr-28 bg-transparent focus:outline-none"
+                    />
+                    <Search className="ml-2 text-gray-500" size={20} />
+                  </div>
                 </div>
                 <div className="flex flex-col overflow-y-auto" style={{ height: "800px" }}>
-                  {filteredCategories.slice(0, 20).map((category, index) => (
-                    <a key={index}
-                      href={category.href}
-                      className="mb-4 flex items-center rounded-lg bg-white p-2 shadow hover:bg-gray-100"
+                  {state.selectedCategories.length > 0 && (
+                    <button
+                      onClick={clearSelectedCategories}
+                      className="mb-2 w-full rounded-lg bg-[#8f8575] p-2 text-white shadow hover:bg-[#ee9613]"
+                    >
+                      Clear Selected Categories
+                    </button>
+                  )}
+                  {filteredCategories.map((category, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleCategorySelect(category.name)}
+                      className={`mb-4  flex items-center rounded-lg p-2 shadow hover:bg-gray-100 ${state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
+                        }`}
                     >
                       <LazyLoadImage
                         src={category.imgSrc}
@@ -542,99 +605,111 @@ function Checkers() {
                         className="mr-4 size-10 rounded-full"
                       />
                       <span>{category.name}</span>
-                    </a>
+                    </button>
                   ))}
                 </div>
               </div>
             </aside>
 
-           
-              {/* Products grid */}
-              <section className="w-full md:w-3/4">
-      <div className="px-4">
-        <div className="flex items-center p-4">
-          <h2 className="text-2xl font-bold">All Products</h2>
-          <div className="ml-auto">
-            <button className="flex items-center rounded-md border px-4 py-2">
-              <div className="flex items-center">
-                Sorted by
-                <span className="ml-2 font-semibold">Recommended</span>
-              </div>
-              <div className="ml-2">
-                <svg viewBox="0 0 20 21" className="size-5">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M5.41703 10.7133V17.085C5.41703 17.306 5.50483 17.5179 5.66111 17.6742C5.81739 17.8305 6.02935 17.9183 6.25037 17.9183C6.47138 17.9183 6.68334 17.8305 6.83962 17.6742C6.9959 17.5179 7.0837 17.306 7.0837 17.085L7.0837 10.7133C7.68556 10.5338 8.2134 10.1648 8.58871 9.66122C8.96402 9.15763 9.16675 8.54635 9.16675 7.91829C9.16675 7.29024 8.96402 6.67896 8.58871 6.17537C8.2134 5.67179 7.68556 5.3028 7.0837 5.12329V2.91829C7.0837 2.69728 6.9959 2.48532 6.83962 2.32904C6.68334 2.17276 6.47138 2.08496 6.25037 2.08496C6.02935 2.08496 5.81739 2.17276 5.66111 2.32904C5.50483 2.48532 5.41703 2.69728 5.41703 2.91829V5.12329C4.81518 5.3028 4.28734 5.67179 3.91203 6.17537C3.53672 6.67896 3.33398 7.29024 3.33398 7.91829C3.33398 8.54635 3.53672 9.15763 3.91203 9.66122C4.28734 10.1648 4.81518 10.5338 5.41703 10.7133Z" fill="#121E28"></path>
-                </svg>
-              </div>
-            </button>
-          </div>
-        </div>
-
-        <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
-          <div className="px-2 pb-4">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-  {storecards.map((category, shopsindex) => (
-    <div
-      key={shopsindex}
-      className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
-    >
-                  <a href={category.href}
-                    className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
-                  >
-                    <div className="flex h-full flex-col">
-                      <div className="relative aspect-square w-full overflow-hidden">
-                        <LazyLoadImage
-                          src={category.imgSrc}
-                          alt={category.name}
-                          width="100%"
-                          height="100%"
-                          effect="blur"
-                          className="size-full object-cover"
-                        />
-                        {category.discount && (
-                          <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
-                            {`-${category.discount}%`}
-                          </div>
-                        )}
-                       <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
-                          +
-                        </div>
-                      </div>
-                      <div className="flex w-full grow flex-col p-2">
-                        <h3 className="truncate font-bold">{category.name}</h3>
-                        <div className="mt-2 flex items-center text-sm">
-                          <div className="text-sm font-bold text-[#ee9613]">
-                            <span>{category.priceRange}</span>
-                          </div>
-                          <span className="mx-1">•</span>
-                          <span className="truncate">{category.category}</span>
-                        </div>
-                        <div className="mt-1 text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-                        <div className="mt-1 line-clamp-2 text-xs text-gray-500">
-                          {category.description}
-                        </div>
-                        <div className="mt-auto">
-                          <div className="rounded py-1 text-xs text-black">
-                            <span className="text-black">Etomart </span>
-                            {category.deliveryTime ? (
-                              <span className="font-bold text-[#ee9613]">Delivery Available</span>
-                            ) : (
-                              <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+            {/* Products grid */}
+            <section className="w-full md:w-3/4">
+              <div className="px-4">
+                <div className="flex items-center p-4">
+                  <h2 className="text-2xl font-bold">All Products</h2>
+                  <div className="ml-auto flex items-center">
+                    <div ref={productSearchRef} className="mr-4 flex items-center rounded-full bg-gray-200 px-4 py-2">
+                      <input
+                        type="text"
+                        placeholder="Search products..."
+                        value={state.productSearchTerm}
+                        onChange={handleProductSearch}
+                        className="bg-transparent focus:outline-none"
+                      />
+                      <Search className="ml-2 text-gray-500" size={20} />
                     </div>
-                  </a>
+                    <select
+                      value={state.sortCriteria}
+                      onChange={handleSortChange}
+                      className="rounded-md border px-4 py-2"
+                    >
+                      <option value="recommended">Sort by: Recommended</option>
+                      <option value="priceAsc">Price: Low to High</option>
+                      <option value="priceDesc">Price: High to Low</option>
+                      <option value="nameAsc">Name: A to Z</option>
+                      <option value="nameDesc">Name: Z to A</option>
+                    </select>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+
+                <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
+                  <div className="px-2 pb-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+                      {filteredAndSortedProducts.map((product, index) => (
+                        <div
+                          key={index}
+                          className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
+                        >
+                          <a href={product.href}
+                            className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
+                          >
+                            <div className="flex h-full flex-col">
+                              <div className="relative aspect-square w-full overflow-hidden">
+                                <LazyLoadImage
+                                  src={product.imgSrc}
+                                  alt={product.name}
+                                  width="100%"
+                                  height="100%"
+                                  effect="blur"
+                                  className="size-full object-cover"
+                                />
+                                {product.discount && (
+                                  <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
+                                    {`-${product.discount}%`}
+                                  </div>
+                                )}
+                                <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                                  +
+                                </div>
+                              </div>
+                              <div className="flex w-full grow flex-col p-2">
+                                <h3 className="truncate font-bold">{product.name}</h3>
+                                <div className="mt-2 flex items-center text-sm">
+                                  <div className="text-sm font-bold text-[#ee9613]">
+                                    <span>{product.priceRange}</span>
+                                  </div>
+                                  <span className="mx-1">•</span>
+                                  <span className="truncate">{product.cuisine}</span>
+                                </div>
+                                <div className="mt-1 text-xs text-gray-500">
+                                  {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
+                                </div>
+                                <div className="mt-1 line-clamp-2 text-xs text-gray-500">
+                                  {product.description}
+                                </div>
+                                <div className="mt-auto">
+                                  <div className="rounded py-1 text-xs text-black">
+                                    <span className="text-black">Etomart </span>
+                                    {product.deliveryTime ? (
+                                      <span className="font-bold text-[#ee9613]">Delivery Available</span>
+                                    ) : (
+                                      <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         </section>
 
+        {/* More Information Section */}
         <section className="container mx-auto mt-8 p-4">
           <div className="flex flex-col md:flex-row md:space-x-8">
             <div className="space-y-8 md:w-1/3">
@@ -649,7 +724,6 @@ function Checkers() {
                   <div>
                     <p>Windhoek West</p>
                     <p>8850603 Eilat</p>
-
                     <a href="https://maps.google.com/?q=29.56134350459979,34.95609347009179"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -686,7 +760,7 @@ function Checkers() {
           </div>
         </section>
 
-        {/* Supermarkets Near Me Section */}
+        {/* Similar Supermarkets Section */}
         <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
           <div
             className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
