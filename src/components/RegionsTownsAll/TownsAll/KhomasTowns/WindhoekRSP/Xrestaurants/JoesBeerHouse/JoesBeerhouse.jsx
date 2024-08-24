@@ -1,3 +1,4 @@
+// Import necessary React hooks and components
 import React, { useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense } from "react";
 import PropTypes from 'prop-types';
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
@@ -10,14 +11,16 @@ import { useCards, useRestaurantCards, useRestaurants } from "./cardsDataJoesBee
 import KhomasOPNavBar from "../../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-// Lazy-loaded components
+// Lazy-load the Footer component for better performance
 const Footer = lazy(() => import("../../../../../../Footer"));
 
-// Custom hook for performance measurement
+// Custom hook for measuring component performance
 const usePerformanceMeasure = (name) => {
   useEffect(() => {
+    // Mark the start of the component's lifecycle
     performance.mark(`${name}-start`);
     return () => {
+      // Mark the end of the component's lifecycle and measure the duration
       performance.mark(`${name}-end`);
       performance.measure(name, `${name}-start`, `${name}-end`);
       console.log(performance.getEntriesByName(name));
@@ -25,13 +28,15 @@ const usePerformanceMeasure = (name) => {
   }, [name]);
 };
 
-// Map Constants
+// Constants
 const VISIBLE_CATEGORIES_COUNT = 8;
 
+// Main component for Joe's Beerhouse page
 function JoesBeerhouse() {
+  // Use the performance measurement hook
   usePerformanceMeasure('JoesBeerhouse');
 
-  // Combined state management
+  // State management using a single useState hook
   const [state, setState] = useState({
     isDelivery: false,
     stickyOffset: 0,
@@ -50,22 +55,20 @@ function JoesBeerhouse() {
     filteredProducts: [],
   });
 
+  // Additional state hooks for specific functionalities
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isKhomasOPNavBarSticky, setIsKhomasOPNavBarSticky] = useState(false);
   const [isKhomasOPNavBarVisible, setIsKhomasOPNavBarVisible] = useState(true);
   const [sortCriteria, setSortCriteria] = useState('default');
   const [mapboxLoaded, setMapboxLoaded] = useState(false);
 
-  // Refs
+  // Refs for accessing DOM elements and storing values across renders
   const searchResultsRef = useRef(null);
   const lastScrollYRef = useRef(0);
   const opCarouselRef = useRef(null);
   const opMoreInformationRef = useRef(null);
-  const productsRef = useRef(null);
   const containerRef = useRef(null);
   const mapContainerRef = useRef(null);
-  const mapInstanceRef = useRef(null);
   const restaurantsscroll = useRef(null);
   const productsSectionRef = useRef(null);
   const searchAndFilterRef = useRef(null);
@@ -73,35 +76,41 @@ function JoesBeerhouse() {
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Memoized data
+  // Custom hooks for fetching and memoizing data
   const cards = useCards();
   const restaurantCards = useRestaurantCards();
   const restaurants = useRestaurants();
 
+  // Memoized extended cards array for carousel
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
+  // Memoized unique categories from restaurant cards
   const categories = useMemo(() => {
     const uniqueCategories = new Set(restaurantCards.map(card => card.cuisine));
     return Array.from(uniqueCategories);
   }, [restaurantCards]);
 
-  // Mapbox setup
+  // Mapbox configuration
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
   console.log("Mapbox Token:", process.env.REACT_APP_MAPBOX_ACCESS_TOKEN);
 
+  // Marker coordinates for the map
   const MARKER_COORDINATES = [
     { lng: 17.090396711968985, lat: -22.550459904783143 }, // Joe's Beerhouse
     { lng: 17.073723364157306, lat: -22.561939983264068 }, // User's home
   ];
 
+  // Function to fetch and display the route on the map
   const fetchAndDisplayRoute = useCallback(async (mapInstance) => {
     try {
+      // Fetch route data from Mapbox API
       const response = await axios.get(
         `https://api.mapbox.com/directions/v5/mapbox/driving/${MARKER_COORDINATES[0].lng},${MARKER_COORDINATES[0].lat};${MARKER_COORDINATES[1].lng},${MARKER_COORDINATES[1].lat}?geometries=geojson&access_token=${mapboxgl.accessToken}`
       );
 
       const routeLine = response.data.routes[0].geometry;
 
+      // Add the route to the map
       mapInstance.addSource("route", {
         type: "geojson",
         data: {
@@ -130,11 +139,13 @@ function JoesBeerhouse() {
     }
   }, []);
 
+  // Function to initialize the map
   const initializeMap = useCallback((mapContainer) => {
     if (!mapContainer) return;
 
     console.log("Initializing map...");
     try {
+      // Create a new Mapbox instance
       const mapInstance = new mapboxgl.Map({
         container: mapContainer,
         style: "mapbox://styles/mapbox/streets-v11",
@@ -144,14 +155,17 @@ function JoesBeerhouse() {
 
       console.log("Map instance created:", mapInstance);
 
+      // Add navigation control to the map
       mapInstance.addControl(new mapboxgl.NavigationControl());
 
+      // Add markers for the coordinates
       MARKER_COORDINATES.forEach((coord) => {
         new mapboxgl.Marker({ color: "#ee9613" })
           .setLngLat([coord.lng, coord.lat])
           .addTo(mapInstance);
       });
 
+      // Fit the map to show all markers
       const bounds = new mapboxgl.LngLatBounds();
       MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
 
@@ -161,22 +175,25 @@ function JoesBeerhouse() {
         linear: true,
       });
 
+      // Load the map and fetch the route
       mapInstance.on('load', () => {
         console.log("Map loaded successfully");
         fetchAndDisplayRoute(mapInstance);
       });
 
+      // Handle map errors
       mapInstance.on('error', (e) => {
         console.error("Map error:", e);
       });
 
+      // Update the state with the map instance
       setState(prevState => ({ ...prevState, map: mapInstance }));
     } catch (error) {
       console.error("Error initializing map:", error);
     }
   }, [fetchAndDisplayRoute]);
 
-  // Sort functionality
+  // Function to sort products based on criteria
   const sortProducts = useCallback((products, criteria) => {
     switch (criteria) {
       case 'priceAsc':
@@ -192,6 +209,7 @@ function JoesBeerhouse() {
     }
   }, []);
 
+  // Function to scroll to the products section
   const scrollToProducts = useCallback(() => {
     if (productsSectionRef.current) {
       const yOffset = -100;
@@ -200,16 +218,19 @@ function JoesBeerhouse() {
     }
   }, []);
 
+  // Function to handle search input changes
   const handleSearch = useCallback((event) => {
     const searchTerm = event.target.value;
     setState(prevState => ({ ...prevState, searchTerm }));
     scrollToProducts();
   }, [scrollToProducts]);
 
+  // Function to handle search input focus
   const handleSearchClick = () => {
     setIsSearchFocused(true);
   };
 
+  // Function to clear search input
   const handleClear = () => {
     setState(prevState => ({ ...prevState, searchTerm: '' }));
     if (inputRef.current) {
@@ -217,11 +238,13 @@ function JoesBeerhouse() {
     }
   };
 
+  // Function to handle category selection
   const handleCategorySelect = useCallback((category) => {
     setState(prevState => ({ ...prevState, selectedCategory: category }));
     scrollToProducts();
   }, [scrollToProducts]);
 
+  // Functions to handle carousel scrolling
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
@@ -234,6 +257,7 @@ function JoesBeerhouse() {
     }
   }, []);
 
+  // Functions to handle carousel navigation
   const handleNext = useCallback(() => {
     setState(prevState => ({ ...prevState, currentIndex: prevState.currentIndex + 1 }));
   }, []);
@@ -242,6 +266,7 @@ function JoesBeerhouse() {
     setState(prevState => ({ ...prevState, currentIndex: prevState.currentIndex - 1 }));
   }, []);
 
+  // Function to handle carousel transition end
   const handleTransitionEnd = useCallback(() => {
     setState(prevState => {
       let newIndex = prevState.currentIndex;
@@ -254,6 +279,7 @@ function JoesBeerhouse() {
     });
   }, [extendedCards.length, cards.length]);
 
+  // Function to pause carousel scrolling
   const pauseScroll = useCallback(() => {
     setState(prevState => ({ ...prevState, isPaused: true }));
     setTimeout(() => {
@@ -261,15 +287,18 @@ function JoesBeerhouse() {
     }, 5000);
   }, []);
 
+  // Function to toggle dropdown menu
   const toggleDropdown = useCallback(() => {
     setState(prevState => ({ ...prevState, isDropdownOpen: !prevState.isDropdownOpen }));
   }, []);
 
+  // Function to handle dot click in carousel
   const handleDotClick = useCallback((index) => {
     setState(prevState => ({ ...prevState, currentIndex: index }));
     pauseScroll();
   }, [pauseScroll]);
 
+  // Function to toggle favorite status
   const toggleFavorite = useCallback(() => {
     setState(prevState => {
       const newIsFavorite = !prevState.isFavorite;
@@ -278,24 +307,17 @@ function JoesBeerhouse() {
     });
   }, []);
 
+  // Function to show more information (placeholder)
   const getMoreInfo = useCallback(() => {
     alert("More information about the store");
   }, []);
 
+  // Function to toggle "More" dropdown
   const toggleMoreDropdown = useCallback(() => {
     setState(prevState => ({ ...prevState, isMoreDropdownOpen: !prevState.isMoreDropdownOpen }));
   }, []);
 
-  // Effects
-  //KhomasOPNavBar scroll effect
-  {/*Changes for (KhomasOPNavBar): Update visibility behavior based on scroll position
-
-  - Adjusted the navbar's visibility logic to enhance user experience:
-    - Navbar remains sticky and visible while scrolling down until passing the 'opInformation' section (`opInformationOffset`).
-    - After passing 'opInformation', the navbar hides and remains hidden until:
-      - The user starts scrolling up/The scroll position surpasses the 'opMoreInformation' section (`opMoreInformationOffset`). and Navbar becomes visible again after passing 'opMoreInformation' or when scrolling up, and remains sticky until the top of the page is reached.
-  - Maintained the previous behaviors for consistent functionality.*/}
-
+  // Effect for handling KhomasOPNavBar visibility
   useEffect(() => {
     let initialTopKhomasOPNavBar = null;
 
@@ -331,6 +353,7 @@ function JoesBeerhouse() {
     return () => window.removeEventListener('scroll', handleScrollKhomasOPNavBar);
   }, [isSearchFocused]);
 
+  // Effect for handling navbar visibility and stickiness
   useEffect(() => {
     let lastScrollY = window.pageYOffset;
     let initialTop = null;
@@ -362,173 +385,191 @@ function JoesBeerhouse() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    setState(prevState => ({
-      ...prevState,
-      visibleCategories: categories.slice(0, VISIBLE_CATEGORIES_COUNT),
-      hiddenCategories: categories.slice(VISIBLE_CATEGORIES_COUNT),
-    }));
-  }, [categories]);
+// Effect for initializing visible and hidden categories
+useEffect(() => {
+  setState(prevState => ({
+    ...prevState,
+    visibleCategories: categories.slice(0, VISIBLE_CATEGORIES_COUNT),
+    hiddenCategories: categories.slice(VISIBLE_CATEGORIES_COUNT),
+  }));
+}, [categories]);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        moreButtonRef.current &&
-        !moreButtonRef.current.contains(event.target) &&
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
-        setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-      }
-    };
-
-    const handleScroll = () => {
+// Effect for handling clicks outside the "More" dropdown
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (
+      moreButtonRef.current &&
+      !moreButtonRef.current.contains(event.target) &&
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    ) {
       setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setState(prevState => ({ ...prevState, isDropdownOpen: false }));
-      }
-    };
-
-    if (state.isDropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
+  };
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [state.isDropdownOpen]);
+  const handleScroll = () => {
+    setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+  };
 
-  useEffect(() => {
-    let interval;
-    if (!state.isPaused) {
-      interval = setInterval(handleNext, 5000);
+  document.addEventListener('mousedown', handleClickOutside);
+  window.addEventListener('scroll', handleScroll);
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+    window.removeEventListener('scroll', handleScroll);
+  };
+}, []);
+
+// Effect for handling clicks outside the dropdown menu
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setState(prevState => ({ ...prevState, isDropdownOpen: false }));
     }
-    return () => clearInterval(interval);
-  }, [state.isPaused, handleNext]);
+  };
 
-  useEffect(() => {
-    console.log("Map container ref:", mapContainerRef.current);
-    if (mapContainerRef.current && !state.map) {
-      console.log("Calling initializeMap");
-      initializeMap(mapContainerRef.current);
-    }
-  }, [initializeMap, state.map]);
+  if (state.isDropdownOpen) {
+    document.addEventListener("mousedown", handleClickOutside);
+  } else {
+    document.removeEventListener("mousedown", handleClickOutside);
+  }
 
-  useEffect(() => {
-    if (typeof mapboxgl !== 'undefined' && mapboxgl.supported() && mapContainerRef.current && !state.map) {
-      console.log("Mapbox supported and container ready, initializing map");
-      initializeMap(mapContainerRef.current);
-    } else {
-      console.log("Mapbox not ready or already initialized", {
-        mapboxDefined: typeof mapboxgl !== 'undefined',
-        mapboxSupported: typeof mapboxgl !== 'undefined' && mapboxgl.supported(),
-        containerReady: !!mapContainerRef.current,
-        mapAlreadyInitialized: !!state.map
-      });
-    }
-  }, [initializeMap, state.map]);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [state.isDropdownOpen]);
 
-  useEffect(() => {
-    if (window.mapboxgl) {
-      setMapboxLoaded(true);
-    } else {
-      const script = document.createElement('script');
-      script.src = 'https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js';
-      script.onload = () => setMapboxLoaded(true);
-      document.body.appendChild(script);
-    }
-  }, []);
+// Effect for auto-scrolling the carousel
+useEffect(() => {
+  let interval;
+  if (!state.isPaused) {
+    interval = setInterval(handleNext, 5000);
+  }
+  return () => clearInterval(interval);
+}, [state.isPaused, handleNext]);
 
-  useEffect(() => {
-    if (mapboxLoaded && mapContainerRef.current) {
-      initializeMap(mapContainerRef.current);
-    }
-  }, [mapboxLoaded, initializeMap]);
+// Effect for initializing the map
+useEffect(() => {
+  console.log("Map container ref:", mapContainerRef.current);
+  if (mapContainerRef.current && !state.map) {
+    console.log("Calling initializeMap");
+    initializeMap(mapContainerRef.current);
+  }
+}, [initializeMap, state.map]);
 
-  useEffect(() => {
-    const filteredProducts = restaurantCards.filter(product => {
-      const lowerCaseSearchTerm = state.searchTerm.toLowerCase();
-      const matchesSearch =
-        product.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-        product.cuisine.toLowerCase().includes(lowerCaseSearchTerm);
-      const matchesCategory =
-        state.selectedCategory === "" ||
-        product.cuisine === state.selectedCategory;
-      const matchesDeliveryOption =
-        !state.isDelivery || product.deliveryTime;
-      return matchesSearch && matchesCategory && matchesDeliveryOption;
+// Effect for checking Mapbox support and initializing the map
+useEffect(() => {
+  if (typeof mapboxgl !== 'undefined' && mapboxgl.supported() && mapContainerRef.current && !state.map) {
+    console.log("Mapbox supported and container ready, initializing map");
+    initializeMap(mapContainerRef.current);
+  } else {
+    console.log("Mapbox not ready or already initialized", {
+      mapboxDefined: typeof mapboxgl !== 'undefined',
+      mapboxSupported: typeof mapboxgl !== 'undefined' && mapboxgl.supported(),
+      containerReady: !!mapContainerRef.current,
+      mapAlreadyInitialized: !!state.map
     });
-    const sortedProducts = sortProducts(filteredProducts, sortCriteria);
-    setState(prevState => ({ ...prevState, filteredProducts: sortedProducts }));
-  }, [state.searchTerm, state.selectedCategory, state.isDelivery, restaurantCards, sortCriteria, sortProducts]);
+  }
+}, [initializeMap, state.map]);
 
-  // Render functions
-  const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
-    <div className="relative mt-4 w-full sm:mt-6 md:mt-8">
-      <div className="container mx-auto px-2 sm:px-4 lg:px-6">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
-        <button
-          className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
-          onClick={() => scrollLeft(scrollRef)}
-          aria-label="Scroll left"
-        >
-          &#9664;
-        </button>
-        <div
-          ref={scrollRef}
-          className="custom-scrollbar flex space-x-4 overflow-x-auto p-4 sm:p-6 md:p-8"
-        >
-          {items.map((item, index) => itemRenderer(item, index))}
-        </div>
-        <button
-          className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
-          onClick={() => scrollRight(scrollRef)}
-          aria-label="Scroll right"
-        >
-          &#9654;
-        </button>
+// Effect for loading Mapbox script
+useEffect(() => {
+  if (window.mapboxgl) {
+    setMapboxLoaded(true);
+  } else {
+    const script = document.createElement('script');
+    script.src = 'https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js';
+    script.onload = () => setMapboxLoaded(true);
+    document.body.appendChild(script);
+  }
+}, []);
+
+// Effect for initializing map after Mapbox is loaded
+useEffect(() => {
+  if (mapboxLoaded && mapContainerRef.current) {
+    initializeMap(mapContainerRef.current);
+  }
+}, [mapboxLoaded, initializeMap]);
+
+// Effect for filtering and sorting products
+useEffect(() => {
+  const filteredProducts = restaurantCards.filter(product => {
+    const lowerCaseSearchTerm = state.searchTerm.toLowerCase();
+    const matchesSearch =
+      product.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+      product.cuisine.toLowerCase().includes(lowerCaseSearchTerm);
+    const matchesCategory =
+      state.selectedCategory === "" ||
+      product.cuisine === state.selectedCategory;
+    const matchesDeliveryOption =
+      !state.isDelivery || product.deliveryTime;
+    return matchesSearch && matchesCategory && matchesDeliveryOption;
+  });
+  const sortedProducts = sortProducts(filteredProducts, sortCriteria);
+  setState(prevState => ({ ...prevState, filteredProducts: sortedProducts }));
+}, [state.searchTerm, state.selectedCategory, state.isDelivery, restaurantCards, sortCriteria, sortProducts]);
+
+// Function to render the carousel
+const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
+  <div className="relative mt-4 w-full sm:mt-6 md:mt-8">
+    <div className="container mx-auto px-2 sm:px-4 lg:px-6">
+      {/* Gradient overlays for scroll indicators */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
+      
+      {/* Left scroll button */}
+      <button
+        className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
+        onClick={() => scrollLeft(scrollRef)}
+        aria-label="Scroll left"
+      >
+        &#9664;
+      </button>
+      
+      {/* Carousel content */}
+      <div
+        ref={scrollRef}
+        className="custom-scrollbar flex space-x-4 overflow-x-auto p-4 sm:p-6 md:p-8"
+      >
+        {items.map((item, index) => itemRenderer(item, index))}
       </div>
+      
+      {/* Right scroll button */}
+      <button
+        className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
+        onClick={() => scrollRight(scrollRef)}
+        aria-label="Scroll right"
+      >
+        &#9654;
+      </button>
     </div>
-  ), [scrollLeft, scrollRight]);
+  </div>
+), [scrollLeft, scrollRight]);
 
-  const renderRestaurantCard = useCallback((restaurant, index) => (
-    <div key={index} className="w-full max-w-[300px] shrink-0">
-      <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-        <div className="relative w-full overflow-hidden rounded-t-lg pb-[100%]">
-          <LazyLoadImage
-            src={restaurant.imgSrc}
-            alt={restaurant.name}
-            className="absolute left-0 top-0 size-full object-cover"
-            effect="opacity"
-          />
-        </div>
-        <div className="p-3 sm:p-4">
-          <p className="w-full truncate text-center text-sm font-bold sm:text-base">{restaurant.name}</p>
-        </div>
-      </a>
-    </div>
-  ), []);
+// Function to render a restaurant card
+const renderRestaurantCard = useCallback((restaurant, index) => (
+  <div key={index} className="w-full max-w-[300px] shrink-0">
+    <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+      <div className="relative w-full overflow-hidden rounded-t-lg pb-[100%]">
+        <LazyLoadImage
+          src={restaurant.imgSrc}
+          alt={restaurant.name}
+          className="absolute left-0 top-0 size-full object-cover"
+          effect="opacity"
+        />
+      </div>
+      <div className="p-3 sm:p-4">
+        <p className="w-full truncate text-center text-sm font-bold sm:text-base">{restaurant.name}</p>
+      </div>
+    </a>
+  </div>
+), []);
 
   // Return statement
   return (
     <div className="bg-white">
       <Suspense fallback={<div>Loading...</div>}>
+      {/* Navigation bar */}
         <nav
           id="navbarKhomasOPNavBar"
           className={`fixed inset-x-0 top-0 z-50 shadow-md transition-transform duration-300 ${isKhomasOPNavBarVisible ? '' : '-translate-y-full'
@@ -539,6 +580,7 @@ function JoesBeerhouse() {
         <main className="relative z-10 pt-20">
           {/* Header section */}
           <header className="relative w-full">
+            {/* Restaurant image */}
             <div className="relative mx-auto max-w-xs p-4">
               <LazyLoadImage
                 src="/images/restaurants/joesbeerhouse.png"
@@ -547,7 +589,9 @@ function JoesBeerhouse() {
                 className="h-auto w-full object-contain"
               />
             </div>
+            {/* Overlay */}
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+            {/* Restaurant information */}
             <div className="absolute bottom-0 left-0 flex w-full items-center justify-between p-4">
               <div className="px-4">
                 <h1 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">Joe's Beerhouse</h1>
@@ -559,6 +603,7 @@ function JoesBeerhouse() {
                   onClick={toggleFavorite}
                   className="mt-2 rounded-full p-2 text-white transition duration-200 hover:bg-white hover:text-black"
                 >
+                  {/* SVG for favorite icon */}
                   <svg viewBox="0 0 24 24" className="size-6 fill-current">
                     {state.isFavorite ? (
                       <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498Z" />
@@ -568,13 +613,16 @@ function JoesBeerhouse() {
                   </svg>
                 </button>
               </div>
+              {/* More options dropdown */}
               <div ref={dropdownRef} className="relative px-4">
+                {/* More options button */}
                 <button
                   ref={dropdownRef}
                   aria-label="More options"
                   className="p-2 text-white"
                   onClick={toggleDropdown}
                 >
+                  {/* SVG for more options icon */}
                   <svg
                     viewBox="0 0 24 24"
                     className="size-8 rounded-full fill-current text-white transition duration-200 hover:bg-white hover:text-black"
@@ -583,9 +631,11 @@ function JoesBeerhouse() {
                     <circle cx="12" cy="12" r="2"></circle>
                     <circle cx="12" cy="19" r="2"></circle>
                   </svg>
+                  {/* Dropdown menu */}
                 </button>
                 {state.isDropdownOpen && (
                   <div className="absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                    {/* Dropdown menu items */}
                     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                       <button
                         aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
@@ -611,6 +661,7 @@ function JoesBeerhouse() {
 
           {/* Carousel section */}
           <section ref={opCarouselRef} className="my-8">
+            {/* Carousel implementation */}
             <div className="container mx-auto px-4">
               <div className="relative mt-8 overflow-hidden">
                 <div
@@ -693,6 +744,7 @@ function JoesBeerhouse() {
 
           {/* Store Information */}
           <section id="information" className="container mx-auto mb-2 px-4">
+            {/* Store information content */}
             <div className="flex flex-col items-start justify-between space-y-4 px-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
               <div className="flex flex-col items-start space-y-2 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
                 <div className="flex items-center space-x-1">
@@ -740,6 +792,7 @@ function JoesBeerhouse() {
             className={`p-4 transition-all duration-300 ease-in-out ${state.isSticky ? 'fixed inset-x-0 z-50 bg-white shadow-md' : ''}`}
             style={{ top: state.isSticky ? 0 : 'auto' }}
           >
+            {/* Search and filter content */}
             <div className="container mx-auto px-4">
               {/* Mobile layout (smaller than md) */}
               <div className="md:hidden">
@@ -945,6 +998,7 @@ function JoesBeerhouse() {
 
           {/* Restaurant Products Section */}
           <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
+            {/* Restaurant products content */}
             <div className="border-b border-gray-200 py-4">
               <div data-testid="product-list-header" className="flex items-center px-4">
                 <h2 className="text-lg font-bold">Restaurant Products</h2>
@@ -1010,9 +1064,9 @@ function JoesBeerhouse() {
                           </div>
                         </div>
                       </div>
-                      <div className="absolute right-2 top-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                      {/* <div className="absolute right-2 top-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
                         +
-                      </div>
+                      </div> */}
                     </a>
                   ))}
                 </div>
@@ -1022,6 +1076,7 @@ function JoesBeerhouse() {
 
           {/*More Information Section */}
           <section ref={opMoreInformationRef} id="moreInformation" className="container mx-auto mt-8 p-4">
+             {/* More information content */}
             <div className="flex flex-col p-4 md:flex-row md:space-x-8">
               <div className="space-y-8 md:w-1/3">
                 <div className="space-y-8">
@@ -1074,6 +1129,7 @@ function JoesBeerhouse() {
 
           {/* Similar Restaurants Section */}
           <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
+            {/* Similar restaurants content */}
             <div
               className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
               style={{ width: "50%", maxWidth: "1000px" }}
@@ -1087,12 +1143,13 @@ function JoesBeerhouse() {
           {/* Restaurants Carousel */}
           {renderCarousel(restaurants, restaurantsscroll, renderRestaurantCard)}
         </main>
+        {/* Footer */}
         <Footer />
       </Suspense>
     </div>
   );
 }
-
+// PropTypes definition (if needed)
 JoesBeerhouse.propTypes = {
   // Add prop types here if needed
 };
