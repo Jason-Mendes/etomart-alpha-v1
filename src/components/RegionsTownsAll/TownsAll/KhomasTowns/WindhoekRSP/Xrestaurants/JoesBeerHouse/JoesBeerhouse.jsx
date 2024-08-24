@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import axios from "axios";
+import { Search, X } from 'lucide-react';
 import mapboxgl from "mapbox-gl";
 import { toast } from "react-toastify";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import PropTypes from 'prop-types';
 import KhomasOPNavBar from "../../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
-import { useCards, useRestaurantCards, useRestaurants  } from "./cardsDataJoesBeerhouse";
+import { useCards, useRestaurantCards, useRestaurants } from "./cardsDataJoesBeerhouse";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Lazy-loaded components
@@ -50,13 +51,17 @@ function JoesBeerhouse() {
     filteredProducts: [],
   });
 
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isKhomasOPNavBarSticky, setIsKhomasOPNavBarSticky] = useState(false);
   const [isKhomasOPNavBarVisible, setIsKhomasOPNavBarVisible] = useState(true);
   const [sortCriteria, setSortCriteria] = useState('default');
   const [mapboxLoaded, setMapboxLoaded] = useState(false);
 
   // Refs
-  const opInformationRef = useRef(null);
+  const searchResultsRef = useRef(null);
+  const lastScrollYRef = useRef(0);
+  const opCarouselRef = useRef(null);
   const opMoreInformationRef = useRef(null);
   const productsRef = useRef(null);
   const containerRef = useRef(null);
@@ -67,7 +72,7 @@ function JoesBeerhouse() {
   const searchAndFilterRef = useRef(null);
   const moreButtonRef = useRef(null);
   const dropdownRef = useRef(null);
-
+  const inputRef = useRef(null);
   // Memoized data
   const cards = useCards();
   const restaurantCards = useRestaurantCards();
@@ -201,6 +206,18 @@ function JoesBeerhouse() {
     scrollToProducts();
   }, [scrollToProducts]);
 
+  const handleSearchClick = () => {
+    setIsSearchFocused(true);
+  };
+
+  const handleClear = () => {
+    setState(prevState => ({ ...prevState, searchTerm: '' }));
+    // After clearing, you might want to refocus the input
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   const handleCategorySelect = useCallback((category) => {
     setState(prevState => ({ ...prevState, selectedCategory: category }));
     scrollToProducts();
@@ -271,7 +288,7 @@ function JoesBeerhouse() {
   }, []);
 
   // Effects
-    // Effects
+  // Effects
   //KhomasOPNavBar scroll effect
   {/*Changes for (KhomasOPNavBar): Update visibility behavior based on scroll position
 
@@ -281,39 +298,39 @@ function JoesBeerhouse() {
       - The user starts scrolling up/The scroll position surpasses the 'opMoreInformation' section (`opMoreInformationOffset`). and Navbar becomes visible again after passing 'opMoreInformation' or when scrolling up, and remains sticky until the top of the page is reached.
   - Maintained the previous behaviors for consistent functionality.*/}
   useEffect(() => {
-    let lastScrollY = window.pageYOffset;
     let initialTopKhomasOPNavBar = null;
-
+  
     const handleScrollKhomasOPNavBar = () => {
       const currentScrollY = window.pageYOffset;
-      const opInformationRect = opInformationRef.current?.getBoundingClientRect();
+      const opInformationRect = opCarouselRef.current?.getBoundingClientRect();
       const opMoreInformationRect = opMoreInformationRef.current?.getBoundingClientRect();
-
+  
       if (opInformationRect && opMoreInformationRect) {
         if (initialTopKhomasOPNavBar === null) {
           initialTopKhomasOPNavBar = opInformationRect.top + currentScrollY;
         }
-
+  
         const opInformationOffset = initialTopKhomasOPNavBar;
         const opMoreInformationOffset = opMoreInformationRect.bottom + currentScrollY;
-
-        const isScrollingUp = currentScrollY < lastScrollY;
+  
+        const isScrollingUp = currentScrollY < lastScrollYRef.current;
         const hasPassedOpMoreInformation = currentScrollY >= opMoreInformationOffset;
-
+  
         setIsKhomasOPNavBarVisible(
-          currentScrollY <= opInformationOffset ||
+          (currentScrollY <= opInformationOffset ||
           isScrollingUp ||
-          hasPassedOpMoreInformation
+          hasPassedOpMoreInformation) &&
+          !isSearchFocused
         );
         setIsKhomasOPNavBarSticky(currentScrollY > 0);
-
-        lastScrollY = currentScrollY;
+  
+        lastScrollYRef.current = currentScrollY;
       }
     };
-
+  
     window.addEventListener('scroll', handleScrollKhomasOPNavBar, { passive: true });
     return () => window.removeEventListener('scroll', handleScrollKhomasOPNavBar);
-  }, []);
+  }, [isSearchFocused]);
 
   useEffect(() => {
     let lastScrollY = window.pageYOffset;
@@ -346,6 +363,7 @@ function JoesBeerhouse() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  
   useEffect(() => {
     setState(prevState => ({
       ...prevState,
@@ -501,7 +519,7 @@ function JoesBeerhouse() {
             className="absolute top-0 left-0 w-full h-full object-cover"
             effect="opacity"
           />
-          </div>
+        </div>
         <div className="p-3 sm:p-4">
           <p className="text-center font-bold truncate w-full text-sm sm:text-base">{restaurant.name}</p>
         </div>
@@ -594,89 +612,89 @@ function JoesBeerhouse() {
           </header>
 
           {/* Carousel section */}
-<section className="my-8">
-  <div className="container mx-auto px-4">
-    <div className="relative mt-8 overflow-hidden">
-      <div
-        ref={containerRef}
-        className="flex transition-transform duration-500 ease-in-out"
-        style={{
-          transform: `translateX(-${state.currentIndex * 576}px)`,
-          width: `${extendedCards.length * 576}px`,
-        }}
-        onTransitionEnd={handleTransitionEnd}
-      >
-        {extendedCards.map((card, index) => (
-          <div
-            key={index}
-            className="p-2 flex-shrink-0"
-            style={{ width: "576px", height: "276px" }}
-          >
-            <div
-              className="h-full w-full rounded-md overflow-hidden relative"
-            >
-              <img
-                src={card.image}
-                alt={card.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center">
-                <div className="px-10 max-w-xl">
-                  <h2 className="text-2xl text-white font-semibold">
-                    {card.title}
-                  </h2>
-                  <p className="mt-2 text-gray-400">{card.description}</p>
-                  <button className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
-                    <span>Shop Now</span>
-                    <svg
-                      className="h-5 w-5 ml-2"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+          <section ref={opCarouselRef} className="my-8">
+            <div className="container mx-auto px-4">
+              <div className="relative mt-8 overflow-hidden">
+                <div
+                  ref={containerRef}
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{
+                    transform: `translateX(-${state.currentIndex * 576}px)`,
+                    width: `${extendedCards.length * 576}px`,
+                  }}
+                  onTransitionEnd={handleTransitionEnd}
+                >
+                  {extendedCards.map((card, index) => (
+                    <div
+                      key={index}
+                      className="p-2 flex-shrink-0"
+                      style={{ width: "576px", height: "276px" }}
                     >
-                      <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                  </button>
+                      <div
+                        className="h-full w-full rounded-md overflow-hidden relative"
+                      >
+                        <img
+                          src={card.image}
+                          alt={card.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center">
+                          <div className="px-10 max-w-xl">
+                            <h2 className="text-2xl text-white font-semibold">
+                              {card.title}
+                            </h2>
+                            <p className="mt-2 text-gray-400">{card.description}</p>
+                            <button className="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
+                              <span>Shop Now</span>
+                              <svg
+                                className="h-5 w-5 ml-2"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
+                  onClick={handlePrev}
+                  aria-label="Previous slide"
+                >
+                  &lt;
+                </button>
+                <button
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
+                  onClick={handleNext}
+                  aria-label="Next slide"
+                >
+                  &gt;
+                </button>
+                <div className="absolute bottom-4 w-full flex justify-center space-x-2">
+                  {cards.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
+                        }`}
+                      onClick={() => handleDotClick(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                    ></button>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <button
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
-        onClick={handlePrev}
-        aria-label="Previous slide"
-      >
-        &lt;
-      </button>
-      <button
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
-        onClick={handleNext}
-        aria-label="Next slide"
-      >
-        &gt;
-      </button>
-      <div className="absolute bottom-4 w-full flex justify-center space-x-2">
-        {cards.map((_, index) => (
-          <button
-            key={index}
-            className={`h-2 w-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
-              }`}
-            onClick={() => handleDotClick(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          ></button>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
+          </section>
 
           {/* Store Information */}
-          <section ref={opInformationRef} id="information" className="container mx-auto px-4 mb-2">
+          <section id="information" className="container mx-auto px-4 mb-2">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 px-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <div className="flex items-center space-x-1">
@@ -706,259 +724,287 @@ function JoesBeerhouse() {
                   Delivery
                 </button>
                 <button
-                 className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
-                 onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
-               >
-                 Pickup
-               </button>
-             </div>
-           </div>
-           <div className="text-gray-700 px-4 mt-4">
-             The store isn't delivering to your location, but you can still place an order for pickup.
-           </div>
-         </section>
+                  className={`px-2 py-1 rounded-full border border-gray-300 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
+                  onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
+                >
+                  Pickup
+                </button>
+              </div>
+            </div>
+            <div className="text-gray-700 px-4 mt-4">
+              The store isn't delivering to your location, but you can still place an order for pickup.
+            </div>
+          </section>
 
-         {/* Search and Filter Section */}
-         <section
-           ref={searchAndFilterRef}
-           className={`p-4 transition-all duration-300 ease-in-out ${state.isSticky ? 'fixed left-0 right-0 z-50 bg-white shadow-md' : ''}`}
-           style={{ top: state.isSticky ? 0 : 'auto' }}
-         >
-           <div className="container mx-auto px-4">
-             {/* Mobile layout (smaller than md) */}
-             <div className="md:hidden">
-               {/* Search Input */}
-               <div className="relative w-full mb-4">
-                 <input
-                   type="text"
-                   placeholder="Search products..."
-                   value={state.searchTerm}
-                   onChange={handleSearch}
-                   className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613] transform hover:bg-gray-200 hover:scale-105 transition-transform duration-200"
-                 />
-                 <svg
-                   viewBox="0 0 24 24"
-                   className="w-6 h-6 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2"
-                 >
-                   <path
-                     d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
-                     fill="#ee9613"
-                   />
-                 </svg>
-               </div>
+          {/* Search and Filter Section */}
+          <section
+            ref={searchAndFilterRef}
+            className={`p-4 transition-all duration-300 ease-in-out ${state.isSticky ? 'fixed left-0 right-0 z-50 bg-white shadow-md' : ''}`}
+            style={{ top: state.isSticky ? 0 : 'auto' }}
+          >
+            <div className="container mx-auto px-4">
+              {/* Mobile layout (smaller than md) */}
+              <div className="md:hidden">
+                {/* Search Input */}
+                <div className="relative w-full mb-4">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={state.searchTerm}
+                    onChange={handleSearch}
+                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613] transform hover:bg-gray-200 hover:scale-105 transition-transform duration-200"
+                  />
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="w-6 h-6 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2"
+                  >
+                    <path
+                      d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
+                      fill="#ee9613"
+                    />
+                  </svg>
+                </div>
 
-               {/* Category Buttons and More Button */}
-               <div className="flex items-center space-x-4">
-                 {/* Category Buttons Container */}
-                 <div className="flex-1 overflow-x-auto">
-                   <div className="grid grid-flow-col auto-cols-max gap-2 pb-2">
-                     <button
-                       onClick={() => handleCategorySelect("")}
-                       className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                     >
-                       All
-                     </button>
-                     {state.visibleCategories.map((category) => (
-                       <button
-                         key={category}
-                         data-category={category}
-                         onClick={() => handleCategorySelect(category)}
-                         className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                       >
-                         {category}
-                       </button>
-                     ))}
-                   </div>
-                 </div>
+                {/* Category Buttons and More Button */}
+                <div className="flex items-center space-x-4">
+                  {/* Category Buttons Container */}
+                  <div className="flex-1 overflow-x-auto">
+                    <div className="grid grid-flow-col auto-cols-max gap-2 pb-2">
+                      <button
+                        onClick={() => handleCategorySelect("")}
+                        className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                      >
+                        All
+                      </button>
+                      {state.visibleCategories.map((category) => (
+                        <button
+                          key={category}
+                          data-category={category}
+                          onClick={() => handleCategorySelect(category)}
+                          className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                        >
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-                 {/* More Button Container */}
-                 <div className="flex-shrink-0">
-                   {state.hiddenCategories.length > 0 && (
-                     <div className="relative">
-                       <button
-                         ref={moreButtonRef}
-                         onClick={toggleMoreDropdown}
-                         className="px-4 py-2 w-[130px] rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center justify-between whitespace-nowrap"
-                       >
-                         More <ChevronDownIcon className="w-4 h-4" />
-                       </button>
+                  {/* More Button Container */}
+                  <div className="flex-shrink-0">
+                    {state.hiddenCategories.length > 0 && (
+                      <div className="relative">
+                        <button
+                          ref={moreButtonRef}
+                          onClick={toggleMoreDropdown}
+                          className="px-4 py-2 w-[130px] rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center justify-between whitespace-nowrap"
+                        >
+                          More <ChevronDownIcon className="w-4 h-4" />
+                        </button>
 
-                       {/* Dropdown Menu */}
-                       {state.isMoreDropdownOpen && (
-                         <div
-                           ref={dropdownRef}
-                           className="absolute right-0 mt-1 bg-white shadow-lg rounded-md z-50 w-[130px] overflow-visible"
-                           style={{ top: 'calc(100% + 2px)' }}
-                         >
-                           <div className="p-2 flex flex-col gap-2">
-                             {state.hiddenCategories.map((category) => (
-                               <button
-                                 key={category}
-                                 onClick={() => {
-                                   handleCategorySelect(category);
-                                   setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                                 }}
-                                 className="px-3 py-2 text-left hover:bg-gray-100 rounded whitespace-nowrap"
-                               >
-                                 {category}
-                               </button>
-                             ))}
-                           </div>
-                         </div>
-                       )}
-                     </div>
-                   )}
-                 </div>
-               </div>
-             </div>
+                        {/* Dropdown Menu */}
+                        {state.isMoreDropdownOpen && (
+                          <div
+                            ref={dropdownRef}
+                            className="absolute right-0 mt-1 bg-white shadow-lg rounded-md z-50 w-[130px] overflow-visible"
+                            style={{ top: 'calc(100% + 2px)' }}
+                          >
+                            <div className="p-2 flex flex-col gap-2">
+                              {state.hiddenCategories.map((category) => (
+                                <button
+                                  key={category}
+                                  onClick={() => {
+                                    handleCategorySelect(category);
+                                    setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+                                  }}
+                                  className="px-3 py-2 text-left hover:bg-gray-100 rounded whitespace-nowrap"
+                                >
+                                  {category}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
 
-             {/* Desktop layout (md and above) */}
-             <div className="hidden md:flex md:flex-col md:space-y-4">
-               <div className="flex items-center justify-between space-x-2">
-                 {/* Category Buttons Container */}
-                 <div className="w-2/3 overflow-x-auto">
-                   <div className="flex items-center space-x-2">
-                     <button
-                       onClick={() => handleCategorySelect("")}
-                       className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                     >
-                       All
-                     </button>
-                     {state.visibleCategories.map((category) => (
-                       <button
-                         key={category}
-                         data-category={category}
-                         onClick={() => handleCategorySelect(category)}
-                         className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                       >
-                         {category}
-                       </button>
-                     ))}
-                   </div>
-                 </div>
+              {/* Desktop layout (md and above) */}
+              <div className="hidden md:flex md:flex-col md:space-y-4">
+                <div className="flex items-center justify-between space-x-2">
+                  {/* Category Buttons Container */}
+                  <div className="w-2/3 overflow-x-auto">
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => handleCategorySelect("")}
+                        className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                      >
+                        All
+                      </button>
+                      {state.visibleCategories.map((category) => (
+                        <button
+                          key={category}
+                          data-category={category}
+                          onClick={() => handleCategorySelect(category)}
+                          className={`px-4 py-2 w-auto max-w-[130px] rounded-md transition-colors duration-300 whitespace-nowrap ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                        >
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-                 {/* More Button Container */}
-                 <div className="relative w-auto pr-6 min-w-[80px]">
-                   {state.hiddenCategories.length > 0 && (
-                     <div className="relative">
-                       <button
-                         ref={moreButtonRef}
-                         onClick={toggleMoreDropdown}
-                         className="px-4 py-2 w-auto max-w-[130px] rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center whitespace-nowrap"
-                       >
-                         More <ChevronDownIcon className="w-4 h-4 mx-2" />
-                       </button>
+                  {/* More Button Container */}
+                  <div className="relative w-auto pr-6 min-w-[80px]">
+                    {state.hiddenCategories.length > 0 && (
+                      <div className="relative">
+                        <button
+                          ref={moreButtonRef}
+                          onClick={toggleMoreDropdown}
+                          className="px-4 py-2 w-auto max-w-[130px] rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center whitespace-nowrap"
+                        >
+                          More <ChevronDownIcon className="w-4 h-4 mx-2" />
+                        </button>
 
-                       {/* Dropdown Menu */}
-                       {state.isMoreDropdownOpen && (
-                         <div
-                           ref={dropdownRef}
-                           className="absolute left-0 mt-1 bg-white shadow-lg rounded-md z-50 w-auto min-w-[200px] overflow-visible"
-                           style={{ top: 'calc(100% + 2px)' }}
-                         >
-                           <div className="p-2 grid grid-cols-2 gap-2">
-                             {state.hiddenCategories.map((category) => (
-                               <button
-                                 key={category}
-                                 onClick={() => {
-                                   handleCategorySelect(category);
-                                   setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                                 }}
-                                 className="px-3 py-2 text-left hover:bg-gray-100 rounded whitespace-nowrap"
-                               >
-                                 {category}
-                               </button>
-                             ))}
-                           </div>
-                         </div>
-                       )}
-                     </div>
-                   )}
-                 </div>
+                        {/* Dropdown Menu */}
+                        {state.isMoreDropdownOpen && (
+                          <div
+                            ref={dropdownRef}
+                            className="absolute left-0 mt-1 bg-white shadow-lg rounded-md z-50 w-auto min-w-[200px] overflow-visible"
+                            style={{ top: 'calc(100% + 2px)' }}
+                          >
+                            <div className="p-2 grid grid-cols-2 gap-2">
+                              {state.hiddenCategories.map((category) => (
+                                <button
+                                  key={category}
+                                  onClick={() => {
+                                    handleCategorySelect(category);
+                                    setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+                                  }}
+                                  className="px-3 py-2 text-left hover:bg-gray-100 rounded whitespace-nowrap"
+                                >
+                                  {category}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
 
-                 {/* Search Input */}
-                 <div className="relative w-1/3">
-                   <input
-                     type="text"
-                     placeholder="Search products..."
-                     value={state.searchTerm}
-                     onChange={handleSearch}
-                     className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613] transform hover:bg-gray-200 hover:scale-105 transition-transform duration-200"
-                   />
-                   <svg
-                     viewBox="0 0 24 24"
-                     className="w-6 h-6 text-gray-500 absolute right-3 top-1/2 transform -translate-y-1/2"
-                   >
-                     <path
-                       d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
-                       fill="#ee9613"
-                     />
-                   </svg>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </section>
+                  {/* Search Input */}
+                  <div className="relative w-1/3">
+  <input
+    ref={inputRef}
+    type="text"
+    placeholder="Search products..."
+    value={state.searchTerm}
+    onChange={handleSearch}
+    onFocus={() => {
+      setIsSearchFocused(true);
+      setIsKhomasOPNavBarVisible(false);
+    }}
+    onBlur={(e) => {
+      if (!searchResultsRef.current?.contains(e.relatedTarget)) {
+      setTimeout(() => {
+        setIsSearchFocused(false);
+        setState(prevState => ({ ...prevState, searchTerm: '' }));
 
-         {/* Restaurant Products Section */}
-         <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
-           <div className="py-4 border-b border-gray-200">
-             <div data-testid="product-list-header" className="flex items-center px-4">
-               <h2 className="text-lg font-bold">Restaurant Products</h2>
-               <select
-                 value={sortCriteria}
-                 onChange={(e) => setSortCriteria(e.target.value)}
-                 className="ml-auto text-[#ee9613] hover:underline cursor-pointer"
-               >
-                 <option value="default">Sort by</option>
-                 <option value="priceAsc">Price: Low to High</option>
-                 <option value="priceDesc">Price: High to Low</option>
-                 <option value="nameAsc">Name: A to Z</option>
-                 <option value="nameDesc">Name: Z to A</option>
-               </select>
-             </div>
-             <div className="overflow-y-auto h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px]">
-               <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
-                 {state.filteredProducts.map((product, index) => (
-                   <a key={index}
-                     href={product.href}
-                     className="flex w-full max-w-[550px] min-h-[150px] mx-auto rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
-                     data-test-id="product-card-link"
-                   >
-                     <div className="relative w-1/3 overflow-hidden">
-                       <LazyLoadImage
-                         src={product.imgSrc}
-                         alt={product.name}
-                         className="absolute top-0 left-0 w-full h-full object-cover"
-                         effect="opacity"
-                       />
-                       {product.discount && (
-                         <div
-                           data-testid="product-discount-label"
-                           className="absolute top-2 right-2 bg-yellow-400 text-black text-xs px-2 py-1 rounded-full"
-                         >
-                           -{product.discount}%
-                         </div>
-                       )}
-                     </div>
-                     <div className="w-2/3 p-4 flex flex-col justify-between">
-                       <div>
-                         <h3 data-testid="product-name" className="font-bold text-sm sm:text-base mb-1 truncate">
-                           {product.name}
-                         </h3>
-                         <div className="flex items-center text-xs sm:text-sm mb-2 text-gray-600">
-                           <span className="text-[#ee9613] font-semibold">{product.priceRange}</span>
-                           <span className="mx-2">•</span>
-                           <span className="truncate">{product.cuisine}</span>
-                         </div>
-                         <p className="text-xs text-gray-600 mb-2 line-clamp-2">{product.description}</p>
-                       </div>
-                       <div className="text-xs text-gray-500">
-                         Pickup: {product.pickupTime}
-                       </div>
-                       <div className="mt-auto">
-                         <div className="text-black text-xs py-1 rounded">
-                         <span className="text-black">Etomart </span>
+      // Restore navbar visibility based on scroll position
+      const currentScrollY = window.pageYOffset;
+      const opInformationOffset = opCarouselRef.current?.getBoundingClientRect().top + currentScrollY;
+      const opMoreInformationOffset = opMoreInformationRef.current?.getBoundingClientRect().bottom + currentScrollY;
+      setIsKhomasOPNavBarVisible(
+        currentScrollY <= opInformationOffset ||
+        currentScrollY < lastScrollYRef.current ||
+        currentScrollY >= opMoreInformationOffset
+      );
+      }, 200); // 200ms delay
+    }}}
+    className={`w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#ee9613] transform hover:bg-gray-200 hover:scale-105 transition-transform duration-200 ${
+      isSearchFocused ? 'pl-10 pr-10' : 'pl-4 pr-10'
+    }`}
+  />
+  <Search
+    size={20}
+    className={`absolute ${
+      isSearchFocused ? 'left-3' : 'right-3'
+    } top-1/2 transform -translate-y-1/2 text-orange-500`}
+  />
+  {state.searchTerm && (
+    <X
+      size={20}
+      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-orange-500 cursor-pointer"
+      onClick={handleClear}
+    />
+  )}
+</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Restaurant Products Section */}
+          <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">
+            <div className="py-4 border-b border-gray-200">
+              <div data-testid="product-list-header" className="flex items-center px-4">
+                <h2 className="text-lg font-bold">Restaurant Products</h2>
+                <select
+                  value={sortCriteria}
+                  onChange={(e) => setSortCriteria(e.target.value)}
+                  className="ml-auto text-[#ee9613] hover:underline cursor-pointer"
+                >
+                  <option value="default">Sort by</option>
+                  <option value="priceAsc">Price: Low to High</option>
+                  <option value="priceDesc">Price: High to Low</option>
+                  <option value="nameAsc">Name: A to Z</option>
+                  <option value="nameDesc">Name: Z to A</option>
+                </select>
+              </div>
+              <div className="overflow-y-auto h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px]">
+                <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
+                  {state.filteredProducts.map((product, index) => (
+                    <a key={index}
+                      href={product.href}
+                      className="flex w-full max-w-[550px] min-h-[150px] mx-auto rounded-lg bg-slate-50 shadow-md hover:shadow-xl transform hover:scale-105 transition-transform duration-200 overflow-hidden"
+                      data-test-id="product-card-link"
+                    >
+                      <div className="relative w-1/3 overflow-hidden">
+                        <LazyLoadImage
+                          src={product.imgSrc}
+                          alt={product.name}
+                          className="absolute top-0 left-0 w-full h-full object-cover"
+                          effect="opacity"
+                        />
+                        {product.discount && (
+                          <div
+                            data-testid="product-discount-label"
+                            className="absolute top-2 right-2 bg-yellow-400 text-black text-xs px-2 py-1 rounded-full"
+                          >
+                            -{product.discount}%
+                          </div>
+                        )}
+                      </div>
+                      <div className="w-2/3 p-4 flex flex-col justify-between">
+                        <div>
+                          <h3 data-testid="product-name" className="font-bold text-sm sm:text-base mb-1 truncate">
+                            {product.name}
+                          </h3>
+                          <div className="flex items-center text-xs sm:text-sm mb-2 text-gray-600">
+                            <span className="text-[#ee9613] font-semibold">{product.priceRange}</span>
+                            <span className="mx-2">•</span>
+                            <span className="truncate">{product.cuisine}</span>
+                          </div>
+                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{product.description}</p>
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Pickup: {product.pickupTime}
+                        </div>
+                        <div className="mt-auto">
+                          <div className="text-black text-xs py-1 rounded">
+                            <span className="text-black">Etomart </span>
                             {product.deliveryTime ? (
                               <span className="text-[#ee9613] font-bold">Delivery Available</span>
                             ) : (
@@ -1024,8 +1070,8 @@ function JoesBeerhouse() {
                 </div>
               </div>
               <div style={{ width: '100%', height: '400px', position: 'relative' }}>
-  <div ref={mapContainerRef} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
-</div>
+                <div ref={mapContainerRef} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
+              </div>
             </div>
           </section>
 
