@@ -127,7 +127,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         <div className="mt-auto">
           <div className="rounded py-1 text-xs text-black">
             <span className="text-black">Etomart </span>
-            <span className={`text-[#${food.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
+            <span className={`text-[# ${food.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
               {food.deliveryTime ? 'Delivery Available' : 'Delivery Not Available'}
             </span>
           </div>
@@ -157,7 +157,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         <div className="mt-auto">
           <div className="rounded py-1 text-xs text-black">
             <span className="text-black">Etomart </span>
-            <span className={`text-[#${product.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
+            <span className={`text-[# ${product.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
               {product.deliveryTime ? 'Delivery Available' : 'Delivery Not Available'}
             </span>
           </div>
@@ -196,11 +196,11 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
               />
               <Search
                 size={20}
-                className={`absolute right-4 top-1/2 -translate-y-1/2 text-orange-500${isExpanded ? 'hidden' : ''}`}
+                className={`absolute right-4 top-1/2 -translate-y-1/2 text-orange-500 ${isExpanded ? 'hidden' : ''}`}
               />
               <Search
                 size={20}
-                className={`absolute left-4 top-1/2 -translate-y-1/2 text-orange-500${!isExpanded ? 'hidden' : ''}`} />
+                className={`absolute left-4 top-1/2 -translate-y-1/2 text-orange-500 ${!isExpanded ? 'hidden' : ''}`} />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}

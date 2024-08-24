@@ -26,8 +26,7 @@ const usePerformanceMeasure = (name) => {
 };
 
 // Map Constants
-const VISIBLE_CATEGORIES_COUNT = 10;
-
+const VISIBLE_CATEGORIES_COUNT = 8;
 
 function JoesBeerhouse() {
   usePerformanceMeasure('JoesBeerhouse');
@@ -73,6 +72,7 @@ function JoesBeerhouse() {
   const moreButtonRef = useRef(null);
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
+
   // Memoized data
   const cards = useCards();
   const restaurantCards = useRestaurantCards();
@@ -212,7 +212,6 @@ function JoesBeerhouse() {
 
   const handleClear = () => {
     setState(prevState => ({ ...prevState, searchTerm: '' }));
-    // After clearing, you might want to refocus the input
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -288,7 +287,6 @@ function JoesBeerhouse() {
   }, []);
 
   // Effects
-  // Effects
   //KhomasOPNavBar scroll effect
   {/*Changes for (KhomasOPNavBar): Update visibility behavior based on scroll position
 
@@ -297,6 +295,7 @@ function JoesBeerhouse() {
     - After passing 'opInformation', the navbar hides and remains hidden until:
       - The user starts scrolling up/The scroll position surpasses the 'opMoreInformation' section (`opMoreInformationOffset`). and Navbar becomes visible again after passing 'opMoreInformation' or when scrolling up, and remains sticky until the top of the page is reached.
   - Maintained the previous behaviors for consistent functionality.*/}
+
   useEffect(() => {
     let initialTopKhomasOPNavBar = null;
 
@@ -362,7 +361,6 @@ function JoesBeerhouse() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
 
   useEffect(() => {
     setState(prevState => ({
@@ -527,7 +525,7 @@ function JoesBeerhouse() {
     </div>
   ), []);
 
-  // Return statement would go here
+  // Return statement
   return (
     <div className="bg-white">
       <Suspense fallback={<div>Loading...</div>}>
@@ -924,7 +922,7 @@ function JoesBeerhouse() {
                           }, 200); // 200ms delay
                         }
                       }}
-                      className={`w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]${isSearchFocused ? 'px-10' : 'pl-4 pr-10'
+                      className={`w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613] ${isSearchFocused ? 'px-10' : 'pl-4 pr-10'
                         }`}
                     />
                     <Search
@@ -1068,8 +1066,8 @@ function JoesBeerhouse() {
                   </table>
                 </div>
               </div>
-              <div style={{ width: '100%', height: '400px', position: 'relative' }}>
-                <div ref={mapContainerRef} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
+              <div className="md:w-2/3">
+                <div ref={mapContainerRef} className="h-[400px] w-full"></div>
               </div>
             </div>
           </section>
