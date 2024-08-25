@@ -16,7 +16,8 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState({
     stores: [],
-    food: []
+    food: [],
+    product: []
   });
 
   // Use custom hooks to get data
@@ -30,7 +31,6 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value);
   }
-  
 
   useEffect(() => {
     if (searchQuery) {
@@ -66,13 +66,10 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
       product: shuffleArray(productsCards)
     });
   };
-  
 
   const handleExpandNavbar = () => {
     setIsExpanded(true);
   };
-
-
 
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
@@ -109,7 +106,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
   );
 
   const renderFoodCard = (food) => (
-    <a href={food.href} className="flex h-[160px] w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="food-card-link">
+    <a href={food.href} className="group relative flex h-[160px] w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="food-card-link">
       <div className="relative w-1/3 overflow-hidden">
         <img src={food.imgSrc} alt={food.name} className="absolute left-0 top-0 size-full object-cover" />
       </div>
@@ -127,19 +124,20 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         <div className="mt-auto">
           <div className="rounded py-1 text-xs text-black">
             <span className="text-black">Etomart </span>
-            <span className={`text-[# ${food.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
+            <span className={`text-[#${food.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
               {food.deliveryTime ? 'Delivery Available' : 'Delivery Not Available'}
             </span>
           </div>
         </div>
       </div>
-      <div className="absolute right-2 top-2 flex h-6 w-8 items-center justify-center rounded bg-[#ee9613] text-lg text-white">+</div>
+      <div className="absolute right-2 top-2 flex h-6 w-8 items-center justify-center rounded bg-[#ee9613] text-lg text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        +
+      </div>
     </a>
   );
 
-  
   const renderPharmacyCard = (product) => (
-    <a href={product.href} className="flex h-[160px] w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="product-card-link">
+    <a href={product.href} className="group relative flex h-[160px] w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="product-card-link">
       <div className="relative w-1/3 overflow-hidden">
         <img src={product.imgSrc} alt={product.name} className="absolute left-0 top-0 size-full object-cover" />
       </div>
@@ -157,17 +155,18 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         <div className="mt-auto">
           <div className="rounded py-1 text-xs text-black">
             <span className="text-black">Etomart </span>
-            <span className={`text-[# ${product.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
+            <span className={`text-[#${product.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
               {product.deliveryTime ? 'Delivery Available' : 'Delivery Not Available'}
             </span>
           </div>
         </div>
       </div>
-      <div className="absolute right-2 top-2 flex h-6 w-8 items-center justify-center rounded bg-[#ee9613] text-lg text-white">+</div>
+      <div className="absolute right-2 top-2 flex h-6 w-8 items-center justify-center rounded bg-[#ee9613] text-lg text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        +
+      </div>
     </a>
   );
 
-  
   return (
     <div className="container mx-auto px-4">
       <div className="font-josefin_sans">
@@ -265,7 +264,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
                     </div>
                   </div>
                   <div>
-                  <div className="mb-4 flex items-center justify-between">
+                    <div className="mb-4 flex items-center justify-between">
                       <h2 className="text-xl font-bold">Products & Groceries</h2>
                       <button className="text-[#ee9613] hover:underline">See all</button>
                     </div>
@@ -340,4 +339,5 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     </div>
   );
 };
+
 export default KhomasOPNavBar;
