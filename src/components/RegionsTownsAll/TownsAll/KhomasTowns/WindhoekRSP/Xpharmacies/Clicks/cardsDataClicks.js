@@ -62,15 +62,10 @@ const navcategories = [
     href: "/pharmacy/foot-care",
   },
   {
-    name: "Allergy & Sinus",
+    name: "Allergy Relief",
     imgSrc: "/images/pharmacies/as.png",
-    href: "/pharmacy/allergy-sinus",
+    href: "/pharmacy/allergy-relief",
   },
-  //   {
-  //     name: "Eye Care",
-  //     imgSrc: "/images/pharmacies/",
-  //     href: "/pharmacy/eye-care"
-  //  },
   {
     name: "Pain Relief",
     imgSrc: "/images/pharmacies/pr.png",
@@ -100,6 +95,36 @@ const navcategories = [
     name: "Men's Health",
     imgSrc: "/images/pharmacies/mh.png",
     href: "/pharmacy/mens-health",
+  },
+  {
+    name: "Anti-inflammatory",
+    imgSrc: "/images/pharmacies/anti-inflammatory.png",
+    href: "/pharmacy/anti-inflammatory",
+  },
+  {
+    name: "Cough Relief",
+    imgSrc: "/images/pharmacies/cough-relief.png",
+    href: "/pharmacy/cough-relief",
+  },
+  {
+    name: "Eye Care",
+    imgSrc: "/images/pharmacies/placeholder.png", // Placeholder image
+    href: "/pharmacy/eye-care",
+  },
+  {
+    name: "Sleep Aids",
+    imgSrc: "/images/pharmacies/placeholder.png", // Placeholder image
+    href: "/pharmacy/sleep-aids",
+  },
+  {
+    name: "Weight Management",
+    imgSrc: "/images/pharmacies/placeholder.png", // Placeholder image
+    href: "/pharmacy/weight-management",
+  },
+  {
+    name: "Smoking Cessation",
+    imgSrc: "/images/pharmacies/placeholder.png", // Placeholder image
+    href: "/pharmacy/smoking-cessation",
   },
   // Add more categories as needed
 ];
