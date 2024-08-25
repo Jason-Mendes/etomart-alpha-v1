@@ -26,7 +26,7 @@ const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
         {/* Modal content */}
         <div
           id="Orange_container"
-          className={`fixed bottom-6 left-1/2 top-24 z-50 flex -translate-x-1/2 flex-col rounded-lg bg-[#ee9613] p-4 transition-all${
+          className={`fixed bottom-6 left-1/2 top-24 flex -translate-x-1/2 flex-col rounded-lg bg-[#ee9613] p-4 transition-all${
             showModal ? "scale-100 opacity-100" : "scale-95 opacity-0"
           }`}
           style={{
@@ -125,7 +125,7 @@ const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
           </div>
 
           {/* Image section */}
-          <div className="z-50 m-8 w-10/12 rounded-lg bg-white p-4 pt-8">
+          <div className=" m-8 w-10/12 rounded-lg bg-white p-4 pt-8">
             <div className="relative">
               <img
                 src="/images/Mais_rdedeverse.jpg"

@@ -180,12 +180,12 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
 
 {nav && (
         <div
-          className="absolute right-0 top-24 z-20 w-56 rounded-lg bg-[#fdfdfd] shadow-lg transition-opacity duration-200"
+          className="absolute right-0 top-24 z-50 w-56 rounded-lg bg-[#fdfdfd] shadow-lg transition-opacity duration-200"
           role="dialog"
           style={{ opacity: nav ? 1 : 0 }}
         >
           <div className="relative">
-            <div className="absolute -top-2.5 right-3 z-20">
+            <div className="absolute -top-2.5 right-3 z-50">
               <svg viewBox="0 0 32 16" className="size-4 text-white">
                 <path className="fill-white" d="M 16,0 L32,16 H0 Z"></path>
                 <path fill="#fdfdfd" d="M 16,1 L31,16 H1 Z"></path>

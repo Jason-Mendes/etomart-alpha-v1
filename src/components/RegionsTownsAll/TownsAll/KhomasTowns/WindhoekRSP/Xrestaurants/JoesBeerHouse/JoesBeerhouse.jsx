@@ -552,7 +552,7 @@ function JoesBeerhouse() {
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
         {/* Left scroll button */}
         <button
-          className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
+          className="absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
           onClick={() => scrollLeft(scrollRef)}
           aria-label="Scroll left"
         >
@@ -567,7 +567,7 @@ function JoesBeerhouse() {
         </div>
         {/* Right scroll button */}
         <button
-          className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
+          className="absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
           onClick={() => scrollRight(scrollRef)}
           aria-label="Scroll right"
         >

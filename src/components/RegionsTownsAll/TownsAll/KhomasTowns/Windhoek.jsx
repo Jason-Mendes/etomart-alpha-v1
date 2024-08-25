@@ -187,7 +187,7 @@ function KhomasTowns() {
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-white to-transparent sm:w-12 md:w-16"></div>
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white to-transparent sm:w-12 md:w-16"></div>
         <button
-          className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-r-[50px] bg-[#ee9613] p-1 sm:rounded-r-[100px] sm:p-2"
+          className="absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-[50px] bg-[#ee9613] p-1 sm:rounded-r-[100px] sm:p-2"
           onClick={() => scrollLeft(scrollRef)}
           aria-label="Scroll left"
         >
@@ -200,7 +200,7 @@ function KhomasTowns() {
           {items.map((item, index) => itemRenderer(item, index))}
         </div>
         <button
-          className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[50px] bg-[#ee9613] p-1 sm:rounded-l-[100px] sm:p-2"
+          className="absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-[50px] bg-[#ee9613] p-1 sm:rounded-l-[100px] sm:p-2"
           onClick={() => scrollRight(scrollRef)}
           aria-label="Scroll right"
         >
