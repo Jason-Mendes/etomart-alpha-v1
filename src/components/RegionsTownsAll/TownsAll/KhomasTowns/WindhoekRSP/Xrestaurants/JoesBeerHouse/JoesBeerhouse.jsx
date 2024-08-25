@@ -547,7 +547,7 @@ function JoesBeerhouse() {
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
       <div className="container mx-auto px-2 sm:px-4 lg:px-6">
-         {/* Gradient overlays for scroll indicators */}
+        {/* Gradient overlays for scroll indicators */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
         {/* Left scroll button */}
@@ -565,7 +565,7 @@ function JoesBeerhouse() {
         >
           {items.map((item, index) => itemRenderer(item, index))}
         </div>
-         {/* Right scroll button */}
+        {/* Right scroll button */}
         <button
           className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
           onClick={() => scrollRight(scrollRef)}
@@ -600,21 +600,20 @@ function JoesBeerhouse() {
 
   // Return statement
   return (
-    <div className="bg-white">
+    <div className="">
       <Suspense fallback={<div>Loading...</div>}>
-        {/* Navigation bar */}
-        <div className="flex pb-20">
-          <nav
-            id="navbarKhomasOPNavBar"
-            className={` fixed inset-x-0 top-0 z-50 shadow-md transition-transform duration-300 ${isKhomasOPNavBarVisible ? '' : '-translate-y-full'
-              } ${isKhomasOPNavBarSticky ? 'sticky' : ''}`}
-          >
-            <KhomasOPNavBar />
-          </nav>
-        </div>
+
+        <nav
+          id="navbarKhomasOPNavBar"
+          className={`relative bg-[#f9f9f9] mx-auto inset-x-0 top-0 z-50 shadow-md transition-transform duration-300 ${isKhomasOPNavBarVisible ? '' : '-translate-y-full'
+            } ${isKhomasOPNavBarSticky ? 'sticky' : ''}`}
+        >
+          <KhomasOPNavBar />
+        </nav>
+
         <main className="relative z-10 ">
           {/* Header section */}
-          <header className="relative w-full">
+          <header className="relative w-full h-80">
             {/* Restaurant image */}
             <div className="relative mx-auto max-w-xs p-4">
               <LazyLoadImage
@@ -821,9 +820,9 @@ function JoesBeerhouse() {
               </div>
             </div>
             <div className="mt-4 px-4 text-gray-700">
-            {state.isDelivery
-              ? "The following Food is available for delivery to your location."
-              : "All Food the Restaurant has to offer"}
+              {state.isDelivery
+                ? "The following Food is available for delivery to your location."
+                : "All Food the Restaurant has to offer"}
             </div>
           </section>
 
@@ -1170,15 +1169,15 @@ function JoesBeerhouse() {
 
           {/* Similar Restaurants Section */}
           <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
-       <div
-         className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
-         style={{ width: "50%", maxWidth: "1000px" }}
-       >
-         <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
-           Similar Restaurants
-         </h2>
-       </div>
-     </section>
+            <div
+              className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
+              style={{ width: "50%", maxWidth: "1000px" }}
+            >
+              <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
+                Similar Restaurants
+              </h2>
+            </div>
+          </section>
 
           {/* Restaurants Carousel */}
           {renderCarousel(restaurants, restaurantsscroll, renderRestaurantCard)}

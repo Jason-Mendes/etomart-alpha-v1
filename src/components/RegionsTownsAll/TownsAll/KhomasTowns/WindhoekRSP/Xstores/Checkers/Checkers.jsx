@@ -514,7 +514,7 @@ useEffect(() => {
       <KhomasOPNavBar />
       <main className="relative z-10">
         {/* Header section */}
-        <header className="relative w-full">
+        <header className="relative w-full h-80">
           <div className="relative mx-auto max-w-xs p-4">
             <LazyLoadImage
               src="/images/supermarkets/checkers.png"

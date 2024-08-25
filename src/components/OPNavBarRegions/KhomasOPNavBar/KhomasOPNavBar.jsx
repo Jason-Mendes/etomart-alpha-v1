@@ -175,7 +175,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
           id="KhomasOPNavBar"
           className={`bg-[#f9f9f9] px-4 text-[#ee9613] transition-all duration-300 ${isExpanded ? 'py-6' : 'py-4'} relative z-50`}
         >
-          <div className="mx-auto flex max-w-7xl items-center justify-between">
+          <div className="mx-auto flex items-center justify-between">
             <div className="flex items-center">
               <h1 className={`mr-4 whitespace-nowrap pt-1 font-shrikhand text-3xl text-[#ee9613]`}>
                 <Link to="/LP">Etomart</Link>
