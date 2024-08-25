@@ -30,7 +30,7 @@ function Checkers() {
 
   // Combined state
   const [state, setState] = useState({
-    isDelivery: true,
+    isDelivery: false,
     searchTerm: "",
     currentIndex: 0,
     isPaused: false,
@@ -44,8 +44,12 @@ function Checkers() {
     isProductFocused: false,
     selectedCategories: [],
     sortCriteria: 'recommended',
-    isDelivery: true,
+    visibleCategories: [],
+    hiddenCategories: [],
+    isMoreDropdownOpen: false,
   });
+
+  const [mapboxLoaded, setMapboxLoaded] = useState(false);
 
   // Refs
   const containerRef = useRef(null);
@@ -56,6 +60,7 @@ function Checkers() {
   const categoriesSearchRef = useRef(null);
   const inputCategoriesRef = useRef(null);
   const inputProductRef = useRef(null);
+  const moreButtonRef = useRef(null);
 
   // Memoized data
   const navcategories = useNavcategories();
@@ -83,10 +88,6 @@ function Checkers() {
     }
   }, []);
 
-  // const handleSearch = useCallback((event) => {
-  //   setState(prevState => ({ ...prevState, searchTerm: event.target.value }));
-  // }, []);
-
   const handleExpandCategory = useCallback(() => {
     setState(prevState => ({ ...prevState, isExpanded: true }));
   }, []);
@@ -110,7 +111,6 @@ function Checkers() {
   const handleProductSearch = useCallback((event) => {
     setState(prevState => ({ ...prevState, productSearchTerm: event.target.value }));
   }, []);
-
 
   const handleNext = useCallback(() => {
     setState(prevState => ({ ...prevState, currentIndex: prevState.currentIndex + 1 }));
@@ -156,30 +156,28 @@ function Checkers() {
     });
   }, []);
 
-  const getMoreInfo = useCallback(() => {
-    alert("More information about the store");
+  // Function to show more information (placeholder)
+  const getInfo = useCallback(() => {
+    alert("Information about the store");
   }, []);
 
   const handleCategorySelect = useCallback((category) => {
     setState(prevState => {
-      const newSelectedCategories = prevState.selectedCategories.includes(category)
-        ? prevState.selectedCategories.filter(c => c !== category)
-        : [...prevState.selectedCategories, category];
-      return { ...prevState, selectedCategories: newSelectedCategories };
+      if (category === "") {
+        // If "All" is selected, clear all other selections
+        return { ...prevState, selectedCategories: [] };
+      } else {
+        const newSelectedCategories = prevState.selectedCategories.includes(category)
+          ? prevState.selectedCategories.filter(c => c !== category)
+          : [...prevState.selectedCategories, category];
+        return { ...prevState, selectedCategories: newSelectedCategories };
+      }
     });
   }, []);
 
   const handleSortChange = useCallback((event) => {
     setState(prevState => ({ ...prevState, sortCriteria: event.target.value }));
   }, []);
-
-  // const handleCategorySearch = useCallback((event) => {
-  //   setState(prevState => ({ ...prevState, categorySearchTerm: event.target.value }));
-  // }, []);
-
-  // const handleProductSearch = useCallback((event) => {
-  //   setState(prevState => ({ ...prevState, productSearchTerm: event.target.value }));
-  // }, []);
 
   const filteredCategories = useMemo(() =>
     navcategories.filter((category) =>
@@ -192,12 +190,12 @@ function Checkers() {
     let result = storecards;
 
     // Filter by delivery/pickup
-    result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
+  result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
 
-    // Filter by selected categories
-    if (state.selectedCategories.length > 0) {
-      result = result.filter(product => state.selectedCategories.includes(product.cuisine));
-    }
+  // Filter by selected categories
+  if (state.selectedCategories.length > 0) {
+    result = result.filter(product => state.selectedCategories.includes(product.cuisine));
+  }
 
     // Filter by product search term
     if (state.productSearchTerm) {
@@ -223,7 +221,6 @@ function Checkers() {
         return result;
     }
   }, [storecards, state.isDelivery, state.selectedCategories, state.productSearchTerm, state.sortCriteria]);
-
 
   // Mapbox setup
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -303,11 +300,48 @@ function Checkers() {
   }, []);
 
   // Effects
-  useEffect(() => {
-    if (mapContainerRef.current) {
-      initializeMap(mapContainerRef.current);
-    }
-  }, [initializeMap]);
+ // Effect for initializing the map
+ useEffect(() => {
+  console.log("Map container ref:", mapContainerRef.current);
+  if (mapContainerRef.current && !state.map) {
+    console.log("Calling initializeMap");
+    initializeMap(mapContainerRef.current);
+  }
+}, [initializeMap, state.map]);
+
+// Effect for checking Mapbox support and initializing the map
+useEffect(() => {
+  if (typeof mapboxgl !== 'undefined' && mapboxgl.supported() && mapContainerRef.current && !state.map) {
+    console.log("Mapbox supported and container ready, initializing map");
+    initializeMap(mapContainerRef.current);
+  } else {
+    console.log("Mapbox not ready or already initialized", {
+      mapboxDefined: typeof mapboxgl !== 'undefined',
+      mapboxSupported: typeof mapboxgl !== 'undefined' && mapboxgl.supported(),
+      containerReady: !!mapContainerRef.current,
+      mapAlreadyInitialized: !!state.map
+    });
+  }
+}, [initializeMap, state.map]);
+
+// Effect for loading Mapbox script
+useEffect(() => {
+  if (window.mapboxgl) {
+    setMapboxLoaded(true);
+  } else {
+    const script = document.createElement('script');
+    script.src = 'https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js';
+    script.onload = () => setMapboxLoaded(true);
+    document.body.appendChild(script);
+  }
+}, []);
+
+// Effect for initializing map after Mapbox is loaded
+useEffect(() => {
+  if (mapboxLoaded && mapContainerRef.current) {
+    initializeMap(mapContainerRef.current);
+  }
+}, [mapboxLoaded, initializeMap]);
 
   useEffect(() => {
     let interval;
@@ -352,6 +386,7 @@ function Checkers() {
   const handleProductsFocus = (field) => () => {
     setState(prevState => ({ ...prevState, [field]: true }));
   };
+  
   const handleCategoriesFocus = (field) => () => {
     setState(prevState => ({ ...prevState, [field]: true }));
   };
@@ -368,6 +403,7 @@ function Checkers() {
       inputCategoriesRef.current.focus();
     }
   };
+  
   const handleClearProduct = (field) => () => {
     setState(prevState => ({ ...prevState, [field]: "" }));
     if (inputProductRef.current) {
@@ -379,13 +415,52 @@ function Checkers() {
     setState(prevState => ({ ...prevState, selectedCategories: [] }));
   }, []);
 
+  const toggleMoreDropdown = useCallback(() => {
+    setState(prevState => ({ ...prevState, isMoreDropdownOpen: !prevState.isMoreDropdownOpen }));
+  }, []);
+
+  // Function to handle smooth scrolling for information button to snap to more information section
+  const smoothScroll = useCallback((target, duration = 1000) => {
+    const targetElement = document.getElementById(target);
+    if (!targetElement) return;
+
+    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+
+    // Easing function
+    function ease(t, b, c, d) {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+
+    requestAnimationFrame(animation);
+  }, []);
+
+    // Function to handle the infromation button click
+    const handleSeeMoreInfo = useCallback(() => {
+      smoothScroll('moreInformation', 1500); // Scroll duration of 1.5 seconds
+    }, [smoothScroll]);
 
   // Render helpers
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
       <div className="container mx-auto px-2 sm:px-4 lg:px-6">
+         {/* Gradient overlays for scroll indicators */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
+        {/* Left scroll button */}
         <button
           className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
           onClick={() => scrollLeft(scrollRef)}
@@ -393,12 +468,14 @@ function Checkers() {
         >
           &#9664;
         </button>
+        {/* Carousel content */}
         <div
           ref={scrollRef}
           className="custom-scrollbar flex space-x-4 overflow-x-auto p-4 sm:p-6 md:p-8"
         >
           {items.map((item, index) => itemRenderer(item, index))}
         </div>
+         {/* Right scroll button */}
         <button
           className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
           onClick={() => scrollRight(scrollRef)}
@@ -410,6 +487,7 @@ function Checkers() {
     </div>
   ), [scrollLeft, scrollRight]);
 
+  // Function to render a restaurant card
   const renderSupermarketCard = useCallback((supermarket, index) => (
     <div key={index} className="w-48 shrink-0 p-6 sm:w-56 md:w-64 lg:w-72">
       <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
@@ -491,12 +569,12 @@ function Checkers() {
                       {state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                     </button>
                     <button
-                      onClick={getMoreInfo}
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      More Information
-                    </button>
+                        onClick={getInfo}
+                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        role="menuitem"
+                      >
+                        Stores Information
+                      </button>
                   </div>
                 </div>
               )}
@@ -600,134 +678,158 @@ function Checkers() {
                 </svg>
                 <span>9.8</span>
               </div>
-              <button type="button" className="flex items-center space-x-1 text-[#ee9613]">
-                <svg viewBox="0 0 24 24" width="16">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
-                </svg>
-                <span>See more information</span>
-              </button>
+              <button
+                  type="button"
+                  onClick={handleSeeMoreInfo}
+                  className="flex items-center space-x-1 text-[#ee9613] hover:underline focus:outline-none focus:ring-2 focus:ring-[#ee9613] focus:ring-opacity-50 transition duration-300"
+                >
+                  <svg viewBox="0 0 24 24" width="16">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
+                  </svg>
+                  <span>See more information</span>
+                </button>
             </div>
             <div className="flex items-center justify-end space-x-2 rounded-full border-solid bg-gray-200 p-1">
-              <button
-                className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-[#ee9613] text-white" : "bg-gray-200"}`}
-                onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
-              >
-                Delivery
-              </button>
-              <button
-                className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
-                onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
-              >
-                Pickup
-              </button>
+                <button
+                  className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-[#ee9613] text-white" : "bg-gray-200"}`}
+                  onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
+                >
+                  Delivery
+                </button>
+                <button
+                  className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
+                  onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
+                >
+                  Pickup
+                </button>
+              </div>
             </div>
-          </div>
           <div className="px-4 text-gray-700">
             {state.isDelivery
-              ? "Delivery is available for your location."
-              : "The store isn't delivering to your location, but you can still place an order for pickup."}
+              ? "The following products are available for delivery to your location."
+              : "All products the Store has to offer"}
           </div>
         </section>
 
-      {/* Categories and products section */}
-      <section className="container mx-auto px-4">
-      <div className="flex flex-row">
-        {/* Categories sidebar */}
-        <aside className="w-full md:w-1/5 p-4">
-          <div className="flex flex-col">
-            <div className="mb-4 w-full">
-              <div className="relative">
-                <input
-                  ref={categoriesSearchRef}
-                  type="text"
-                  placeholder="Search Categories..."
-                  value={state.categorySearchTerm}
-                  onChange={handleSearch('categorySearchTerm')}
-                  onFocus={handleCategoriesFocus('isCategoryFocused')}
-                  onBlur={handleBlur('isCategoryFocused')}
-                  className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+        {/* Categories and products section */}
+        <section className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row">
+            {/* Mobile view (below md screens) */}
+            <div className="md:hidden w-full">
+              {/* Product search */}
+              <div className="mb-4 w-full">
+                <div className="relative">
+                  <input
+                    ref={inputProductRef}
+                    type="text"
+                    placeholder="Search products..."
+                    value={state.productSearchTerm}
+                    onChange={handleSearch('productSearchTerm')}
+                    onFocus={handleProductsFocus('isProductFocused')}
+                    onBlur={handleBlur('isProductFocused', 'productSearchTerm')}
+                    className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
                   />
-                  {state.isCategoryFocused ? (
+                  {state.isProductFocused ? (
                     <>
                       <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                      {state.categorySearchTerm && (
+                      {state.productSearchTerm && (
                         <X
                           size={20}
                           className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
-                          onClick={handleClearCategory('categorySearchTerm')}
+                          onClick={handleClearProduct('productSearchTerm')}
                         />
                       )}
                     </>
                   ) : (
                     <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
                   )}
-              </div>
-            </div>
-            
-            <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "calc(850px - 4rem)" }}>
-              {state.selectedCategories.length > 0 && (
-                <button
-                  onClick={clearSelectedCategories}
-                  className="mb-2 w-full rounded-lg bg-[#8f8575] p-2 text-white shadow hover:bg-[#ee9613]"
-                >
-                  Clear Selected Categories
-                </button>
-              )}
-              {filteredCategories.map((category, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleCategorySelect(category.name)}
-                  className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-gray-100 ${
-                    state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
-                  }`}
-                >
-                  <LazyLoadImage
-                    src={category.imgSrc}
-                    alt={category.name}
-                    effect="blur"
-                    className="mr-4 size-10 rounded-full hidden md:block"
-                  />
-                  <span>{category.name}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </aside>
-
-        {/* Products grid */}
-        <section className="w-full md:w-4/5">
-          <div className="px-4">
-            <div className="flex items-center p-4">
-              <h2 className="mr-auto text-2xl font-bold">All Products</h2>
-                <div className="mx-auto flex items-center">
-                  <div className="relative ">
-                    <input
-                      ref={productSearchRef}
-                      type="text"
-                      placeholder="Search products..."
-                      value={state.productSearchTerm}
-                      onChange={handleSearch('productSearchTerm')}
-                      onFocus={handleProductsFocus('isProductFocused')}
-                      onBlur={handleBlur('isProductFocused')}
-                      className="w-full rounded-full border border-gray-300 px-28 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
-                    />
-                    {state.isProductFocused ? (
-                      <>
-                        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                        {state.productSearchTerm && (
-                          <X
-                            size={20}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
-                            onClick={handleClearProduct('productSearchTerm')}
-                          />
-                        )}
-                      </>
-                    ) : (
-                      <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                    )}
-                  </div>
                 </div>
-                <div className="ml-auto flex items-center">
+              </div>
+
+              {/* Categories */}
+              <div className="mb-4">
+                <div className="flex items-center space-x-4">
+                  {/* Visible categories */}
+                  <div className="flex-1 overflow-x-auto">
+                    <div className="grid auto-cols-max grid-flow-col gap-2 pb-2">
+                    <button
+  onClick={() => handleCategorySelect("")}
+  className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${
+    state.selectedCategories.length === 0 ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+  }`}
+>
+  All
+</button>
+
+                      {state.visibleCategories.map((category) => (
+                        <button
+                          key={category}
+                          onClick={() => handleCategorySelect(category)}
+                          className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${
+                            state.selectedCategories.includes(category) ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                          }`}
+                        >
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+    {/* More button */}
+{state.hiddenCategories.length > 0 && (
+  <div className="relative w-auto min-w-[80px] pr-6">
+    <div className="relative">
+      <button
+        ref={moreButtonRef}
+        onClick={toggleMoreDropdown}
+        className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
+      >
+        More 
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 24 24" 
+          fill="currentColor" 
+          aria-hidden="true" 
+          className="mx-2 size-4"
+        >
+          <path 
+            fillRule="evenodd" 
+            d="M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z" 
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+      {/* Dropdown Menu */}
+      {state.isMoreDropdownOpen && (
+        <div
+          ref={dropdownRef}
+          className="absolute left-0 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
+          style={{ top: 'calc(100% + 2px)' }}
+        >
+          <div className="grid grid-cols-2 gap-2 p-2">
+            {state.hiddenCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => {
+                  handleCategorySelect(category);
+                  setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+                }}
+                className="whitespace-normal rounded px-3 py-2 text-left hover:bg-gray-100"
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+)}
+                </div>
+              </div>
+
+              {/* All Products and Sort */}
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold">All Products</h2>
                 <select
                   value={state.sortCriteria}
                   onChange={handleSortChange}
@@ -740,149 +842,320 @@ function Checkers() {
                   <option value="nameDesc">Name: Z to A</option>
                 </select>
               </div>
-            </div>
 
-            <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
-              <div className="px-2 pb-4">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-                  {filteredAndSortedProducts.map((product, index) => (
-                    <div
-                      key={index}
-                      className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
+              {/* Products grid */}
+              <div className="grid grid-cols-2 gap-4">
+                {filteredAndSortedProducts.map((product, index) => (
+                  <div key={index} className="w-full">
+                    <a
+                      href={product.href}
+                      className="block h-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
                     >
-                      <a href={product.href}
-                        className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
-                      >
-                        <div className="flex h-full flex-col">
-                          <div className="relative aspect-square w-full overflow-hidden">
-                            <LazyLoadImage
-                              src={product.imgSrc}
-                              alt={product.name}
-                              width="100%"
-                              height="100%"
-                              effect="blur"
-                              className="size-full object-cover"
-                            />
-                            {product.discount && (
-                              <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
-                                {`-${product.discount}%`}
-                              </div>
-                            )}
-                            <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
-                              +
-                            </div>
+                      <div className="relative aspect-square w-full overflow-hidden">
+                        <LazyLoadImage
+                          src={product.imgSrc}
+                          alt={product.name}
+                          width="100%"
+                          height="100%"
+                          effect="blur"
+                          className="size-full object-cover"
+                        />
+                        {product.discount && (
+                          <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
+                            {`-${product.discount}%`}
                           </div>
-                          <div className="flex w-full grow flex-col p-2">
-                            <h3 className="truncate font-bold">{product.name}</h3>
-                            <div className="mt-2 flex items-center text-sm">
-                              <div className="text-sm font-bold text-[#ee9613]">
-                                <span>{product.priceRange}</span>
-                              </div>
-                              <span className="mx-1">•</span>
-                              <span className="truncate">{product.cuisine}</span>
-                            </div>
-                            <div className="mt-1 text-xs text-gray-500">
-                              {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
-                            </div>
-                            <div className="mt-1 line-clamp-2 text-xs text-gray-500">
-                              {product.description}
-                            </div>
-                            <div className="mt-auto">
-                              <div className="rounded py-1 text-xs text-black">
-                                <span className="text-black">Etomart </span>
-                                {product.deliveryTime ? (
-                                  <span className="font-bold text-[#ee9613]">Delivery Available</span>
-                                ) : (
-                                  <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
-                                )}
-                              </div>
-                            </div>
+                        )}
+                        <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                          +
+                        </div>
+                      </div>
+                      <div className="flex w-full grow flex-col p-2">
+                        <h3 className="truncate font-bold">{product.name}</h3>
+                        <div className="mt-2 flex items-center text-sm">
+                          <div className="text-sm font-bold text-[#ee9613]">
+                            <span>{product.priceRange}</span>
+                          </div>
+                          <span className="mx-1">•</span>
+                          <span className="truncate">{product.cuisine}</span>
+                        </div>
+                        <div className="mt-1 text-xs text-gray-500">
+                          {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
+                        </div>
+                        <div className="mt-1 line-clamp-2 text-xs text-gray-500">
+                          {product.description}
+                        </div>
+                        <div className="mt-auto">
+                          <div className="rounded py-1 text-xs text-black">
+                            <span className="text-black">Etomart </span>
+                            {product.deliveryTime ? (
+                              <span className="font-bold text-[#ee9613]">Delivery Available</span>
+                            ) : (
+                              <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
+                            )}
                           </div>
                         </div>
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </section>
-
-        {/* More Information Section */}
-        <section className="container mx-auto mt-8 p-4">
-          <div className="flex flex-col md:flex-row md:space-x-8">
-            <div className="space-y-8 md:w-1/3">
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-md font-semibold">Store Information</h3>
-                  <p className="font-bold text-[#ee9613]">Checkers</p>
-                  <p>Better and Better</p>
-                </div>
-                <div>
-                  <h3 className="text-md font-semibold">Address</h3>
-                  <div>
-                    <p>Windhoek West</p>
-                    <p>8850603 Eilat</p>
-                    <a href="https://maps.google.com/?q=29.56134350459979,34.95609347009179"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-bold text-[#ee9613] hover:underline"
-                    >
-                      See map
+                      </div>
                     </a>
                   </div>
-                </div>
+                ))}
               </div>
             </div>
-            <div className="space-y-8 md:w-1/3">
-              <h3 className="text-md font-semibold">More information</h3>
-              <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">
-                +972543131665
-              </a>
-              <div>
-                <h3 className="text-md font-semibold">Delivery times</h3>
-                <table className="table-auto">
-                  <tbody>
-                    {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
-                      <tr key={day}>
-                        <td className="pr-4">{day}</td>
-                        <td>09:00–22:30</td>
-                      </tr>
+
+            {/* Desktop view (md screens and above) */}
+            <div className="hidden md:flex md:flex-row w-full">
+              {/* Categories sidebar */}
+              <aside className="w-1/5 p-4">
+                <div className="flex flex-col">
+                  <div className="mb-4 w-full">
+                    <div className="relative">
+                      <input
+                        ref={categoriesSearchRef}
+                        type="text"
+                        placeholder="Search Categories..."
+                        value={state.categorySearchTerm}
+                        onChange={handleSearch('categorySearchTerm')}
+                        onFocus={handleCategoriesFocus('isCategoryFocused')}
+                        onBlur={handleBlur('isCategoryFocused', 'categorySearchTerm')}
+                        className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+                      />
+                      {state.isCategoryFocused ? (
+                        <>
+                          <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                          {state.categorySearchTerm && (
+                            <X
+                              size={20}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
+                              onClick={handleClearCategory('categorySearchTerm')}
+                            />
+                          )}
+                        </>
+                      ) : (
+                        <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "calc(850px - 4rem)" }}>
+                    {state.selectedCategories.length > 0 && (
+                      <button
+                        onClick={clearSelectedCategories}
+                        className="mb-2 w-full rounded-lg bg-[#8f8575] p-2 text-white shadow hover:bg-[#ee9613]"
+                      >
+                        Clear Selected Categories
+                      </button>
+                    )}
+                    {filteredCategories.map((category, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleCategorySelect(category.name)}
+                        className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-[#ecbc73] ${
+                          state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
+                        }`}
+                      >
+                        <LazyLoadImage
+                          src={category.imgSrc}
+                          alt={category.name}
+                          effect="blur"
+                          className="mr-4 size-10 rounded-full hidden md:block"
+                        />
+                        <span>{category.name}</span>
+                      </button>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                </div>
+              </aside>
+
+              {/* Products grid */}
+              <section className="w-4/5">
+                <div className="px-4">
+                  <div className="flex items-center p-4">
+                    <h2 className="mr-auto text-2xl font-bold">All Products</h2>
+                    <div className="mx-auto flex items-center">
+                      <div className="relative ">
+                        <input
+                          ref={productSearchRef}
+                          type="text"
+                          placeholder="Search products..."
+                          value={state.productSearchTerm}
+                          onChange={handleSearch('productSearchTerm')}
+                          onFocus={handleProductsFocus('isProductFocused')}
+                          onBlur={handleBlur('isProductFocused', 'productSearchTerm')}
+                          className="w-full rounded-full border border-gray-300 px-28 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+                        />
+                        {state.isProductFocused ? (
+                          <>
+                            <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                            {state.productSearchTerm && (
+                             <X
+                             size={20}
+                             className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
+                             onClick={handleClearProduct('productSearchTerm')}
+                           />
+                         )}
+                       </>
+                     ) : (
+                       <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                     )}
+                   </div>
+                 </div>
+                 <div className="ml-auto flex items-center">
+                   <select
+                     value={state.sortCriteria}
+                     onChange={handleSortChange}
+                     className="rounded-md border px-4 py-2"
+                   >
+                     <option value="recommended">Sort by: Recommended</option>
+                     <option value="priceAsc">Price: Low to High</option>
+                     <option value="priceDesc">Price: High to Low</option>
+                     <option value="nameAsc">Name: A to Z</option>
+                     <option value="nameDesc">Name: Z to A</option>
+                   </select>
+                 </div>
+               </div>
+
+               <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
+                 <div className="px-2 pb-4">
+                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+                     {filteredAndSortedProducts.map((product, index) => (
+                       <div
+                         key={index}
+                         className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
+                       >
+                         <a href={product.href}
+                           className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
+                         >
+                           <div className="flex h-full flex-col">
+                             <div className="relative aspect-square w-full overflow-hidden">
+                               <LazyLoadImage
+                                 src={product.imgSrc}
+                                 alt={product.name}
+                                 width="100%"
+                                 height="100%"
+                                 effect="blur"
+                                 className="size-full object-cover"
+                               />
+                               {product.discount && (
+                                 <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
+                                   {`-${product.discount}%`}
+                                 </div>
+                               )}
+                               <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                                 +
+                               </div>
+                             </div>
+                             <div className="flex w-full grow flex-col p-2">
+                               <h3 className="truncate font-bold">{product.name}</h3>
+                               <div className="mt-2 flex items-center text-sm">
+                                 <div className="text-sm font-bold text-[#ee9613]">
+                                   <span>{product.priceRange}</span>
+                                 </div>
+                                 <span className="mx-1">•</span>
+                                 <span className="truncate">{product.cuisine}</span>
+                               </div>
+                               <div className="mt-1 text-xs text-gray-500">
+                                 {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
+                               </div>
+                               <div className="mt-1 line-clamp-2 text-xs text-gray-500">
+                                 {product.description}
+                               </div>
+                               <div className="mt-auto">
+                                 <div className="rounded py-1 text-xs text-black">
+                                   <span className="text-black">Etomart </span>
+                                   {product.deliveryTime ? (
+                                     <span className="font-bold text-[#ee9613]">Delivery Available</span>
+                                   ) : (
+                                     <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
+                                   )}
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                         </a>
+                       </div>
+                     ))}
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </section>
+         </div>
+       </div>
+     </section>
+
+     {/*More Information Section */}
+     <section  id="moreInformation" className="container mx-auto mt-8 p-4">
+            {/* More information content */}
+            <div className="flex flex-col p-4 md:flex-row md:space-x-8">
+              <div className="space-y-8 md:w-1/3">
+                <div className="space-y-8">
+                  <div>
+               <h3 className="text-md font-semibold">Store Information</h3>
+               <p className="font-bold text-[#ee9613]">Checkers</p>
+               <p>Better and Better</p>
+             </div>
+             <div>
+               <h3 className="text-md font-semibold">Address</h3>
+               <div>
+                 <p>Windhoek West</p>
+                 <p>8850603 Eilat</p>
+                 <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-[#ee9613] hover:underline"
+                      >
+                   See map
+                 </a>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div className="space-y-8 md:w-1/3">
+           <h3 className="text-md font-semibold">More information</h3>
+           <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">
+             +972543131665
+           </a>
+           <div>
+             <h3 className="text-md font-semibold">Delivery times</h3>
+             <table className="table-auto">
+               <tbody>
+                 {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                   <tr key={day}>
+                     <td className="pr-4">{day}</td>
+                     <td>09:00–22:30</td>
+                   </tr>
+                 ))}
+               </tbody>
+             </table>
+           </div>
+         </div>
+         <div className="md:w-2/3">
+                <div ref={mapContainerRef} className="h-[400px] w-full"></div>
               </div>
-            </div>
-            <div className="relative h-64 w-full md:h-96">
-              <div ref={mapContainerRef} className="absolute inset-0" />
-            </div>
-          </div>
-        </section>
+       </div>
+     </section>
 
-        {/* Similar Supermarkets Section */}
-        <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
-          <div
-            className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
-            style={{ width: "50%", maxWidth: "1000px" }}
-          >
-            <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
-              Similar Supermarkets
-            </h2>
-          </div>
-        </section>
+     {/* Similar Supermarkets Section */}
+     <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
+       <div
+         className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
+         style={{ width: "50%", maxWidth: "1000px" }}
+       >
+         <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
+           Similar Supermarkets
+         </h2>
+       </div>
+     </section>
 
-        {/* Supermarkets Carousel */}
-        {renderCarousel(supermarkets, supermarketsscroll, renderSupermarketCard)}
-      </main>
-      <Footer />
-    </div>
-  );
+     {/* Supermarkets Carousel */}
+     {renderCarousel(supermarkets, supermarketsscroll, renderSupermarketCard)}
+   </main>
+   <Footer />
+ </div>
+);
 }
 
 Checkers.propTypes = {
-  // Add prop types here if needed
+// Add prop types here if needed
 };
 
 export default Checkers;

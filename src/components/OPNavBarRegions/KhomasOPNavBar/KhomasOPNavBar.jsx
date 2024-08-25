@@ -169,172 +169,174 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
 
   
   return (
-    <div className="font-josefin_sans">
-      <nav
-        id="KhomasOPNavBar"
-        className={`bg-[#f9f9f9] px-4 text-[#ee9613] transition-all duration-300 ${isExpanded ? 'py-6' : 'py-4'} relative z-50`}
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center">
-            <h1 className={`mr-4 whitespace-nowrap pt-1 font-shrikhand text-3xl text-[#ee9613]`}>
-              <Link to="/LP">Etomart</Link>
-            </h1>
-            <div className={`${isExpanded ? 'hidden' : ''}`}>
-              <LocationButton onClick={handleLocationClick} />
-            </div>
-          </div>
-          <div className={`relative flex grow justify-center ${isExpanded ? 'w-full' : ''}`}>
-            <div className={`relative ${isExpanded ? 'w-full max-w-[700px]' : 'w-[400px]'} transition-all duration-300`}>
-              <input
-                placeholder="Search in Etomart..."
-                data-test-id="SearchInput"
-                className="w-full rounded-full border border-gray-300 py-2 pl-12 pr-10 text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
-                style={{ height: '40px' }}
-                value={searchQuery}
-                onChange={handleSearchInputChange}
-                onFocus={handleExpandNavbar}
-              />
-              <Search
-                size={20}
-                className={`absolute right-4 top-1/2 -translate-y-1/2 text-orange-500 ${isExpanded ? 'hidden' : ''}`}
-              />
-              <Search
-                size={20}
-                className={`absolute left-4 top-1/2 -translate-y-1/2 text-orange-500 ${!isExpanded ? 'hidden' : ''}`} />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                >
-                  <X size={20} />
-                </button>
-              )}
-            </div>
-          </div>
-          <div className={`flex items-center space-x-4 ${isExpanded ? 'hidden' : ''}`}>
-            <div className="hidden md:block">
-              <HomeIcon />
-            </div>
-            <div className="hidden lg:block">
-              <CartIcon />
-            </div>
-            <div className="hidden xl:block">
-              <UserProfileIcon />
-            </div>
-            <div className="cursor-pointer xl:hidden" onClick={() => setNav(!nav)}>
-              {nav ? <CgClose size={30} /> : <CgMenuRound size={30} />}
-            </div>
-          </div>
-          {isExpanded && (
-            <button
-              className="ml-4 rounded-full p-1 text-gray-500 hover:text-black focus:outline-none"
-              onClick={handleCollapseNavbar}
-            >
-              <X size={20} />
-            </button>
-          )}
-        </div>
-      </nav>
-      {isExpanded && (
-        <>
-          <div className="relative z-40 bg-white shadow-md">
-            <div className="mx-auto max-h-[calc(100vh-5rem)] max-w-7xl overflow-y-auto p-4">
-              <div className="mb-8">
-                <div className="mb-4 flex items-center justify-between">
-                  <h2 className="text-xl font-bold">Stores, Restaurants and Pharmacies</h2>
-                  <button className="text-[#ee9613] hover:underline">See all</button>
-                </div>
-                <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {searchResults.stores.slice(0, 4).map((store, index) => (
-                    <div key={index}>{renderStoreCard(store)}</div>
-                  ))}
-                </div>
-              </div>
-              <div className="">
-              <h2 className="py-2 text-xl font-bold">Found what you are looking for?</h2>
-                <div className="mb-8">
-                  <div className="mb-4 flex items-center justify-between">
-                    <h2 className="text-xl font-bold">Food</h2>
-                    <button className="text-[#ee9613] hover:underline">See all</button>
-                  </div>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                    {searchResults.food.slice(0, 3).map((food, index) => (
-                      <div key={index}>{renderFoodCard(food)}</div>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                <div className="mb-4 flex items-center justify-between">
-                    <h2 className="text-xl font-bold">Products & Groceries</h2>
-                    <button className="text-[#ee9613] hover:underline">See all</button>
-                  </div>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                    {searchResults.product.slice(0, 3).map((product, index) => (
-                      <div key={index}>{renderPharmacyCard(product)}</div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="fixed inset-0 z-30 mt-[calc(5rem+1px)] bg-black bg-opacity-50" onClick={handleOverlayClick}></div>
-        </>
-      )}
-      {showLocationModal && (
-        <LocationModal
-          showModal={showLocationModal}
-          closeModal={closeModals}
-        />
-      )}
-
-      {nav && (
-        <div
-          className="absolute right-0 top-24 z-20 w-56 rounded-lg bg-[#fdfdfd] shadow-lg transition-opacity duration-200"
-          role="dialog"
-          style={{ opacity: nav ? 1 : 0 }}
+    <div className="container mx-auto px-4">
+      <div className="font-josefin_sans">
+        <nav
+          id="KhomasOPNavBar"
+          className={`bg-[#f9f9f9] px-4 text-[#ee9613] transition-all duration-300 ${isExpanded ? 'py-6' : 'py-4'} relative z-50`}
         >
-          <div className="relative">
-            <div className="absolute -top-2.5 right-3 z-20">
-              <svg viewBox="0 0 32 16" className="size-4 text-white">
-                <path className="fill-white" d="M 16,0 L32,16 H0 Z"></path>
-                <path fill="#fdfdfd" d="M 16,1 L31,16 H1 Z"></path>
-              </svg>
+          <div className="mx-auto flex max-w-7xl items-center justify-between">
+            <div className="flex items-center">
+              <h1 className={`mr-4 whitespace-nowrap pt-1 font-shrikhand text-3xl text-[#ee9613]`}>
+                <Link to="/LP">Etomart</Link>
+              </h1>
+              <div className={`${isExpanded ? 'hidden' : ''}`}>
+                <LocationButton onClick={handleLocationClick} />
+              </div>
             </div>
-            <div className="p-4">
-              <div className="mb-2 flex items-center justify-center">
+            <div className={`relative flex grow justify-center ${isExpanded ? 'w-full' : ''}`}>
+              <div className={`relative ${isExpanded ? 'w-full max-w-[700px]' : 'w-[400px]'} transition-all duration-300`}>
+                <input
+                  placeholder="Search in Etomart..."
+                  data-test-id="SearchInput"
+                  className="w-full rounded-full border border-gray-300 py-2 pl-12 pr-10 text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  style={{ height: '40px' }}
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  onFocus={handleExpandNavbar}
+                />
+                <Search
+                  size={20}
+                  className={`absolute right-4 top-1/2 -translate-y-1/2 text-orange-500 ${isExpanded ? 'hidden' : ''}`}
+                />
+                <Search
+                  size={20}
+                  className={`absolute left-4 top-1/2 -translate-y-1/2 text-orange-500 ${!isExpanded ? 'hidden' : ''}`} />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    <X size={20} />
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className={`flex items-center space-x-4 ${isExpanded ? 'hidden' : ''}`}>
+              <div className="hidden md:block">
                 <HomeIcon />
               </div>
-              <div className="mb-2 flex items-center justify-center">
+              <div className="hidden lg:block">
                 <CartIcon />
               </div>
-              <div className="mb-2">
-                <button className="w-full rounded-md py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b]">
-                  Login or register
-                </button>
+              <div className="hidden xl:block">
+                <UserProfileIcon />
               </div>
-              <hr className="border-gray-200" />
-              <div className="mt-2 w-full py-2 text-center">
-                <select
-                  id="language-selector"
-                  className="mt-1 block w-full rounded-md border bg-[#ffaf5e4b] bg-white px-3 py-2 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                >
-                  <option value="en">English</option>
-                  <option value="de">Deutsch</option>
-                  <option value="fr">Français</option>
-                  <option value="es">Español</option>
-                  <option value="ru">Русский</option>
-                  <option value="zh">中文</option>
-                </select>
+              <div className="cursor-pointer xl:hidden" onClick={() => setNav(!nav)}>
+                {nav ? <CgClose size={30} /> : <CgMenuRound size={30} />}
               </div>
-              <div className="mt-2">
-                <button className="w-full rounded-md px-4 py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]">
-                  Support
-                </button>
+            </div>
+            {isExpanded && (
+              <button
+                className="ml-4 rounded-full p-1 text-gray-500 hover:text-black focus:outline-none"
+                onClick={handleCollapseNavbar}
+              >
+                <X size={20} />
+              </button>
+            )}
+          </div>
+        </nav>
+        {isExpanded && (
+          <>
+            <div className="relative z-40 bg-white shadow-md">
+              <div className="mx-auto max-h-[calc(100vh-5rem)] max-w-7xl overflow-y-auto p-4">
+                <div className="mb-8">
+                  <div className="mb-4 flex items-center justify-between">
+                    <h2 className="text-xl font-bold">Stores, Restaurants and Pharmacies</h2>
+                    <button className="text-[#ee9613] hover:underline">See all</button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {searchResults.stores.slice(0, 4).map((store, index) => (
+                      <div key={index}>{renderStoreCard(store)}</div>
+                    ))}
+                  </div>
+                </div>
+                <div className="">
+                <h2 className="py-2 text-xl font-bold">Found what you are looking for?</h2>
+                  <div className="mb-8">
+                    <div className="mb-4 flex items-center justify-between">
+                      <h2 className="text-xl font-bold">Food</h2>
+                      <button className="text-[#ee9613] hover:underline">See all</button>
+                    </div>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                      {searchResults.food.slice(0, 3).map((food, index) => (
+                        <div key={index}>{renderFoodCard(food)}</div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                  <div className="mb-4 flex items-center justify-between">
+                      <h2 className="text-xl font-bold">Products & Groceries</h2>
+                      <button className="text-[#ee9613] hover:underline">See all</button>
+                    </div>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                      {searchResults.product.slice(0, 3).map((product, index) => (
+                        <div key={index}>{renderPharmacyCard(product)}</div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="fixed inset-0 z-30 mt-[calc(5rem+1px)] bg-black bg-opacity-50" onClick={handleOverlayClick}></div>
+          </>
+        )}
+        {showLocationModal && (
+          <LocationModal
+            showModal={showLocationModal}
+            closeModal={closeModals}
+          />
+        )}
+  
+        {nav && (
+          <div
+            className="absolute right-0 top-24 z-20 w-56 rounded-lg bg-[#fdfdfd] shadow-lg transition-opacity duration-200"
+            role="dialog"
+            style={{ opacity: nav ? 1 : 0 }}
+          >
+            <div className="relative">
+              <div className="absolute -top-2.5 right-3 z-20">
+                <svg viewBox="0 0 32 16" className="size-4 text-white">
+                  <path className="fill-white" d="M 16,0 L32,16 H0 Z"></path>
+                  <path fill="#fdfdfd" d="M 16,1 L31,16 H1 Z"></path>
+                </svg>
+              </div>
+              <div className="p-4">
+                <div className="mb-2 flex items-center justify-center">
+                  <HomeIcon />
+                </div>
+                <div className="mb-2 flex items-center justify-center">
+                  <CartIcon />
+                </div>
+                <div className="mb-2">
+                  <button className="w-full rounded-md py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b]">
+                    Login or register
+                  </button>
+                </div>
+                <hr className="border-gray-200" />
+                <div className="mt-2 w-full py-2 text-center">
+                  <select
+                    id="language-selector"
+                    className="mt-1 block w-full rounded-md border bg-[#ffaf5e4b] bg-white px-3 py-2 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
+                  >
+                    <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                    <option value="ru">Русский</option>
+                    <option value="zh">中文</option>
+                  </select>
+                </div>
+                <div className="mt-2">
+                  <button className="w-full rounded-md px-4 py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]">
+                    Support
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

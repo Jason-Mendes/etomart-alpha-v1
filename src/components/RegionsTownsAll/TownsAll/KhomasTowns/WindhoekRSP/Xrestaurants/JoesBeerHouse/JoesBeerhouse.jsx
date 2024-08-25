@@ -545,12 +545,11 @@ function JoesBeerhouse() {
 
   // Function to render the carousel
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
-    <div className="relative mt-4 w-full sm:mt-6 md:mt-8">
+    <div className="relative mt-4 sm:mt-6 md:mt-8">
       <div className="container mx-auto px-2 sm:px-4 lg:px-6">
-        {/* Gradient overlays for scroll indicators */}
+         {/* Gradient overlays for scroll indicators */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
-
         {/* Left scroll button */}
         <button
           className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
@@ -559,7 +558,6 @@ function JoesBeerhouse() {
         >
           &#9664;
         </button>
-
         {/* Carousel content */}
         <div
           ref={scrollRef}
@@ -567,8 +565,7 @@ function JoesBeerhouse() {
         >
           {items.map((item, index) => itemRenderer(item, index))}
         </div>
-
-        {/* Right scroll button */}
+         {/* Right scroll button */}
         <button
           className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
           onClick={() => scrollRight(scrollRef)}
@@ -582,13 +579,15 @@ function JoesBeerhouse() {
 
   // Function to render a restaurant card
   const renderRestaurantCard = useCallback((restaurant, index) => (
-    <div key={index} className="w-full max-w-[300px] shrink-0">
+    <div key={index} className="w-48 shrink-0 p-6 sm:w-56 md:w-64 lg:w-72">
       <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-        <div className="relative w-full overflow-hidden rounded-t-lg pb-[100%]">
+        <div className="relative aspect-square w-full overflow-hidden rounded-t-lg">
           <LazyLoadImage
             src={restaurant.imgSrc}
             alt={restaurant.name}
-            className="absolute left-0 top-0 size-full object-cover"
+            width="100%"
+            height="100%"
+            className="size-full object-fill"
             effect="opacity"
           />
         </div>
@@ -822,7 +821,9 @@ function JoesBeerhouse() {
               </div>
             </div>
             <div className="mt-4 px-4 text-gray-700">
-              The store isn't delivering to your location, but you can still place an order for pickup.
+            {state.isDelivery
+              ? "The following Food is available for delivery to your location."
+              : "All Food the Restaurant has to offer"}
             </div>
           </section>
 
@@ -1169,16 +1170,15 @@ function JoesBeerhouse() {
 
           {/* Similar Restaurants Section */}
           <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
-            {/* Similar restaurants content */}
-            <div
-              className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
-              style={{ width: "50%", maxWidth: "1000px" }}
-            >
-              <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
-                Similar Restaurants
-              </h2>
-            </div>
-          </section>
+       <div
+         className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
+         style={{ width: "50%", maxWidth: "1000px" }}
+       >
+         <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
+           Similar Restaurants
+         </h2>
+       </div>
+     </section>
 
           {/* Restaurants Carousel */}
           {renderCarousel(restaurants, restaurantsscroll, renderRestaurantCard)}
