@@ -287,6 +287,40 @@ function JoesBeerhouse() {
     }, 5000);
   }, []);
 
+  // Function to handle smooth scrolling for information button to snap to more information section
+  const smoothScroll = useCallback((target, duration = 1000) => {
+    const targetElement = document.getElementById(target);
+    if (!targetElement) return;
+
+    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+
+    // Easing function
+    function ease(t, b, c, d) {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+
+    requestAnimationFrame(animation);
+  }, []);
+
+  // Function to handle the infromation button click
+  const handleSeeMoreInfo = useCallback(() => {
+    smoothScroll('moreInformation', 1500); // Scroll duration of 1.5 seconds
+  }, [smoothScroll]);
+
   // Function to toggle dropdown menu
   const toggleDropdown = useCallback(() => {
     setState(prevState => ({ ...prevState, isDropdownOpen: !prevState.isDropdownOpen }));
@@ -308,8 +342,8 @@ function JoesBeerhouse() {
   }, []);
 
   // Function to show more information (placeholder)
-  const getMoreInfo = useCallback(() => {
-    alert("More information about the store");
+  const getInfo = useCallback(() => {
+    alert("Information about the store");
   }, []);
 
   // Function to toggle "More" dropdown
@@ -385,199 +419,201 @@ function JoesBeerhouse() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-// Effect for initializing visible and hidden categories
-useEffect(() => {
-  setState(prevState => ({
-    ...prevState,
-    visibleCategories: categories.slice(0, VISIBLE_CATEGORIES_COUNT),
-    hiddenCategories: categories.slice(VISIBLE_CATEGORIES_COUNT),
-  }));
-}, [categories]);
+  // Effect for initializing visible and hidden categories
+  useEffect(() => {
+    setState(prevState => ({
+      ...prevState,
+      visibleCategories: categories.slice(0, VISIBLE_CATEGORIES_COUNT),
+      hiddenCategories: categories.slice(VISIBLE_CATEGORIES_COUNT),
+    }));
+  }, [categories]);
 
-// Effect for handling clicks outside the "More" dropdown
-useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (
-      moreButtonRef.current &&
-      !moreButtonRef.current.contains(event.target) &&
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target)
-    ) {
+  // Effect for handling clicks outside the "More" dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        moreButtonRef.current &&
+        !moreButtonRef.current.contains(event.target) &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+      }
+    };
+
+    const handleScroll = () => {
       setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Effect for handling clicks outside the dropdown menu
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setState(prevState => ({ ...prevState, isDropdownOpen: false }));
+      }
+    };
+
+    if (state.isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
     }
-  };
 
-  const handleScroll = () => {
-    setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-  };
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [state.isDropdownOpen]);
 
-  document.addEventListener('mousedown', handleClickOutside);
-  window.addEventListener('scroll', handleScroll);
-
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-    window.removeEventListener('scroll', handleScroll);
-  };
-}, []);
-
-// Effect for handling clicks outside the dropdown menu
-useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setState(prevState => ({ ...prevState, isDropdownOpen: false }));
+  // Effect for auto-scrolling the carousel
+  useEffect(() => {
+    let interval;
+    if (!state.isPaused) {
+      interval = setInterval(handleNext, 5000);
     }
-  };
+    return () => clearInterval(interval);
+  }, [state.isPaused, handleNext]);
 
-  if (state.isDropdownOpen) {
-    document.addEventListener("mousedown", handleClickOutside);
-  } else {
-    document.removeEventListener("mousedown", handleClickOutside);
-  }
+  // Effect for initializing the map
+  useEffect(() => {
+    console.log("Map container ref:", mapContainerRef.current);
+    if (mapContainerRef.current && !state.map) {
+      console.log("Calling initializeMap");
+      initializeMap(mapContainerRef.current);
+    }
+  }, [initializeMap, state.map]);
 
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, [state.isDropdownOpen]);
+  // Effect for checking Mapbox support and initializing the map
+  useEffect(() => {
+    if (typeof mapboxgl !== 'undefined' && mapboxgl.supported() && mapContainerRef.current && !state.map) {
+      console.log("Mapbox supported and container ready, initializing map");
+      initializeMap(mapContainerRef.current);
+    } else {
+      console.log("Mapbox not ready or already initialized", {
+        mapboxDefined: typeof mapboxgl !== 'undefined',
+        mapboxSupported: typeof mapboxgl !== 'undefined' && mapboxgl.supported(),
+        containerReady: !!mapContainerRef.current,
+        mapAlreadyInitialized: !!state.map
+      });
+    }
+  }, [initializeMap, state.map]);
 
-// Effect for auto-scrolling the carousel
-useEffect(() => {
-  let interval;
-  if (!state.isPaused) {
-    interval = setInterval(handleNext, 5000);
-  }
-  return () => clearInterval(interval);
-}, [state.isPaused, handleNext]);
+  // Effect for loading Mapbox script
+  useEffect(() => {
+    if (window.mapboxgl) {
+      setMapboxLoaded(true);
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js';
+      script.onload = () => setMapboxLoaded(true);
+      document.body.appendChild(script);
+    }
+  }, []);
 
-// Effect for initializing the map
-useEffect(() => {
-  console.log("Map container ref:", mapContainerRef.current);
-  if (mapContainerRef.current && !state.map) {
-    console.log("Calling initializeMap");
-    initializeMap(mapContainerRef.current);
-  }
-}, [initializeMap, state.map]);
+  // Effect for initializing map after Mapbox is loaded
+  useEffect(() => {
+    if (mapboxLoaded && mapContainerRef.current) {
+      initializeMap(mapContainerRef.current);
+    }
+  }, [mapboxLoaded, initializeMap]);
 
-// Effect for checking Mapbox support and initializing the map
-useEffect(() => {
-  if (typeof mapboxgl !== 'undefined' && mapboxgl.supported() && mapContainerRef.current && !state.map) {
-    console.log("Mapbox supported and container ready, initializing map");
-    initializeMap(mapContainerRef.current);
-  } else {
-    console.log("Mapbox not ready or already initialized", {
-      mapboxDefined: typeof mapboxgl !== 'undefined',
-      mapboxSupported: typeof mapboxgl !== 'undefined' && mapboxgl.supported(),
-      containerReady: !!mapContainerRef.current,
-      mapAlreadyInitialized: !!state.map
+  // Effect for filtering and sorting products
+  useEffect(() => {
+    const filteredProducts = restaurantCards.filter(product => {
+      const lowerCaseSearchTerm = state.searchTerm.toLowerCase();
+      const matchesSearch =
+        product.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+        product.cuisine.toLowerCase().includes(lowerCaseSearchTerm);
+      const matchesCategory =
+        state.selectedCategory === "" ||
+        product.cuisine === state.selectedCategory;
+      const matchesDeliveryOption =
+        !state.isDelivery || product.deliveryTime;
+      return matchesSearch && matchesCategory && matchesDeliveryOption;
     });
-  }
-}, [initializeMap, state.map]);
+    const sortedProducts = sortProducts(filteredProducts, sortCriteria);
+    setState(prevState => ({ ...prevState, filteredProducts: sortedProducts }));
+  }, [state.searchTerm, state.selectedCategory, state.isDelivery, restaurantCards, sortCriteria, sortProducts]);
 
-// Effect for loading Mapbox script
-useEffect(() => {
-  if (window.mapboxgl) {
-    setMapboxLoaded(true);
-  } else {
-    const script = document.createElement('script');
-    script.src = 'https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js';
-    script.onload = () => setMapboxLoaded(true);
-    document.body.appendChild(script);
-  }
-}, []);
+  // Function to render the carousel
+  const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
+    <div className="relative mt-4 w-full sm:mt-6 md:mt-8">
+      <div className="container mx-auto px-2 sm:px-4 lg:px-6">
+        {/* Gradient overlays for scroll indicators */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
 
-// Effect for initializing map after Mapbox is loaded
-useEffect(() => {
-  if (mapboxLoaded && mapContainerRef.current) {
-    initializeMap(mapContainerRef.current);
-  }
-}, [mapboxLoaded, initializeMap]);
+        {/* Left scroll button */}
+        <button
+          className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
+          onClick={() => scrollLeft(scrollRef)}
+          aria-label="Scroll left"
+        >
+          &#9664;
+        </button>
 
-// Effect for filtering and sorting products
-useEffect(() => {
-  const filteredProducts = restaurantCards.filter(product => {
-    const lowerCaseSearchTerm = state.searchTerm.toLowerCase();
-    const matchesSearch =
-      product.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-      product.cuisine.toLowerCase().includes(lowerCaseSearchTerm);
-    const matchesCategory =
-      state.selectedCategory === "" ||
-      product.cuisine === state.selectedCategory;
-    const matchesDeliveryOption =
-      !state.isDelivery || product.deliveryTime;
-    return matchesSearch && matchesCategory && matchesDeliveryOption;
-  });
-  const sortedProducts = sortProducts(filteredProducts, sortCriteria);
-  setState(prevState => ({ ...prevState, filteredProducts: sortedProducts }));
-}, [state.searchTerm, state.selectedCategory, state.isDelivery, restaurantCards, sortCriteria, sortProducts]);
+        {/* Carousel content */}
+        <div
+          ref={scrollRef}
+          className="custom-scrollbar flex space-x-4 overflow-x-auto p-4 sm:p-6 md:p-8"
+        >
+          {items.map((item, index) => itemRenderer(item, index))}
+        </div>
 
-// Function to render the carousel
-const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
-  <div className="relative mt-4 w-full sm:mt-6 md:mt-8">
-    <div className="container mx-auto px-2 sm:px-4 lg:px-6">
-      {/* Gradient overlays for scroll indicators */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
-      
-      {/* Left scroll button */}
-      <button
-        className="absolute left-0 top-1/2 z-20 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
-        onClick={() => scrollLeft(scrollRef)}
-        aria-label="Scroll left"
-      >
-        &#9664;
-      </button>
-      
-      {/* Carousel content */}
-      <div
-        ref={scrollRef}
-        className="custom-scrollbar flex space-x-4 overflow-x-auto p-4 sm:p-6 md:p-8"
-      >
-        {items.map((item, index) => itemRenderer(item, index))}
+        {/* Right scroll button */}
+        <button
+          className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
+          onClick={() => scrollRight(scrollRef)}
+          aria-label="Scroll right"
+        >
+          &#9654;
+        </button>
       </div>
-      
-      {/* Right scroll button */}
-      <button
-        className="absolute right-0 top-1/2 z-20 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
-        onClick={() => scrollRight(scrollRef)}
-        aria-label="Scroll right"
-      >
-        &#9654;
-      </button>
     </div>
-  </div>
-), [scrollLeft, scrollRight]);
+  ), [scrollLeft, scrollRight]);
 
-// Function to render a restaurant card
-const renderRestaurantCard = useCallback((restaurant, index) => (
-  <div key={index} className="w-full max-w-[300px] shrink-0">
-    <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-      <div className="relative w-full overflow-hidden rounded-t-lg pb-[100%]">
-        <LazyLoadImage
-          src={restaurant.imgSrc}
-          alt={restaurant.name}
-          className="absolute left-0 top-0 size-full object-cover"
-          effect="opacity"
-        />
-      </div>
-      <div className="p-3 sm:p-4">
-        <p className="w-full truncate text-center text-sm font-bold sm:text-base">{restaurant.name}</p>
-      </div>
-    </a>
-  </div>
-), []);
+  // Function to render a restaurant card
+  const renderRestaurantCard = useCallback((restaurant, index) => (
+    <div key={index} className="w-full max-w-[300px] shrink-0">
+      <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+        <div className="relative w-full overflow-hidden rounded-t-lg pb-[100%]">
+          <LazyLoadImage
+            src={restaurant.imgSrc}
+            alt={restaurant.name}
+            className="absolute left-0 top-0 size-full object-cover"
+            effect="opacity"
+          />
+        </div>
+        <div className="p-3 sm:p-4">
+          <p className="w-full truncate text-center text-sm font-bold sm:text-base">{restaurant.name}</p>
+        </div>
+      </a>
+    </div>
+  ), []);
 
   // Return statement
   return (
     <div className="bg-white">
       <Suspense fallback={<div>Loading...</div>}>
-      {/* Navigation bar */}
-        <nav
-          id="navbarKhomasOPNavBar"
-          className={`fixed inset-x-0 top-0 z-50 shadow-md transition-transform duration-300 ${isKhomasOPNavBarVisible ? '' : '-translate-y-full'
-            } ${isKhomasOPNavBarSticky ? 'sticky' : ''}`}
-        >
-          <KhomasOPNavBar />
-        </nav>
-        <main className="relative z-10 pt-20">
+        {/* Navigation bar */}
+        <div className="flex pb-20">
+          <nav
+            id="navbarKhomasOPNavBar"
+            className={` fixed inset-x-0 top-0 z-50 shadow-md transition-transform duration-300 ${isKhomasOPNavBarVisible ? '' : '-translate-y-full'
+              } ${isKhomasOPNavBarSticky ? 'sticky' : ''}`}
+          >
+            <KhomasOPNavBar />
+          </nav>
+        </div>
+        <main className="relative z-10 ">
           {/* Header section */}
           <header className="relative w-full">
             {/* Restaurant image */}
@@ -646,11 +682,11 @@ const renderRestaurantCard = useCallback((restaurant, index) => (
                         {state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                       </button>
                       <button
-                        onClick={getMoreInfo}
+                        onClick={getInfo}
                         className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
                       >
-                        More Information
+                        Stores Information
                       </button>
                     </div>
                   </div>
@@ -759,7 +795,11 @@ const renderRestaurantCard = useCallback((restaurant, index) => (
                   </svg>
                   <span>9.8</span>
                 </div>
-                <button type="button" className="flex items-center space-x-1 text-[#ee9613]">
+                <button
+                  type="button"
+                  onClick={handleSeeMoreInfo}
+                  className="flex items-center space-x-1 text-[#ee9613] hover:underline focus:outline-none focus:ring-2 focus:ring-[#ee9613] focus:ring-opacity-50 transition duration-300"
+                >
                   <svg viewBox="0 0 24 24" width="16">
                     <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
                   </svg>
@@ -1005,9 +1045,9 @@ const renderRestaurantCard = useCallback((restaurant, index) => (
                 <select
                   value={sortCriteria}
                   onChange={(e) => setSortCriteria(e.target.value)}
-                  className="ml-auto cursor-pointer text-[#ee9613] hover:underline"
+                  className="ml-auto rounded-md border px-4 py-2"
                 >
-                  <option value="default">Sort by</option>
+                  <option value="recommended">Sort by: Recommended</option>
                   <option value="priceAsc">Price: Low to High</option>
                   <option value="priceDesc">Price: High to Low</option>
                   <option value="nameAsc">Name: A to Z</option>
@@ -1019,7 +1059,7 @@ const renderRestaurantCard = useCallback((restaurant, index) => (
                   {state.filteredProducts.map((product, index) => (
                     <a key={index}
                       href={product.href}
-                      className="mx-auto flex min-h-[150px] w-full max-w-[550px] overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
+                      className="mx-auto flex min-h-[150px] w-full max-w-[550px] overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl relative group"
                       data-test-id="product-card-link"
                     >
                       <div className="relative w-1/3 overflow-hidden">
@@ -1064,9 +1104,9 @@ const renderRestaurantCard = useCallback((restaurant, index) => (
                           </div>
                         </div>
                       </div>
-                      {/* <div className="absolute right-2 top-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                      <div className="absolute right-2 top-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white md:opacity-0 md:transition-opacity md:duration-200 md:group-hover:opacity-100">
                         +
-                      </div> */}
+                      </div>
                     </a>
                   ))}
                 </div>
@@ -1076,7 +1116,7 @@ const renderRestaurantCard = useCallback((restaurant, index) => (
 
           {/*More Information Section */}
           <section ref={opMoreInformationRef} id="moreInformation" className="container mx-auto mt-8 p-4">
-             {/* More information content */}
+            {/* More information content */}
             <div className="flex flex-col p-4 md:flex-row md:space-x-8">
               <div className="space-y-8 md:w-1/3">
                 <div className="space-y-8">
