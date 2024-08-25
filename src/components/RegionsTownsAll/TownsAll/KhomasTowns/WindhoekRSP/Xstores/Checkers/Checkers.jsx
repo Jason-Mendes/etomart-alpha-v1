@@ -37,10 +37,14 @@ function Checkers() {
     isDropdownOpen: false,
     map: null,
     isFavorite: false,
+    isExpanded: false,
+    categorySearchTerm: "",
+    productSearchTerm: "",
+    isCategoryFocused: false,
+    isProductFocused: false,
     selectedCategories: [],
     sortCriteria: 'recommended',
-    productSearchTerm: "", // New state for product search
-    searchTerm: "",
+    isDelivery: true,
   });
 
   // Refs
@@ -50,6 +54,8 @@ function Checkers() {
   const supermarketsscroll = useRef(null);
   const productSearchRef = useRef(null);
   const categoriesSearchRef = useRef(null);
+  const inputCategoriesRef = useRef(null);
+  const inputProductRef = useRef(null);
 
   // Memoized data
   const navcategories = useNavcategories();
@@ -77,13 +83,34 @@ function Checkers() {
     }
   }, []);
 
-  const handleSearch = useCallback((event) => {
-    setState(prevState => ({ ...prevState, searchTerm: event.target.value }));
+  // const handleSearch = useCallback((event) => {
+  //   setState(prevState => ({ ...prevState, searchTerm: event.target.value }));
+  // }, []);
+
+  const handleExpandCategory = useCallback(() => {
+    setState(prevState => ({ ...prevState, isExpanded: true }));
+  }, []);
+
+  const handleCollapseCategory = useCallback(() => {
+    setState(prevState => ({ ...prevState, isExpanded: false, categorySearchTerm: "" }));
+  }, []);
+
+  const handleExpandProduct = useCallback(() => {
+    setState(prevState => ({ ...prevState, isExpanded: true }));
+  }, []);
+
+  const handleCollapseProduct = useCallback(() => {
+    setState(prevState => ({ ...prevState, isExpanded: false, productSearchTerm: "" }));
+  }, []);
+
+  const handleCategorySearch = useCallback((event) => {
+    setState(prevState => ({ ...prevState, categorySearchTerm: event.target.value }));
   }, []);
 
   const handleProductSearch = useCallback((event) => {
     setState(prevState => ({ ...prevState, productSearchTerm: event.target.value }));
   }, []);
+
 
   const handleNext = useCallback(() => {
     setState(prevState => ({ ...prevState, currentIndex: prevState.currentIndex + 1 }));
@@ -145,6 +172,58 @@ function Checkers() {
   const handleSortChange = useCallback((event) => {
     setState(prevState => ({ ...prevState, sortCriteria: event.target.value }));
   }, []);
+
+  // const handleCategorySearch = useCallback((event) => {
+  //   setState(prevState => ({ ...prevState, categorySearchTerm: event.target.value }));
+  // }, []);
+
+  // const handleProductSearch = useCallback((event) => {
+  //   setState(prevState => ({ ...prevState, productSearchTerm: event.target.value }));
+  // }, []);
+
+  const filteredCategories = useMemo(() =>
+    navcategories.filter((category) =>
+      category.name.toLowerCase().includes(state.categorySearchTerm.toLowerCase())
+    ),
+    [navcategories, state.categorySearchTerm]
+  );
+
+  const filteredAndSortedProducts = useMemo(() => {
+    let result = storecards;
+
+    // Filter by delivery/pickup
+    result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
+
+    // Filter by selected categories
+    if (state.selectedCategories.length > 0) {
+      result = result.filter(product => state.selectedCategories.includes(product.cuisine));
+    }
+
+    // Filter by product search term
+    if (state.productSearchTerm) {
+      result = result.filter(product =>
+        product.name.toLowerCase().includes(state.productSearchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(state.productSearchTerm.toLowerCase())
+      );
+    }
+
+    // Sort products
+    switch (state.sortCriteria) {
+      case 'priceAsc':
+        return result.sort((a, b) => a.priceRange.length - b.priceRange.length);
+      case 'priceDesc':
+        return result.sort((a, b) => b.priceRange.length - a.priceRange.length);
+      case 'nameAsc':
+        return result.sort((a, b) => a.name.localeCompare(b.name));
+      case 'nameDesc':
+        return result.sort((a, b) => b.name.localeCompare(a.name));
+      case 'recommended':
+      default:
+        // Implement your recommendation logic here
+        return result;
+    }
+  }, [storecards, state.isDelivery, state.selectedCategories, state.productSearchTerm, state.sortCriteria]);
+
 
   // Mapbox setup
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -247,7 +326,7 @@ function Checkers() {
         setState(prevState => ({ ...prevState, productSearchTerm: "" }));
       }
       if (categoriesSearchRef.current && !categoriesSearchRef.current.contains(event.target)) {
-        setState(prevState => ({ ...prevState, searchTerm: "" }));
+        setState(prevState => ({ ...prevState, categorySearchTerm: "" }));
       }
     };
 
@@ -266,49 +345,35 @@ function Checkers() {
     }));
   }, [categories]);
 
-  // Memoized values
-  const filteredAndSortedProducts = useMemo(() => {
-    let result = storecards;
+  const handleSearch = (field) => (event) => {
+    setState(prevState => ({ ...prevState, [field]: event.target.value }));
+  };
 
-    // Filter by delivery/pickup
-    result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
+  const handleProductsFocus = (field) => () => {
+    setState(prevState => ({ ...prevState, [field]: true }));
+  };
+  const handleCategoriesFocus = (field) => () => {
+    setState(prevState => ({ ...prevState, [field]: true }));
+  };
 
-    // Filter by selected categories
-    if (state.selectedCategories.length > 0) {
-      result = result.filter(product => state.selectedCategories.includes(product.cuisine));
+  const handleBlur = (field, term) => () => {
+    if (!state[term]) {
+      setState(prevState => ({ ...prevState, [field]: false }));
     }
+  };
 
-    // Filter by product search term
-    if (state.productSearchTerm) {
-      result = result.filter(product =>
-        product.name.toLowerCase().includes(state.productSearchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(state.productSearchTerm.toLowerCase())
-      );
+  const handleClearCategory = (field) => () => {
+    setState(prevState => ({ ...prevState, [field]: "" }));
+    if (inputCategoriesRef.current) {
+      inputCategoriesRef.current.focus();
     }
-
-    // Sort products
-    switch (state.sortCriteria) {
-      case 'priceAsc':
-        return result.sort((a, b) => a.priceRange.length - b.priceRange.length);
-      case 'priceDesc':
-        return result.sort((a, b) => b.priceRange.length - a.priceRange.length);
-      case 'nameAsc':
-        return result.sort((a, b) => a.name.localeCompare(b.name));
-      case 'nameDesc':
-        return result.sort((a, b) => b.name.localeCompare(a.name));
-      case 'recommended':
-      default:
-        // Implement your recommendation logic here
-        return result;
+  };
+  const handleClearProduct = (field) => () => {
+    setState(prevState => ({ ...prevState, [field]: "" }));
+    if (inputProductRef.current) {
+      inputProductRef.current.focus();
     }
-  }, [storecards, state.isDelivery, state.selectedCategories, state.productSearchTerm, state.sortCriteria]);
-
-  const filteredCategories = useMemo(() =>
-    navcategories.filter((category) =>
-      category.name.toLowerCase().includes(state.searchTerm.toLowerCase())
-    ),
-    [navcategories, state.searchTerm]
-  );
+  };
 
   const clearSelectedCategories = useCallback(() => {
     setState(prevState => ({ ...prevState, selectedCategories: [] }));
@@ -564,150 +629,186 @@ function Checkers() {
           </div>
         </section>
 
-        {/* Categories and products section */}
-        <section className="container mx-auto px-4">
-          <div className="flex flex-row">
-            {/* Categories sidebar */}
-            <aside className="w-1/4 p-4">
-              <div className="flex flex-col">
-                <div className="mb-4 flex items-center">
-                  <div ref={categoriesSearchRef} className="mr-4 flex items-center rounded-full bg-gray-200 px-4 py-2">
+      {/* Categories and products section */}
+      <section className="container mx-auto px-4">
+      <div className="flex flex-row">
+        {/* Categories sidebar */}
+        <aside className="w-full md:w-1/5 p-4">
+          <div className="flex flex-col">
+            <div className="mb-4 w-full">
+              <div className="relative">
+                <input
+                  ref={categoriesSearchRef}
+                  type="text"
+                  placeholder="Search Categories..."
+                  value={state.categorySearchTerm}
+                  onChange={handleSearch('categorySearchTerm')}
+                  onFocus={handleCategoriesFocus('isCategoryFocused')}
+                  onBlur={handleBlur('isCategoryFocused')}
+                  className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+                  />
+                  {state.isCategoryFocused ? (
+                    <>
+                      <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                      {state.categorySearchTerm && (
+                        <X
+                          size={20}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
+                          onClick={handleClearCategory('categorySearchTerm')}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                  )}
+              </div>
+            </div>
+            
+            <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "calc(850px - 4rem)" }}>
+              {state.selectedCategories.length > 0 && (
+                <button
+                  onClick={clearSelectedCategories}
+                  className="mb-2 w-full rounded-lg bg-[#8f8575] p-2 text-white shadow hover:bg-[#ee9613]"
+                >
+                  Clear Selected Categories
+                </button>
+              )}
+              {filteredCategories.map((category, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleCategorySelect(category.name)}
+                  className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-gray-100 ${
+                    state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
+                  }`}
+                >
+                  <LazyLoadImage
+                    src={category.imgSrc}
+                    alt={category.name}
+                    effect="blur"
+                    className="mr-4 size-10 rounded-full hidden md:block"
+                  />
+                  <span>{category.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </aside>
+
+        {/* Products grid */}
+        <section className="w-full md:w-4/5">
+          <div className="px-4">
+            <div className="flex items-center p-4">
+              <h2 className="mr-auto text-2xl font-bold">All Products</h2>
+                <div className="mx-auto flex items-center">
+                  <div className="relative ">
                     <input
+                      ref={productSearchRef}
                       type="text"
-                      placeholder="Search Categories..."
-                      value={state.searchTerm}
-                      onChange={handleSearch}
-                      className="mr-28 bg-transparent focus:outline-none"
+                      placeholder="Search products..."
+                      value={state.productSearchTerm}
+                      onChange={handleSearch('productSearchTerm')}
+                      onFocus={handleProductsFocus('isProductFocused')}
+                      onBlur={handleBlur('isProductFocused')}
+                      className="w-full rounded-full border border-gray-300 px-28 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
                     />
-                    <Search className="ml-2 text-gray-500" size={20} />
+                    {state.isProductFocused ? (
+                      <>
+                        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                        {state.productSearchTerm && (
+                          <X
+                            size={20}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
+                            onClick={handleClearProduct('productSearchTerm')}
+                          />
+                        )}
+                      </>
+                    ) : (
+                      <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                    )}
                   </div>
                 </div>
-                <div className="flex flex-col overflow-y-auto" style={{ height: "800px" }}>
-                  {state.selectedCategories.length > 0 && (
-                    <button
-                      onClick={clearSelectedCategories}
-                      className="mb-2 w-full rounded-lg bg-[#8f8575] p-2 text-white shadow hover:bg-[#ee9613]"
-                    >
-                      Clear Selected Categories
-                    </button>
-                  )}
-                  {filteredCategories.map((category, index) => (
-                    <button
+                <div className="ml-auto flex items-center">
+                <select
+                  value={state.sortCriteria}
+                  onChange={handleSortChange}
+                  className="rounded-md border px-4 py-2"
+                >
+                  <option value="recommended">Sort by: Recommended</option>
+                  <option value="priceAsc">Price: Low to High</option>
+                  <option value="priceDesc">Price: High to Low</option>
+                  <option value="nameAsc">Name: A to Z</option>
+                  <option value="nameDesc">Name: Z to A</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
+              <div className="px-2 pb-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+                  {filteredAndSortedProducts.map((product, index) => (
+                    <div
                       key={index}
-                      onClick={() => handleCategorySelect(category.name)}
-                      className={`mb-4  flex items-center rounded-lg p-2 shadow hover:bg-gray-100 ${state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
-                        }`}
+                      className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
                     >
-                      <LazyLoadImage
-                        src={category.imgSrc}
-                        alt={category.name}
-                        effect="blur"
-                        className="mr-4 size-10 rounded-full"
-                      />
-                      <span>{category.name}</span>
-                    </button>
+                      <a href={product.href}
+                        className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
+                      >
+                        <div className="flex h-full flex-col">
+                          <div className="relative aspect-square w-full overflow-hidden">
+                            <LazyLoadImage
+                              src={product.imgSrc}
+                              alt={product.name}
+                              width="100%"
+                              height="100%"
+                              effect="blur"
+                              className="size-full object-cover"
+                            />
+                            {product.discount && (
+                              <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
+                                {`-${product.discount}%`}
+                              </div>
+                            )}
+                            <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                              +
+                            </div>
+                          </div>
+                          <div className="flex w-full grow flex-col p-2">
+                            <h3 className="truncate font-bold">{product.name}</h3>
+                            <div className="mt-2 flex items-center text-sm">
+                              <div className="text-sm font-bold text-[#ee9613]">
+                                <span>{product.priceRange}</span>
+                              </div>
+                              <span className="mx-1">•</span>
+                              <span className="truncate">{product.cuisine}</span>
+                            </div>
+                            <div className="mt-1 text-xs text-gray-500">
+                              {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
+                            </div>
+                            <div className="mt-1 line-clamp-2 text-xs text-gray-500">
+                              {product.description}
+                            </div>
+                            <div className="mt-auto">
+                              <div className="rounded py-1 text-xs text-black">
+                                <span className="text-black">Etomart </span>
+                                {product.deliveryTime ? (
+                                  <span className="font-bold text-[#ee9613]">Delivery Available</span>
+                                ) : (
+                                  <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
                   ))}
                 </div>
               </div>
-            </aside>
-
-            {/* Products grid */}
-            <section className="w-full md:w-3/4">
-              <div className="px-4">
-                <div className="flex items-center p-4">
-                  <h2 className="text-2xl font-bold">All Products</h2>
-                  <div className="ml-auto flex items-center">
-                    <div ref={productSearchRef} className="mr-4 flex items-center rounded-full bg-gray-200 px-4 py-2">
-                      <input
-                        type="text"
-                        placeholder="Search products..."
-                        value={state.productSearchTerm}
-                        onChange={handleProductSearch}
-                        className="bg-transparent focus:outline-none"
-                      />
-                      <Search className="ml-2 text-gray-500" size={20} />
-                    </div>
-                    <select
-                      value={state.sortCriteria}
-                      onChange={handleSortChange}
-                      className="rounded-md border px-4 py-2"
-                    >
-                      <option value="recommended">Sort by: Recommended</option>
-                      <option value="priceAsc">Price: Low to High</option>
-                      <option value="priceDesc">Price: High to Low</option>
-                      <option value="nameAsc">Name: A to Z</option>
-                      <option value="nameDesc">Name: Z to A</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
-                  <div className="px-2 pb-4">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-                      {filteredAndSortedProducts.map((product, index) => (
-                        <div
-                          key={index}
-                          className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
-                        >
-                          <a href={product.href}
-                            className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
-                          >
-                            <div className="flex h-full flex-col">
-                              <div className="relative aspect-square w-full overflow-hidden">
-                                <LazyLoadImage
-                                  src={product.imgSrc}
-                                  alt={product.name}
-                                  width="100%"
-                                  height="100%"
-                                  effect="blur"
-                                  className="size-full object-cover"
-                                />
-                                {product.discount && (
-                                  <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
-                                    {`-${product.discount}%`}
-                                  </div>
-                                )}
-                                <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
-                                  +
-                                </div>
-                              </div>
-                              <div className="flex w-full grow flex-col p-2">
-                                <h3 className="truncate font-bold">{product.name}</h3>
-                                <div className="mt-2 flex items-center text-sm">
-                                  <div className="text-sm font-bold text-[#ee9613]">
-                                    <span>{product.priceRange}</span>
-                                  </div>
-                                  <span className="mx-1">•</span>
-                                  <span className="truncate">{product.cuisine}</span>
-                                </div>
-                                <div className="mt-1 text-xs text-gray-500">
-                                  {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
-                                </div>
-                                <div className="mt-1 line-clamp-2 text-xs text-gray-500">
-                                  {product.description}
-                                </div>
-                                <div className="mt-auto">
-                                  <div className="rounded py-1 text-xs text-black">
-                                    <span className="text-black">Etomart </span>
-                                    {product.deliveryTime ? (
-                                      <span className="font-bold text-[#ee9613]">Delivery Available</span>
-                                    ) : (
-                                      <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+            </div>
           </div>
         </section>
+      </div>
+    </section>
 
         {/* More Information Section */}
         <section className="container mx-auto mt-8 p-4">

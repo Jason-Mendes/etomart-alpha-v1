@@ -1026,7 +1026,7 @@ function JoesBeerhouse() {
                     {state.searchTerm && (
                       <X
                         size={20}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-orange-500"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-orange-500 hover:text-gray-400"
                         onClick={handleClear}
                       />
                     )}
