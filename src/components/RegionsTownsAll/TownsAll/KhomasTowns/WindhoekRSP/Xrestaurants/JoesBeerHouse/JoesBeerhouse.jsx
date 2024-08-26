@@ -238,12 +238,29 @@ function JoesBeerhouse() {
     }
   };
 
+  // Combine visible and hidden categories for mobile view
+  const allCategories = useMemo(() => [...state.visibleCategories, ...state.hiddenCategories], [state.visibleCategories, state.hiddenCategories]);
+
+
   // Function to handle category selection
   const handleCategorySelect = useCallback((category) => {
-    setState(prevState => ({ ...prevState, selectedCategory: category }));
+    setState(prevState => ({
+      ...prevState,
+      selectedCategory: category,
+      isMoreDropdownOpen: false // Close the dropdown after selection
+    }));
     scrollToProducts();
   }, [scrollToProducts]);
 
+  const handleMobileCategorySelect = useCallback((category, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    handleCategorySelect(category);
+    // Use setTimeout to close the dropdown after the state has been updated
+    setTimeout(() => {
+      setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+    }, 0);
+  }, [handleCategorySelect]);
   // Functions to handle carousel scrolling
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
@@ -441,19 +458,14 @@ function JoesBeerhouse() {
       }
     };
 
-    const handleScroll = () => {
-      setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    window.addEventListener('scroll', handleScroll);
+    if (state.isMoreDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
-
+  }, [state.isMoreDropdownOpen]);
   // Effect for handling clicks outside the dropdown menu
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -779,7 +791,7 @@ function JoesBeerhouse() {
           {/* Store Information */}
           <section id="information" className="container mx-auto mb-2 px-4">
             {/* Store information content */}
-            <div className="flex flex-col items-start justify-between space-y-4 px-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
+            <div className="flex flex-row items-start justify-between space-y-4 px-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
               <div className="flex flex-col items-start space-y-2 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
                 <div className="flex items-center space-x-1">
                   <svg viewBox="0 0 16 16" width="16" aria-hidden="true" className="text-primary">
@@ -832,161 +844,126 @@ function JoesBeerhouse() {
             className={`p-4 transition-all duration-300 ease-in-out ${state.isSticky ? 'fixed inset-x-0 z-50 bg-white shadow-md' : ''}`}
             style={{ top: state.isSticky ? 0 : 'auto' }}
           >
-            {/* Search and filter content */}
             <div className="container mx-auto px-4">
-              {/* Mobile layout (smaller than md) */}
-              <div className="md:hidden">
+              {/* Mobile layout (smaller than 760px) */}
+              <div className="max-[760px]:block hidden">
                 {/* Search Input */}
                 <div className="relative mb-4 w-full">
                   <input
+                    ref={inputRef}
                     type="text"
                     placeholder="Search products..."
                     value={state.searchTerm}
                     onChange={handleSearch}
-                    className="w-full rounded-full border border-gray-300 px-4 py-2 pr-10 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+                    onFocus={() => {
+                      setIsSearchFocused(true);
+                      setIsKhomasOPNavBarVisible(false);
+                    }}
+                    onBlur={(e) => {
+                      if (!searchResultsRef.current?.contains(e.relatedTarget)) {
+                        setTimeout(() => {
+                          setIsSearchFocused(false);
+                          setState(prevState => ({ ...prevState, searchTerm: '' }));
+                          // Restore navbar visibility based on scroll position
+                          const currentScrollY = window.pageYOffset;
+                          const opInformationOffset = opCarouselRef.current?.getBoundingClientRect().top + currentScrollY;
+                          const opMoreInformationOffset = opMoreInformationRef.current?.getBoundingClientRect().bottom + currentScrollY;
+                          setIsKhomasOPNavBarVisible(
+                            currentScrollY <= opInformationOffset ||
+                            currentScrollY < lastScrollYRef.current ||
+                            currentScrollY >= opMoreInformationOffset
+                          );
+                        }, 200); // 200ms delay
+                      }
+                    }}
+                    className={`w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613] ${isSearchFocused ? 'px-10' : 'pl-4 pr-10'
+                      }`}
                   />
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="absolute right-3 top-1/2 size-6 -translate-y-1/2 text-gray-500"
-                  >
-                    <path
-                      d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
-                      fill="#ee9613"
+                  <Search
+                    size={20}
+                    className={`absolute ${isSearchFocused ? 'left-2' : 'right-6'
+                      } top-1/2 -translate-y-1/2 text-orange-500`}
+                  />
+                  {state.searchTerm && (
+                    <X
+                      size={20}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-orange-500"
+                      onClick={handleClear}
                     />
-                  </svg>
-                </div>
-
-                {/* Category Buttons and More Button */}
-                <div className="flex items-center space-x-4">
-                  {/* Category Buttons Container */}
-                  <div className="flex-1 overflow-x-auto">
-                    <div className="grid auto-cols-max grid-flow-col gap-2 pb-2">
-                      <button
-                        onClick={() => handleCategorySelect("")}
-                        className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                      >
-                        All
-                      </button>
-                      {state.visibleCategories.map((category) => (
-                        <button
-                          key={category}
-                          data-category={category}
-                          onClick={() => handleCategorySelect(category)}
-                          className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                        >
-                          {category}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* More Button Container */}
-                  <div className="shrink-0">
-                    {state.hiddenCategories.length > 0 && (
-                      <div className="relative">
-                        <button
-                          ref={moreButtonRef}
-                          onClick={toggleMoreDropdown}
-                          className="flex w-[130px] items-center justify-between whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
-                        >
-                          More <ChevronDownIcon className="size-4" />
-                        </button>
-
-                        {/* Dropdown Menu */}
-                        {state.isMoreDropdownOpen && (
-                          <div
-                            ref={dropdownRef}
-                            className="absolute right-0 z-50 mt-1 w-[130px] overflow-visible rounded-md bg-white shadow-lg"
-                            style={{ top: 'calc(100% + 2px)' }}
-                          >
-                            <div className="flex flex-col gap-2 p-2">
-                              {state.hiddenCategories.map((category) => (
-                                <button
-                                  key={category}
-                                  onClick={() => {
-                                    handleCategorySelect(category);
-                                    setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                                  }}
-                                  className="whitespace-nowrap rounded px-3 py-2 text-left hover:bg-gray-100"
-                                >
-                                  {category}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
               </div>
 
-              {/* Desktop layout (md and above) */}
-              <div className="hidden md:flex md:flex-col md:space-y-4">
-                <div className="flex items-center justify-between space-x-2">
-                  {/* Category Buttons Container */}
-                  <div className="w-2/3 overflow-x-auto">
-                    <div className="flex items-center space-x-2">
+
+              {/* Desktop layout (760px and above) */}
+
+              <div className="flex  items-center justify-between space-x-2">
+                {/* Category Buttons Container */}
+                <div className="max-w-[750px] overflow-x-auto">
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => handleCategorySelect("")}
+                      className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`}
+                    >
+                      All
+                    </button>
+                    {state.visibleCategories.map((category) => (
                       <button
-                        onClick={() => handleCategorySelect("")}
-                        className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                        key={category}
+                        data-category={category}
+                        onClick={() => handleCategorySelect(category)}
+                        className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                          }`}
                       >
-                        All
+                        {category}
                       </button>
-                      {state.visibleCategories.map((category) => (
-                        <button
-                          key={category}
-                          data-category={category}
-                          onClick={() => handleCategorySelect(category)}
-                          className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-                        >
-                          {category}
-                        </button>
-                      ))}
-                    </div>
+                    ))}
                   </div>
+                </div>
 
-                  {/* More Button Container */}
-                  <div className="relative w-auto min-w-[80px] pr-6">
-                    {state.hiddenCategories.length > 0 && (
-                      <div className="relative">
-                        <button
-                          ref={moreButtonRef}
-                          onClick={toggleMoreDropdown}
-                          className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
+                {/* More Button Container */}
+                <div className="w-[160px] relative pr-16">
+                  {state.hiddenCategories.length > 0 && (
+                    <div className="relative">
+                      <button
+                        ref={moreButtonRef}
+                        onClick={toggleMoreDropdown}
+                        className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
+                      >
+                        More <ChevronDownIcon className="mx-2 size-4" />
+                      </button>
+
+                      {/* Dropdown Menu */}
+                      {state.isMoreDropdownOpen && (
+                        <div
+                          ref={dropdownRef}
+                          className="absolute left-0 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
+                          style={{ top: 'calc(100% + 2px)' }}
                         >
-                          More <ChevronDownIcon className="mx-2 size-4" />
-                        </button>
-
-                        {/* Dropdown Menu */}
-                        {state.isMoreDropdownOpen && (
-                          <div
-                            ref={dropdownRef}
-                            className="absolute left-0 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
-                            style={{ top: 'calc(100% + 2px)' }}
-                          >
-                            <div className="grid grid-cols-2 gap-2 p-2">
-                              {state.hiddenCategories.map((category) => (
-                                <button
-                                  key={category}
-                                  onClick={() => {
-                                    handleCategorySelect(category);
-                                    setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                                  }}
-                                  className="whitespace-nowrap rounded px-3 py-2 text-left hover:bg-gray-100"
-                                >
-                                  {category}
-                                </button>
-                              ))}
-                            </div>
+                          <div className="grid grid-cols-2 gap-2 p-2">
+                            {state.hiddenCategories.map((category) => (
+                              <button
+                                key={category}
+                                onClick={() => {
+                                  handleCategorySelect(category);
+                                  setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+                                }}
+                                className="whitespace-nowrap rounded px-3 py-2 text-left hover:bg-gray-100"
+                              >
+                                {category}
+                              </button>
+                            ))}
                           </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
 
-                  {/* Search Input */}
-                  <div className="relative w-1/3">
+                {/* Search Input */}
+                <div className="w-2/5 min-[760px]:block hidden">
+                  <div className="relative w-auto ">
                     <input
                       ref={inputRef}
                       type="text"
@@ -1002,7 +979,6 @@ function JoesBeerhouse() {
                           setTimeout(() => {
                             setIsSearchFocused(false);
                             setState(prevState => ({ ...prevState, searchTerm: '' }));
-
                             // Restore navbar visibility based on scroll position
                             const currentScrollY = window.pageYOffset;
                             const opInformationOffset = opCarouselRef.current?.getBoundingClientRect().top + currentScrollY;
@@ -1020,13 +996,13 @@ function JoesBeerhouse() {
                     />
                     <Search
                       size={20}
-                      className={`absolute ${isSearchFocused ? 'left-3' : 'right-3'
+                      className={`absolute ${isSearchFocused ? 'left-2' : 'right-6'
                         } top-1/2 -translate-y-1/2 text-orange-500`}
                     />
                     {state.searchTerm && (
                       <X
                         size={20}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-orange-500 hover:text-gray-400"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-orange-500"
                         onClick={handleClear}
                       />
                     )}
@@ -1115,53 +1091,57 @@ function JoesBeerhouse() {
           </section>
 
           {/*More Information Section */}
-          <section ref={opMoreInformationRef} id="moreInformation" className="container mx-auto mt-8 p-4">
+          <section ref={opMoreInformationRef} id="moreInformation" className="container mx-auto mt-8 px-4">
             {/* More information content */}
-            <div className="flex flex-col p-4 md:flex-row md:space-x-8">
-              <div className="space-y-8 md:w-1/3">
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-md font-semibold">Store Information</h3>
-                    <p className="font-bold text-[#ee9613]">Joe's Beerhouse</p>
-                    <p>German Cuisine</p>
-                    <p>Steakhouse</p>
-                  </div>
-                  <div>
-                    <h3 className="text-md font-semibold">Address</h3>
+            <div className="flex flex-col md:flex-row space-y-4 p-4 md:space-x-8 ">
+              <div className="flex flex-row  justify-between sm:flex-row items-center   md:w-1/3">
+                <div className="flex flex-row items-start justtify-between space-x-4 sm:space-y-0 ">
+                  
+                    <div className="space-y-8">
+                      <div>
+                        <h3 className="text-md font-semibold">Store Information</h3>
+                        <p className="font-bold text-[#ee9613]">Joe's Beerhouse</p>
+                        <p>German Cuisine</p>
+                        <p>Steakhouse</p>
+                      </div>
+                      <div>
+                        <h3 className="text-md font-semibold">Address</h3>
+                        <div>
+                          <p>Windhoek West</p>
+                          <p>8850603 Eilat</p>
+                          <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-bold text-[#ee9613] hover:underline"
+                          >
+                            See map
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                 
+                  <div className="space-y-8 ">
+                    <h3 className="text-md font-semibold">More information</h3>
+                    <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">
+                      +972543131665
+                    </a>
                     <div>
-                      <p>Windhoek West</p>
-                      <p>8850603 Eilat</p>
-                      <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-bold text-[#ee9613] hover:underline"
-                      >
-                        See map
-                      </a>
+                      <h3 className="text-md font-semibold">Opening hours</h3>
+                      <table className="table-auto">
+                        <tbody>
+                          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                            <tr key={day}>
+                              <td className="pr-4">{day}</td>
+                              <td>09:00–22:30</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="space-y-8 md:w-1/3">
-                <h3 className="text-md font-semibold">More information</h3>
-                <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">
-                  +972543131665
-                </a>
-                <div>
-                  <h3 className="text-md font-semibold">Opening hours</h3>
-                  <table className="table-auto">
-                    <tbody>
-                      {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
-                        <tr key={day}>
-                          <td className="pr-4">{day}</td>
-                          <td>09:00–22:30</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="md:w-2/3">
+              <div className="md:w-2/3 ">
                 <div ref={mapContainerRef} className="h-[400px] w-full"></div>
               </div>
             </div>
