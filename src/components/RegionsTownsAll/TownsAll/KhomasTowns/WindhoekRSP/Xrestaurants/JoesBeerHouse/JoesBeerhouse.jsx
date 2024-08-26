@@ -803,7 +803,7 @@ function JoesBeerhouse() {
                   <svg viewBox="0 0 24 24" width="16" aria-hidden="true" className="text-[#ee9613]">
                     <circle cx="12" cy="12" r="12" fill="orange" />
                   </svg>
-                  <span>9.8</span>
+                  <span>9.8 Store Rating </span>
                 </div>
                 <button
                   type="button"
@@ -938,7 +938,7 @@ function JoesBeerhouse() {
                       {state.isMoreDropdownOpen && (
                         <div
                           ref={dropdownRef}
-                          className="absolute left-0 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
+                          className="absolute -left-36 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
                           style={{ top: 'calc(100% + 2px)' }}
                         >
                           <div className="grid grid-cols-2 gap-2 p-2">

@@ -190,12 +190,12 @@ function Checkers() {
     let result = storecards;
 
     // Filter by delivery/pickup
-  result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
+    result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
 
-  // Filter by selected categories
-  if (state.selectedCategories.length > 0) {
-    result = result.filter(product => state.selectedCategories.includes(product.cuisine));
-  }
+    // Filter by selected categories
+    if (state.selectedCategories.length > 0) {
+      result = result.filter(product => state.selectedCategories.includes(product.cuisine));
+    }
 
     // Filter by product search term
     if (state.productSearchTerm) {
@@ -300,48 +300,48 @@ function Checkers() {
   }, []);
 
   // Effects
- // Effect for initializing the map
- useEffect(() => {
-  console.log("Map container ref:", mapContainerRef.current);
-  if (mapContainerRef.current && !state.map) {
-    console.log("Calling initializeMap");
-    initializeMap(mapContainerRef.current);
-  }
-}, [initializeMap, state.map]);
+  // Effect for initializing the map
+  useEffect(() => {
+    console.log("Map container ref:", mapContainerRef.current);
+    if (mapContainerRef.current && !state.map) {
+      console.log("Calling initializeMap");
+      initializeMap(mapContainerRef.current);
+    }
+  }, [initializeMap, state.map]);
 
-// Effect for checking Mapbox support and initializing the map
-useEffect(() => {
-  if (typeof mapboxgl !== 'undefined' && mapboxgl.supported() && mapContainerRef.current && !state.map) {
-    console.log("Mapbox supported and container ready, initializing map");
-    initializeMap(mapContainerRef.current);
-  } else {
-    console.log("Mapbox not ready or already initialized", {
-      mapboxDefined: typeof mapboxgl !== 'undefined',
-      mapboxSupported: typeof mapboxgl !== 'undefined' && mapboxgl.supported(),
-      containerReady: !!mapContainerRef.current,
-      mapAlreadyInitialized: !!state.map
-    });
-  }
-}, [initializeMap, state.map]);
+  // Effect for checking Mapbox support and initializing the map
+  useEffect(() => {
+    if (typeof mapboxgl !== 'undefined' && mapboxgl.supported() && mapContainerRef.current && !state.map) {
+      console.log("Mapbox supported and container ready, initializing map");
+      initializeMap(mapContainerRef.current);
+    } else {
+      console.log("Mapbox not ready or already initialized", {
+        mapboxDefined: typeof mapboxgl !== 'undefined',
+        mapboxSupported: typeof mapboxgl !== 'undefined' && mapboxgl.supported(),
+        containerReady: !!mapContainerRef.current,
+        mapAlreadyInitialized: !!state.map
+      });
+    }
+  }, [initializeMap, state.map]);
 
-// Effect for loading Mapbox script
-useEffect(() => {
-  if (window.mapboxgl) {
-    setMapboxLoaded(true);
-  } else {
-    const script = document.createElement('script');
-    script.src = 'https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js';
-    script.onload = () => setMapboxLoaded(true);
-    document.body.appendChild(script);
-  }
-}, []);
+  // Effect for loading Mapbox script
+  useEffect(() => {
+    if (window.mapboxgl) {
+      setMapboxLoaded(true);
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js';
+      script.onload = () => setMapboxLoaded(true);
+      document.body.appendChild(script);
+    }
+  }, []);
 
-// Effect for initializing map after Mapbox is loaded
-useEffect(() => {
-  if (mapboxLoaded && mapContainerRef.current) {
-    initializeMap(mapContainerRef.current);
-  }
-}, [mapboxLoaded, initializeMap]);
+  // Effect for initializing map after Mapbox is loaded
+  useEffect(() => {
+    if (mapboxLoaded && mapContainerRef.current) {
+      initializeMap(mapContainerRef.current);
+    }
+  }, [mapboxLoaded, initializeMap]);
 
   useEffect(() => {
     let interval;
@@ -386,7 +386,7 @@ useEffect(() => {
   const handleProductsFocus = (field) => () => {
     setState(prevState => ({ ...prevState, [field]: true }));
   };
-  
+
   const handleCategoriesFocus = (field) => () => {
     setState(prevState => ({ ...prevState, [field]: true }));
   };
@@ -403,7 +403,7 @@ useEffect(() => {
       inputCategoriesRef.current.focus();
     }
   };
-  
+
   const handleClearProduct = (field) => () => {
     setState(prevState => ({ ...prevState, [field]: "" }));
     if (inputProductRef.current) {
@@ -448,16 +448,16 @@ useEffect(() => {
     requestAnimationFrame(animation);
   }, []);
 
-    // Function to handle the infromation button click
-    const handleSeeMoreInfo = useCallback(() => {
-      smoothScroll('moreInformation', 1500); // Scroll duration of 1.5 seconds
-    }, [smoothScroll]);
+  // Function to handle the infromation button click
+  const handleSeeMoreInfo = useCallback(() => {
+    smoothScroll('moreInformation', 1500); // Scroll duration of 1.5 seconds
+  }, [smoothScroll]);
 
   // Render helpers
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
       <div className="container mx-auto px-2 sm:px-4 lg:px-6">
-         {/* Gradient overlays for scroll indicators */}
+        {/* Gradient overlays for scroll indicators */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
         {/* Left scroll button */}
@@ -475,7 +475,7 @@ useEffect(() => {
         >
           {items.map((item, index) => itemRenderer(item, index))}
         </div>
-         {/* Right scroll button */}
+        {/* Right scroll button */}
         <button
           className="absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
           onClick={() => scrollRight(scrollRef)}
@@ -569,12 +569,12 @@ useEffect(() => {
                       {state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                     </button>
                     <button
-                        onClick={getInfo}
-                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                        role="menuitem"
-                      >
-                        Stores Information
-                      </button>
+                      onClick={getInfo}
+                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                      role="menuitem"
+                    >
+                      Stores Information
+                    </button>
                   </div>
                 </div>
               )}
@@ -650,8 +650,8 @@ useEffect(() => {
                   <button
                     key={index}
                     className={`size-2 rounded-full ${index === state.currentIndex % cards.length
-                        ? "bg-white"
-                        : "bg-gray-400"
+                      ? "bg-white"
+                      : "bg-gray-400"
                       }`}
                     onClick={() => handleDotClick(index)}
                     aria-label={`Go to slide ${index + 1}`}
@@ -663,9 +663,10 @@ useEffect(() => {
         </section>
 
         {/* Store Information */}
-        <section className="container mx-auto px-4">
-          <div className="flex items-center justify-between space-x-28 px-4">
-            <div className="flex items-center space-x-4">
+        <section id="information" className="container mx-auto mb-2 px-4">
+          {/* Store information content */}
+          <div className="flex flex-row items-start justify-between space-y-4 px-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
+            <div className="flex flex-col items-start space-y-2 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
               <div className="flex items-center space-x-1">
                 <svg viewBox="0 0 16 16" width="16" aria-hidden="true" className="text-primary">
                   <path fillRule="evenodd" clipRule="evenodd" d="M8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C15.9949 3.58385 12.4161 0.00514317 8 0ZM8 14.6667C4.3181 14.6667 1.33333 11.6819 1.33333 8C1.33333 4.3181 4.3181 1.33333 8 1.33333C11.6819 1.33333 14.6667 4.3181 14.6667 8C14.6626 11.6802 11.6802 14.6626 8 14.6667ZM11.4227 10.54L8.33333 7.70733V4.33333C8.33333 3.96514 8.03486 3.66667 7.66667 3.66667C7.29848 3.66667 7 3.96514 7 4.33333V8C6.99979 8.18704 7.07817 8.36556 7.216 8.492L10.522 11.522C10.7947 11.7672 11.2135 11.7492 11.464 11.4813C11.7123 11.2099 11.6938 10.7886 11.4227 10.54Z"></path>
@@ -676,35 +677,35 @@ useEffect(() => {
                 <svg viewBox="0 0 24 24" width="16" aria-hidden="true" className="text-[#ee9613]">
                   <circle cx="12" cy="12" r="12" fill="orange" />
                 </svg>
-                <span>9.8</span>
+                <span>9.8 Store Rating </span>
               </div>
               <button
-                  type="button"
-                  onClick={handleSeeMoreInfo}
-                  className="flex items-center space-x-1 text-[#ee9613] hover:underline focus:outline-none focus:ring-2 focus:ring-[#ee9613] focus:ring-opacity-50 transition duration-300"
-                >
-                  <svg viewBox="0 0 24 24" width="16">
-                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
-                  </svg>
-                  <span>See more information</span>
-                </button>
+                type="button"
+                onClick={handleSeeMoreInfo}
+                className="flex items-center space-x-1 text-[#ee9613] hover:underline focus:outline-none focus:ring-2 focus:ring-[#ee9613] focus:ring-opacity-50 transition duration-300"
+              >
+                <svg viewBox="0 0 24 24" width="16">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.993 5.376 18.624.007 12 0zm.25 5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75c0 .138.112.25.25.25h.75a1 1 0 010 2z"></path>
+                </svg>
+                <span>See more information</span>
+              </button>
             </div>
             <div className="flex items-center justify-end space-x-2 rounded-full border-solid bg-gray-200 p-1">
-                <button
-                  className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-[#ee9613] text-white" : "bg-gray-200"}`}
-                  onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
-                >
-                  Delivery
-                </button>
-                <button
-                  className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
-                  onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
-                >
-                  Pickup
-                </button>
-              </div>
+              <button
+                className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-[#ee9613] text-white" : "bg-gray-200"}`}
+                onClick={() => setState(prevState => ({ ...prevState, isDelivery: true }))}
+              >
+                Delivery
+              </button>
+              <button
+                className={`rounded-full border border-gray-300 px-2 py-1 text-black transition-colors duration-300 ${state.isDelivery ? "bg-gray-200" : "bg-[#ee9613] text-white"}`}
+                onClick={() => setState(prevState => ({ ...prevState, isDelivery: false }))}
+              >
+                Pickup
+              </button>
             </div>
-          <div className="px-4 text-gray-700">
+          </div>
+          <div className="mt-4 px-4 text-gray-700">
             {state.isDelivery
               ? "The following products are available for delivery to your location."
               : "All products the Store has to offer"}
@@ -752,78 +753,76 @@ useEffect(() => {
                   {/* Visible categories */}
                   <div className="flex-1 overflow-x-auto">
                     <div className="grid auto-cols-max grid-flow-col gap-2 pb-2">
-                    <button
-  onClick={() => handleCategorySelect("")}
-  className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${
-    state.selectedCategories.length === 0 ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-  }`}
->
-  All
-</button>
+                      <button
+                        onClick={() => handleCategorySelect("")}
+                        className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategories.length === 0 ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                          }`}
+                      >
+                        All
+                      </button>
 
                       {state.visibleCategories.map((category) => (
                         <button
                           key={category}
                           onClick={() => handleCategorySelect(category)}
-                          className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${
-                            state.selectedCategories.includes(category) ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                          }`}
+                          className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategories.includes(category) ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                            }`}
                         >
                           {category}
                         </button>
                       ))}
                     </div>
                   </div>
-    {/* More button */}
-{state.hiddenCategories.length > 0 && (
-  <div className="relative w-auto min-w-[80px] pr-6">
-    <div className="relative">
-      <button
-        ref={moreButtonRef}
-        onClick={toggleMoreDropdown}
-        className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
-      >
-        More 
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 0 24 24" 
-          fill="currentColor" 
-          aria-hidden="true" 
-          className="mx-2 size-4"
-        >
-          <path 
-            fillRule="evenodd" 
-            d="M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z" 
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
-      {/* Dropdown Menu */}
-      {state.isMoreDropdownOpen && (
-        <div
-          ref={dropdownRef}
-          className="absolute left-0 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
-          style={{ top: 'calc(100% + 2px)' }}
-        >
-          <div className="grid grid-cols-2 gap-2 p-2">
-            {state.hiddenCategories.map((category) => (
-              <button
-                key={category}
-                onClick={() => {
-                  handleCategorySelect(category);
-                  setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                }}
-                className="whitespace-normal rounded px-3 py-2 text-left hover:bg-gray-100"
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  </div>
-)}
+                  {/* More button */}
+                  {state.hiddenCategories.length > 0 && (
+                    <div className="relative w-auto min-w-[80px] pr-6">
+                      <div className="relative">
+                        <button
+                          ref={moreButtonRef}
+                          onClick={toggleMoreDropdown}
+                          className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
+                        >
+                          More
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            aria-hidden="true"
+                            className="mx-2 size-4"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </button>
+                        {/* Dropdown Menu */}
+                        {state.isMoreDropdownOpen && (
+                          <div
+                            ref={dropdownRef}
+                            className="absolute -left-36 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
+                            style={{ top: 'calc(100% + 2px)' }}
+                          >
+                            <div className="grid grid-cols-2 gap-2 p-2">
+                              {state.hiddenCategories.map((category) => (
+                                <button
+                                  key={category}
+                                  onClick={() => {
+                                    handleCategorySelect(category);
+                                    setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+                                  }}
+                                  className="whitespace-normal rounded px-3 py-2 text-left hover:bg-gray-100"
+                                >
+                                  {category}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -934,7 +933,7 @@ useEffect(() => {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "calc(850px - 4rem)" }}>
                     {state.selectedCategories.length > 0 && (
                       <button
@@ -948,9 +947,8 @@ useEffect(() => {
                       <button
                         key={index}
                         onClick={() => handleCategorySelect(category.name)}
-                        className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-[#ecbc73] ${
-                          state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
-                        }`}
+                        className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-[#ecbc73] ${state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
+                          }`}
                       >
                         <LazyLoadImage
                           src={category.imgSrc}
@@ -986,179 +984,179 @@ useEffect(() => {
                           <>
                             <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
                             {state.productSearchTerm && (
-                             <X
-                             size={20}
-                             className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
-                             onClick={handleClearProduct('productSearchTerm')}
-                           />
-                         )}
-                       </>
-                     ) : (
-                       <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                     )}
-                   </div>
-                 </div>
-                 <div className="ml-auto flex items-center">
-                   <select
-                     value={state.sortCriteria}
-                     onChange={handleSortChange}
-                     className="rounded-md border px-4 py-2"
-                   >
-                     <option value="recommended">Sort by: Recommended</option>
-                     <option value="priceAsc">Price: Low to High</option>
-                     <option value="priceDesc">Price: High to Low</option>
-                     <option value="nameAsc">Name: A to Z</option>
-                     <option value="nameDesc">Name: Z to A</option>
-                   </select>
-                 </div>
-               </div>
-
-               <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
-                 <div className="px-2 pb-4">
-                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-                     {filteredAndSortedProducts.map((product, index) => (
-                       <div
-                         key={index}
-                         className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
-                       >
-                         <a href={product.href}
-                           className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
-                         >
-                           <div className="flex h-full flex-col">
-                             <div className="relative aspect-square w-full overflow-hidden">
-                               <LazyLoadImage
-                                 src={product.imgSrc}
-                                 alt={product.name}
-                                 width="100%"
-                                 height="100%"
-                                 effect="blur"
-                                 className="size-full object-cover"
-                               />
-                               {product.discount && (
-                                 <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
-                                   {`-${product.discount}%`}
-                                 </div>
-                               )}
-                               <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
-                                 +
-                               </div>
-                             </div>
-                             <div className="flex w-full grow flex-col p-2">
-                               <h3 className="truncate font-bold">{product.name}</h3>
-                               <div className="mt-2 flex items-center text-sm">
-                                 <div className="text-sm font-bold text-[#ee9613]">
-                                   <span>{product.priceRange}</span>
-                                 </div>
-                                 <span className="mx-1">•</span>
-                                 <span className="truncate">{product.cuisine}</span>
-                               </div>
-                               <div className="mt-1 text-xs text-gray-500">
-                                 {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
-                               </div>
-                               <div className="mt-1 line-clamp-2 text-xs text-gray-500">
-                                 {product.description}
-                               </div>
-                               <div className="mt-auto">
-                                 <div className="rounded py-1 text-xs text-black">
-                                   <span className="text-black">Etomart </span>
-                                   {product.deliveryTime ? (
-                                     <span className="font-bold text-[#ee9613]">Delivery Available</span>
-                                   ) : (
-                                     <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
-                                   )}
-                                 </div>
-                               </div>
-                             </div>
-                           </div>
-                         </a>
-                       </div>
-                     ))}
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </section>
-         </div>
-       </div>
-     </section>
-
-     <section id="moreInformation" className="container mx-auto mt-8 px-4">
-            {/* More information content */}
-            <div className="flex flex-col md:flex-row space-y-4 p-4 md:space-x-8 ">
-              <div className="flex flex-row  justify-between sm:flex-row items-center   md:w-1/3">
-                <div className="flex flex-row items-start justtify-between space-x-4 sm:space-y-0 ">
-                  
-                    <div className="space-y-8">
-                      <div>
-                        <h3 className="text-md font-semibold">Store Information</h3>
-                        <p className="font-bold text-[#ee9613]">Checkers</p>
-                        <p>Better and Better</p>
-                      </div>
-                      <div>
-                        <h3 className="text-md font-semibold">Address</h3>
-                        <div>
-                          <p>Windhoek West</p>
-                          <p>8850603 Eilat</p>
-                          <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-bold text-[#ee9613] hover:underline"
-                          >
-                            See map
-                          </a>
-                        </div>
+                              <X
+                                size={20}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
+                                onClick={handleClearProduct('productSearchTerm')}
+                              />
+                            )}
+                          </>
+                        ) : (
+                          <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                        )}
                       </div>
                     </div>
-                 
-                  <div className="space-y-8 ">
-                    <h3 className="text-md font-semibold">More information</h3>
-                    <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">
-                      +972543131665
-                    </a>
-                    <div>
-                      <h3 className="text-md font-semibold">Opening hours</h3>
-                      <table className="table-auto">
-                        <tbody>
-                          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
-                            <tr key={day}>
-                              <td className="pr-4">{day}</td>
-                              <td>09:00–22:30</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                    <div className="ml-auto flex items-center">
+                      <select
+                        value={state.sortCriteria}
+                        onChange={handleSortChange}
+                        className="rounded-md border px-4 py-2"
+                      >
+                        <option value="recommended">Sort by: Recommended</option>
+                        <option value="priceAsc">Price: Low to High</option>
+                        <option value="priceDesc">Price: High to Low</option>
+                        <option value="nameAsc">Name: A to Z</option>
+                        <option value="nameDesc">Name: Z to A</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
+                    <div className="px-2 pb-4">
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+                        {filteredAndSortedProducts.map((product, index) => (
+                          <div
+                            key={index}
+                            className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
+                          >
+                            <a href={product.href}
+                              className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
+                            >
+                              <div className="flex h-full flex-col">
+                                <div className="relative aspect-square w-full overflow-hidden">
+                                  <LazyLoadImage
+                                    src={product.imgSrc}
+                                    alt={product.name}
+                                    width="100%"
+                                    height="100%"
+                                    effect="blur"
+                                    className="size-full object-cover"
+                                  />
+                                  {product.discount && (
+                                    <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
+                                      {`-${product.discount}%`}
+                                    </div>
+                                  )}
+                                  <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                                    +
+                                  </div>
+                                </div>
+                                <div className="flex w-full grow flex-col p-2">
+                                  <h3 className="truncate font-bold">{product.name}</h3>
+                                  <div className="mt-2 flex items-center text-sm">
+                                    <div className="text-sm font-bold text-[#ee9613]">
+                                      <span>{product.priceRange}</span>
+                                    </div>
+                                    <span className="mx-1">•</span>
+                                    <span className="truncate">{product.cuisine}</span>
+                                  </div>
+                                  <div className="mt-1 text-xs text-gray-500">
+                                    {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
+                                  </div>
+                                  <div className="mt-1 line-clamp-2 text-xs text-gray-500">
+                                    {product.description}
+                                  </div>
+                                  <div className="mt-auto">
+                                    <div className="rounded py-1 text-xs text-black">
+                                      <span className="text-black">Etomart </span>
+                                      {product.deliveryTime ? (
+                                        <span className="font-bold text-[#ee9613]">Delivery Available</span>
+                                      ) : (
+                                        <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="md:w-2/3 ">
-                <div ref={mapContainerRef} className="h-[400px] w-full"></div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section id="moreInformation" className="container mx-auto mt-8 px-4">
+          {/* More information content */}
+          <div className="flex flex-col md:flex-row space-y-4 p-4 md:space-x-8 ">
+            <div className="flex flex-row  justify-between sm:flex-row items-center   md:w-1/3">
+              <div className="flex flex-row items-start justtify-between space-x-4 sm:space-y-0 ">
+
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-md font-semibold">Store Information</h3>
+                    <p className="font-bold text-[#ee9613]">Checkers</p>
+                    <p>Better and Better</p>
+                  </div>
+                  <div>
+                    <h3 className="text-md font-semibold">Address</h3>
+                    <div>
+                      <p>Windhoek West</p>
+                      <p>8850603 Eilat</p>
+                      <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-[#ee9613] hover:underline"
+                      >
+                        See map
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-8 ">
+                  <h3 className="text-md font-semibold">More information</h3>
+                  <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">
+                    +972543131665
+                  </a>
+                  <div>
+                    <h3 className="text-md font-semibold">Opening hours</h3>
+                    <table className="table-auto">
+                      <tbody>
+                        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                          <tr key={day}>
+                            <td className="pr-4">{day}</td>
+                            <td>09:00–22:30</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
-          </section>
+            <div className="md:w-2/3 ">
+              <div ref={mapContainerRef} className="h-[400px] w-full"></div>
+            </div>
+          </div>
+        </section>
 
-     {/* Similar Supermarkets Section */}
-     <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
-       <div
-         className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
-         style={{ width: "50%", maxWidth: "1000px" }}
-       >
-         <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
-           Similar Supermarkets
-         </h2>
-       </div>
-     </section>
+        {/* Similar Supermarkets Section */}
+        <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
+          <div
+            className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
+            style={{ width: "50%", maxWidth: "1000px" }}
+          >
+            <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
+              Similar Supermarkets
+            </h2>
+          </div>
+        </section>
 
-     {/* Supermarkets Carousel */}
-     {renderCarousel(supermarkets, supermarketsscroll, renderSupermarketCard)}
-   </main>
-   <Footer />
- </div>
-);
+        {/* Supermarkets Carousel */}
+        {renderCarousel(supermarkets, supermarketsscroll, renderSupermarketCard)}
+      </main>
+      <Footer />
+    </div>
+  );
 }
 
 Checkers.propTypes = {
-// Add prop types here if needed
+  // Add prop types here if needed
 };
 
 export default Checkers;
