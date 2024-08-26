@@ -610,7 +610,7 @@ function JoesBeerhouse() {
     </div>
   ), []);
 
-  // Return statement
+  //Return statement
   return (
     <div className="">
       <Suspense fallback={<div>Loading...</div>}>
