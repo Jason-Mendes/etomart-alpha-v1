@@ -71,7 +71,7 @@ function Checkers() {
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
   const categories = useMemo(() => {
-    const uniqueCategories = new Set(storecards.map(card => card.cuisine));
+    const uniqueCategories = new Set(storecards.map(card => card.type));
     return Array.from(uniqueCategories);
   }, [storecards]);
 
@@ -170,7 +170,7 @@ function Checkers() {
 
     // Filter by selected categories
     if (state.selectedCategories.length > 0) {
-      result = result.filter(product => state.selectedCategories.includes(product.cuisine));
+      result = result.filter(product => state.selectedCategories.includes(product.type));
     }
 
     // Filter by product search term
@@ -198,76 +198,48 @@ function Checkers() {
     }
   }, [storecards, state.isDelivery, state.selectedCategories, state.productSearchTerm, state.sortCriteria]);
 
-  // Mapbox setup
+  // Mapbox configuration
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+  console.log("Mapbox Token:", process.env.REACT_APP_MAPBOX_ACCESS_TOKEN);
 
+  // Marker coordinates for the map
   const MARKER_COORDINATES = [
     { lng: 17.09449450474923, lat: -22.584210677171924 },
     { lng: 17.073723364157306, lat: -22.561939983264068 },
   ];
 
-  const initializeMap = useCallback((mapContainer) => {
-    if (!mapContainer) return;
-
-    const mapInstance = new mapboxgl.Map({
-      container: mapContainer,
-      style: "mapbox://styles/mapbox/streets-v11",
-      zoom: 12,
-    });
-
-    mapInstance.addControl(new mapboxgl.NavigationControl());
-
-    MARKER_COORDINATES.forEach((coord) => {
-      new mapboxgl.Marker({ color: "#ee9613" })
-        .setLngLat([coord.lng, coord.lat])
-        .addTo(mapInstance);
-    });
-
-    const bounds = new mapboxgl.LngLatBounds();
-    MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
-
-    mapInstance.fitBounds(bounds, {
-      padding: { top: 30, bottom: 30, left: 20, right: 20 },
-      maxZoom: 13,
-      linear: true,
-    });
-
-    fetchAndDisplayRoute(mapInstance);
-
-    setState(prevState => ({ ...prevState, map: mapInstance }));
-  }, []);
-
+  // Function to fetch and display the route on the map
   const fetchAndDisplayRoute = useCallback(async (mapInstance) => {
     try {
+      // Fetch route data from Mapbox API
       const response = await axios.get(
         `https://api.mapbox.com/directions/v5/mapbox/driving/${MARKER_COORDINATES[0].lng},${MARKER_COORDINATES[0].lat};${MARKER_COORDINATES[1].lng},${MARKER_COORDINATES[1].lat}?geometries=geojson&access_token=${mapboxgl.accessToken}`
       );
 
       const routeLine = response.data.routes[0].geometry;
 
-      mapInstance.on("load", () => {
-        mapInstance.addSource("route", {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            properties: {},
-            geometry: routeLine,
-          },
-        });
+      // Add the route to the map
+      mapInstance.addSource("route", {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: routeLine,
+        },
+      });
 
-        mapInstance.addLayer({
-          id: "route",
-          type: "line",
-          source: "route",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#ee9613",
-            "line-width": 8,
-          },
-        });
+      mapInstance.addLayer({
+        id: "route",
+        type: "line",
+        source: "route",
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#ee9613",
+          "line-width": 8,
+        },
       });
     } catch (error) {
       console.error("Error fetching route:", error);
@@ -275,7 +247,96 @@ function Checkers() {
     }
   }, []);
 
-  // Effects
+  // Function to initialize the map
+  const initializeMap = useCallback((mapContainer) => {
+    if (!mapContainer) return;
+
+    console.log("Initializing map...");
+    try {
+      // Create a new Mapbox instance
+      const mapInstance = new mapboxgl.Map({
+        container: mapContainer,
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [17.09449450474923, -22.584210677171924], // Center on Joe's Beerhouse
+        zoom: 12,
+      });
+
+      console.log("Map instance created:", mapInstance);
+
+      // Add navigation control to the map
+      mapInstance.addControl(new mapboxgl.NavigationControl());
+
+      // Add markers for the coordinates
+      MARKER_COORDINATES.forEach((coord) => {
+        new mapboxgl.Marker({ color: "#ee9613" })
+          .setLngLat([coord.lng, coord.lat])
+          .addTo(mapInstance);
+      });
+
+      // Fit the map to show all markers
+      const bounds = new mapboxgl.LngLatBounds();
+      MARKER_COORDINATES.forEach((coord) => bounds.extend([coord.lng, coord.lat]));
+
+      mapInstance.fitBounds(bounds, {
+        padding: { top: 30, bottom: 30, left: 20, right: 20 },
+        maxZoom: 13,
+        linear: true,
+      });
+
+      // Load the map and fetch the route
+      mapInstance.on('load', () => {
+        console.log("Map loaded successfully");
+        fetchAndDisplayRoute(mapInstance);
+      });
+
+      // Handle map errors
+      mapInstance.on('error', (e) => {
+        console.error("Map error:", e);
+      });
+
+      // Update the state with the map instance
+      setState(prevState => ({ ...prevState, map: mapInstance }));
+    } catch (error) {
+      console.error("Error initializing map:", error);
+    }
+  }, [fetchAndDisplayRoute]);
+
+  useEffect(() => {
+    let interval;
+    if (!state.isPaused) {
+      interval = setInterval(handleNext, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [state.isPaused, handleNext]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setState(prevState => ({ ...prevState, isDropdownOpen: false }));
+      }
+      if (productSearchRef.current && !productSearchRef.current.contains(event.target)) {
+        setState(prevState => ({ ...prevState, productSearchTerm: "" }));
+      }
+      if (categoriesSearchRef.current && !categoriesSearchRef.current.contains(event.target)) {
+        setState(prevState => ({ ...prevState, categorySearchTerm: "" }));
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    setState(prevState => ({
+      ...prevState,
+      visibleCategories: categories.slice(0, VISIBLE_CATEGORIES_COUNT),
+      hiddenCategories: categories.slice(VISIBLE_CATEGORIES_COUNT),
+    }));
+  }, [categories]);
+
   // Effect for initializing the map
   useEffect(() => {
     console.log("Map container ref:", mapContainerRef.current);
@@ -318,42 +379,6 @@ function Checkers() {
       initializeMap(mapContainerRef.current);
     }
   }, [mapboxLoaded, initializeMap]);
-
-  useEffect(() => {
-    let interval;
-    if (!state.isPaused) {
-      interval = setInterval(handleNext, 5000);
-    }
-    return () => clearInterval(interval);
-  }, [state.isPaused, handleNext]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setState(prevState => ({ ...prevState, isDropdownOpen: false }));
-      }
-      if (productSearchRef.current && !productSearchRef.current.contains(event.target)) {
-        setState(prevState => ({ ...prevState, productSearchTerm: "" }));
-      }
-      if (categoriesSearchRef.current && !categoriesSearchRef.current.contains(event.target)) {
-        setState(prevState => ({ ...prevState, categorySearchTerm: "" }));
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    setState(prevState => ({
-      ...prevState,
-      visibleCategories: categories.slice(0, VISIBLE_CATEGORIES_COUNT),
-      hiddenCategories: categories.slice(VISIBLE_CATEGORIES_COUNT),
-    }));
-  }, [categories]);
 
   const handleSearch = (field) => (event) => {
     setState(prevState => ({ ...prevState, [field]: event.target.value }));
@@ -692,9 +717,9 @@ function Checkers() {
         <section className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row">
             {/* Mobile view (below md screens) */}
-            <div className="lg:hidden w-full">
+            <div className="lg:hidden w-full ">
               {/* Product search */}
-              <div className="mb-4 w-full">
+              <div className="mb-4 w-full ">
                 <div className="relative">
                   <input
                     ref={inputProductRef}
@@ -758,20 +783,7 @@ function Checkers() {
                           onClick={toggleMoreDropdown}
                           className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
                         >
-                          More
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            aria-hidden="true"
-                            className="mx-2 size-4"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
+                          More <ChevronDownIcon className="mx-2 size-4" />
                         </button>
                         {/* Dropdown Menu */}
                         {state.isMoreDropdownOpen && (
@@ -803,7 +815,7 @@ function Checkers() {
               </div>
 
               {/* All Products and Sort */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-4 ">
                 <h2 className="text-2xl font-bold">All Products</h2>
                 <select
                   value={state.sortCriteria}
@@ -819,29 +831,29 @@ function Checkers() {
               </div>
 
               {/* Products grid */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="overflow-y-auto h-[850px] grid grid-cols-2 sm:grid-cols-3 md:h-[850px]">
                 {filteredAndSortedProducts.map((product, index) => (
-                  <div key={index} className="w-full">
-
-                    <a href={product.href}
-                      className="block h-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
-                    >
-                      <div className="relative aspect-square w-full overflow-hidden">
+                  <div key={index} className="w-56 shrink-0 p-6 sm:w-48 md:w-60 lg:w-64">
+                    <a href={supermarkets.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl overflow-hidden">
+                      <div className="relative aspect-square w-full overflow-hidden rounded-t-lg">
                         <LazyLoadImage
                           src={product.imgSrc}
                           alt={product.name}
                           width="100%"
                           height="100%"
-                          effect="blur"
                           className="size-full object-cover"
+                          effect="opacity"
                         />
-                        {product.discount && (
-                          <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
-                            {`-${product.discount}%`}
+
+                        <div className="p-3 sm:p-4">
+                          {product.discount && (
+                            <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
+                              {`-${product.discount}%`}
+                            </div>
+                          )}
+                          <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                            +
                           </div>
-                        )}
-                        <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
-                          +
                         </div>
                       </div>
                       <div className="flex w-full grow flex-col p-2">
@@ -851,7 +863,7 @@ function Checkers() {
                             <span>{product.priceRange}</span>
                           </div>
                           <span className="mx-1">•</span>
-                          <span className="truncate">{product.cuisine}</span>
+                          <span className="truncate">{product.type}</span>
                         </div>
                         <div className="mt-1 text-xs text-gray-500">
                           {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
@@ -910,7 +922,7 @@ function Checkers() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "calc(850px - 4rem)" }}>
+                  <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "850px" }}>
                     {state.selectedCategories.length > 0 && (
                       <button
                         onClick={clearSelectedCategories}
@@ -987,7 +999,7 @@ function Checkers() {
                     </div>
                   </div>
 
-                  <div className="h-[600px] overflow-y-auto sm:h-[700px] md:h-[850px]">
+                  <div className="overflow-y-auto  lg:h-[850px]">
                     <div className="px-2 pb-4">
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
                         {filteredAndSortedProducts.map((product, index) => (
@@ -1024,7 +1036,7 @@ function Checkers() {
                                       <span>{product.priceRange}</span>
                                     </div>
                                     <span className="mx-1">•</span>
-                                    <span className="truncate">{product.cuisine}</span>
+                                    <span className="truncate">{product.type}</span>
                                   </div>
                                   <div className="mt-1 text-xs text-gray-500">
                                     {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}

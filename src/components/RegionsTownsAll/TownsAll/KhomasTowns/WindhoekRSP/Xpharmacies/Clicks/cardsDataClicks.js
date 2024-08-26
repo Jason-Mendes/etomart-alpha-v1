@@ -171,7 +171,7 @@ export const pharmacycards = [
     discount: null,
     isEtomartStore: false,
     priceRange: "€",
-    category: "Pain Relief",
+    type: "Pain Relief",
     description:
       "Effective pain reliever for headaches, muscle pain, and minor arthritis. Trusted relief you can count on.",
     pickupTime: "10–30 min",
@@ -184,7 +184,7 @@ export const pharmacycards = [
     discount: null,
     isEtomartStore: false,
     priceRange: "€",
-    category: "Anti-inflammatory",
+    type: "Anti-inflammatory",
     description:
       "Powerful anti-inflammatory medication for reducing pain and swelling. Ideal for back pain, toothaches, and menstrual cramps.",
     pickupTime: "20–40 min",
@@ -197,7 +197,7 @@ export const pharmacycards = [
     discount: null,
     isEtomartStore: false,
     priceRange: "€",
-    category: "Pain Relief",
+    type: "Pain Relief",
     description:
       "Safe and effective pain reliever and fever reducer. Perfect for all ages and common ailments.",
     pickupTime: "15–35 min",
@@ -210,7 +210,7 @@ export const pharmacycards = [
     discount: 20,
     isEtomartStore: false,
     priceRange: "€",
-    category: "Allergy Relief",
+    type: "Allergy Relief",
     description:
       "Relieve allergy symptoms such as runny nose, sneezing, and itchy eyes. Fast-acting and long-lasting.",
     pickupTime: "20–40 min",
@@ -223,7 +223,7 @@ export const pharmacycards = [
     discount: null,
     isEtomartStore: false,
     priceRange: "€",
-    category: "Cough Relief",
+    type: "Cough Relief",
     description:
       "Soothe your throat and ease your cough with our effective cough syrups. Available for both adults and children.",
     pickupTime: "10–30 min",
