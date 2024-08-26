@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import PropTypes from 'prop-types';
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
@@ -52,15 +52,15 @@ function Checkers() {
   const [mapboxLoaded, setMapboxLoaded] = useState(false);
 
   // Refs
-  const containerRef = useRef(null);
-  const dropdownRef = useRef(null);
-  const mapContainerRef = useRef(null);
-  const supermarketsscroll = useRef(null);
-  const productSearchRef = useRef(null);
-  const categoriesSearchRef = useRef(null);
-  const inputCategoriesRef = useRef(null);
-  const inputProductRef = useRef(null);
-  const moreButtonRef = useRef(null);
+  const containerRef = React.useRef(null);
+  const dropdownRef = React.useRef(null);
+  const mapContainerRef = React.useRef(null);
+  const supermarketsscroll = React.useRef(null);
+  const productSearchRef = React.useRef(null);
+  const categoriesSearchRef = React.useRef(null);
+  const inputCategoriesRef = React.useRef(null);
+  const inputProductRef = React.useRef(null);
+  const moreButtonRef = React.useRef(null);
 
   // Memoized data
   const navcategories = useNavcategories();
@@ -86,30 +86,6 @@ function Checkers() {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: 200, behavior: "smooth" });
     }
-  }, []);
-
-  const handleExpandCategory = useCallback(() => {
-    setState(prevState => ({ ...prevState, isExpanded: true }));
-  }, []);
-
-  const handleCollapseCategory = useCallback(() => {
-    setState(prevState => ({ ...prevState, isExpanded: false, categorySearchTerm: "" }));
-  }, []);
-
-  const handleExpandProduct = useCallback(() => {
-    setState(prevState => ({ ...prevState, isExpanded: true }));
-  }, []);
-
-  const handleCollapseProduct = useCallback(() => {
-    setState(prevState => ({ ...prevState, isExpanded: false, productSearchTerm: "" }));
-  }, []);
-
-  const handleCategorySearch = useCallback((event) => {
-    setState(prevState => ({ ...prevState, categorySearchTerm: event.target.value }));
-  }, []);
-
-  const handleProductSearch = useCallback((event) => {
-    setState(prevState => ({ ...prevState, productSearchTerm: event.target.value }));
   }, []);
 
   const handleNext = useCallback(() => {
@@ -390,282 +366,282 @@ function Checkers() {
   const handleCategoriesFocus = (field) => () => {
     setState(prevState => ({ ...prevState, [field]: true }));
   };
+ // Callbacks and event handlers
+ const handleBlur = (field, term) => () => {
+  if (!state[term]) {
+    setState(prevState => ({ ...prevState, [field]: false }));
+  }
+};
 
-  const handleBlur = (field, term) => () => {
-    if (!state[term]) {
-      setState(prevState => ({ ...prevState, [field]: false }));
-    }
-  };
+const handleClearCategory = (field) => () => {
+  setState(prevState => ({ ...prevState, [field]: "" }));
+  if (inputCategoriesRef.current) {
+    inputCategoriesRef.current.focus();
+  }
+};
 
-  const handleClearCategory = (field) => () => {
-    setState(prevState => ({ ...prevState, [field]: "" }));
-    if (inputCategoriesRef.current) {
-      inputCategoriesRef.current.focus();
-    }
-  };
+const handleClearProduct = (field) => () => {
+  setState(prevState => ({ ...prevState, [field]: "" }));
+  if (inputProductRef.current) {
+    inputProductRef.current.focus();
+  }
+};
 
-  const handleClearProduct = (field) => () => {
-    setState(prevState => ({ ...prevState, [field]: "" }));
-    if (inputProductRef.current) {
-      inputProductRef.current.focus();
-    }
-  };
+const clearSelectedCategories = useCallback(() => {
+  setState(prevState => ({ ...prevState, selectedCategories: [] }));
+}, []);
 
-  const clearSelectedCategories = useCallback(() => {
-    setState(prevState => ({ ...prevState, selectedCategories: [] }));
-  }, []);
+const toggleMoreDropdown = useCallback(() => {
+  setState(prevState => ({ ...prevState, isMoreDropdownOpen: !prevState.isMoreDropdownOpen }));
+}, []);
 
-  const toggleMoreDropdown = useCallback(() => {
-    setState(prevState => ({ ...prevState, isMoreDropdownOpen: !prevState.isMoreDropdownOpen }));
-  }, []);
+// Function to handle smooth scrolling for information button to snap to more information section
+const smoothScroll = useCallback((target, duration = 1000) => {
+  const targetElement = document.getElementById(target);
+  if (!targetElement) return;
 
-  // Function to handle smooth scrolling for information button to snap to more information section
-  const smoothScroll = useCallback((target, duration = 1000) => {
-    const targetElement = document.getElementById(target);
-    if (!targetElement) return;
+  const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+  const startPosition = window.pageYOffset;
+  const distance = targetPosition - startPosition;
+  let startTime = null;
 
-    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    let startTime = null;
+  function animation(currentTime) {
+    if (startTime === null) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const run = ease(timeElapsed, startPosition, distance, duration);
+    window.scrollTo(0, run);
+    if (timeElapsed < duration) requestAnimationFrame(animation);
+  }
 
-    function animation(currentTime) {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-      if (timeElapsed < duration) requestAnimationFrame(animation);
-    }
+  // Easing function
+  function ease(t, b, c, d) {
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t + b;
+    t--;
+    return -c / 2 * (t * (t - 2) - 1) + b;
+  }
 
-    // Easing function
-    function ease(t, b, c, d) {
-      t /= d / 2;
-      if (t < 1) return c / 2 * t * t + b;
-      t--;
-      return -c / 2 * (t * (t - 2) - 1) + b;
-    }
+  requestAnimationFrame(animation);
+}, []);
 
-    requestAnimationFrame(animation);
-  }, []);
-
-  // Function to handle the infromation button click
-  const handleSeeMoreInfo = useCallback(() => {
-    smoothScroll('moreInformation', 1500); // Scroll duration of 1.5 seconds
-  }, [smoothScroll]);
-
-  // Render helpers
-  const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
-    <div className="relative mt-4 sm:mt-6 md:mt-8">
-      <div className="container mx-auto px-2 sm:px-4 lg:px-6">
-        {/* Gradient overlays for scroll indicators */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
-        {/* Left scroll button */}
-        <button
-          className="absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
-          onClick={() => scrollLeft(scrollRef)}
-          aria-label="Scroll left"
-        >
-          &#9664;
-        </button>
-        {/* Carousel content */}
-        <div
-          ref={scrollRef}
-          className="custom-scrollbar flex space-x-4 overflow-x-auto p-4 sm:p-6 md:p-8"
-        >
-          {items.map((item, index) => itemRenderer(item, index))}
+// Function to handle the information button click
+const handleSeeMoreInfo = useCallback(() => {
+  smoothScroll('moreInformation', 1500); // Scroll duration of 1.5 seconds
+}, [smoothScroll]);
+  
+    // Render helpers
+    const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
+      <div className="relative mt-4 sm:mt-6 md:mt-8">
+        <div className="container mx-auto px-2 sm:px-4 lg:px-6">
+          {/* Gradient overlays for scroll indicators */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
+          {/* Left scroll button */}
+          <button
+            className="absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
+            onClick={() => scrollLeft(scrollRef)}
+            aria-label="Scroll left"
+          >
+            &#9664;
+          </button>
+          {/* Carousel content */}
+          <div
+            ref={scrollRef}
+            className="custom-scrollbar flex space-x-4 overflow-x-auto p-4 sm:p-6 md:p-8"
+          >
+            {items.map((item, index) => itemRenderer(item, index))}
+          </div>
+          {/* Right scroll button */}
+          <button
+            className="absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
+            onClick={() => scrollRight(scrollRef)}
+            aria-label="Scroll right"
+          >
+            &#9654;
+          </button>
         </div>
-        {/* Right scroll button */}
-        <button
-          className="absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
-          onClick={() => scrollRight(scrollRef)}
-          aria-label="Scroll right"
-        >
-          &#9654;
-        </button>
       </div>
-    </div>
-  ), [scrollLeft, scrollRight]);
-
-  // Function to render a restaurant card
-  const renderSupermarketCard = useCallback((supermarket, index) => (
-    <div key={index} className="w-48 shrink-0 p-6 sm:w-56 md:w-64 lg:w-72">
-      <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-        <div className="relative aspect-square w-full overflow-hidden rounded-t-lg">
-          <LazyLoadImage
-            src={supermarket.imgSrc}
-            alt={supermarket.name}
-            width="100%"
-            height="100%"
-            className="size-full object-fill"
-            effect="opacity"
-          />
-        </div>
-        <div className="p-3 sm:p-4">
-          <p className="w-full truncate text-center text-sm font-bold sm:text-base">{supermarket.name}</p>
-        </div>
-      </a>
-    </div>
-  ), []);
-
-  // JSX
-  return (
-    <div className="bg-white">
-      <KhomasOPNavBar />
-      <main className="relative z-10">
-        {/* Header section */}
-        <header className="relative w-full h-80">
-          <div className="relative mx-auto max-w-xs p-4">
+    ), [scrollLeft, scrollRight]);
+  
+    // Function to render a supermarket card
+    const renderSupermarketCard = useCallback((supermarket, index) => (
+      <div key={index} className="w-48 shrink-0 p-6 sm:w-56 md:w-64 lg:w-72">
+        <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+          <div className="relative aspect-square w-full overflow-hidden rounded-t-lg">
             <LazyLoadImage
-              src="/images/supermarkets/checkers.png"
-              alt="Checkers supermarket"
-              effect="blur"
-              className="h-auto w-full object-contain"
+              src={supermarket.imgSrc}
+              alt={supermarket.name}
+              width="100%"
+              height="100%"
+              className="size-full object-cover"
+              effect="opacity"
             />
           </div>
-          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-          <div className="absolute bottom-0 left-0 flex w-full items-center justify-between p-4">
-            <div className="px-4">
-              <h1 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">Checkers</h1>
-              <p className="text-sm text-white sm:text-base md:text-lg">Better and Better</p>
-              <button
-                data-test-id="venue-favorite"
-                aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-                onClick={toggleFavorite}
-                className="mt-2 rounded-full p-2 text-white transition duration-200 hover:bg-white hover:text-black"
-              >
-                <svg viewBox="0 0 24 24" className="size-6 fill-current">
-                  {state.isFavorite ? (
-                    <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498Z" />
-                  ) : (
-                    <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498ZM20.657 11.151L12.357 19.696C12.2628 19.7928 12.1335 19.8474 11.9985 19.8474C11.8634 19.8474 11.7341 19.7928 11.64 19.696L3.32699 11.136C1.94998 9.78618 1.60717 7.69937 2.47999 5.97998C3.13326 4.68428 4.37197 3.78375 5.80599 3.56198C7.26664 3.31621 8.75572 3.79456 9.79999 4.84498L11.33 6.24498C11.7117 6.59273 12.2953 6.59273 12.677 6.24498L14.238 4.82198C15.278 3.7873 16.7534 3.3181 18.2 3.56198C19.6323 3.78494 20.869 4.68536 21.521 5.97998C22.3943 7.7072 22.0444 9.8015 20.657 11.151Z" />
-                  )}
-                </svg>
-              </button>
-            </div>
-            <div ref={dropdownRef} className="relative px-4">
-              <button
-                aria-label="More options"
-                className="p-2 text-white"
-                onClick={toggleDropdown}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="size-8 rounded-full fill-current text-white transition duration-200 hover:bg-white hover:text-black"
-                >
-                  <circle cx="12" cy="5" r="2"></circle>
-                  <circle cx="12" cy="12" r="2"></circle>
-                  <circle cx="12" cy="19" r="2"></circle>
-                </svg>
-              </button>
-              {state.isDropdownOpen && (
-                <div className="absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-                  <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                    <button
-                      onClick={toggleFavorite}
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      {state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-                    </button>
-                    <button
-                      onClick={getInfo}
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      Stores Information
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+          <div className="p-3 sm:p-4">
+            <p className="w-full truncate text-center text-sm font-bold sm:text-base">{supermarket.name}</p>
           </div>
-        </header>
-
-        {/* Carousel section */}
-        <section className="my-8">
-          <div className="container mx-auto px-4">
-            <div className="relative mt-8 overflow-hidden">
-              <div
-                ref={containerRef}
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{
-                  transform: `translateX(-${state.currentIndex * 576}px)`,
-                  width: `${extendedCards.length * 576}px`,
-                }}
-                onTransitionEnd={handleTransitionEnd}
-              >
-                {extendedCards.map((card, index) => (
-                  <div
-                    key={index}
-                    className="shrink-0 p-2"
-                    style={{ width: "576px", height: "276px" }}
+        </a>
+      </div>
+    ), []);
+  
+    // JSX
+    return (
+      <div className="bg-white">
+        <KhomasOPNavBar />
+        <main className="relative z-10">
+          {/* Header section */}
+          <header className="relative w-full h-80">
+            <div className="relative mx-auto max-w-xs p-4">
+              <LazyLoadImage
+                src="/images/supermarkets/checkers.png"
+                alt="Checkers supermarket"
+                effect="blur"
+                className="h-auto w-full object-contain"
+              />
+            </div>
+            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div className="absolute bottom-0 left-0 flex w-full items-center justify-between p-4">
+              <div className="px-4">
+                <h1 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">Checkers</h1>
+                <p className="text-sm text-white sm:text-base md:text-lg">Better and Better</p>
+                <button
+                  data-test-id="venue-favorite"
+                  aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                  onClick={toggleFavorite}
+                  className="mt-2 rounded-full p-2 text-white transition duration-200 hover:bg-white hover:text-black"
+                >
+                  <svg viewBox="0 0 24 24" className="size-6 fill-current">
+                    {state.isFavorite ? (
+                      <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498Z" />
+                    ) : (
+                      <path d="M23.305 5.07498C22.3508 3.21819 20.5724 1.92407 18.5121 1.58723C16.4518 1.25039 14.3539 1.91076 12.858 3.36698L12 4.14798L11.172 3.39398C9.67891 1.90936 7.56117 1.23646 5.48499 1.58698C3.42071 1.90968 1.63893 3.2085 0.699989 5.07498C-0.569125 7.56204 -0.0794272 10.5848 1.90999 12.544L11.283 22.2C11.4713 22.3936 11.7299 22.5029 12 22.5029C12.2701 22.5029 12.5287 22.3936 12.717 22.2L22.076 12.562C24.0755 10.6019 24.5729 7.57146 23.305 5.07498ZM20.657 11.151L12.357 19.696C12.2628 19.7928 12.1335 19.8474 11.9985 19.8474C11.8634 19.8474 11.7341 19.7928 11.64 19.696L3.32699 11.136C1.94998 9.78618 1.60717 7.69937 2.47999 5.97998C3.13326 4.68428 4.37197 3.78375 5.80599 3.56198C7.26664 3.31621 8.75572 3.79456 9.79999 4.84498L11.33 6.24498C11.7117 6.59273 12.2953 6.59273 12.677 6.24498L14.238 4.82198C15.278 3.7873 16.7534 3.3181 18.2 3.56198C19.6323 3.78494 20.869 4.68536 21.521 5.97998C22.3943 7.7072 22.0444 9.8015 20.657 11.151Z" />
+                    )}
+                  </svg>
+                </button>
+              </div>
+              <div ref={dropdownRef} className="relative px-4">
+                <button
+                  aria-label="More options"
+                  className="p-2 text-white"
+                  onClick={toggleDropdown}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="size-8 rounded-full fill-current text-white transition duration-200 hover:bg-white hover:text-black"
                   >
+                    <circle cx="12" cy="5" r="2"></circle>
+                    <circle cx="12" cy="12" r="2"></circle>
+                    <circle cx="12" cy="19" r="2"></circle>
+                  </svg>
+                </button>
+                {state.isDropdownOpen && (
+                  <div className="absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                      <button
+                        onClick={toggleFavorite}
+                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        role="menuitem"
+                      >
+                        {state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                      </button>
+                      <button
+                        onClick={getInfo}
+                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        role="menuitem"
+                      >
+                        Store's Information
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </header>
+  
+          {/* Carousel section */}
+          <section className="my-8">
+            <div className="container mx-auto px-4">
+              <div className="relative mt-8 overflow-hidden">
+                <div
+                  ref={containerRef}
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{
+                    transform: `translateX(-${state.currentIndex * 576}px)`,
+                    width: `${extendedCards.length * 576}px`,
+                  }}
+                  onTransitionEnd={handleTransitionEnd}
+                >
+                  {extendedCards.map((card, index) => (
                     <div
-                      className="size-full overflow-hidden rounded-md bg-cover bg-center"
-                      style={{ backgroundImage: `url(${card.image})` }}
+                      key={index}
+                      className="shrink-0 p-2"
+                      style={{ width: "576px", height: "276px" }}
                     >
-                      <div className="flex h-full items-center bg-gray-900 bg-opacity-50">
-                        <div className="max-w-xl px-10">
-                          <h2 className="text-2xl font-semibold text-white">
-                            {card.title}
-                          </h2>
-                          <p className="mt-2 text-gray-400">{card.description}</p>
-                          <button className="mt-4 flex items-center rounded text-sm font-medium uppercase text-white hover:underline focus:outline-none">
-                            <span>Shop Now</span>
-                            <svg
-                              className="ml-2 size-5"
-                              fill="none"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
-                          </button>
+                      <div
+                        className="relative size-full overflow-hidden rounded-md bg-cover bg-center"
+                        style={{ backgroundImage: `url(${card.image})` }}
+                      >
+                        <div className="flex h-full items-center bg-gray-900 bg-opacity-50">
+                          <div className="max-w-xl px-10">
+                            <h2 className="text-2xl font-semibold text-white">
+                              {card.title}
+                            </h2>
+                            <p className="mt-2 text-gray-400">{card.description}</p>
+                            <button className="mt-4 flex items-center rounded text-sm font-medium uppercase text-white hover:underline focus:outline-none">
+                              <span>Shop Now</span>
+                              <svg
+                                className="ml-2 size-5"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              <button
-                className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
-                onClick={handlePrev}
-                aria-label="Previous slide"
-              >
-                &lt;
-              </button>
-              <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
-                onClick={handleNext}
-                aria-label="Next slide"
-              >
-                &gt;
-              </button>
-              <div className="absolute bottom-4 flex w-full justify-center space-x-2">
-                {cards.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`size-2 rounded-full ${index === state.currentIndex % cards.length
-                      ? "bg-white"
-                      : "bg-gray-400"
-                      }`}
-                    onClick={() => handleDotClick(index)}
-                    aria-label={`Go to slide ${index + 1}`}
-                  ></button>
-                ))}
+                  ))}
+                </div>
+                <button
+                  className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
+                  onClick={handlePrev}
+                  aria-label="Previous slide"
+                >
+                  &lt;
+                </button>
+                <button
+                  className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
+                  onClick={handleNext}
+                  aria-label="Next slide"
+                >
+                  &gt;
+                </button>
+                <div className="absolute bottom-4 flex w-full justify-center space-x-2">
+                  {cards.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`size-2 rounded-full ${index === state.currentIndex % cards.length
+                        ? "bg-white"
+                        : "bg-gray-400"
+                        }`}
+                      onClick={() => handleDotClick(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                    ></button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Store Information */}
-        <section id="information" className="container mx-auto mb-2 px-4">
-          {/* Store information content */}
-          <div className="flex flex-row items-start justify-between space-y-4 px-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
+          </section>
+  
+          {/* Store Information */}
+          <section id="information" className="container mx-auto mb-2 px-4">
+            {/* Store information content */}
+            <div className="flex flex-row items-start justify-between space-y-4 px-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
             <div className="flex flex-col items-start space-y-2 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
               <div className="flex items-center space-x-1">
                 <svg viewBox="0 0 16 16" width="16" aria-hidden="true" className="text-primary">
@@ -716,7 +692,7 @@ function Checkers() {
         <section className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row">
             {/* Mobile view (below md screens) */}
-            <div className="md:hidden w-full">
+            <div className="lg:hidden w-full">
               {/* Product search */}
               <div className="mb-4 w-full">
                 <div className="relative">
@@ -775,7 +751,7 @@ function Checkers() {
                   </div>
                   {/* More button */}
                   {state.hiddenCategories.length > 0 && (
-                    <div className="relative w-auto min-w-[80px] pr-6">
+                    <div className="relative w-auto min-w-[80px] pr-6 ">
                       <div className="relative">
                         <button
                           ref={moreButtonRef}
@@ -846,8 +822,8 @@ function Checkers() {
               <div className="grid grid-cols-2 gap-4">
                 {filteredAndSortedProducts.map((product, index) => (
                   <div key={index} className="w-full">
-                    <a
-                      href={product.href}
+                    
+                    <a  href={product.href}
                       className="block h-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
                     >
                       <div className="relative aspect-square w-full overflow-hidden">
@@ -901,7 +877,7 @@ function Checkers() {
             </div>
 
             {/* Desktop view (md screens and above) */}
-            <div className="hidden md:flex md:flex-row w-full">
+            <div className="hidden lg:flex lg:flex-row w-full">
               {/* Categories sidebar */}
               <aside className="w-1/5 p-4">
                 <div className="flex flex-col">
@@ -917,7 +893,7 @@ function Checkers() {
                         onBlur={handleBlur('isCategoryFocused', 'categorySearchTerm')}
                         className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
                       />
-                      {state.isCategoryFocused ? (
+                  {state.isCategoryFocused ? (
                         <>
                           <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
                           {state.categorySearchTerm && (
@@ -1150,9 +1126,9 @@ function Checkers() {
         {/* Supermarkets Carousel */}
         {renderCarousel(supermarkets, supermarketsscroll, renderSupermarketCard)}
       </main>
-      <Footer />
-    </div>
-  );
+    <Footer />
+  </div>
+);
 }
 
 Checkers.propTypes = {
