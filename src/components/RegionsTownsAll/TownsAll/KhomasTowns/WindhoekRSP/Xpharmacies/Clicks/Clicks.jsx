@@ -830,30 +830,30 @@ function Clicks() {
                 </select>
               </div>
 
-              {/* Products grid */}
-              <div className="grid grid-cols-2 gap-4">
+               {/* Products grid */}
+               <div className="overflow-y-auto h-[850px] grid grid-cols-2 sm:grid-cols-3 md:h-[850px]">
                 {filteredAndSortedProducts.map((product, index) => (
-                  <div key={index} className="w-full">
-
-                    <a href={product.href}
-                      className="block h-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
-                    >
-                      <div className="relative aspect-square w-full overflow-hidden">
+                  <div key={index} className="w-56 shrink-0 p-6 sm:w-48 md:w-60 lg:w-64">
+                    <a href={pharmacies.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl overflow-hidden">
+                      <div className="relative aspect-square w-full overflow-hidden rounded-t-lg">
                         <LazyLoadImage
                           src={product.imgSrc}
                           alt={product.name}
                           width="100%"
                           height="100%"
-                          effect="blur"
                           className="size-full object-cover"
+                          effect="opacity"
                         />
-                        {product.discount && (
-                          <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
-                            {`-${product.discount}%`}
+
+                        <div className="p-3 sm:p-4">
+                          {product.discount && (
+                            <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
+                              {`-${product.discount}%`}
+                            </div>
+                          )}
+                          <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                            +
                           </div>
-                        )}
-                        <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
-                          +
                         </div>
                       </div>
                       <div className="flex w-full grow flex-col p-2">
@@ -922,7 +922,7 @@ function Clicks() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "calc(850px - 4rem)" }}>
+                  <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "850px" }}>
                     {state.selectedCategories.length > 0 && (
                       <button
                         onClick={clearSelectedCategories}
