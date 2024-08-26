@@ -1096,30 +1096,30 @@ function JoesBeerhouse() {
             <div className="flex flex-col md:flex-row space-y-4 p-4 md:space-x-8 ">
               <div className="flex flex-row  justify-between sm:flex-row items-center   md:w-1/3">
                 <div className="flex flex-row items-start justtify-between space-x-4 sm:space-y-0 ">
-                  
-                    <div className="space-y-8">
+
+                  <div className="space-y-8">
+                    <div>
+                      <h3 className="text-md font-semibold">Store Information</h3>
+                      <p className="font-bold text-[#ee9613]">Joe's Beerhouse</p>
+                      <p>German Cuisine</p>
+                      <p>Steakhouse</p>
+                    </div>
+                    <div>
+                      <h3 className="text-md font-semibold">Address</h3>
                       <div>
-                        <h3 className="text-md font-semibold">Store Information</h3>
-                        <p className="font-bold text-[#ee9613]">Joe's Beerhouse</p>
-                        <p>German Cuisine</p>
-                        <p>Steakhouse</p>
-                      </div>
-                      <div>
-                        <h3 className="text-md font-semibold">Address</h3>
-                        <div>
-                          <p>Windhoek West</p>
-                          <p>8850603 Eilat</p>
-                          <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-bold text-[#ee9613] hover:underline"
-                          >
-                            See map
-                          </a>
-                        </div>
+                        <p>Windhoek West</p>
+                        <p>8850603 Eilat</p>
+                        <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-bold text-[#ee9613] hover:underline"
+                        >
+                          See map
+                        </a>
                       </div>
                     </div>
-                 
+                  </div>
+
                   <div className="space-y-8 ">
                     <h3 className="text-md font-semibold">More information</h3>
                     <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">

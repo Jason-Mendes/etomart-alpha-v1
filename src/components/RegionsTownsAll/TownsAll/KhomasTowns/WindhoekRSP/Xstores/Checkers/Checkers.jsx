@@ -1082,57 +1082,60 @@ useEffect(() => {
        </div>
      </section>
 
-     {/*More Information Section */}
-     <section  id="moreInformation" className="container mx-auto mt-8 p-4">
+     <section id="moreInformation" className="container mx-auto mt-8 px-4">
             {/* More information content */}
-            <div className="flex flex-col p-4 md:flex-row md:space-x-8">
-              <div className="space-y-8 md:w-1/3">
-                <div className="space-y-8">
-                  <div>
-               <h3 className="text-md font-semibold">Store Information</h3>
-               <p className="font-bold text-[#ee9613]">Checkers</p>
-               <p>Better and Better</p>
-             </div>
-             <div>
-               <h3 className="text-md font-semibold">Address</h3>
-               <div>
-                 <p>Windhoek West</p>
-                 <p>8850603 Eilat</p>
-                 <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-bold text-[#ee9613] hover:underline"
-                      >
-                   See map
-                 </a>
-               </div>
-             </div>
-           </div>
-         </div>
-         <div className="space-y-8 md:w-1/3">
-           <h3 className="text-md font-semibold">More information</h3>
-           <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">
-             +972543131665
-           </a>
-           <div>
-             <h3 className="text-md font-semibold">Delivery times</h3>
-             <table className="table-auto">
-               <tbody>
-                 {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
-                   <tr key={day}>
-                     <td className="pr-4">{day}</td>
-                     <td>09:00–22:30</td>
-                   </tr>
-                 ))}
-               </tbody>
-             </table>
-           </div>
-         </div>
-         <div className="md:w-2/3">
+            <div className="flex flex-col md:flex-row space-y-4 p-4 md:space-x-8 ">
+              <div className="flex flex-row  justify-between sm:flex-row items-center   md:w-1/3">
+                <div className="flex flex-row items-start justtify-between space-x-4 sm:space-y-0 ">
+                  
+                    <div className="space-y-8">
+                      <div>
+                        <h3 className="text-md font-semibold">Store Information</h3>
+                        <p className="font-bold text-[#ee9613]">Checkers</p>
+                        <p>Better and Better</p>
+                      </div>
+                      <div>
+                        <h3 className="text-md font-semibold">Address</h3>
+                        <div>
+                          <p>Windhoek West</p>
+                          <p>8850603 Eilat</p>
+                          <a href={`https://maps.google.com/?q=${MARKER_COORDINATES[0].lat},${MARKER_COORDINATES[0].lng}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-bold text-[#ee9613] hover:underline"
+                          >
+                            See map
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                 
+                  <div className="space-y-8 ">
+                    <h3 className="text-md font-semibold">More information</h3>
+                    <a href="tel:+972543131665" className="font-bold text-[#ee9613] hover:underline">
+                      +972543131665
+                    </a>
+                    <div>
+                      <h3 className="text-md font-semibold">Opening hours</h3>
+                      <table className="table-auto">
+                        <tbody>
+                          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                            <tr key={day}>
+                              <td className="pr-4">{day}</td>
+                              <td>09:00–22:30</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="md:w-2/3 ">
                 <div ref={mapContainerRef} className="h-[400px] w-full"></div>
               </div>
-       </div>
-     </section>
+            </div>
+          </section>
 
      {/* Similar Supermarkets Section */}
      <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
