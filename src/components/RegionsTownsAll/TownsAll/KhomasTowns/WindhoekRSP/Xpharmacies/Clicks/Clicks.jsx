@@ -1072,7 +1072,7 @@ function Clicks() {
           {/* More information content */}
           <div className="flex flex-col md:flex-row space-y-4 p-4 md:space-x-8 ">
             <div className="flex flex-row  justify-between sm:flex-row items-center   md:w-1/3">
-              <div className="flex flex-row items-start justtify-between space-x-4 sm:space-y-0 ">
+              <div className="flex flex-row items-start justify-between space-x-4 sm:space-y-0 ">
 
                 <div className="space-y-8">
                   <div>
