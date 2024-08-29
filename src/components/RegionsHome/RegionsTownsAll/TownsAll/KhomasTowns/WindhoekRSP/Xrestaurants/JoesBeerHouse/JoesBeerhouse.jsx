@@ -705,7 +705,7 @@ function JoesBeerhouse() {
             </div>
           </header>
 
-          {/* Carousel section */}
+   {/* Carousel section */}
 <section ref={opCarouselRef} className="my-8">
   {/* Carousel implementation */}
   <div className="container mx-auto px-4">
@@ -735,27 +735,29 @@ function JoesBeerhouse() {
               />
               <div className="absolute inset-0 flex items-center bg-gray-900 bg-opacity-50">
                 <div className="w-full h-full flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-10">
-                  <div className="w-[280px] sm:w-full md:max-w-md lg:max-w-lg">
-                    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight mb-1 sm:mb-2">
+                  <div className="w-[280px] mx-auto sm:w-full sm:mx-0 md:max-w-md lg:max-w-lg">
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight mb-1 sm:mb-2 text-center sm:text-left">
                       {card.title}
                     </h2>
-                    <p className="text-xs sm:text-sm text-gray-300 line-clamp-2 sm:line-clamp-3 md:line-clamp-4 mb-2 sm:mb-3">
+                    <p className="text-xs sm:text-sm text-gray-300 line-clamp-2 sm:line-clamp-3 md:line-clamp-4 mb-2 sm:mb-3 text-center sm:text-left">
                       {card.description}
                     </p>
-                    <button className="inline-flex items-center text-xs sm:text-sm font-medium uppercase text-white hover:underline focus:outline-none">
-                      <span>Shop Now</span>
-                      <svg
-                        className="ml-1 sm:ml-2 size-4 sm:size-5"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                      </svg>
-                    </button>
+                    <div className="flex justify-center sm:justify-start">
+                      <button className="inline-flex items-center text-xs sm:text-sm font-medium uppercase text-white hover:underline focus:outline-none">
+                        <span>Shop Now</span>
+                        <svg
+                          className="ml-1 sm:ml-2 size-4 sm:size-5"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -764,14 +766,14 @@ function JoesBeerhouse() {
         ))}
       </div>
       <button
-        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
+        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-white bg-transparent hover:bg-white hover:bg-opacity-50 active:bg-white active:bg-opacity-75 transition-colors duration-200 shadow-md drop-shadow-lg"
         onClick={handlePrev}
         aria-label="Previous slide"
       >
         &lt;
       </button>
       <button
-        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
+        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-white bg-transparent hover:bg-white hover:bg-opacity-50 active:bg-white active:bg-opacity-75 transition-colors duration-200 shadow-md drop-shadow-lg"
         onClick={handleNext}
         aria-label="Next slide"
       >
@@ -781,8 +783,10 @@ function JoesBeerhouse() {
         {cards.map((_, index) => (
           <button
             key={index}
-            className={`size-2 rounded-full ${
-              index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
+            className={`size-2 rounded-full transition-colors duration-200 ${
+              index === state.currentIndex % cards.length 
+                ? "bg-white" 
+                : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
             }`}
             onClick={() => handleDotClick(index)}
             aria-label={`Go to slide ${index + 1}`}
