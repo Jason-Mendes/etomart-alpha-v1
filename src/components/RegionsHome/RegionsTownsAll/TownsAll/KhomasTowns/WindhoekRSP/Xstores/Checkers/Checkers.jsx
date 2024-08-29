@@ -463,7 +463,7 @@ function Checkers() {
     setIsHovering(true);
     setShowControls(true);
   };
-  
+
   const handleMouseLeave = () => {
     setIsHovering(false);
     setShowControls(false);
@@ -603,108 +603,105 @@ function Checkers() {
           </div>
         </header>
 
-       {/* Carousel section */}
-<section 
-  ref={containerRef} 
-  className="my-8"
-  onMouseEnter={handleMouseEnter}
-  onMouseLeave={handleMouseLeave}
-  onTouchStart={handleTouchStart}
->
-  {/* Carousel implementation */}
-  <div className="container mx-auto px-4">
-    <div className="relative mt-8 overflow-hidden">
-      <div
-        ref={containerRef}
-        className="flex transition-transform duration-500 ease-in-out"
-        style={{
-          transform: `translateX(-${state.currentIndex * (window.innerWidth < 640 ? 350 : 550)}px)`,
-          width: `${extendedCards.length * (window.innerWidth < 640 ? 350 : 550)}px`,
-        }}
-        onTransitionEnd={handleTransitionEnd}
-      >
-        {extendedCards.map((card, index) => (
-          <div
-            key={index}
-            className="shrink-0 p-2 cursor-pointer"
-            style={{ width: window.innerWidth < 640 ? "350px" : "550px", height: "276px" }}
-            onClick={handleTouchStart}
-          >
-            <div
-              className="relative w-full h-full overflow-hidden rounded-md"
-            >
-              <img
-                src={card.image}
-                alt={card.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 flex items-center bg-gray-900 bg-opacity-30">
-                <div className="w-full h-full flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-10">
-                  <div className="w-[280px] mx-auto sm:w-full sm:mx-0 md:max-w-md lg:max-w-lg">
-                    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight mb-1 sm:mb-2 text-center sm:text-left">
-                      {card.title}
-                    </h2>
-                    <p className="text-xs sm:text-sm text-gray-300 line-clamp-4 mb-2 sm:mb-3 text-center sm:text-left">
-                      {card.description}
-                    </p>
-                    <div className="flex justify-center sm:justify-start">
-                      <button className="inline-flex items-center text-xs sm:text-sm font-medium uppercase text-white hover:underline focus:outline-none">
-                        <span>Shop Now</span>
-                        <svg
-                          className="ml-1 sm:ml-2 w-4 h-4 sm:w-5 sm:h-5"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                      </button>
+        {/* Carousel section */}
+        <section
+          ref={containerRef}
+          className="my-8"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+        >
+          {/* Carousel implementation */}
+          <div className="container mx-auto px-4">
+            <div className="relative mt-8 overflow-hidden">
+              <div
+                ref={containerRef}
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(-${state.currentIndex * (window.innerWidth < 640 ? 350 : 550)}px)`,
+                  width: `${extendedCards.length * (window.innerWidth < 640 ? 350 : 550)}px`,
+                }}
+                onTransitionEnd={handleTransitionEnd}
+              >
+                {extendedCards.map((card, index) => (
+                  <div
+                    key={index}
+                    className="shrink-0 p-2 cursor-pointer"
+                    style={{ width: window.innerWidth < 640 ? "350px" : "550px", height: "276px" }}
+                    onClick={handleTouchStart}
+                  >
+                    <div
+                      className="relative w-full h-full overflow-hidden rounded-md"
+                    >
+                      <img
+                        src={card.image}
+                        alt={card.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 flex items-center bg-gray-900 bg-opacity-30">
+                        <div className="w-full h-full flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-10">
+                          <div className="w-[280px] mx-auto sm:w-full sm:mx-0 md:max-w-md lg:max-w-lg">
+                            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight mb-1 sm:mb-2 text-center sm:text-left">
+                              {card.title}
+                            </h2>
+                            <p className="text-xs sm:text-sm text-gray-300 line-clamp-4 mb-2 sm:mb-3 text-center sm:text-left">
+                              {card.description}
+                            </p>
+                            <div className="flex justify-center sm:justify-start">
+                              <button className="inline-flex items-center text-xs sm:text-sm font-medium uppercase text-white hover:underline focus:outline-none">
+                                <span>Shop Now</span>
+                                <svg
+                                  className="ml-1 sm:ml-2 w-4 h-4 sm:w-5 sm:h-5"
+                                  fill="none"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
+              </div>
+              <button
+                className={`absolute left-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-black bg-white bg-opacity-70 hover:bg-opacity-85 active:bg-opacity-100 transition-all duration-150 ${showControls ? 'opacity-100 visible' : 'opacity-0 invisible'
+                  }`}
+                onClick={handlePrev}
+                aria-label="Previous slide"
+              >
+                &lt;
+              </button>
+              <button
+                className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-black bg-white bg-opacity-70 hover:bg-opacity-85 active:bg-opacity-100 transition-all duration-150 ${showControls ? 'opacity-100 visible' : 'opacity-0 invisible'
+                  }`}
+                onClick={handleNext}
+                aria-label="Next slide"
+              >
+                &gt;
+              </button>
+              <div className="absolute bottom-4 flex w-full justify-center space-x-2">
+                {cards.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`size-2 rounded-full transition-colors duration-200 ${index === state.currentIndex % cards.length
+                        ? "bg-white"
+                        : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
+                      }`}
+                    onClick={() => handleDotClick(index)}
+                    aria-label={`Go to slide ${index + 1}`}
+                  ></button>
+                ))}
               </div>
             </div>
           </div>
-        ))}
-      </div>
-      <button
-        className={`absolute left-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-black bg-white bg-opacity-70 hover:bg-opacity-85 active:bg-opacity-100 transition-all duration-150 ${
-          showControls ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-        onClick={handlePrev}
-        aria-label="Previous slide"
-      >
-        &lt;
-      </button>
-      <button
-        className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-black bg-white bg-opacity-70 hover:bg-opacity-85 active:bg-opacity-100 transition-all duration-150 ${
-          showControls ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-        onClick={handleNext}
-        aria-label="Next slide"
-      >
-        &gt;
-      </button>
-      <div className="absolute bottom-4 flex w-full justify-center space-x-2">
-        {cards.map((_, index) => (
-          <button
-            key={index}
-            className={`size-2 rounded-full transition-colors duration-200 ${
-              index === state.currentIndex % cards.length 
-                ? "bg-white" 
-                : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
-            }`}
-            onClick={() => handleDotClick(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          ></button>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
+        </section>
 
         {/* Store Information */}
         <section id="information" className="container mx-auto mb-2 px-4">
