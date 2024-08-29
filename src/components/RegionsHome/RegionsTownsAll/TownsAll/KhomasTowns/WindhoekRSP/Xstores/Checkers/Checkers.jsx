@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { Search, X } from 'lucide-react';
 import { useNavcategories, useCards, useStoresCards, useSupermarkets } from "./cardsDataCheckers";
-import Footer from "../../../../../../Footer";
-import KhomasOPNavBar from "../../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import Footer from "../../../../../../../Footer";
+import KhomasOPNavBar from "../../../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const VISIBLE_CATEGORIES_COUNT = 8;

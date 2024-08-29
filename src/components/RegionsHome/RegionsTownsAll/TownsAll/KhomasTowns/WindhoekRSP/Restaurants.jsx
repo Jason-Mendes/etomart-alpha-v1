@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import PropTypes from 'prop-types';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useRestaurantsStoresCards1, useRestaurants } from "./CardsDataWindhoekRSP/cardsDataRestaurants";
-import Footer from "../../../../Footer";
-import KhomasOPNavBar from "../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import Footer from "../../../../../Footer";
+import KhomasOPNavBar from "../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 import { useIconsCategories} from "../cardsDataKhomasTowns/cardsDataKhomasTowns";
 
 import 'react-lazy-load-image-component/src/effects/blur.css';
