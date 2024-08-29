@@ -61,6 +61,8 @@ function JoesBeerhouse() {
   const [isKhomasOPNavBarVisible, setIsKhomasOPNavBarVisible] = useState(true);
   const [sortCriteria, setSortCriteria] = useState('default');
   const [mapboxLoaded, setMapboxLoaded] = useState(false);
+  const [showControls, setShowControls] = useState(false);
+  const [ishovering, setIsHovering] = useState(false);
 
   // Refs for accessing DOM elements and storing values across renders
   const searchResultsRef = useRef(null);
@@ -96,7 +98,7 @@ function JoesBeerhouse() {
 
   // Marker coordinates for the map
   const MARKER_COORDINATES = [
-    { lng: 17.090396711968985, lat: -22.550459904783143 }, // Joe's Beerhouse
+    { lng: 17.090396711968985, lat: -22.450459904783143 }, // Joe's Beerhouse
     { lng: 17.073723364157306, lat: -22.561939983264068 }, // User's home
   ];
 
@@ -149,7 +151,7 @@ function JoesBeerhouse() {
       const mapInstance = new mapboxgl.Map({
         container: mapContainer,
         style: "mapbox://styles/mapbox/streets-v11",
-        center: [17.090396711968985, -22.550459904783143], // Center on Joe's Beerhouse
+        center: [17.090396711968985, -22.450459904783143], // Center on Joe's Beerhouse
         zoom: 12,
       });
 
@@ -332,6 +334,24 @@ function JoesBeerhouse() {
 
     requestAnimationFrame(animation);
   }, []);
+
+  //Function to handle touch start
+  const handleTouchStart = () => {
+    setShowControls(true);
+    // Hide controls after 3 seconds
+    setTimeout(() => setShowControls(false), 3000);
+  };
+
+  //Function Update the isHovering state to also set showControls
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+    setShowControls(true);
+  };
+  
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    setShowControls(false);
+  };
 
   // Function to handle the infromation button click
   const handleSeeMoreInfo = useCallback(() => {
@@ -705,8 +725,14 @@ function JoesBeerhouse() {
             </div>
           </header>
 
-   {/* Carousel section */}
-<section ref={opCarouselRef} className="my-8">
+{/* Carousel section */}
+<section 
+  ref={opCarouselRef} 
+  className="my-8"
+  onMouseEnter={handleMouseEnter}
+  onMouseLeave={handleMouseLeave}
+  onTouchStart={handleTouchStart}
+>
   {/* Carousel implementation */}
   <div className="container mx-auto px-4">
     <div className="relative mt-8 overflow-hidden">
@@ -714,39 +740,40 @@ function JoesBeerhouse() {
         ref={containerRef}
         className="flex transition-transform duration-500 ease-in-out"
         style={{
-          transform: `translateX(-${state.currentIndex * 576}px)`,
-          width: `${extendedCards.length * 576}px`,
+          transform: `translateX(-${state.currentIndex * (window.innerWidth < 640 ? 450 : 550)}px)`,
+          width: `${extendedCards.length * (window.innerWidth < 640 ? 450 : 550)}px`,
         }}
         onTransitionEnd={handleTransitionEnd}
       >
         {extendedCards.map((card, index) => (
           <div
             key={index}
-            className="shrink-0 p-2"
-            style={{ width: "576px", height: "276px" }}
+            className="shrink-0 p-2 cursor-pointer"
+            style={{ width: window.innerWidth < 640 ? "450px" : "550px", height: "276px" }}
+            onClick={handleTouchStart}
           >
             <div
-              className="relative size-full overflow-hidden rounded-md"
+              className="relative w-full h-full overflow-hidden rounded-md"
             >
               <img
                 src={card.image}
                 alt={card.title}
-                className="size-full object-cover"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 flex items-center bg-gray-900 bg-opacity-50">
+              <div className="absolute inset-0 flex items-center bg-gray-900 bg-opacity-30">
                 <div className="w-full h-full flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-10">
                   <div className="w-[280px] mx-auto sm:w-full sm:mx-0 md:max-w-md lg:max-w-lg">
                     <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight mb-1 sm:mb-2 text-center sm:text-left">
                       {card.title}
                     </h2>
-                    <p className="text-xs sm:text-sm text-gray-300 line-clamp-2 sm:line-clamp-3 md:line-clamp-4 mb-2 sm:mb-3 text-center sm:text-left">
+                    <p className="text-xs sm:text-sm text-gray-300 line-clamp-4 mb-2 sm:mb-3 text-center sm:text-left">
                       {card.description}
                     </p>
                     <div className="flex justify-center sm:justify-start">
                       <button className="inline-flex items-center text-xs sm:text-sm font-medium uppercase text-white hover:underline focus:outline-none">
                         <span>Shop Now</span>
                         <svg
-                          className="ml-1 sm:ml-2 size-4 sm:size-5"
+                          className="ml-1 sm:ml-2 w-4 h-4 sm:w-5 sm:h-5"
                           fill="none"
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -766,14 +793,18 @@ function JoesBeerhouse() {
         ))}
       </div>
       <button
-        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-white bg-transparent hover:bg-white hover:bg-opacity-50 active:bg-white active:bg-opacity-75 transition-colors duration-200 shadow-md drop-shadow-lg"
+        className={`absolute left-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-black bg-white bg-opacity-70 hover:bg-opacity-85 active:bg-opacity-100 transition-all duration-150 ${
+          showControls ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}
         onClick={handlePrev}
         aria-label="Previous slide"
       >
         &lt;
       </button>
       <button
-        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-white bg-transparent hover:bg-white hover:bg-opacity-50 active:bg-white active:bg-opacity-75 transition-colors duration-200 shadow-md drop-shadow-lg"
+        className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-black bg-white bg-opacity-70 hover:bg-opacity-85 active:bg-opacity-100 transition-all duration-150 ${
+          showControls ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}
         onClick={handleNext}
         aria-label="Next slide"
       >
@@ -1038,12 +1069,12 @@ function JoesBeerhouse() {
                   <option value="nameDesc">Name: Z to A</option>
                 </select>
               </div>
-              <div className="h-[450px] overflow-y-auto sm:h-[500px] md:h-[550px] lg:h-[600px]">
+              <div className="h-[450px] overflow-y-auto sm:h-[500px] md:h-[450px] lg:h-[600px]">
                 <div className="grid grid-cols-1 gap-4 p-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {state.filteredProducts.map((product, index) => (
                     <a key={index}
                       href={product.href}
-                      className="mx-auto flex min-h-[150px] w-full max-w-[550px] overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl relative group"
+                      className="mx-auto flex min-h-[150px] w-full max-w-[450px] overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl relative group"
                       data-test-id="product-card-link"
                     >
                       <div className="relative w-1/3 overflow-hidden">
