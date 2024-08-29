@@ -618,8 +618,8 @@ function Clicks() {
         ref={containerRef}
         className="flex transition-transform duration-500 ease-in-out"
         style={{
-          transform: `translateX(-${state.currentIndex * (window.innerWidth < 640 ? 300 : 550)}px)`,
-          width: `${extendedCards.length * (window.innerWidth < 640 ? 300 : 550)}px`,
+          transform: `translateX(-${state.currentIndex * (window.innerWidth < 640 ? 350 : 550)}px)`,
+          width: `${extendedCards.length * (window.innerWidth < 640 ? 350 : 550)}px`,
         }}
         onTransitionEnd={handleTransitionEnd}
       >
@@ -627,7 +627,7 @@ function Clicks() {
           <div
             key={index}
             className="shrink-0 p-2 cursor-pointer"
-            style={{ width: window.innerWidth < 640 ? "300px" : "550px", height: "276px" }}
+            style={{ width: window.innerWidth < 640 ? "350px" : "550px", height: "276px" }}
             onClick={handleTouchStart}
           >
             <div
