@@ -706,88 +706,92 @@ function JoesBeerhouse() {
           </header>
 
           {/* Carousel section */}
-          <section ref={opCarouselRef} className="my-8">
-            {/* Carousel implementation */}
-            <div className="container mx-auto px-4">
-              <div className="relative mt-8 overflow-hidden">
-                <div
-                  ref={containerRef}
-                  className="flex transition-transform duration-500 ease-in-out"
-                  style={{
-                    transform: `translateX(-${state.currentIndex * 576}px)`,
-                    width: `${extendedCards.length * 576}px`,
-                  }}
-                  onTransitionEnd={handleTransitionEnd}
-                >
-                  {extendedCards.map((card, index) => (
-                    <div
-                      key={index}
-                      className="shrink-0 p-2"
-                      style={{ width: "576px", height: "276px" }}
-                    >
-                      <div
-                        className="relative size-full overflow-hidden rounded-md"
+<section ref={opCarouselRef} className="my-8">
+  {/* Carousel implementation */}
+  <div className="container mx-auto px-4">
+    <div className="relative mt-8 overflow-hidden">
+      <div
+        ref={containerRef}
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{
+          transform: `translateX(-${state.currentIndex * 576}px)`,
+          width: `${extendedCards.length * 576}px`,
+        }}
+        onTransitionEnd={handleTransitionEnd}
+      >
+        {extendedCards.map((card, index) => (
+          <div
+            key={index}
+            className="shrink-0 p-2"
+            style={{ width: "576px", height: "276px" }}
+          >
+            <div
+              className="relative size-full overflow-hidden rounded-md"
+            >
+              <img
+                src={card.image}
+                alt={card.title}
+                className="size-full object-cover"
+              />
+              <div className="absolute inset-0 flex items-center bg-gray-900 bg-opacity-50">
+                <div className="w-full h-full flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-10">
+                  <div className="w-[280px] sm:w-full md:max-w-md lg:max-w-lg">
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight mb-1 sm:mb-2">
+                      {card.title}
+                    </h2>
+                    <p className="text-xs sm:text-sm text-gray-300 line-clamp-2 sm:line-clamp-3 md:line-clamp-4 mb-2 sm:mb-3">
+                      {card.description}
+                    </p>
+                    <button className="inline-flex items-center text-xs sm:text-sm font-medium uppercase text-white hover:underline focus:outline-none">
+                      <span>Shop Now</span>
+                      <svg
+                        className="ml-1 sm:ml-2 size-4 sm:size-5"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                       >
-                        <img
-                          src={card.image}
-                          alt={card.title}
-                          className="size-full object-cover"
-                        />
-                        <div className="absolute inset-0 flex items-center bg-gray-900 bg-opacity-50">
-                          <div className="max-w-xl px-10">
-                            <h2 className="text-2xl font-semibold text-white">
-                              {card.title}
-                            </h2>
-                            <p className="mt-2 text-gray-400">{card.description}</p>
-                            <button className="mt-4 flex items-center rounded text-sm font-medium uppercase text-white hover:underline focus:outline-none">
-                              <span>Shop Now</span>
-                              <svg
-                                className="ml-2 size-5"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                              </svg>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
-                  onClick={handlePrev}
-                  aria-label="Previous slide"
-                >
-                  &lt;
-                </button>
-                <button
-                  className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
-                  onClick={handleNext}
-                  aria-label="Next slide"
-                >
-                  &gt;
-                </button>
-                <div className="absolute bottom-4 flex w-full justify-center space-x-2">
-                  {cards.map((_, index) => (
-                    <button
-                      key={index}
-                      className={`size-2 rounded-full ${index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
-                        }`}
-                      onClick={() => handleDotClick(index)}
-                      aria-label={`Go to slide ${index + 1}`}
-                    ></button>
-                  ))}
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </section>
-
+          </div>
+        ))}
+      </div>
+      <button
+        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
+        onClick={handlePrev}
+        aria-label="Previous slide"
+      >
+        &lt;
+      </button>
+      <button
+        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
+        onClick={handleNext}
+        aria-label="Next slide"
+      >
+        &gt;
+      </button>
+      <div className="absolute bottom-4 flex w-full justify-center space-x-2">
+        {cards.map((_, index) => (
+          <button
+            key={index}
+            className={`size-2 rounded-full ${
+              index === state.currentIndex % cards.length ? "bg-white" : "bg-gray-400"
+            }`}
+            onClick={() => handleDotClick(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          ></button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
           {/* Store Information */}
           <section id="information" className="container mx-auto mb-2 px-4">
             {/* Store information content */}
