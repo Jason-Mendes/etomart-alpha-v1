@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, lazy, Suspense } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo, lazy, Suspense } from "react";
 import PropTypes from 'prop-types';
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
@@ -45,37 +45,59 @@ function Clicks() {
     map: null,
     isFavorite: false,
     isExpanded: false,
-    categorySearchTerm: "",
-    productSearchTerm: "",
-    isCategoryFocused: false,
-    isProductFocused: false,
-    selectedCategories: [],
-    sortCriteria: 'recommended',
+    // categorySearchTerm: "",
+    // productSearchTerm: "",
+    // isCategoryFocused: false,
+    // isProductFocused: false,
+    // selectedCategories: [],
+    // sortCriteria: 'recommended',
     visibleCategories: [],
     hiddenCategories: [],
-    isMoreDropdownOpen: false,
+    // isMoreDropdownOpen: false,
     isMapLoaded: false,
+
+    //test
+    categorySearchTerm: "",
+    productSearchTerm: "",
+    selectedCategories: [],
+    isMoreDropdownOpen: false,
+    isCategoryFocused: false,
+    isProductFocused: false,
+    sortCriteria: "recommended",
+    // isDelivery: true,
+    categorySearchResults: [],
+    productSearchResults: [],
   });
 
   const [mapboxLoaded, setMapboxLoaded] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+//test
+const navcategories = useNavcategories();
+const pharmacycards = usePharmacycards();
+
 
   // Refs
   const containerRef = React.useRef(null);
-  const dropdownRef = React.useRef(null);
+  // const dropdownRef = React.useRef(null);
   const mapContainerRef = React.useRef(null);
   const pharmaciesscroll = React.useRef(null);
-  const productSearchRef = React.useRef(null);
-  const categoriesSearchRef = React.useRef(null);
+  // const productSearchRef = React.useRef(null);
+  // const categoriesSearchRef = React.useRef(null);
   const inputCategoriesRef = React.useRef(null);
   const inputProductRef = React.useRef(null);
-  const moreButtonRef = React.useRef(null);
+  // const moreButtonRef = React.useRef(null);
+
+  //test
+  const categoriesSearchRef = useRef(null);
+  const productSearchRef = useRef(null);
+  const moreButtonRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   // Memoized data
-  const navcategories = useNavcategories();
+  // const navcategories = useNavcategories();
   const cards = useCards();
-  const pharmacycards = usePharmacycards();
+  // const pharmacycards = usePharmacycards();
   const pharmacies = usePharmacies();
 
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
@@ -147,60 +169,60 @@ function Clicks() {
     alert("Information about the store");
   }, []);
 
-  const handleCategorySelect = useCallback((category) => {
-    setState(prevState => {
-      if (category === "") {
-        return { ...prevState, selectedCategories: [] };
-      } else {
-        const newSelectedCategories = prevState.selectedCategories.includes(category)
-          ? prevState.selectedCategories.filter(c => c !== category)
-          : [...prevState.selectedCategories, category];
-        return { ...prevState, selectedCategories: newSelectedCategories };
-      }
-    });
-  }, []);
+  // const handleCategorySelect = useCallback((category) => {
+  //   setState(prevState => {
+  //     if (category === "") {
+  //       return { ...prevState, selectedCategories: [] };
+  //     } else {
+  //       const newSelectedCategories = prevState.selectedCategories.includes(category)
+  //         ? prevState.selectedCategories.filter(c => c !== category)
+  //         : [...prevState.selectedCategories, category];
+  //       return { ...prevState, selectedCategories: newSelectedCategories };
+  //     }
+  //   });
+  // }, []);
 
-  const handleSortChange = useCallback((event) => {
-    setState(prevState => ({ ...prevState, sortCriteria: event.target.value }));
-  }, []);
+  // const handleSortChange = useCallback((event) => {
+  //   setState(prevState => ({ ...prevState, sortCriteria: event.target.value }));
+  // }, []);
 
-  const filteredCategories = useMemo(() =>
-    navcategories.filter((category) =>
-      category.name.toLowerCase().includes(state.categorySearchTerm.toLowerCase())
-    ),
-    [navcategories, state.categorySearchTerm]
-  );
+  // const filteredCategories = useMemo(() =>
+  //   navcategories.filter((category) =>
+  //     category.name.toLowerCase().includes(state.categorySearchTerm.toLowerCase())
+  //   ),
+  //   [navcategories, state.categorySearchTerm]
+  // );
 
-  const filteredAndSortedProducts = useMemo(() => {
-    let result = pharmacycards;
+  // const filteredAndSortedProducts = useMemo(() => {
+  //   let result = pharmacycards;
 
-    result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
+  //   result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
 
-    if (state.selectedCategories.length > 0) {
-      result = result.filter(product => state.selectedCategories.includes(product.type));
-    }
+  //   if (state.selectedCategories.length > 0) {
+  //     result = result.filter(product => state.selectedCategories.includes(product.type));
+  //   }
 
-    if (state.productSearchTerm) {
-      result = result.filter(product =>
-        product.name.toLowerCase().includes(state.productSearchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(state.productSearchTerm.toLowerCase())
-      );
-    }
+  //   if (state.productSearchTerm) {
+  //     result = result.filter(product =>
+  //       product.name.toLowerCase().includes(state.productSearchTerm.toLowerCase()) ||
+  //       product.description.toLowerCase().includes(state.productSearchTerm.toLowerCase())
+  //     );
+  //   }
 
-    switch (state.sortCriteria) {
-      case 'priceAsc':
-        return result.sort((a, b) => a.priceRange.length - b.priceRange.length);
-      case 'priceDesc':
-        return result.sort((a, b) => b.priceRange.length - a.priceRange.length);
-      case 'nameAsc':
-        return result.sort((a, b) => a.name.localeCompare(b.name));
-      case 'nameDesc':
-        return result.sort((a, b) => b.name.localeCompare(a.name));
-      case 'recommended':
-      default:
-        return result;
-    }
-  }, [pharmacycards, state.isDelivery, state.selectedCategories, state.productSearchTerm, state.sortCriteria]);
+  //   switch (state.sortCriteria) {
+  //     case 'priceAsc':
+  //       return result.sort((a, b) => a.priceRange.length - b.priceRange.length);
+  //     case 'priceDesc':
+  //       return result.sort((a, b) => b.priceRange.length - a.priceRange.length);
+  //     case 'nameAsc':
+  //       return result.sort((a, b) => a.name.localeCompare(b.name));
+  //     case 'nameDesc':
+  //       return result.sort((a, b) => b.name.localeCompare(a.name));
+  //     case 'recommended':
+  //     default:
+  //       return result;
+  //   }
+  // }, [pharmacycards, state.isDelivery, state.selectedCategories, state.productSearchTerm, state.sortCriteria]);
 
   // Mapbox configuration
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -366,9 +388,9 @@ useEffect(() => {
     initializeMap(mapContainerRef.current);
   }
 }, [mapboxLoaded, initializeMap]);
-  const handleSearch = useCallback((field) => (event) => {
-    setState(prevState => ({ ...prevState, [field]: event.target.value }));
-  }, []);
+  // const handleSearch = useCallback((field) => (event) => {
+  //   setState(prevState => ({ ...prevState, [field]: event.target.value }));
+  // }, []);
 
   const handleProductsFocus = useCallback((field) => () => {
     setState(prevState => ({ ...prevState, [field]: true }));
@@ -378,11 +400,11 @@ useEffect(() => {
     setState(prevState => ({ ...prevState, [field]: true }));
   }, []);
 
-  const handleBlur = useCallback((field, term) => () => {
-    if (!state[term]) {
-      setState(prevState => ({ ...prevState, [field]: false }));
-    }
-  }, [state]);
+  // const handleBlur = useCallback((field, term) => () => {
+  //   if (!state[term]) {
+  //     setState(prevState => ({ ...prevState, [field]: false }));
+  //   }
+  // }, [state]);
 
   const handleClearCategory = useCallback((field) => () => {
     setState(prevState => ({ ...prevState, [field]: "" }));
@@ -398,13 +420,13 @@ useEffect(() => {
     }
   }, []);
 
-  const clearSelectedCategories = useCallback(() => {
-    setState(prevState => ({ ...prevState, selectedCategories: [] }));
-  }, []);
+  // const clearSelectedCategories = useCallback(() => {
+  //   setState(prevState => ({ ...prevState, selectedCategories: [] }));
+  // }, []);
 
-  const toggleMoreDropdown = useCallback(() => {
-    setState(prevState => ({ ...prevState, isMoreDropdownOpen: !prevState.isMoreDropdownOpen }));
-  }, []);
+  // const toggleMoreDropdown = useCallback(() => {
+  //   setState(prevState => ({ ...prevState, isMoreDropdownOpen: !prevState.isMoreDropdownOpen }));
+  // }, []);
 
   const smoothScroll = useCallback((target, duration = 1000) => {
     const targetElement = document.getElementById(target);
@@ -452,6 +474,138 @@ useEffect(() => {
     smoothScroll('moreInformation', 1500);
   }, [smoothScroll]);
 
+  //testing
+  // Memoized filtered categories
+  const filteredCategories = useMemo(() => {
+    return navcategories.filter(category =>
+      category.name.toLowerCase().includes(state.categorySearchTerm.toLowerCase())
+    );
+  }, [navcategories, state.categorySearchTerm]);
+
+  // Memoized filtered and sorted products
+  const filteredAndSortedProducts = useMemo(() => {
+    let filtered = pharmacycards.filter(product => {
+      const matchesSearch = product.name.toLowerCase().includes(state.productSearchTerm.toLowerCase()) ||
+                            product.type.toLowerCase().includes(state.productSearchTerm.toLowerCase());
+      const matchesCategory = state.selectedCategories.length === 0 || state.selectedCategories.includes(product.type);
+      const matchesDelivery = !state.isDelivery || product.deliveryTime;
+      return matchesSearch && matchesCategory && matchesDelivery;
+    });
+
+    // Sort products
+    switch (state.sortCriteria) {
+      case "priceAsc":
+        return filtered.sort((a, b) => a.priceRange.length - b.priceRange.length);
+      case "priceDesc":
+        return filtered.sort((a, b) => b.priceRange.length - a.priceRange.length);
+      case "nameAsc":
+        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+      case "nameDesc":
+        return filtered.sort((a, b) => b.name.localeCompare(a.name));
+      default:
+        return filtered;
+    }
+  }, [pharmacycards, state.productSearchTerm, state.selectedCategories, state.isDelivery, state.sortCriteria]);
+
+  const handleSearch = useCallback((searchType) => (event) => {
+    const searchTerm = event.target.value;
+    setState(prevState => ({ 
+      ...prevState, 
+      [searchType]: searchTerm,
+      [searchType === 'categorySearchTerm' ? 'categorySearchResults' : 'productSearchResults']: 
+        searchType === 'categorySearchTerm' 
+          ? navcategories.filter(category => 
+              category.name.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+          : pharmacycards.filter(product => 
+              product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              product.type.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+    }));
+  }, [navcategories, pharmacycards]);
+
+  const handleCategorySelect = useCallback((category) => {
+    setState(prevState => {
+      const newSelectedCategories = prevState.selectedCategories.includes(category)
+        ? prevState.selectedCategories.filter(c => c !== category)
+        : [...prevState.selectedCategories, category];
+      return { 
+        ...prevState, 
+        selectedCategories: newSelectedCategories, 
+        isMoreDropdownOpen: false,
+        categorySearchTerm: '',
+        categorySearchResults: []
+      };
+    });
+  }, []);
+  const handleProductSelect = useCallback((product) => {
+    // Navigate to the product page
+    window.location.href = product.href;
+    
+    // Clear the search term and results
+    setState(prevState => ({
+      ...prevState,
+      productSearchTerm: '',
+      productSearchResults: []
+    }));
+  }, []);
+
+  const clearSelectedCategories = useCallback(() => {
+    setState(prevState => ({ 
+      ...prevState, 
+      selectedCategories: [],
+      categorySearchTerm: '',
+      categorySearchResults: []
+    }));
+  }, []);
+
+  const handleSortChange = useCallback((event) => {
+    setState(prevState => ({ ...prevState, sortCriteria: event.target.value }));
+  }, []);
+
+  const toggleMoreDropdown = useCallback(() => {
+    setState(prevState => ({ ...prevState, isMoreDropdownOpen: !prevState.isMoreDropdownOpen }));
+  }, []);
+
+  const handleFocus = useCallback((focusType) => () => {
+    setState(prevState => ({ ...prevState, [focusType]: true }));
+  }, []);
+
+  const handleBlur = useCallback((blurType, searchType) => () => {
+    setTimeout(() => {
+      setState(prevState => ({ 
+        ...prevState, 
+        [blurType]: false, 
+        [searchType]: '',
+        [searchType === 'categorySearchTerm' ? 'categorySearchResults' : 'productSearchResults']: []
+      }));
+    }, 200);
+  }, []);
+
+  const handleClear = useCallback((searchType) => () => {
+    setState(prevState => ({ 
+      ...prevState, 
+      [searchType]: '',
+      [searchType === 'categorySearchTerm' ? 'categorySearchResults' : 'productSearchResults']: []
+    }));
+  }, []);
+// Effect for handling clicks outside the "More" dropdown
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (moreButtonRef.current && !moreButtonRef.current.contains(event.target) &&
+        dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+    }
+  };
+
+  if (state.isMoreDropdownOpen) {
+    document.addEventListener('mousedown', handleClickOutside);
+  }
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [state.isMoreDropdownOpen]);
   // Render helpers
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
@@ -580,13 +734,15 @@ useEffect(() => {
           <section 
             ref={containerRef} 
             className="my-8"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onTouchStart={handleTouchStart}
+            
           >
             {/* Carousel implementation */}
             <div className="container mx-auto px-4">
-              <div className="relative mt-8 overflow-hidden">
+              <div className="relative mt-8 overflow-hidden"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onTouchStart={handleTouchStart}
+              isHovering={isHovering}>
                 <div
                   ref={containerRef}
                   className="flex transition-transform duration-500 ease-in-out"
@@ -602,6 +758,7 @@ useEffect(() => {
                       className="shrink-0 p-2 cursor-pointer"
                       style={{ width: window.innerWidth < 640 ? "350px" : "550px", height: "276px" }}
                       onClick={handleTouchStart}
+                      isHovering={isHovering}
                     >
                       <div
                         className="relative w-full h-full overflow-hidden rounded-md"
@@ -728,147 +885,355 @@ useEffect(() => {
             </div>
           </section>
 
-          {/* Categories and products section */}
-          <section className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row">
-              {/* Mobile view (below md screens) */}
-              <div className="lg:hidden w-full">
-                {/* Product search */}
-                <div className="mb-4 w-full">
-                  <div className="relative">
-                    <input
-                      ref={inputProductRef}
-                      type="text"
-                      placeholder="Search products..."
-                      value={state.productSearchTerm}
-                      onChange={handleSearch('productSearchTerm')}
-                      onFocus={handleProductsFocus('isProductFocused')}
-                      onBlur={handleBlur('isProductFocused', 'productSearchTerm')}
-                      className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
-                    />
-                    {state.isProductFocused ? (
-                      <>
-                        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                        {state.productSearchTerm && (
-                          <X
-                            size={20}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
-                            onClick={handleClearProduct('productSearchTerm')}
-                          />
-                        )}
-                      </>
-                    ) : (
-                      <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                    )}
-                  </div>
-                </div>
+       {/* Categories and products section */}
+<section className="container mx-auto px-4">
+  <div className="flex flex-col md:flex-row">
+    {/* Mobile view (below md screens) */}
+    <div className="lg:hidden w-full">
+      {/* Product search */}
+      <div className="mb-4 w-full">
+        <div className="relative">
+          <input
+            ref={productSearchRef}
+            type="text"
+            placeholder="Search products..."
+            value={state.productSearchTerm}
+            onChange={handleSearch('productSearchTerm')}
+            onFocus={handleFocus('isProductFocused')}
+            className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+          />
+          {state.isProductFocused ? (
+            <>
+              <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+              {state.productSearchTerm && (
+                <X
+                  size={20}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
+                  onClick={handleClear('productSearchTerm')}
+                />
+              )}
+            </>
+          ) : (
+            <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+          )}
+        </div>
+        {state.productSearchResults.length > 0 && (
+          <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+            {state.productSearchResults.map((product, index) => (
+              <button
+                key={index}
+                className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                onClick={() => handleProductSelect(product)}
+              >
+                {product.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
-                {/* Categories */}
-                <div className="mb-4">
-                  <div className="flex items-center space-x-4">
-                    {/* Visible categories */}
-                    <div className="flex-1 overflow-x-auto">
-                      <div className="grid auto-cols-max grid-flow-col gap-2 pb-2">
-                        <button
-                          onClick={() => handleCategorySelect("")}
-                          className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategories.length === 0 ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                            }`}
-                        >
-                          All
-                        </button>
+      {/* Categories */}
+      <div className="mb-4">
+        <div className="flex items-center space-x-4">
+          {/* Visible categories */}
+          <div className="flex-1 overflow-x-auto">
+            <div className="grid auto-cols-max grid-flow-col gap-2 pb-2">
+              <button
+                onClick={clearSelectedCategories}
+                className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${
+                  state.selectedCategories.length === 0 ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
+              >
+                All
+              </button>
 
-                        {state.visibleCategories.map((category) => (
-                          <button
-                            key={category}
-                            onClick={() => handleCategorySelect(category)}
-                            className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategories.includes(category) ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                              }`}
-                          >
-                            {category}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    {/* More button */}
-                    {state.hiddenCategories.length > 0 && (
-                      <div className="relative w-auto min-w-[80px] pr-6 ">
-                        <div className="relative">
-                          <button
-                            ref={moreButtonRef}
-                            onClick={toggleMoreDropdown}
-                            className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
-                          >
-                            More <ChevronDownIcon className="mx-2 size-4" />
-                          </button>
-                          {/* Dropdown Menu */}
-                          {state.isMoreDropdownOpen && (
-                            <div
-                              ref={dropdownRef}
-                              className="absolute -left-36 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
-                              style={{ top: 'calc(100% + 2px)' }}
-                            >
-                              <div className="grid grid-cols-2 gap-2 p-2">
-                                {state.hiddenCategories.map((category) => (
-                                  <button
-                                    key={category}
-                                    onClick={() => {
-                                      handleCategorySelect(category);
-                                      setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                                    }}
-                                    className="whitespace-normal rounded px-3 py-2 text-left hover:bg-gray-100"
-                                  >
-                                    {category}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* All Products and Sort */}
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-2xl font-bold">All Products</h2>
-                  <select
-                    value={state.sortCriteria}
-                    onChange={handleSortChange}
-                    className="rounded-md border px-4 py-2"
+              {filteredCategories.slice(0, 8).map((category) => (
+                <button
+                  key={category.name}
+                  onClick={() => handleCategorySelect(category.name)}
+                  className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${
+                    state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                  }`}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          </div>
+          {/* More button */}
+          {filteredCategories.length > 8 && (
+            <div className="relative w-auto min-w-[80px] pr-6 ">
+              <div className="relative">
+                <button
+                  ref={moreButtonRef}
+                  onClick={toggleMoreDropdown}
+                  className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
+                >
+                  More <ChevronDownIcon className="mx-2 size-4" />
+                </button>
+                {/* Dropdown Menu */}
+                {state.isMoreDropdownOpen && (
+                  <div
+                    ref={dropdownRef}
+                    className="absolute -left-36 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
+                    style={{ top: 'calc(100% + 2px)' }}
                   >
-                    <option value="recommended">Sort by: Recommended</option>
-                    <option value="priceAsc">Price: Low to High</option>
-                    <option value="priceDesc">Price: High to Low</option>
-                    <option value="nameAsc">Name: A to Z</option>
-                    <option value="nameDesc">Name: Z to A</option>
-                  </select>
-                </div>
+                    <div className="grid grid-cols-2 gap-2 p-2">
+                      {filteredCategories.slice(8).map((category) => (
+                        <button
+                          key={category.name}
+                          onClick={() => handleCategorySelect(category.name)}
+                          className="whitespace-normal rounded px-3 py-2 text-left hover:bg-gray-100"
+                        >
+                          {category.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
 
-                {/* Products grid */}
-                <div className="overflow-y-auto h-[850px] grid grid-cols-2 sm:grid-cols-3 md:h-[850px]">
-                  {filteredAndSortedProducts.map((product, index) => (
-                    <div key={index} className="w-56 shrink-0 p-6 sm:w-48 md:w-60 lg:w-64">
-                      <a href={product.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl overflow-hidden">
-                        <div className="relative aspect-square w-full overflow-hidden rounded-t-lg">
+      {/* All Products and Sort */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-bold">All Products</h2>
+        <select
+          value={state.sortCriteria}
+          onChange={handleSortChange}
+          className="rounded-md border px-4 py-2"
+        >
+          <option value="recommended">Sort by: Recommended</option>
+          <option value="priceAsc">Price: Low to High</option>
+          <option value="priceDesc">Price: High to Low</option>
+          <option value="nameAsc">Name: A to Z</option>
+          <option value="nameDesc">Name: Z to A</option>
+        </select>
+      </div>
+
+      {/* Products grid */}
+      <div className="overflow-y-auto h-[850px] grid grid-cols-2 sm:grid-cols-3 md:h-[850px]">
+        {filteredAndSortedProducts.map((product, index) => (
+          <div key={index} className="w-56 shrink-0 p-6 sm:w-48 md:w-60 lg:w-64">
+            <a href={product.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl overflow-hidden">
+              <div className="relative aspect-square w-full overflow-hidden rounded-t-lg">
+                <LazyLoadImage
+                  src={product.imgSrc}
+                  alt={product.name}
+                  width="100%"
+                  height="100%"
+                  className="size-full object-cover"
+                  effect="opacity"
+                />
+                <div className="p-3 sm:p-4">
+                  {product.discount && (
+                    <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
+                      {`-${product.discount}%`}
+                    </div>
+                  )}
+                  <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                    +
+                  </div>
+                </div>
+              </div>
+              <div className="flex w-full grow flex-col p-2">
+                <h3 className="truncate font-bold">{product.name}</h3>
+                <div className="mt-2 flex items-center text-sm">
+                  <div className="text-sm font-bold text-[#ee9613]">
+                    <span>{product.priceRange}</span>
+                  </div>
+                  <span className="mx-1">•</span>
+                  <span className="truncate">{product.type}</span>
+                </div>
+                <div className="mt-1 text-xs text-gray-500">
+                  {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
+                </div>
+                <div className="mt-1 line-clamp-2 text-xs text-gray-500">
+                  {product.description}
+                </div>
+                <div className="mt-auto">
+                  <div className="rounded py-1 text-xs text-black">
+                    <span className="text-black">Etomart </span>
+                    {product.deliveryTime ? (
+                      <span className="font-bold text-[#ee9613]">Delivery Available</span>
+                    ) : (
+                      <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Desktop view (md screens and above) */}
+    <div className="hidden lg:flex lg:flex-row w-full">
+      {/* Categories sidebar */}
+      <aside className="w-1/5 p-4">
+        <div className="flex flex-col">
+          <div className="mb-4 w-full">
+            <div className="relative">
+              <input
+                ref={categoriesSearchRef}
+                type="text"
+                placeholder="Search Categories..."
+                value={state.categorySearchTerm}
+                onChange={handleSearch('categorySearchTerm')}
+                onFocus={handleFocus('isCategoryFocused')}
+                className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+              />
+              {state.isCategoryFocused ? (
+                <>
+                  <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                  {state.categorySearchTerm && (
+                    <X
+                      size={20}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
+                      onClick={handleClear('categorySearchTerm')}
+                    />
+                  )}
+                </>
+              ) : (
+                <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+              )}
+            </div>
+            {state.categorySearchResults.length > 0 && (
+              <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+                {state.categorySearchResults.map((category, index) => (
+                  <button
+                    key={index}
+                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={() => handleCategorySelect(category.name)}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "850px" }}>
+            {state.selectedCategories.length > 0 && (
+              <button
+                onClick={clearSelectedCategories}
+                className="mb-2 w-full rounded-lg bg-[#8f8575] p-2 text-white shadow hover:bg-[#ee9613]"
+              >
+                Clear Selected Categories
+              </button>
+            )}
+            {filteredCategories.map((category, index) => (
+              <button
+                key={index}
+                onClick={() => handleCategorySelect(category.name)}
+                className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-[#ecbc73] ${
+                  state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
+                }`}
+              >
+                <LazyLoadImage
+                  src={category.imgSrc}
+                  alt={category.name}
+                  effect="blur"
+                  className="mr-4 size-10 rounded-full hidden md:block"
+                />
+                <span>{category.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </aside>
+
+      {/* Products grid */}
+      <section className="w-4/5">
+        <div className="px-4">
+          <div className="flex items-center p-4">
+            <h2 className="mr-auto text-2xl font-bold">All Products</h2>
+            <div className="mx-auto flex items-center">
+              <div className="relative">
+                <input
+                  ref={productSearchRef}
+                  type="text"
+                  placeholder="Search products..."
+                  value={state.productSearchTerm}
+                  onChange={handleSearch('productSearchTerm')}
+                  onFocus={handleFocus('isProductFocused')}
+                  className="w-full rounded-full border border-gray-300 px-28 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+                />
+                {state.isProductFocused ? (
+                  <>
+                    <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                    {state.productSearchTerm && (
+                      <X
+                        size={20}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
+                        onClick={handleClear('productSearchTerm')}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
+                )}
+                {state.productSearchResults.length > 0 && (
+                  <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+                    {state.productSearchResults.map((product, index) => (
+                      <button
+                        key={index}
+                        className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                        onClick={() => handleProductSelect(product)}
+                      >
+                        {product.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="ml-auto flex items-center">
+              <select
+                value={state.sortCriteria}
+                onChange={handleSortChange}
+                className="rounded-md border px-4 py-2"
+              >
+                <option value="recommended">Sort by: Recommended</option>
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="nameAsc">Name: A to Z</option>
+                <option value="nameDesc">Name: Z to A</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="overflow-y-auto lg:h-[850px]">
+            <div className="px-2 pb-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+                {filteredAndSortedProducts.map((product, index) => (
+                  <div
+                    key={index}
+                    className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
+                  >
+                    <a href={product.href}
+                      className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
+                    >
+                      <div className="flex h-full flex-col">
+                        <div className="relative aspect-square w-full overflow-hidden">
                           <LazyLoadImage
                             src={product.imgSrc}
                             alt={product.name}
                             width="100%"
                             height="100%"
+                            effect="blur"
                             className="size-full object-cover"
-                            effect="opacity"
                           />
-
-                          <div className="p-3 sm:p-4">
-                            {product.discount && (
-                              <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
-                                {`-${product.discount}%`}
-                              </div>
-                            )}
-                            <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
-                              +
+                          {product.discount && (
+                            <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
+                              {`-${product.discount}%`}
                             </div>
+                          )}
+                          <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
+                            +
                           </div>
                         </div>
                         <div className="flex w-full grow flex-col p-2">
@@ -897,192 +1262,18 @@ useEffect(() => {
                             </div>
                           </div>
                         </div>
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Desktop view (md screens and above) */}
-              <div className="hidden lg:flex lg:flex-row w-full">
-                {/* Categories sidebar */}
-                <aside className="w-1/5 p-4">
-                  <div className="flex flex-col">
-                    <div className="mb-4 w-full">
-                      <div className="relative">
-                      <input
-                          ref={categoriesSearchRef}
-                          type="text"
-                          placeholder="Search Categories..."
-                          value={state.categorySearchTerm}
-                          onChange={handleSearch('categorySearchTerm')}
-                          onFocus={handleCategoriesFocus('isCategoryFocused')}
-                          onBlur={handleBlur('isCategoryFocused', 'categorySearchTerm')}
-                          className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
-                        />
-                        {state.isCategoryFocused ? (
-                          <>
-                            <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                            {state.categorySearchTerm && (
-                              <X
-                                size={20}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
-                                onClick={handleClearCategory('categorySearchTerm')}
-                              />
-                            )}
-                          </>
-                        ) : (
-                          <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                        )}
                       </div>
-                    </div>
-
-                    <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "850px" }}>
-                      {state.selectedCategories.length > 0 && (
-                        <button
-                          onClick={clearSelectedCategories}
-                          className="mb-2 w-full rounded-lg bg-[#8f8575] p-2 text-white shadow hover:bg-[#ee9613]"
-                        >
-                          Clear Selected Categories
-                        </button>
-                      )}
-                      {filteredCategories.map((category, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleCategorySelect(category.name)}
-                          className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-[#ecbc73] ${state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
-                            }`}
-                        >
-                          <LazyLoadImage
-                            src={category.imgSrc}
-                            alt={category.name}
-                            effect="blur"
-                            className="mr-4 size-10 rounded-full hidden md:block"
-                          />
-                          <span>{category.name}</span>
-                        </button>
-                      ))}
-                    </div>
+                    </a>
                   </div>
-                </aside>
-
-                {/* Products grid */}
-                <section className="w-4/5">
-                  <div className="px-4">
-                    <div className="flex items-center p-4">
-                      <h2 className="mr-auto text-2xl font-bold">All Products</h2>
-                      <div className="mx-auto flex items-center">
-                        <div className="relative ">
-                          <input
-                            ref={productSearchRef}
-                            type="text"
-                            placeholder="Search products..."
-                            value={state.productSearchTerm}
-                            onChange={handleSearch('productSearchTerm')}
-                            onFocus={handleProductsFocus('isProductFocused')}
-                            onBlur={handleBlur('isProductFocused', 'productSearchTerm')}
-                            className="w-full rounded-full border border-gray-300 px-28 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
-                          />
-                          {state.isProductFocused ? (
-                            <>
-                              <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                              {state.productSearchTerm && (
-                                <X
-                                  size={20}
-                                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
-                                  onClick={handleClearProduct('productSearchTerm')}
-                                />
-                              )}
-                            </>
-                          ) : (
-                            <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
-                          )}
-                        </div>
-                      </div>
-                      <div className="ml-auto flex items-center">
-                        <select
-                          value={state.sortCriteria}
-                          onChange={handleSortChange}
-                          className="rounded-md border px-4 py-2"
-                        >
-                          <option value="recommended">Sort by: Recommended</option>
-                          <option value="priceAsc">Price: Low to High</option>
-                          <option value="priceDesc">Price: High to Low</option>
-                          <option value="nameAsc">Name: A to Z</option>
-                          <option value="nameDesc">Name: Z to A</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="overflow-y-auto lg:h-[850px]">
-                      <div className="px-2 pb-4">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-                          {filteredAndSortedProducts.map((product, index) => (
-                            <div
-                              key={index}
-                              className="mx-auto w-full max-w-[180px] sm:mx-0 sm:max-w-[400px]"
-                            >
-                              <a href={product.href}
-                                className="block size-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl"
-                              >
-                                <div className="flex h-full flex-col">
-                                  <div className="relative aspect-square w-full overflow-hidden">
-                                    <LazyLoadImage
-                                      src={product.imgSrc}
-                                      alt={product.name}
-                                      width="100%"
-                                      height="100%"
-                                      effect="blur"
-                                      className="size-full object-cover"
-                                    />
-                                    {product.discount && (
-                                      <div className="absolute right-0 top-0 mr-2 mt-2 rounded bg-[#ee9613] px-2 py-1 text-xs text-white">
-                                        {`-${product.discount}%`}
-                                      </div>
-                                    )}
-                                    <div className="absolute bottom-2 right-2 flex h-8 w-12 items-center justify-center rounded bg-[#ee9613] text-lg text-white">
-                                      +
-                                    </div>
-                                  </div>
-                                  <div className="flex w-full grow flex-col p-2">
-                                    <h3 className="truncate font-bold">{product.name}</h3>
-                                    <div className="mt-2 flex items-center text-sm">
-                                      <div className="text-sm font-bold text-[#ee9613]">
-                                        <span>{product.priceRange}</span>
-                                      </div>
-                                      <span className="mx-1">•</span>
-                                      <span className="truncate">{product.type}</span>
-                                    </div>
-                                    <div className="mt-1 text-xs text-gray-500">
-                                      {state.isDelivery ? `Delivery: ${product.deliveryTime}` : `Pickup: ${product.pickupTime}`}
-                                    </div>
-                                    <div className="mt-1 line-clamp-2 text-xs text-gray-500">
-                                      {product.description}
-                                    </div>
-                                    <div className="mt-auto">
-                                      <div className="rounded py-1 text-xs text-black">
-                                        <span className="text-black">Etomart </span>
-                                        {product.deliveryTime ? (
-                                          <span className="font-bold text-[#ee9613]">Delivery Available</span>
-                                        ) : (
-                                          <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </a>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
+                ))}
               </div>
             </div>
-          </section>
-
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
           <section id="moreInformation" className="container mx-auto mt-8 px-4">
             {/* More information content */}
             <div className="flex flex-col md:flex-row space-y-4 p-4 md:space-x-8 ">

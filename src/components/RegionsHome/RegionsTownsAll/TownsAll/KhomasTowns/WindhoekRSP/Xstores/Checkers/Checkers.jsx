@@ -594,13 +594,14 @@ function Checkers() {
           <section
             ref={containerRef}
             className="my-8"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onTouchStart={handleTouchStart}
           >
             {/* Carousel implementation */}
             <div className="container mx-auto px-4">
-              <div className="relative mt-8 overflow-hidden">
+              <div className="relative mt-8 overflow-hidden"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onTouchStart={handleTouchStart}
+              isHovering={isHovering}>
                 <div
                   ref={containerRef}
                   className="flex transition-transform duration-500 ease-in-out"
