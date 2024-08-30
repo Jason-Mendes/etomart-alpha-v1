@@ -4,7 +4,7 @@ const HomeIcon = () => {
   return (
     <div>
       <a
-        href="/LP/Region"
+        href="/LP/Khomas/Towns"
         className=" tab flex h-9  w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#ffaf5e4b] p-3 transition-all duration-300 hover:bg-[#ffaf5e9c] "
       >
         <svg
