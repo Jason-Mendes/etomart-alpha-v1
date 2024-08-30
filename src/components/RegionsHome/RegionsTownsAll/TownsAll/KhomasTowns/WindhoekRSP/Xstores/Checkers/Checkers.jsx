@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, lazy, Suspense } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo, lazy, Suspense } from "react";
 import PropTypes from 'prop-types';
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
@@ -34,44 +34,54 @@ const usePerformanceMeasure = (name) => {
 function Checkers() {
   usePerformanceMeasure('Checkers');
 
-  // Combined state using a single useState
-  const [state, setState] = useState({
-    isDelivery: false,
-    searchTerm: "",
-    currentIndex: 0,
-    isPaused: false,
-    isDropdownOpen: false,
-    map: null,
-    isFavorite: false,
-    isExpanded: false,
-    categorySearchTerm: "",
-    productSearchTerm: "",
-    isCategoryFocused: false,
-    isProductFocused: false,
-    selectedCategories: [],
-    sortCriteria: 'recommended',
-    visibleCategories: [],
-    hiddenCategories: [],
-    isMoreDropdownOpen: false,
-  });
+ // Combined state using a single useState call
+ const [state, setState] = useState({
+  isDelivery: false,
+  searchTerm: "",
+  currentIndex: 0,
+  isPaused: false,
+  isDropdownOpen: false,
+  map: null,
+  isFavorite: false,
+  isExpanded: false,
+  visibleCategories: [],
+  hiddenCategories: [],
+  isMapLoaded: false,
 
-  const [mapboxLoaded, setMapboxLoaded] = useState(false);
-  const [showControls, setShowControls] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
+  //test
+  categorySearchTerm: "",
+  productSearchTerm: "",
+  selectedCategories: [],
+  isMoreDropdownOpen: false,
+  isCategoryFocused: false,
+  isProductFocused: false,
+  sortCriteria: "recommended",
+  categorySearchResults: [],
+  productSearchResults: [],
+});
 
-  // Refs
-  const containerRef = React.useRef(null);
-  const dropdownRef = React.useRef(null);
-  const mapContainerRef = React.useRef(null);
-  const supermarketsScroll = React.useRef(null);
-  const productSearchRef = React.useRef(null);
-  const categoriesSearchRef = React.useRef(null);
-  const inputCategoriesRef = React.useRef(null);
-  const inputProductRef = React.useRef(null);
-  const moreButtonRef = React.useRef(null);
 
-  // Memoized data
-  const navcategories = useNavcategories();
+const [mapboxLoaded, setMapboxLoaded] = useState(false);
+const [showControls, setShowControls] = useState(false);
+const [isHovering, setIsHovering] = useState(false);
+//test
+const navcategories = useNavcategories();
+
+
+// Refs
+const containerRef = React.useRef(null);
+
+const mapContainerRef = React.useRef(null);
+const supermarketsScroll = React.useRef(null);
+
+
+//test
+const categoriesSearchRef = useRef(null);
+const productSearchRef = useRef(null);
+const moreButtonRef = useRef(null);
+const dropdownRef = useRef(null);
+
+// Memoized data
   const cards = useCards();
   const storecards = useStoresCards();
   const supermarkets = useSupermarkets();
@@ -145,66 +155,7 @@ function Checkers() {
     alert("Information about the store");
   }, []);
 
-  const handleCategorySelect = useCallback((categoryName) => {
-    setState(prevState => {
-      if (categoryName === "") {
-        // If "All" is selected, clear all other selections
-        return { ...prevState, selectedCategories: [] };
-      } else {
-        const newSelectedCategories = prevState.selectedCategories.includes(categoryName)
-          ? prevState.selectedCategories.filter(c => c !== categoryName)
-          : [...prevState.selectedCategories, categoryName];
-        return { ...prevState, selectedCategories: newSelectedCategories };
-      }
-    });
-  }, []);
-  const handleSortChange = useCallback((event) => {
-    setState(prevState => ({ ...prevState, sortCriteria: event.target.value }));
-  }, []);
-
-  const filteredCategories = useMemo(() =>
-    navcategories.filter((category) =>
-      category.name.toLowerCase().includes(state.categorySearchTerm.toLowerCase())
-    ),
-    [navcategories, state.categorySearchTerm]
-  );
-
-  const filteredAndSortedProducts = useMemo(() => {
-    let result = storecards;
-  
-    // Filter by delivery/pickup
-    result = result.filter(product => state.isDelivery ? product.deliveryTime : product.pickupTime);
-  
-    // Filter by selected categories
-    if (state.selectedCategories.length > 0) {
-      result = result.filter(product => state.selectedCategories.includes(product.type));
-    }
-  
-    // Filter by product search term
-    if (state.productSearchTerm) {
-      const searchTerm = state.productSearchTerm.toLowerCase();
-      result = result.filter(product =>
-        product.name.toLowerCase().includes(searchTerm) ||
-        product.description.toLowerCase().includes(searchTerm) ||
-        product.type.toLowerCase().includes(searchTerm)
-      );
-    }
-  
-    // Sort products
-    switch (state.sortCriteria) {
-      case 'priceAsc':
-        return result.sort((a, b) => a.priceRange.length - b.priceRange.length);
-      case 'priceDesc':
-        return result.sort((a, b) => b.priceRange.length - a.priceRange.length);
-      case 'nameAsc':
-        return result.sort((a, b) => a.name.localeCompare(b.name));
-      case 'nameDesc':
-        return result.sort((a, b) => b.name.localeCompare(a.name));
-      case 'recommended':
-      default:
-        return result;
-    }
-  }, [storecards, state.isDelivery, state.selectedCategories, state.productSearchTerm, state.sortCriteria]);
+ 
   // Mapbox configuration
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -382,36 +333,16 @@ function Checkers() {
     }
   }, [mapboxLoaded, initializeMap]);
 
-  const handleSearch = useCallback((field) => (event) => {
-    setState(prevState => ({ ...prevState, [field]: event.target.value }));
-  }, []);
-
-  const handleFocus = useCallback((field) => () => {
+  const handleProductsFocus = useCallback((field) => () => {
     setState(prevState => ({ ...prevState, [field]: true }));
   }, []);
 
-  const handleBlur = useCallback((field, term) => () => {
-    if (!state[term]) {
-      setState(prevState => ({ ...prevState, [field]: false }));
-    }
-  }, [state]);
-
-  const handleClear = useCallback((field) => () => {
-    setState(prevState => ({ ...prevState, [field]: "" }));
-    if (field === 'categorySearchTerm' && inputCategoriesRef.current) {
-      inputCategoriesRef.current.focus();
-    } else if (field === 'productSearchTerm' && inputProductRef.current) {
-      inputProductRef.current.focus();
-    }
+  const handleCategoriesFocus = useCallback((field) => () => {
+    setState(prevState => ({ ...prevState, [field]: true }));
   }, []);
 
-  const clearSelectedCategories = useCallback(() => {
-    setState(prevState => ({ ...prevState, selectedCategories: [] }));
-  }, []);
 
-  const toggleMoreDropdown = useCallback(() => {
-    setState(prevState => ({ ...prevState, isMoreDropdownOpen: !prevState.isMoreDropdownOpen }));
-  }, []);
+
 
   // Function to handle smooth scrolling
   const smoothScroll = useCallback((target, duration = 1000) => {
@@ -459,6 +390,177 @@ function Checkers() {
   const handleSeeMoreInfo = useCallback(() => {
     smoothScroll('moreInformation', 1500);
   }, [smoothScroll]);
+
+  //testing
+  // Memoized filtered categories
+  const filteredCategories = useMemo(() => {
+    return navcategories.filter(category =>
+      category.name.toLowerCase().includes(state.categorySearchTerm.toLowerCase())
+    );
+  }, [navcategories, state.categorySearchTerm]);
+
+  // Memoized filtered and sorted products
+  const filteredAndSortedProducts = useMemo(() => {
+    let filtered = state.productSearchResults.length > 0
+      ? state.productSearchResults
+      : storecards.filter(product => {
+        const matchesCategory = state.selectedCategories.length === 0 || state.selectedCategories.includes(product.type);
+        const matchesDelivery = !state.isDelivery || product.deliveryTime;
+        return matchesCategory && matchesDelivery;
+      });
+
+    // Sort products
+    switch (state.sortCriteria) {
+      case "priceAsc":
+        return filtered.sort((a, b) => a.priceRange.length - b.priceRange.length);
+      case "priceDesc":
+        return filtered.sort((a, b) => b.priceRange.length - a.priceRange.length);
+      case "nameAsc":
+        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+      case "nameDesc":
+        return filtered.sort((a, b) => b.name.localeCompare(a.name));
+      default:
+        return filtered;
+    }
+  }, [storecards, state.productSearchResults, state.selectedCategories, state.isDelivery, state.sortCriteria]);
+
+  const handleSearch = useCallback((searchType) => (event) => {
+    const searchTerm = event.target.value;
+    setState(prevState => ({
+      ...prevState,
+      [searchType]: searchTerm,
+      [searchType === 'categorySearchTerm' ? 'categorySearchResults' : 'productSearchResults']:
+        searchType === 'categorySearchTerm'
+          ? navcategories.filter(category =>
+            category.name.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+          : storecards.filter(product =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.type.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+    }));
+  }, [navcategories, storecards]);
+
+  const handleCategorySelect = useCallback((category) => {
+    setState(prevState => {
+      const newSelectedCategories = prevState.selectedCategories.includes(category)
+        ? prevState.selectedCategories.filter(c => c !== category)
+        : [...prevState.selectedCategories, category];
+      return {
+        ...prevState,
+        selectedCategories: newSelectedCategories,
+        isMoreDropdownOpen: false,
+        categorySearchTerm: '',
+        categorySearchResults: []
+      };
+    });
+  }, []);
+  const handleProductSelect = useCallback((product) => {
+    // Navigate to the product page
+    window.location.href = product.href;
+
+    // Clear the search term and results
+    setState(prevState => ({
+      ...prevState,
+      productSearchTerm: '',
+      productSearchResults: []
+    }));
+  }, []);
+
+  const clearSelectedCategories = useCallback(() => {
+    setState(prevState => ({
+      ...prevState,
+      selectedCategories: [],
+      categorySearchTerm: '',
+      categorySearchResults: []
+    }));
+  }, []);
+
+  const handleSortChange = useCallback((event) => {
+    setState(prevState => ({ ...prevState, sortCriteria: event.target.value }));
+  }, []);
+
+  const toggleMoreDropdown = useCallback(() => {
+    setState(prevState => ({ ...prevState, isMoreDropdownOpen: !prevState.isMoreDropdownOpen }));
+  }, []);
+
+  const handleFocus = useCallback((focusType) => () => {
+    setState(prevState => ({ ...prevState, [focusType]: true }));
+  }, []);
+
+  const handleBlur = useCallback((blurType, searchType) => () => {
+    setTimeout(() => {
+      setState(prevState => ({
+        ...prevState,
+        [blurType]: false,
+        [searchType]: '',
+        [searchType === 'categorySearchTerm' ? 'categorySearchResults' : 'productSearchResults']: []
+      }));
+    }, 200);
+  }, []);
+
+  const handleClearProduct = useCallback((searchType) => () => {
+    setState(prevState => ({
+      ...prevState,
+      [searchType]: '',
+      productSearchResults: [], // Reset productSearchResults when clearing the search term
+    }));
+  }, []);
+
+  const handleClearCategory = useCallback((searchType) => () => {
+    setState(prevState => ({
+      ...prevState,
+      [searchType]: '',
+      categorySearchResults: [], // Reset categorySearchResults when clearing the search term
+    }));
+  }, []);
+  // Effect for handling clicks outside the "More" dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (moreButtonRef.current && !moreButtonRef.current.contains(event.target) &&
+        dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+      }
+    };
+
+    if (state.isMoreDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [state.isMoreDropdownOpen]);
+
+  useEffect(() => {
+    let timeout;
+
+    if (state.productSearchTerm === '') {
+      timeout = setTimeout(() => {
+        setState(prevState => ({
+          ...prevState,
+          productSearchResults: [], // Reset productSearchResults when the search term is empty
+        }));
+      }, 300); // Adjust the delay (in milliseconds) as needed
+    }
+
+    return () => clearTimeout(timeout);
+  }, [state.productSearchTerm]);
+
+  useEffect(() => {
+    let timeout;
+
+    if (state.categorySearchTerm === '') {
+      timeout = setTimeout(() => {
+        setState(prevState => ({
+          ...prevState,
+          categorySearchResults: [], // Reset categorySearchResults when the search term is empty
+        }));
+      }, 300); // Adjust the delay (in milliseconds) as needed
+    }
+
+    return () => clearTimeout(timeout);
+  }, [state.categorySearchTerm]);
 
   // Render helpers
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
@@ -598,10 +700,10 @@ function Checkers() {
             {/* Carousel implementation */}
             <div className="container mx-auto px-4">
               <div className="relative mt-8 overflow-hidden"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onTouchStart={handleTouchStart}
-              isHovering={isHovering}>
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onTouchStart={handleTouchStart}
+                isHovering={isHovering}>
                 <div
                   ref={containerRef}
                   className="flex transition-transform duration-500 ease-in-out"
@@ -658,7 +760,7 @@ function Checkers() {
                     </div>
                   ))}
                 </div>
-                <button
+               <button
                   className={`absolute left-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-black bg-white bg-opacity-70 hover:bg-opacity-85 active:bg-opacity-100 transition-all duration-150 ${showControls ? 'opacity-100 visible' : 'opacity-0 invisible'
                     }`}
                   onClick={handlePrev}
@@ -679,8 +781,8 @@ function Checkers() {
                     <button
                       key={index}
                       className={`size-2 rounded-full transition-colors duration-200 ${index === state.currentIndex % cards.length
-                          ? "bg-white"
-                          : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
+                        ? "bg-white"
+                        : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
                         }`}
                       onClick={() => handleDotClick(index)}
                       aria-label={`Go to slide ${index + 1}`}
@@ -690,7 +792,6 @@ function Checkers() {
               </div>
             </div>
           </section>
-
           {/* Store Information */}
           <section id="information" className="container mx-auto mb-2 px-4">
             <div className="flex flex-row items-start justify-between space-y-4 px-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
@@ -748,8 +849,8 @@ function Checkers() {
                 {/* Product search */}
                 <div className="mb-4 w-full ">
                   <div className="relative">
-                    <input
-                      ref={inputProductRef}
+                  <input
+                      ref={productSearchRef}
                       type="text"
                       placeholder="Search products..."
                       value={state.productSearchTerm}
@@ -765,7 +866,7 @@ function Checkers() {
                           <X
                             size={20}
                             className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
-                            onClick={handleClear('productSearchTerm')}
+                            onClick={handleClearProduct('productSearchTerm')}
                           />
                         )}
                       </>
@@ -782,21 +883,21 @@ function Checkers() {
                     <div className="flex-1 overflow-x-auto">
                       <div className="grid auto-cols-max grid-flow-col gap-2 pb-2">
                         <button
-                          onClick={() => handleCategorySelect("")}
+                          onClick={clearSelectedCategories}
                           className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategories.length === 0 ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                             }`}
                         >
                           All
                         </button>
 
-                        {state.visibleCategories.map((category) => (
+                        {filteredCategories.slice(0, 8).map((category) => (
                           <button
-                            key={category}
-                            onClick={() => handleCategorySelect(category)}
-                            className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategories.includes(category) ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                            key={category.name}
+                            onClick={() => handleCategorySelect(category.name)}
+                            className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                               }`}
                           >
-                            {category}
+                            {category.name}
                           </button>
                         ))}
                       </div>
@@ -922,14 +1023,14 @@ function Checkers() {
                   <div className="flex flex-col">
                     <div className="mb-4 w-full">
                       <div className="relative">
-                        <input
+                      <input
                           ref={categoriesSearchRef}
                           type="text"
                           placeholder="Search Categories..."
                           value={state.categorySearchTerm}
                           onChange={handleSearch('categorySearchTerm')}
                           onFocus={handleFocus('isCategoryFocused')}
-                          onBlur={handleBlur('isCategoryFocused', 'categorySearchTerm')}
+                          onBlur={handleBlur('isCategroyFocused', 'categorySearchTerm')}
                           className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
                         />
                         {state.isCategoryFocused ? (
@@ -939,7 +1040,7 @@ function Checkers() {
                               <X
                                 size={20}
                                 className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
-                                onClick={handleClear('categorySearchTerm')}
+                                onClick={handleClearCategory('categorySearchTerm')}
                               />
                             )}
                           </>
@@ -947,36 +1048,66 @@ function Checkers() {
                           <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
                         )}
                       </div>
+                      {/* {state.categorySearchResults.length > 0 && (
+  <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+    {state.categorySearchResults.map((category, index) => (
+      <button
+        key={index}
+        className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+        onClick={() => handleCategorySelect(category.name)}
+      >
+        {category.name}
+      </button>
+    ))}
+  </div>
+)} */}
                     </div>
 
-                    // In the desktop view, update the category rendering:
-<div className="flex flex-col overflow-y-auto" style={{ maxHeight: "850px" }}>
-  {state.selectedCategories.length > 0 && (
-    <button
-      onClick={clearSelectedCategories}
-      className="mb-2 w-full rounded-lg bg-[#8f8575] p-2 text-white shadow hover:bg-[#ee9613]"
-    >
-      Clear Selected Categories
-    </button>
-  )}
-  {filteredCategories.map((category) => (
-    <button
-      key={category.name}
-      onClick={() => handleCategorySelect(category.name)}
-      className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-[#ecbc73] ${
-        state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
-      }`}
-    >
-      <LazyLoadImage
-        src={category.imgSrc}
-        alt={category.name}
-        effect="blur"
-        className="mr-4 size-10 rounded-full hidden md:block"
-      />
-      <span>{category.name}</span>
-    </button>
-  ))}
-</div>
+                    <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "850px" }}>
+                      {state.selectedCategories.length > 0 && (
+                        <button
+                          onClick={clearSelectedCategories}
+                          className="mb-2 w-full rounded-lg bg-[#8f8575] p-2 text-white shadow hover:bg-[#ee9613]"
+                        >
+                          Clear Selected Categories
+                        </button>
+                      )}
+                      {state.categorySearchResults.length > 0 ? (
+                        state.categorySearchResults.map((category, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleCategorySelect(category.name)}
+                            className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-[#ecbc73] ${state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
+                              }`}
+                          >
+                            <LazyLoadImage
+                              src={category.imgSrc}
+                              alt={category.name}
+                              effect="blur"
+                              className="mr-4 size-10 rounded-full hidden md:block"
+                            />
+                            <span>{category.name}</span>
+                          </button>
+                        ))
+                      ) : (
+                        filteredCategories.map((category, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleCategorySelect(category.name)}
+                            className={`mb-4 flex items-center rounded-lg p-2 shadow hover:bg-[#ecbc73] ${state.selectedCategories.includes(category.name) ? "bg-[#ee9613] text-white" : "bg-white"
+                              }`}
+                          >
+                            <LazyLoadImage
+                              src={category.imgSrc}
+                              alt={category.name}
+                              effect="blur"
+                              className="mr-4 size-10 rounded-full hidden md:block"
+                            />
+                            <span>{category.name}</span>
+                          </button>
+                        ))
+                      )}
+                    </div>
                   </div>
                 </aside>
 
@@ -986,17 +1117,16 @@ function Checkers() {
                     <div className="flex items-center p-4">
                       <h2 className="mr-auto text-2xl font-bold">All Products</h2>
                       <div className="mx-auto flex items-center">
-                        <div className="relative ">
-                        <input
-  ref={productSearchRef}
-  type="text"
-  placeholder="Search products..."
-  value={state.productSearchTerm}
-  onChange={(e) => setState(prevState => ({ ...prevState, productSearchTerm: e.target.value }))}
-  onFocus={handleFocus('isProductFocused')}
-  onBlur={handleBlur('isProductFocused', 'productSearchTerm')}
-  className="w-full rounded-full border border-gray-300 px-10 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
-/>
+                        <div className="relative">
+                          <input
+                            ref={productSearchRef}
+                            type="text"
+                            placeholder="Search products..."
+                            value={state.productSearchTerm}
+                            onChange={handleSearch('productSearchTerm')}
+                            onFocus={handleFocus('isProductFocused')}
+                            className="w-full rounded-full border border-gray-300 px-28 py-2 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+                          />
                           {state.isProductFocused ? (
                             <>
                               <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
@@ -1004,13 +1134,26 @@ function Checkers() {
                                 <X
                                   size={20}
                                   className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#ee9613] hover:text-gray-400"
-                                  onClick={handleClear('productSearchTerm')}
+                                  onClick={handleClearProduct('productSearchTerm')}
                                 />
                               )}
                             </>
                           ) : (
                             <Search size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#ee9613]" />
                           )}
+                          {/* {state.productSearchResults.length > 0 && (
+                            <div className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg">
+                              {state.productSearchResults.map((product, index) => (
+                                <button
+                                  key={index}
+                                  className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                                  onClick={() => handleProductSelect(product)}
+                                >
+                                  {product.name}
+                                </button>
+                              ))}
+                            </div>
+                          )} */}
                         </div>
                       </div>
                       <div className="ml-auto flex items-center">
