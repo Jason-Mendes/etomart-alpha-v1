@@ -10,8 +10,8 @@ import { useNavcategories, useCards, useStoresCards, useSupermarkets } from "./c
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Lazy load components for better performance
-const Footer = lazy(() => import("../../../../../../../Footer"));
-const KhomasOPNavBar = lazy(() => import("../../../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar"));
+const Footer = lazy(() => import("../../../../../../../04_Footer/Footer"));
+const KhomasOPNavBar = lazy(() => import("../../../../../../../01_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar"));
 
 const VISIBLE_CATEGORIES_COUNT = 8;
 

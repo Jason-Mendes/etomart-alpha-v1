@@ -4,18 +4,18 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import CartIcon from './components/CartIcon';
 
 // import KhomasLandingPage from './components/Regions/khomasLandingPage';
-import LandingPage from "./components/RegionsHome/LandingPage";
-import LandingPageTest from "./components/RegionsHome/LandingPageTest";
-import RegionHome from "./components/RegionsHome/RegionsTownsAll/RegionsTownsAll";
-import ErongoTowns from "./components/RegionsHome/RegionsTownsAll/TownsAll/ErongoTowns/ErongoTowns";
-import KhomasTowns from "./components/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/Windhoek";
-import Pharmacies from "./components/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Pharmacies";
-import Restaurants from "./components/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Restaurants";
-import Stores from "./components/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Stores";
-import Clicks from "./components/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xpharmacies/Clicks/Clicks";
-import Test from "./components/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xpharmacies/Test";
-import JoesBeerhouse from "./components/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xrestaurants/JoesBeerHouse/JoesBeerhouse";
-import Checkers from "./components/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xstores/Checkers/Checkers";
+import LandingPage from "./components/03_RegionsHome/LandingPage";
+import LandingPageTest from "./components/03_RegionsHome/LandingPageTest";
+import RegionHome from "./components/03_RegionsHome/RegionsTownsAll/RegionsTownsAll";
+import ErongoTowns from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/ErongoTowns/ErongoTowns";
+import KhomasTowns from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/Windhoek";
+import Pharmacies from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Pharmacies";
+import Restaurants from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Restaurants";
+import Stores from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Stores";
+import Clicks from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xpharmacies/Clicks/Clicks";
+import Test from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xpharmacies/Test";
+import JoesBeerhouse from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xrestaurants/JoesBeerHouse/JoesBeerhouse";
+import Checkers from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xstores/Checkers/Checkers";
 import { CartProvider } from "./context/CartContext";
 
 function App() {

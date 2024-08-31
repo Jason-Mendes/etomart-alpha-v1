@@ -6,7 +6,7 @@ const XClearButton = ({ onClick, className }) => {
     <button
       type="button"
       onClick={onClick}
-      className={`absolute right-2 top-1/2 translate-y-1 text-gray-600 hover:text-black${className}`}
+      className={`absolute right-1 text-gray-600 hover:text-black${className}`}
     >
       <svg
         className="size-6"

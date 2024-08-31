@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import XClearButton from "./componentsCalled/XClearButton";
+import XClearButton from "./02_componentsCalled/XClearButton";
 
 const LoginModal = ({
   showModal,

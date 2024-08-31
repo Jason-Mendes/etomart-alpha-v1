@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { GlobeAltIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"; // Importing icons from Heroicons
-import AccessibilityModal from "./Footer/AccessibilityModal";
-import LanguageModal from "./Footer/LanguageModal";
+import AccessibilityModal from "./AccessibilityModal";
+import LanguageModal from "./LanguageModal";
 
 const Footer = () => {
   const [language, setLanguage] = useState("English");

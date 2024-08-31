@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import PropTypes from 'prop-types';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { usePharmaciesStoresCards1, usePharmacies } from "./CardsDataWindhoekRSP/cardsDataPharmacies";
-import Footer from "../../../../../Footer";
-import KhomasOPNavBar from "../../../../../OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import { useRestaurantsStoresCards1, useRestaurants } from "./CardsDataWindhoekRSP/cardsDataRestaurants";
+import Footer from "../../../../../04_Footer/Footer";
+import KhomasOPNavBar from "../../../../../01_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 import { useIconsCategories} from "../cardsDataKhomasTowns/cardsDataKhomasTowns";
 
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -19,21 +19,20 @@ const usePerformanceMeasure = (name) => {
   }, [name]);
 };
 
-function Pharmacies() {
-  usePerformanceMeasure('Pharmacies');
+function Restaurants() {
+  usePerformanceMeasure('Restaurants');
 
   const [state, setState] = useState({
     isLargeScreen: false,
   });
 
   const iconscategoriescarouselscroll = useRef(null);
-  const pharmaciesscroll = useRef(null);
+  const restaurantsscroll = useRef(null);
 
-   // Use custom hooks to get data
-   const iconscategories = useIconsCategories();
-   const pharmaciesstorescards1 = usePharmaciesStoresCards1();
-   const pharmacies = usePharmacies();
-
+ // Use custom hooks to get data
+ const iconscategories = useIconsCategories();
+ const restaurantsstorescards1 = useRestaurantsStoresCards1();
+ const restaurants = useRestaurants();
 
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
@@ -96,13 +95,13 @@ function Pharmacies() {
     </div>
   ), [scrollLeft, scrollRight]);
 
-  const renderPharmacyCard = useCallback((pharmacy, index) => (
+  const renderRestaurantCard = useCallback((restaurant, index) => (
     <div key={index} className="w-48 shrink-0 p-2 sm:w-56 md:w-64 lg:w-72">
-      <a href={pharmacy.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+      <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
         <div className="relative aspect-video w-full overflow-hidden rounded-t-lg">
           <LazyLoadImage
-            src={pharmacy.imgSrc}
-            alt={pharmacy.name}
+            src={restaurant.imgSrc}
+            alt={restaurant.name}
             width="100%"
             height="100%"
             className="size-full object-fill"
@@ -110,12 +109,12 @@ function Pharmacies() {
           />
         </div>
         <div className="p-3 sm:p-4">
-          <p className="w-full truncate text-center text-sm font-bold sm:text-base">{pharmacy.name}</p>
+          <p className="w-full truncate text-center text-sm font-bold sm:text-base">{restaurant.name}</p>
         </div>
       </a>
     </div>
   ), []);
-
+  
   const renderStoreCard = useCallback((category, index) => (
     <div
       key={index}
@@ -171,8 +170,8 @@ function Pharmacies() {
           >
             <div className="relative z-10 mb-0 flex w-full items-center justify-center">
               <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
-                <div role="tablist" className="flex gap-2 space-x-2">
-                  <a
+               <div role="tablist" className="flex gap-2 space-x-2">
+                <a
                   role="tab"
                   aria-selected="false"
                   className="flex items-center gap-2 space-x-2 rounded-full bg-white px-4 py-2 shadow-md transition duration-150 hover:bg-orange-300"
@@ -199,7 +198,7 @@ function Pharmacies() {
                 <a
                   role="tab"
                   aria-selected="false"
-                  className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition-all duration-150 hover:bg-orange-300"
+                  className="flex items-center gap-2 rounded-full bg-orange-300 px-4 py-2 shadow-md transition-all duration-150"
                   href="/LP/Khomas/Towns/Restaurants"
                 >
                   <svg
@@ -217,7 +216,7 @@ function Pharmacies() {
                 <a
                   role="tab"
                   aria-selected="false"
-                  className="flex items-center gap-2 space-x-2 rounded-full bg-orange-300 px-4 py-2 shadow-md transition duration-150"
+                  className="flex items-center gap-2 space-x-2 rounded-full bg-white px-4 py-2 shadow-md transition duration-150 hover:bg-orange-300"
                   href="/LP/Khomas/Towns/Pharmacies"
                 >
                   <svg
@@ -259,37 +258,37 @@ function Pharmacies() {
           </div>
         ))}
 
-        {/* Pharmacies Near Me Section */}
+        {/* Restaurants Near Me Section */}
         <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
           <div
             className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
             style={{ width: "50%", maxWidth: "1000px" }}
           >
             <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
-              Pharmacies Near Me
+              Restaurants Near Me
             </h2>
           </div>
         </section>
 
-        {/* Pharmacies Carousel */}
-        {renderCarousel(pharmacies, pharmaciesscroll, renderPharmacyCard)}
+        {/* Restaurants Carousel */}
+        {renderCarousel(restaurants, restaurantsscroll, renderRestaurantCard)}
 
-        {/* All Pharmacies Near Me Section */}
+        {/* All Restaurants Near Me Section */}
         <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
           <div
             className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
             style={{ width: "60%", maxWidth: "1000px" }}
           >
             <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
-              All Pharmacies Near Me
+              All Restaurants Near Me
             </h2>
           </div>
         </section>
 
-        {/* Pharmacy Cards Container */}
+        {/* Restaurant Cards Container */}
         <div className="container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
           <div className="-mx-2 flex flex-wrap">
-            {pharmaciesstorescards1.map((category, index) => renderStoreCard(category, index))}
+            {restaurantsstorescards1.map((category, index) => renderStoreCard(category, index))}
           </div>
         </div>
       </main>
@@ -299,8 +298,8 @@ function Pharmacies() {
   );
 }
 
-Pharmacies.propTypes = {
+Restaurants.propTypes = {
   // Add prop types here if needed
 };
 
-export default Pharmacies;
+export default Restaurants;
