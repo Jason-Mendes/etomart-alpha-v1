@@ -8,7 +8,7 @@ import mapboxgl from "mapbox-gl";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { toast } from "react-toastify";
 import { useCards, useRestaurantCards, useRestaurants } from "./cardsDataJoesBeerhouse";
-import KhomasOPNavBar from "../../../../../../../01_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import KhomasOPNavBar from "../../../../../../02_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Lazy-load the Footer component for better performance

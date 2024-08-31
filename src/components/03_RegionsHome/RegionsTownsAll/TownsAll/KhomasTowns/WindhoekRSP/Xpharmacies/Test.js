@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { CgMenuRound, CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import CartIcon from "../../../../../../CartIcon";
-import HomeIcon from "../../../../../../HomeIcon";
-import LocationButton from "../../../../../../LocationButton";
-import LocationModal from "../../../../../../LocationModal";
-import UserProfileIcon from "../../../../../../UserProfileIcon";
+import CartIcon from "../../../../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/CartIcon";
+import HomeIcon from "../../../../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/HomeIcon";
+import LocationButton from "../../../../LocationButton";
+import LocationModal from "../../../../LocationModal";
+import UserProfileIcon from "../../../../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/UserProfileIcon";
 
 const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   const [showLocationModal, setShowLocationModal] = useState(false);

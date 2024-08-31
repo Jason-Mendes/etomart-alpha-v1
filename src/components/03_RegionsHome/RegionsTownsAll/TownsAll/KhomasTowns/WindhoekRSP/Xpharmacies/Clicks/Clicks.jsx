@@ -13,7 +13,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 // Lazy load components for better performance
 // These components will only be loaded when they are needed, improving initial load time
 const Footer = lazy(() => import("../../../../../../../04_Footer/Footer"));
-const KhomasOPNavBar = lazy(() => import("../../../../../../../01_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar"));
+const KhomasOPNavBar = lazy(() => import("../../../../../../02_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar"));
 
 const VISIBLE_CATEGORIES_COUNT = 8;
 

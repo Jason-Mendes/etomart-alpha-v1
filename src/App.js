@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import CartIcon from './components/CartIcon';
 
 // import KhomasLandingPage from './components/Regions/khomasLandingPage';
-import LandingPage from "./components/03_RegionsHome/LandingPage";
-import LandingPageTest from "./components/03_RegionsHome/LandingPageTest";
+import LandingPage from "./components/00_Main_Etomart_All/LandingPage";
+import LandingPageTest from "./components/00_Main_Etomart_All/LandingPageTest";
 import RegionHome from "./components/03_RegionsHome/RegionsTownsAll/RegionsTownsAll";
 import ErongoTowns from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/ErongoTowns/ErongoTowns";
 import KhomasTowns from "./components/03_RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/Windhoek";

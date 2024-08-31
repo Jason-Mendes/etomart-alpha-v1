@@ -2,11 +2,11 @@ import React, { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import { Search, X, Menu } from 'lucide-react';
 import { Link } from "react-router-dom";
 import { useStoresCards, useRestaurantsCards, useProductsCards } from "./KhomasDataOPNavBarSearch";
-import CartIcon from "../../CartIcon";
-import HomeIcon from "../../HomeIcon";
-import LocationButton from "../../LocationButton";
-import LocationModal from "../../LocationModal";
-import UserProfileIcon from "../../UserProfileIcon";
+import CartIcon from "../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/CartIcon";
+import HomeIcon from "../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/HomeIcon";
+import LocationButton from "../../RegionsTownsAll/LocationButton";
+import LocationModal from "../../RegionsTownsAll/LocationModal";
+import UserProfileIcon from "../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/UserProfileIcon";
 import PropTypes from 'prop-types';
 
 /**
@@ -239,7 +239,9 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
             <h1 className="mr-2 whitespace-nowrap pt-1 font-shrikhand text-xl sm:text-2xl md:text-3xl text-[#ee9613]">
               <Link to="/LP">Etomart</Link>
             </h1>
-  
+            <div className="flex items-center space-x-4">
+              <LocationButton onClick={handleLocationClick} />
+            </div>
             <div className="flex-grow mx-4">
               <div className="relative">
                 <input
@@ -277,29 +279,28 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
                 )}
               </div>
             </div>
-  
+
             {state.isMobile ? (
-  <button 
-    className="p-2 "
-    onClick={toggleNav}
-    aria-label="Toggle navigation menu"
-  >
-    {state.nav ? (
-      <X size={32} className="text-[#ee9613]" strokeWidth={1} />
-    ) : (
-      <div className=" relative w-8 h-8 flex items-center justify-center">
-        <Menu size={18} className="text-[#ee9613]  z-10" />
-        <div className="absolute inset-0 border-2 border-[#ee9613] rounded-full"></div>
-      </div>
-    )}
-  </button>
-) : (
+              <button
+                className="p-2 "
+                onClick={toggleNav}
+                aria-label="Toggle navigation menu"
+              >
+                {state.nav ? (
+                  <X size={32} className="text-[#ee9613]" strokeWidth={1} />
+                ) : (
+                  <div className=" relative w-8 h-8 flex items-center justify-center">
+                    <Menu size={18} className="text-[#ee9613]  z-10" />
+                    <div className="absolute inset-0 border-2 border-[#ee9613] rounded-full"></div>
+                  </div>
+                )}
+              </button>
+            ) : (
               <>
                 <div className="flex items-center space-x-4">
                   <HomeIcon />
                   <CartIcon />
                   <UserProfileIcon />
-                  <LocationButton onClick={handleLocationClick} />
                 </div>
               </>
             )}
@@ -309,7 +310,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         {state.isExpanded && (
           <>
             <div className="relative z-40 bg-white shadow-md">
-            <div className="mx-auto max-h-[calc(100vh-5rem)] overflow-y-auto p-2 sm:p-4">
+              <div className="mx-auto max-h-[calc(100vh-5rem)] overflow-y-auto p-2 sm:p-4">
                 <div className="mb-4 sm:mb-8">
                   <div className="mb-4 flex items-center justify-between">
                     <h2 className="text-lg sm:text-xl font-bold">Stores, Restaurants and Pharmacies</h2>
@@ -351,7 +352,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
             closeModal={closeModals}
           />
         )}
-  
+
         {state.nav && (
           <div
             ref={dropdownRef}

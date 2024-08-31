@@ -1,20 +1,16 @@
 import React, { useState, useCallback } from "react";
-import XClearButton from "./02_ComponentsCalled/XClearButton";
+import XClearButton from "../../../02_ComponentsCalled/XClearButton";
 
-const SignupModal = ({
+const LoginModal = ({
   showModal,
   closeModal,
-  openLoginModal,
+  openSignupModal,
   openForgotPasswordModal,
-  openAuthenticatedSignupModal,
+  openAuthenticatedLoginModal,
 }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
     email: "",
-    phoneNumber: "",
     password: "",
-    confirmPassword: "",
     rememberMe: false,
   });
 
@@ -33,10 +29,10 @@ const SignupModal = ({
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      openAuthenticatedSignupModal();
-      // Add your signup logic here
+      openAuthenticatedLoginModal();
+      // Add your login logic here
     },
-    [openAuthenticatedSignupModal]
+    [openAuthenticatedLoginModal]
   );
 
   const handleModalTransition = useCallback(
@@ -91,45 +87,62 @@ const SignupModal = ({
             className="mb-4 font-Agbalumo text-3xl leading-6 text-black"
             id="modal-title"
           >
-            Sign Up
+            Login / Sign Up
           </h3>
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Form fields remain the same */}
-            {["name", "surname", "email", "phoneNumber", "password", "confirmPassword"].map((field) => (
-              <div key={field}>
-                <label
-                  htmlFor={field}
-                  className="block text-sm font-medium capitalize text-black"
-                >
-                  {field === "confirmPassword" ? "Confirm Password" : field}
-                </label>
-                <div className="relative mt-1 rounded-md shadow-sm">
-                  <input
-                    type={
-                      field.includes("password")
-                        ? "password"
-                        : field === "email"
-                        ? "email"
-                        : "text"
-                    }
-                    name={field}
-                    id={field}
-                    className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    value={formData[field]}
-                    onChange={handleInputChange}
-                    required
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-black"
+              >
+                Email
+              </label>
+              <div className="relative mt-1 rounded-md shadow-sm">
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+                {formData.email && (
+                  <XClearButton
+                    onClick={() => clearInput("email")}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
                   />
-                  {formData[field] && (
-                    <XClearButton
-                      onClick={() => clearInput(field)}
-                      className="absolute inset-y-0 right-0 flex items-center pr-3"
-                    />
-                  )}
-                </div>
+                )}
               </div>
-            ))}
+            </div>
 
-            {/* Remember me and Forgot password section */}
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-black"
+              >
+                Password
+              </label>
+              <div className="relative mt-1 rounded-md shadow-sm">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+                {formData.password && (
+                  <XClearButton
+                    onClick={() => clearInput("password")}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  />
+                )}
+              </div>
+            </div>
+
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
@@ -144,7 +157,7 @@ const SignupModal = ({
                   htmlFor="remember-me"
                   className="ml-2 block text-sm text-black"
                 >
-                  Remember for 30 days
+                  Remember me
                 </label>
               </div>
 
@@ -152,25 +165,23 @@ const SignupModal = ({
                 <button
                   type="button"
                   onClick={() => handleModalTransition(openForgotPasswordModal)}
-                  className="font-medium text-white transition-colors duration-300 hover:text-black"
+                  className="font-medium text-white hover:text-black"
                 >
-                  Forgot password?
+                  Forgot your password?
                 </button>
               </div>
             </div>
 
-            {/* Sign Up button */}
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
-                Sign Up
+                Sign in
               </button>
             </div>
           </form>
 
-          {/* Social login section */}
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -195,7 +206,7 @@ const SignupModal = ({
                     className="size-5"
                   />
                   <span className="sr-only md:not-sr-only md:inline-block md:px-2">
-                    Sign up with Google
+                    Sign in with Google
                   </span>
                 </button>
               </div>
@@ -211,23 +222,21 @@ const SignupModal = ({
                     className="size-5"
                   />
                   <span className="sr-only md:not-sr-only md:inline-block md:px-2">
-                    Sign up with Apple
+                    Sign in with Apple
                   </span>
                 </button>
               </div>
             </div>
           </div>
         </div>
-        
-        {/* Login link */}
         <div className="bg-[#ee9613] px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
           <p className="mt-2 text-center text-sm text-black">
-            Already have an account?{" "}
+            Don't have an account yet?{" "}
             <button
-              onClick={() => handleModalTransition(openLoginModal)}
+              onClick={() => handleModalTransition(openSignupModal)}
               className="font-medium text-white transition-colors duration-300 hover:text-black"
             >
-              Log in
+              Sign up for free
             </button>
           </p>
         </div>
@@ -236,4 +245,4 @@ const SignupModal = ({
   );
 };
 
-export default SignupModal;
+export default LoginModal;

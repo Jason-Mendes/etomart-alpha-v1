@@ -9,8 +9,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
 import XClearButton from "../02_ComponentsCalled/XClearButton";
 import Footer from "../04_Footer/Footer";
-import LPNavBar from "../LPNavBar";
-import RegionsBanner from "../RegionsBanner";
+import LPNavBar from "./01_LPNavBarRegions/KhomasLPNavBar/LPNavBar";
+import RegionsBanner from "../03_RegionsHome/RegionsBanner";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 /**

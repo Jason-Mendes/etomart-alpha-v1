@@ -4,7 +4,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import PropTypes from 'prop-types';
 import { useIconsCategories, useCategoriesCards, useStoresCards1, useStoresCards2, useSupermarkets, useRestaurants, usePharmacies, useCards, useAboutUs } from "./cardsDataKhomasTowns/cardsDataKhomasTowns";
 import Footer from "../../../../04_Footer/Footer";
-import KhomasOPNavBar from "../../../../01_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
+import KhomasOPNavBar from "../../../02_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 
 
 // Performance benchmarking
