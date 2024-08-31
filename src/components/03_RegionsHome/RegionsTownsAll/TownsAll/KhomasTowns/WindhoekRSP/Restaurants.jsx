@@ -167,7 +167,7 @@ function Restaurants() {
       </a>
     </div>
   ), []);
-  
+
   /**
    * Render a store card
    * @param {Object} category - The store category data
@@ -226,8 +226,8 @@ function Restaurants() {
         <div className="relative z-10 mb-0 flex w-full items-center justify-center">
           <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
             <div role="tablist" className="flex flex-wrap justify-center gap-2 space-x-2">
-              
-              <a  role="tab"
+
+              <a role="tab"
                 aria-selected="false"
                 className="mb-2 flex items-center gap-2 space-x-2 rounded-full bg-white px-3 py-2 text-sm shadow-md transition duration-150 hover:bg-orange-300 sm:mb-0 sm:px-4 sm:text-base"
                 href="/LP/Khomas/Towns/Stores"
@@ -239,19 +239,19 @@ function Restaurants() {
                 </svg>
                 <span className="text-black">Stores</span>
               </a>
-              
-              <a  role="tab"
+
+              <a role="tab"
                 aria-selected="true"
                 className="mb-2 flex items-center gap-2 space-x-2 rounded-full bg-orange-300 px-3 py-2 text-sm shadow-md transition duration-150 sm:mb-0 sm:px-4 sm:text-base"
                 href="/LP/Khomas/Towns/Restaurants"
               >
-              <svg viewBox="0 0 24 24" className="size-4 fill-current text-black sm:size-6">
+                <svg viewBox="0 0 24 24" className="size-4 fill-current text-black sm:size-6">
                   <path fillRule="evenodd" clipRule="evenodd" d="M10 1a1 1 0 112 0v5a4.009 4.009 0 01-2.667 3.772.5.5 0 00-.333.471V23a1 1 0 11-2 0V10.243a.5.5 0 00-.333-.471A4.009 4.009 0 014 6V1a1 1 0 112 0v5c0 .522.205 1.025.571 1.398A.251.251 0 007 7.223V1a1 1 0 112 0v6.225a.251.251 0 00.429.175c.367-.374.572-.877.571-1.4V1zM20.5.75a.75.75 0 00-.75-.75C17.418 0 15.064 6.055 15 13.243v.021c.004.686.563 1.24 1.25 1.236H18a.5.5 0 01.5.5v8a1 1 0 102 0V.75z" />
                 </svg>
                 <span className="text-black">Restaurants</span>
               </a>
-              
-              <a  role="tab"
+
+              <a role="tab"
                 aria-selected="false"
                 className="mb-2 flex items-center gap-2 space-x-2 rounded-full bg-white px-3 py-2 text-sm shadow-md transition duration-150 hover:bg-orange-300 sm:mb-0 sm:px-4 sm:text-base"
                 href="/LP/Khomas/Towns/Pharmacies"
@@ -333,13 +333,13 @@ function Restaurants() {
         </section>
 
         {/* Restaurant Cards Container */}
-<div className="container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
-  <div className="-mx-2 flex flex-wrap">
-    {restaurantsStoresCards.map((category, index) => renderStoreCard(category, index))}
-  </div>
-</div>
+        <div className="container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+          <div className="-mx-2 flex flex-wrap">
+            {restaurantsStoresCards.map((category, index) => renderStoreCard(category, index))}
+          </div>
+        </div>
       </main>
-      
+
       <Footer />
     </div>
   );
