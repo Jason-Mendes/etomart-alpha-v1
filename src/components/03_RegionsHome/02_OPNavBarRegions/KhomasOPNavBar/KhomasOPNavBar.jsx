@@ -9,7 +9,7 @@ import LocationModal from "../../RegionsTownsAll/LocationModal";
 import UserProfileIcon from "../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/UserProfileIcon";
 import PropTypes from 'prop-types';
 
-/**
+/** 
  * KhomasOPNavBar component
  * @param {Object} props - Component props
  * @param {boolean} props.disableInternalScroll - Flag to disable internal scrolling
