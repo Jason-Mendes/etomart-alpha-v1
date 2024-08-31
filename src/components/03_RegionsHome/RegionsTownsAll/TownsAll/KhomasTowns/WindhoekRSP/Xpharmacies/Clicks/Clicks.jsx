@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import React, { useState, useRef, useEffect, useCallback, useMemo, lazy, Suspense } from "react";
 import PropTypes from 'prop-types';
 import axios from "axios";
@@ -10,6 +11,7 @@ import { useNavcategories, useCards, usePharmacycards, usePharmacies } from "./c
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Lazy load components for better performance
+// These components will only be loaded when they are needed, improving initial load time
 const Footer = lazy(() => import("../../../../../../../04_Footer/Footer"));
 const KhomasOPNavBar = lazy(() => import("../../../../../../../01_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar"));
 
@@ -21,8 +23,10 @@ const VISIBLE_CATEGORIES_COUNT = 8;
  */
 const usePerformanceMeasure = (name) => {
   useEffect(() => {
+    // Mark the end of the component's lifecycle and measure the duration
     performance.mark(`${name}-start`);
     return () => {
+      // Mark the end of the component's lifecycle and measure the duration
       performance.mark(`${name}-end`);
       performance.measure(name, `${name}-start`, `${name}-end`);
       console.log(performance.getEntriesByName(name));
@@ -35,50 +39,55 @@ const usePerformanceMeasure = (name) => {
  * @returns {JSX.Element} The Clicks component
  */
 function Clicks() {
+   // Use the performance measure hook to track this component's render time
   usePerformanceMeasure('Clicks');
 
   // Combined state using a single useState call
+  // This object contains all the state variables for the component
   const [state, setState] = useState({
-    isDelivery: false,
-    searchTerm: "",
-    currentIndex: 0,
-    isPaused: false,
-    isDropdownOpen: false,
-    map: null,
-    isFavorite: false,
-    isExpanded: false,
-    visibleCategories: [],
-    hiddenCategories: [],
-    isMapLoaded: false,
-    categorySearchTerm: "",
-    productSearchTerm: "",
-    selectedCategories: [],
-    isMoreDropdownOpen: false,
-    isCategoryFocused: false,
-    isProductFocused: false,
-    sortCriteria: "recommended",
-    categorySearchResults: [],
-    productSearchResults: [],
+    isDelivery: false, // Toggle between delivery and pickup
+    searchTerm: "", // General search term
+    currentIndex: 0, // Current index for the carousel
+    isPaused: false, // Whether the carousel is paused
+    isDropdownOpen: false, // Whether the dropdown menu is open
+    map: null, // Mapbox map instance
+    isFavorite: false, // Whether the store is favorited
+    isExpanded: false, // Whether certain sections are expanded
+    visibleCategories: [], // Categories currently visible
+    hiddenCategories: [], // Categories hidden in the "More" dropdown
+    isMapLoaded: false, // Whether the map has finished loading
+    categorySearchTerm: "", // Search term for categories
+    productSearchTerm: "", // Search term for products
+    selectedCategories: [], // Currently selected categories
+    isMoreDropdownOpen: false, // Whether the "More" categories dropdown is open
+    isCategoryFocused: false, // Whether the category search input is focused
+    isProductFocused: false, // Whether the product search input is focused
+    sortCriteria: "recommended", // Current sort criteria for products
+    categorySearchResults: [], // Search results for categories
+    productSearchResults: [], // Search results for products
   });
 
+  // Additional state for Mapbox and UI controls
   const [mapboxLoaded, setMapboxLoaded] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
-  // Memoized data
+  // Custom hooks to get Memoized data
   const navcategories = useNavcategories();
   const cards = useCards();
   const pharmacycards = usePharmacycards();
   const pharmacies = usePharmacies();
 
+  // Memoize the extended cards array to prevent unnecessary re-renders
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
+  // Memoize the categories array
   const categories = useMemo(() => {
     const uniqueCategories = new Set(pharmacycards.map(card => card.type));
     return Array.from(uniqueCategories);
   }, [pharmacycards]);
 
-  // Refs
+   // Refs for various DOM elements
   const containerRef = useRef(null);
   const mapContainerRef = useRef(null);
   const pharmaciesscroll = useRef(null);
@@ -87,7 +96,7 @@ function Clicks() {
   const moreButtonRef = useRef(null);
   const dropdownRef = useRef(null);
 
-  // Callbacks
+   // Callback functions for carousel navigation
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
@@ -237,7 +246,7 @@ function Clicks() {
     }
   }, [fetchAndDisplayRoute]);
 
-  // Effects
+   // Effect hooks for various functionalities
   useEffect(() => {
     let interval;
     if (!state.isPaused) {
@@ -518,7 +527,7 @@ useEffect(() => {
   return () => clearTimeout(timeout);
 }, [state.categorySearchTerm]);
 
-// Render helpers
+// Render helpers for carousel and pharmacy cards
 const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
   <div className="relative mt-4 sm:mt-6 md:mt-8">
     <div className="container mx-auto px-2 sm:px-4 lg:px-6">

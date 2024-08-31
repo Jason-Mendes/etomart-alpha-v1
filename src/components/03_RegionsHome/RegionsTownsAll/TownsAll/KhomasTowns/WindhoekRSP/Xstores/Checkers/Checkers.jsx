@@ -13,6 +13,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 const Footer = lazy(() => import("../../../../../../../04_Footer/Footer"));
 const KhomasOPNavBar = lazy(() => import("../../../../../../../01_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar"));
 
+// Constant for visible categories count
 const VISIBLE_CATEGORIES_COUNT = 8;
 
 /**
@@ -22,7 +23,9 @@ const VISIBLE_CATEGORIES_COUNT = 8;
 const usePerformanceMeasure = (name) => {
   useEffect(() => {
     performance.mark(`${name}-start`);
+    // Start the performance measurement when the component mounts
     return () => {
+      // End the performance measurement when the component unmounts
       performance.mark(`${name}-end`);
       performance.measure(name, `${name}-start`, `${name}-end`);
       console.log(performance.getEntriesByName(name));
@@ -32,9 +35,11 @@ const usePerformanceMeasure = (name) => {
 
 /**
  * Checkers component
+ * This is the main component for the Checkers supermarket page
  * @returns {JSX.Element} The Checkers component
  */
 function Checkers() {
+  // Use the performance measure hook
   usePerformanceMeasure('Checkers');
 
   // Combined state using a single useState call for better performance
@@ -61,24 +66,27 @@ function Checkers() {
     productSearchResults: [],
   });
 
+  // Additional state hooks
   const [mapboxLoaded, setMapboxLoaded] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
-  // Memoized data
+  // Memoized data from custom hooks
   const navcategories = useNavcategories();
   const cards = useCards();
   const storecards = useStoresCards();
   const supermarkets = useSupermarkets();
-
+  
+  // Memoized extended cards array
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
 
+  // Memoized categories array
   const categories = useMemo(() => {
     const uniqueCategories = new Set(storecards.map(card => card.type));
     return Array.from(uniqueCategories);
   }, [storecards]);
 
-  // Refs
+  // Refs for various DOM elements
   const containerRef = useRef(null);
   const mapContainerRef = useRef(null);
   const supermarketsScroll = useRef(null);
@@ -87,7 +95,7 @@ function Checkers() {
   const moreButtonRef = useRef(null);
   const dropdownRef = useRef(null);
 
-  // Callbacks
+  // Callbacks functions for various actions
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
@@ -240,6 +248,7 @@ function Checkers() {
     }
   }, [fetchAndDisplayRoute]);
 
+  // Effect hooks for various functionalities
   useEffect(() => {
     let interval;
     if (!state.isPaused) {
@@ -312,14 +321,7 @@ function Checkers() {
     }
   }, [mapboxLoaded, initializeMap]);
 
-  const handleProductsFocus = useCallback((field) => () => {
-    setState(prevState => ({ ...prevState, [field]: true }));
-  }, []);
-
-  const handleCategoriesFocus = useCallback((field) => () => {
-    setState(prevState => ({ ...prevState, [field]: true }));
-  }, []);
-
+  // More callback functions for user interactions
   // Function to handle smooth scrolling
   const smoothScroll = useCallback((target, duration = 1000) => {
     const targetElement = document.getElementById(target);
@@ -400,6 +402,8 @@ function Checkers() {
   // Memoized filtered and sorted products (continued)
 }, [storecards, state.productSearchResults, state.selectedCategories, state.isDelivery, state.sortCriteria]);
 
+
+// Callback functions for search and selection
 const handleSearch = useCallback((searchType) => (event) => {
   const searchTerm = event.target.value;
   setState(prevState => ({
@@ -430,18 +434,6 @@ const handleCategorySelect = useCallback((category) => {
       categorySearchResults: []
     };
   });
-}, []);
-
-const handleProductSelect = useCallback((product) => {
-  // Navigate to the product page
-  window.location.href = product.href;
-
-  // Clear the search term and results
-  setState(prevState => ({
-    ...prevState,
-    productSearchTerm: '',
-    productSearchResults: []
-  }));
 }, []);
 
 const clearSelectedCategories = useCallback(() => {
@@ -510,6 +502,8 @@ useEffect(() => {
   };
 }, [state.isMoreDropdownOpen]);
 
+
+// Effects for clearing Products search results
 useEffect(() => {
   let timeout;
 
@@ -525,6 +519,8 @@ useEffect(() => {
   return () => clearTimeout(timeout);
 }, [state.productSearchTerm]);
 
+
+// Effects for clearing Categroy search results
 useEffect(() => {
   let timeout;
 
