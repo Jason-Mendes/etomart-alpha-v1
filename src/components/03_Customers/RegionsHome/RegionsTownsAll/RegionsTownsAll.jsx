@@ -7,9 +7,9 @@ import React, {
 } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate, useLocation } from "react-router-dom";
-import XClearButton from "../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/ComponentsCalled/XClearButton";
-import Footer from "../../04_Footer/Footer";
-import LPNavBar from "../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/LPNavBar";
+import XClearButton from "../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/ComponentsCalled/XClearButton";
+import Footer from "../../../04_Footer/Footer";
+import LPNavBar from "../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/LPNavBar";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 function RegionHome() {

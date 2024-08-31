@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import XClearButton from "./01_LPNavBarRegions/KhomasLPNavBar/ComponentsCalled/XClearButton";
 import Footer from "../04_Footer/Footer";
 import LPNavBar from "./01_LPNavBarRegions/KhomasLPNavBar/LPNavBar";
-import RegionsBanner from "../03_RegionsHome/RegionsBanner";
+import RegionsBanner from "../03_Customers/RegionsHome/RegionsBanner";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 /**

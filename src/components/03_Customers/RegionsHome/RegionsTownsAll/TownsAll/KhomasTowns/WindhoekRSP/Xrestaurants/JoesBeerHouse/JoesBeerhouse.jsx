@@ -12,7 +12,7 @@ import KhomasOPNavBar from "../../../../../../02_OPNavBarRegions/KhomasOPNavBar/
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Lazy-load the Footer component for better performance
-const Footer = lazy(() => import("../../../../../../../04_Footer/Footer"));
+const Footer = lazy(() => import("../../../../../../../../04_Footer/Footer"));
 
 // Custom hook for measuring component performance
 const usePerformanceMeasure = (name) => {

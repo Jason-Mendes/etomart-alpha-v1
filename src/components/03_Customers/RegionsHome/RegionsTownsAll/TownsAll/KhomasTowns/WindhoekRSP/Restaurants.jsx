@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import PropTypes from 'prop-types';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useSupermarketsStoresCards1, useSupermarkets } from "./CardsDataWindhoekRSP/cardsDataStores";
-import Footer from "../../../../../04_Footer/Footer";
+import { useRestaurantsStoresCards1, useRestaurants } from "./CardsDataWindhoekRSP/cardsDataRestaurants";
+import Footer from "../../../../../../04_Footer/Footer";
 import KhomasOPNavBar from "../../../../02_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 import { useIconsCategories } from "../cardsDataKhomasTowns/cardsDataKhomasTowns";
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -23,11 +23,11 @@ const usePerformanceMeasure = (name) => {
 };
 
 /**
- * Stores component
- * @returns {JSX.Element} The Stores component
+ * Restaurants component
+ * @returns {JSX.Element} The Restaurants component
  */
-function Stores() {
-  usePerformanceMeasure('Stores');
+function Restaurants() {
+  usePerformanceMeasure('Restaurants');
 
   // State management
   const [state, setState] = useState({
@@ -38,12 +38,12 @@ function Stores() {
 
   // Refs for carousel scrolling
   const iconsCategoriesCarouselRef = useRef(null);
-  const supermarketsCarouselRef = useRef(null);
+  const restaurantsCarouselRef = useRef(null);
 
   // Use custom hooks to get data
   const iconCategories = useIconsCategories();
-  const supermarketsStoresCards = useSupermarketsStoresCards1();
-  const supermarkets = useSupermarkets();
+  const restaurantsStoresCards = useRestaurantsStoresCards1();
+  const restaurants = useRestaurants();
 
   /**
    * Scroll the carousel to the left
@@ -114,12 +114,12 @@ function Stores() {
    * @returns {JSX.Element} The rendered carousel
    */
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
-    <div className="relative mt-4 sm:mt-6 md:mt-8">
-      <div className="container mx-auto px-2 sm:px-4 lg:px-6">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-white to-transparent sm:w-8 md:w-12"></div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-white to-transparent sm:w-8 md:w-12"></div>
+    <div className="relative mt-8 sm:mt-12 md:mt-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-white to-transparent sm:w-12 md:w-16"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white to-transparent sm:w-12 md:w-16"></div>
         <button
-          className="absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-[25px] bg-[#ee9613] p-1 sm:rounded-r-[50px]"
+          className="absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-[50px] bg-[#ee9613] p-1 sm:rounded-r-[100px] sm:p-2"
           onClick={() => scrollLeft(scrollRef)}
           aria-label="Scroll left"
         >
@@ -132,7 +132,7 @@ function Stores() {
           {items.map((item, index) => itemRenderer(item, index))}
         </div>
         <button
-          className="absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-[25px] bg-[#ee9613] p-1 sm:rounded-l-[50px]"
+          className="absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-[50px] bg-[#ee9613] p-1 sm:rounded-l-[100px] sm:p-2"
           onClick={() => scrollRight(scrollRef)}
           aria-label="Scroll right"
         >
@@ -143,26 +143,26 @@ function Stores() {
   ), [scrollLeft, scrollRight]);
 
   /**
-   * Render a supermarket card
-   * @param {Object} supermarket - The supermarket data
-   * @param {number} index - The index of the supermarket
-   * @returns {JSX.Element} The rendered supermarket card
+   * Render a restaurant card
+   * @param {Object} restaurant - The restaurant data
+   * @param {number} index - The index of the restaurant
+   * @returns {JSX.Element} The rendered restaurant card
    */
-  const renderSupermarketCard = useCallback((supermarket, index) => (
-    <div key={index} className="w-48 shrink-0 p-6 sm:w-56 md:w-64 lg:w-72">
-      <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-        <div className="relative aspect-square w-full overflow-hidden rounded-t-lg">
+  const renderRestaurantCard = useCallback((restaurant, index) => (
+    <div key={index} className="w-48 shrink-0 p-2 sm:w-56 md:w-64 lg:w-72">
+      <a href={restaurant.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+        <div className="relative aspect-video w-full overflow-hidden rounded-t-lg">
           <LazyLoadImage
-            src={supermarket.imgSrc}
-            alt={supermarket.name}
+            src={restaurant.imgSrc}
+            alt={restaurant.name}
             width="100%"
             height="100%"
-            className="size-full object-contain"
+            className="size-full object-cover"
             effect="opacity"
           />
         </div>
         <div className="p-3 sm:p-4">
-          <p className="w-full truncate text-center text-sm font-bold sm:text-base">{supermarket.name}</p>
+          <p className="w-full truncate text-center text-sm font-bold sm:text-base">{restaurant.name}</p>
         </div>
       </a>
     </div>
@@ -177,7 +177,7 @@ function Stores() {
   const renderStoreCard = useCallback((category, index) => (
     <div
       key={index}
-      className="xs:w-full flex w-full items-center justify-center p-2 sm:w-full md:w-1/3 lg:w-1/4"
+      className="xs:w-full flex w-full items-center justify-center p-2 sm:w-full md:w-1/2 lg:w-1/4"
     >
       <a href={category.href}
         className="xs:w-72 block w-64 rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl sm:w-80 md:w-full lg:w-full"
@@ -191,6 +191,11 @@ function Stores() {
             className="size-full object-cover"
             effect="opacity"
           />
+          {category.storetype && (
+            <div className="absolute left-0 top-0 mr-2 mt-2 rounded-r-full bg-[#ee9613] px-2 py-1 text-xs text-black">
+              {category.storetype}
+            </div>
+          )}
           {category.isEtomartStore && (
             <div className="absolute bottom-2 left-2 rounded bg-slate-100 px-2 py-1 text-xs text-black">
               <span className="text-black">Etomart</span>{" "}
@@ -203,17 +208,9 @@ function Stores() {
           <div className="mt-1 flex items-start text-xs sm:text-sm">
             <span className="font-bold text-[#ee9613]">{category.priceRange}</span>
             <span className="mx-1">•</span>
-            <span>{category.storetype}</span>
+            <span>{category.cuisine}</span>
           </div>
           <div className="mt-1 text-left text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
-          <div className="mt-1 text-left text-xs">
-            <span className="text-black">Etomart </span>
-            {category.deliveryTime ? (
-              <span className="font-bold text-[#ee9613]">Delivery Available</span>
-            ) : (
-              <span className="font-bold text-[#ee1313]">Delivery Not Available</span>
-            )}
-          </div>
         </div>
       </a>
     </div>
@@ -221,7 +218,6 @@ function Stores() {
 
   // Memoize the navigation tabs to prevent unnecessary re-renders
   const navigationTabs = useMemo(() => (
-    // Navigation Tabs
     <nav className="container mx-auto mt-4 px-4 sm:px-6 lg:px-8">
       <div
         className="border-white-A700_19 relative z-10 flex justify-center rounded-b-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-b-[100px] sm:p-6 md:rounded-b-[150px] md:p-10"
@@ -232,8 +228,8 @@ function Stores() {
             <div role="tablist" className="flex flex-wrap justify-center gap-2 space-x-2">
 
               <a role="tab"
-                aria-selected="true"
-                className="mb-2 flex items-center gap-2 space-x-2 rounded-full bg-orange-300 px-3 py-2 text-sm shadow-md transition duration-150 sm:mb-0 sm:px-4 sm:text-base"
+                aria-selected="false"
+                className="mb-2 flex items-center gap-2 space-x-2 rounded-full bg-white px-3 py-2 text-sm shadow-md transition duration-150 hover:bg-orange-300 sm:mb-0 sm:px-4 sm:text-base"
                 href="/LP/Khomas/Towns/Stores"
               >
                 <svg viewBox="0 0 24 24" className="size-4 fill-current text-black sm:size-6">
@@ -245,8 +241,8 @@ function Stores() {
               </a>
 
               <a role="tab"
-                aria-selected="false"
-                className="mb-2 flex items-center gap-2 space-x-2 rounded-full bg-white px-3 py-2 text-sm shadow-md transition duration-150 hover:bg-orange-300 sm:mb-0 sm:px-4 sm:text-base"
+                aria-selected="true"
+                className="mb-2 flex items-center gap-2 space-x-2 rounded-full bg-orange-300 px-3 py-2 text-sm shadow-md transition duration-150 sm:mb-0 sm:px-4 sm:text-base"
                 href="/LP/Khomas/Towns/Restaurants"
               >
                 <svg viewBox="0 0 24 24" className="size-4 fill-current text-black sm:size-6">
@@ -297,7 +293,7 @@ function Stores() {
                   <LazyLoadImage
                     src={category.imgSrc}
                     alt={category.name}
-                    className="size-full object-contain"
+                    className="h-full w-full object-cover"
                     effect="blur"
                   />
                 </div>
@@ -309,37 +305,37 @@ function Stores() {
           </div>
         ))}
 
-        {/* Supermarkets Near Me Section */}
+        {/* Restaurants Near Me Section */}
         <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
           <div
             className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
             style={{ width: "50%", maxWidth: "1000px" }}
           >
             <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
-              Supermarkets Near Me
+              Restaurants Near Me
             </h2>
           </div>
         </section>
 
-        {/* Supermarkets Carousel */}
-        {renderCarousel(supermarkets, supermarketsCarouselRef, renderSupermarketCard)}
+        {/* Restaurants Carousel */}
+        {renderCarousel(restaurants, restaurantsCarouselRef, renderRestaurantCard)}
 
-        {/* Supermarkets All Near Me Section */}
+        {/* All Restaurants Near Me Section */}
         <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
           <div
             className="border-white-A700 relative rounded-r-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-r-[100px] sm:p-6 md:rounded-r-[150px] md:p-10"
             style={{ width: "60%", maxWidth: "1000px" }}
           >
             <h2 className="text-left font-Agbalumo text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl">
-              Supermarkets All Near Me
+              All Restaurants Near Me
             </h2>
           </div>
         </section>
 
-        {/* Store Cards Container */}
+        {/* Restaurant Cards Container */}
         <div className="container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
           <div className="-mx-2 flex flex-wrap">
-            {supermarketsStoresCards.map((category, index) => renderStoreCard(category, index))}
+            {restaurantsStoresCards.map((category, index) => renderStoreCard(category, index))}
           </div>
         </div>
       </main>
@@ -349,8 +345,8 @@ function Stores() {
   );
 }
 
-Stores.propTypes = {
+Restaurants.propTypes = {
   // Add prop types here if needed
 };
 
-export default Stores;
+export default Restaurants;

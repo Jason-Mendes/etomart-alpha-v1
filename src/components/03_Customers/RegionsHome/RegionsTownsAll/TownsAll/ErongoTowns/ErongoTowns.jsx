@@ -2,10 +2,9 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import PropTypes from 'prop-types';
-import { useIconsCategories, useCategoriesCards, useStoresCards1, useStoresCards2, useSupermarkets, useRestaurants, usePharmacies, useCards, useAboutUs } from "./cardsDataKhomasTowns/cardsDataKhomasTowns";
-import Footer from "../../../../04_Footer/Footer";
+import { useIconsCategories, useCategoriesCards, useStoresCards1, useStoresCards2, useSupermarkets, useRestaurants, usePharmacies, useCards, useAboutUs } from "./cardsDataErongoTowns/cardsDataErongoTowns";
+import Footer from "../../../../../04_Footer/Footer";
 import KhomasOPNavBar from "../../../02_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
-
 
 // Performance benchmarking
 const usePerformanceMeasure = (name) => {
@@ -19,8 +18,8 @@ const usePerformanceMeasure = (name) => {
   }, [name]);
 };
 
-function KhomasTowns() {
-  usePerformanceMeasure('KhomasTowns');
+function ErongoTowns() {
+  usePerformanceMeasure('ErongoTowns');
 
   // Combined state
   const [state, setState] = useState({
@@ -618,8 +617,8 @@ function KhomasTowns() {
 );
 }
 
-KhomasTowns.propTypes = {
+ErongoTowns.propTypes = {
 // Add prop types here if needed
 };
 
-export default KhomasTowns;
+export default ErongoTowns;
