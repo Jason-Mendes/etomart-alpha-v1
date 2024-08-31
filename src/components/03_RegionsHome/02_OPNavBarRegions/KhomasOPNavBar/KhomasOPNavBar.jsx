@@ -84,6 +84,22 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+
+//Dropdown visibility
+  useEffect(() => {
+    const handleResize = () => {
+      const newIsMobile = window.innerWidth <= 1090;
+      setState(prevState => ({ 
+        ...prevState, 
+        isMobile: newIsMobile,
+        nav: newIsMobile ? prevState.nav : false // Close dropdown if screen becomes larger than 1090px
+      }));
+    };
+    handleResize(); // Call once to set initial state
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -97,13 +113,13 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     };
   }, []);
 
-  const handleSearchFocus = () => {
+  const handleSearchFocus = useCallback(() => {
     setState(prevState => ({ ...prevState, isSearchFocused: true, isExpanded: true }));
-  };
+  }, []);
 
-  const handleSearchBlur = () => {
+  const handleSearchBlur = useCallback(() => {
     setState(prevState => ({ ...prevState, isSearchFocused: false }));
-  };
+  }, []);
 
   useEffect(() => {
     setState(prevState => ({ ...prevState, searchResults: memoizedSearchResults }));
@@ -148,9 +164,9 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
   // Render functions
   const renderStoreCard = useCallback((store) => (
     <div className="h-40 w-full sm:h-48 sm:w-64 md:h-52 md:w-72 lg:h-56 lg:w-80 xl:h-60 xl:w-96 shrink-0 p-2" key={store.name}>
-      <a href={store.href} className="flex h-full flex-col rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+      <Link to={store.href} className="flex h-full flex-col rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
         <div className="relative h-3/5 w-full overflow-hidden rounded-t-lg">
-          <img src={store.imgSrc} alt={store.name} className="h-full w-full object-cover" />
+          <img src={store.imgSrc} alt={store.name} className="h-full w-full object-cover" loading="lazy" />
           <div data-testid="venue-storetype-label" className="absolute left-0 top-0 mr-2 mt-2 rounded-r-full bg-[#ee9613] p-2 text-xs text-black">{store.storetype}</div>
         </div>
         <div className="flex flex-col justify-between p-2 h-2/5">
@@ -162,14 +178,14 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
           </div>
           <div className="mt-1 text-left text-xs text-gray-500">Pickup: {store.pickupTime}</div>
         </div>
-      </a>
+      </Link>
     </div>
   ), []);
 
   const renderFoodCard = useCallback((food) => (
-    <a href={food.href} className="group relative flex h-32 sm:h-36 md:h-40 lg:h-44 xl:h-48 w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="food-card-link" key={food.name}>
+    <Link to={food.href} className="group relative flex h-32 sm:h-36 md:h-40 lg:h-44 xl:h-48 w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="food-card-link" key={food.name}>
       <div className="relative w-1/3 overflow-hidden">
-        <img src={food.imgSrc} alt={food.name} className="absolute left-0 top-0 h-full w-full object-cover" />
+        <img src={food.imgSrc} alt={food.name} className="absolute left-0 top-0 h-full w-full object-cover" loading="lazy" />
       </div>
       <div className="flex w-2/3 flex-col justify-between p-3">
         <div>
@@ -194,13 +210,13 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
       <div className="absolute right-2 top-2 flex h-6 w-8 items-center justify-center rounded bg-[#ee9613] text-lg text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
         +
       </div>
-    </a>
+    </Link>
   ), []);
 
   const renderPharmacyCard = useCallback((product) => (
-    <a href={product.href} className="group relative flex h-32 sm:h-36 md:h-40 lg:h-44 xl:h-48 w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="product-card-link" key={product.name}>
+    <Link to={product.href} className="group relative flex h-32 sm:h-36 md:h-40 lg:h-44 xl:h-48 w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="product-card-link" key={product.name}>
       <div className="relative w-1/3 overflow-hidden">
-        <img src={product.imgSrc} alt={product.name} className="absolute left-0 top-0 h-full w-full object-cover" />
+        <img src={product.imgSrc} alt={product.name} className="absolute left-0 top-0 h-full w-full object-cover" loading="lazy" />
       </div>
       <div className="flex w-2/3 flex-col justify-between p-3">
         <div>
@@ -225,7 +241,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
       <div className="absolute right-2 top-2 flex h-6 w-8 items-center justify-center rounded bg-[#ee9613] text-lg text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
         +
       </div>
-    </a>
+    </Link>
   ), []);
 
   return (
@@ -239,7 +255,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
             <h1 className="mr-2 whitespace-nowrap pt-1 font-shrikhand text-xl sm:text-2xl md:text-3xl text-[#ee9613]">
               <Link to="/LP">Etomart</Link>
             </h1>
-            <div className="flex items-center space-x-4">
+            <div className="hidden sm:flex items-center space-x-4">
               <LocationButton onClick={handleLocationClick} />
             </div>
             <div className="flex-grow mx-4">
@@ -282,27 +298,25 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
 
             {state.isMobile ? (
               <button
-                className="p-2 "
+                className="p-2"
                 onClick={toggleNav}
                 aria-label="Toggle navigation menu"
               >
                 {state.nav ? (
                   <X size={32} className="text-[#ee9613]" strokeWidth={1} />
                 ) : (
-                  <div className=" relative w-8 h-8 flex items-center justify-center">
-                    <Menu size={18} className="text-[#ee9613]  z-10" />
+                  <div className="relative w-8 h-8 flex items-center justify-center">
+                    <Menu size={18} className="text-[#ee9613] z-10" />
                     <div className="absolute inset-0 border-2 border-[#ee9613] rounded-full"></div>
                   </div>
                 )}
               </button>
             ) : (
-              <>
-                <div className="flex items-center space-x-4">
-                  <HomeIcon />
-                  <CartIcon />
-                  <UserProfileIcon />
-                </div>
-              </>
+              <div className="hidden sm:flex items-center space-x-4">
+                <HomeIcon />
+                <CartIcon />
+                <UserProfileIcon />
+              </div>
             )}
           </div>
         </nav>
@@ -353,7 +367,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
           />
         )}
 
-        {state.nav && (
+{state.nav && (
           <div
             ref={dropdownRef}
             className="absolute right-0 top-16 z-50 w-56 rounded-lg bg-[#fdfdfd] shadow-lg transition-opacity duration-200"
@@ -373,6 +387,9 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
                 </div>
                 <div className="mb-2 flex items-center justify-center">
                   <CartIcon />
+                </div>
+                <div className="sm:hidden flex items-center space-x-4">
+                  <LocationButton onClick={handleLocationClick} />
                 </div>
                 <div className="mb-2">
                   <button className="w-full rounded-md py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b]">
