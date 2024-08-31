@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate, useLocation } from "react-router-dom";
-import XClearButton from "../../02_componentsCalled/XClearButton";
+import XClearButton from "../../02_ComponentsCalled/XClearButton";
 import Footer from "../../04_Footer/Footer";
 import LPNavBar from "../../LPNavBar";
 import "react-lazy-load-image-component/src/effects/blur.css";
