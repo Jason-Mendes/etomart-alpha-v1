@@ -5,10 +5,12 @@ import { useSupermarketsStoresCards1, useSupermarkets } from "./CardsDataWindhoe
 import Footer from "../../../../../04_Footer/Footer";
 import KhomasOPNavBar from "../../../../02_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 import { useIconsCategories } from "../cardsDataKhomasTowns/cardsDataKhomasTowns";
-
-
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
+/**
+ * Custom hook for measuring component performance
+ * @param {string} name - The name of the component to measure
+ */
 const usePerformanceMeasure = (name) => {
   useEffect(() => {
     performance.mark(`${name}-start`);
@@ -20,34 +22,55 @@ const usePerformanceMeasure = (name) => {
   }, [name]);
 };
 
+/**
+ * Stores component
+ * @returns {JSX.Element} The Stores component
+ */
 function Stores() {
   usePerformanceMeasure('Stores');
 
+  // State management
   const [state, setState] = useState({
     isLargeScreen: false,
+    error: null,
+    loading: true,
   });
 
-  const iconscategoriescarouselscroll = useRef(null);
-  const supermarketsscroll = useRef(null);
+  // Refs for carousel scrolling
+  const iconsCategoriesCarouselRef = useRef(null);
+  const supermarketsCarouselRef = useRef(null);
 
   // Use custom hooks to get data
-  const iconscategories = useIconsCategories();
-  const supermarketsstorescards1 = useSupermarketsStoresCards1();
+  const iconCategories = useIconsCategories();
+  const supermarketsStoresCards = useSupermarketsStoresCards1();
   const supermarkets = useSupermarkets();
 
-
+  /**
+   * Scroll the carousel to the left
+   * @param {React.RefObject} carouselRef - Reference to the carousel element
+   */
   const scrollLeft = useCallback((carouselRef) => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: -200, behavior: "smooth" });
     }
   }, []);
 
+  /**
+   * Scroll the carousel to the right
+   * @param {React.RefObject} carouselRef - Reference to the carousel element
+   */
   const scrollRight = useCallback((carouselRef) => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: 200, behavior: "smooth" });
     }
   }, []);
 
+  /**
+   * Truncate the middle of a string if it exceeds the maximum length
+   * @param {string} str - The string to truncate
+   * @param {number} maxLength - The maximum length of the string
+   * @returns {string} The truncated string
+   */
   const truncateMiddle = useCallback((str, maxLength) => {
     if (str.length <= maxLength) return str;
     const middleIndex = Math.floor(maxLength / 2);
@@ -56,6 +79,7 @@ function Stores() {
     return `${start}...${end}`;
   }, []);
 
+  // Effect for handling screen size changes
   useEffect(() => {
     const handleResize = () => {
       setState((prevState) => ({
@@ -68,6 +92,27 @@ function Stores() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // New implementation: Error handling and data loading simulation
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setState(prevState => ({ ...prevState, loading: false }));
+      } catch (error) {
+        setState(prevState => ({ ...prevState, error: 'Failed to load data', loading: false }));
+      }
+    };
+    fetchData();
+  }, []);
+
+  /**
+   * Render a carousel of items
+   * @param {Array} items - The items to render in the carousel
+   * @param {React.RefObject} scrollRef - Reference to the carousel element
+   * @param {Function} itemRenderer - Function to render each item
+   * @returns {JSX.Element} The rendered carousel
+   */
   const renderCarousel = useCallback((items, scrollRef, itemRenderer) => (
     <div className="relative mt-4 sm:mt-6 md:mt-8">
       <div className="container mx-auto px-2 sm:px-4 lg:px-6">
@@ -97,6 +142,12 @@ function Stores() {
     </div>
   ), [scrollLeft, scrollRight]);
 
+  /**
+   * Render a supermarket card
+   * @param {Object} supermarket - The supermarket data
+   * @param {number} index - The index of the supermarket
+   * @returns {JSX.Element} The rendered supermarket card
+   */
   const renderSupermarketCard = useCallback((supermarket, index) => (
     <div key={index} className="w-48 shrink-0 p-6 sm:w-56 md:w-64 lg:w-72">
       <a href={supermarket.href} className="block h-full rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
@@ -106,7 +157,7 @@ function Stores() {
             alt={supermarket.name}
             width="100%"
             height="100%"
-            className="size-full object-fill" //Use object-contain to ensure the logo fits within the square container without distortion or use object-cover to ensure the image fills the container while maintaining its aspect ratio.
+            className="size-full object-contain"
             effect="opacity"
           />
         </div>
@@ -116,7 +167,13 @@ function Stores() {
       </a>
     </div>
   ), []);
-  
+
+  /**
+   * Render a store card
+   * @param {Object} category - The store category data
+   * @param {number} index - The index of the store
+   * @returns {JSX.Element} The rendered store card
+   */
   const renderStoreCard = useCallback((category, index) => (
     <div
       key={index}
@@ -131,7 +188,7 @@ function Stores() {
             alt={category.name}
             width="100%"
             height="100%"
-            className="size-full object-fill"
+            className="size-full object-cover"
             effect="opacity"
           />
           {category.isEtomartStore && (
@@ -146,7 +203,7 @@ function Stores() {
           <div className="mt-1 flex items-start text-xs sm:text-sm">
             <span className="font-bold text-[#ee9613]">{category.priceRange}</span>
             <span className="mx-1">•</span>
-            <span>{category.cuisine}</span>
+            <span>{category.storetype}</span>
           </div>
           <div className="mt-1 text-left text-xs text-gray-500">{`Pickup: ${category.pickupTime}`}</div>
           <div className="mt-1 text-left text-xs">
@@ -161,87 +218,102 @@ function Stores() {
       </a>
     </div>
   ), []);
+
+  // Memoize the navigation tabs to prevent unnecessary re-renders
+  const navigationTabs = useMemo(() => (
+    <nav className="container mx-auto mt-4 px-4 sm:px-6 lg:px-8">
+      <div
+        className="border-white-A700_19 relative z-10 flex justify-center rounded-b-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-b-[100px] sm:p-6 md:rounded-b-[150px] md:p-10"
+        style={{ width: "50%", maxWidth: "100vw", margin: "0 auto" }}
+      >
+        <div className="relative z-10 mb-0 flex w-full items-center justify-center">
+          <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
+            <div role="tablist" className="flex gap-2 space-x-2">
+              
+              <a  role="tab"
+                aria-selected="true"
+                className="flex items-center gap-2 space-x-2 rounded-full bg-orange-300 px-4 py-2 shadow-md transition duration-150"
+                href="/LP/Khomas/Towns/Stores"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="text-Black size-6 fill-current"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M.646 0A.646.646 0 0 0 0 .646V4.5a3.5 3.5 0 0 0 6.25 2.165A3.494 3.494 0 0 0 9 8c1.116 0 2.11-.522 2.75-1.335a3.498 3.498 0 0 0 5.75-.362A3.5 3.5 0 0 0 24 4.5V.647A.646.646 0 0 0 23.354 0h-5.708a.647.647 0 0 0-.146.017.647.647 0 0 0-.146-.017H.646ZM2 2v2.5a1.5 1.5 0 1 0 3 0V2H2Zm17 0v2.5a1.5 1.5 0 0 0 3 0V2h-3Zm-6 2.5V2h3v2.5a1.5 1.5 0 0 1-3 0ZM7.5 2v2.5a1.5 1.5 0 1 0 3 0V2h-3Z"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M1 22V8.45a3.491 3.491 0 0 0 2 1.015V22h8V12h7.5v10H21V9.465a3.49 3.49 0 0 0 2-1.016V22a1 1 0 1 1 0 2H1a1 1 0 1 1 0-2Zm12 0h3.5v-8H13v8Z"
+                  />
+                  <path d="M5.5 12a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3Z" />
+                </svg>
+                <span className="text-black">Stores</span>
+              </a>
+              
+              <a  role="tab"
+                aria-selected="false"
+                className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition-all duration-150 hover:bg-orange-300"
+                href="/LP/Khomas/Towns/Restaurants"
+              >
+              <svg
+                  viewBox="0 0 24 24"
+                  className="size-6 fill-current text-black"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M10 1a1 1 0 112 0v5a4.009 4.009 0 01-2.667 3.772.5.5 0 00-.333.471V23a1 1 0 11-2 0V10.243a.5.5 0 00-.333-.471A4.009 4.009 0 014 6V1a1 1 0 112 0v5c0 .522.205 1.025.571 1.398A.251.251 0 007 7.223V1a1 1 0 112 0v6.225a.251.251 0 00.429.175c.367-.374.572-.877.571-1.4V1zM20.5.75a.75.75 0 00-.75-.75C17.418 0 15.064 6.055 15 13.243v.021c.004.686.563 1.24 1.25 1.236H18a.5.5 0 01.5.5v8a1 1 0 102 0V.75z"
+                  />
+                </svg>
+                <span className="text-black">Restaurants</span>
+              </a>
+              
+              <a  role="tab"
+                aria-selected="false"
+                className="flex items-center gap-2 space-x-2 rounded-full bg-white px-4 py-2 shadow-md transition duration-150 hover:bg-orange-300"
+                href="/LP/Khomas/Towns/Pharmacies"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="size-6 fill-current text-black"
+                >
+                   <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M9 2a1 1 0 0 0-1 1v1H4a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h16a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3h-4V3a1 1 0 0 0-1-1H9zm0 2h6v1H9V4zM4 7h16v12H4V7zm7 3a1 1 0 0 0-1 1v1H9a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1a1 1 0 0 0-1-1z"
+                  />
+                </svg>
+                <span className="text-black">Pharmacies</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  ), []);
+
+  // New implementation: Loading and error states
+  if (state.loading) {
+    return <div className="flex h-screen items-center justify-center">Loading...</div>;
+  }
+
+  if (state.error) {
+    return <div className="flex h-screen items-center justify-center text-red-500">{state.error}</div>;
+  }
+
   return (
     <div className="bg-white">
       <KhomasOPNavBar />
       <main className="relative z-10">
         {/* Navigation Tabs */}
-        <nav className="container mx-auto mt-4 px-4 sm:px-6 lg:px-8">
-          <div
-            className="border-white-A700_19 relative z-10 flex justify-center rounded-b-[50px] border border-solid bg-[#ee9613] p-4 shadow-xl sm:rounded-b-[100px] sm:p-6 md:rounded-b-[150px] md:p-10"
-            style={{ width: "50%", maxWidth: "100vw", margin: "0 auto" }}
-          >
-            <div className="relative z-10 mb-0 flex w-full items-center justify-center">
-              <div className="sc-6db52481-0 kZFPSm cb-elevated cb_elevation_elevationMedium_e16y">
-                <div role="tablist" className="flex gap-2 space-x-2">
-                  
-                  <a  role="tab"
-                    aria-selected="true"
-                    className="flex items-center gap-2 space-x-2 rounded-full bg-orange-300 px-4 py-2 shadow-md transition duration-150"
-                    href="/LP/Khomas/Towns/Stores"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="text-Black size-6 fill-current"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M.646 0A.646.646 0 0 0 0 .646V4.5a3.5 3.5 0 0 0 6.25 2.165A3.494 3.494 0 0 0 9 8c1.116 0 2.11-.522 2.75-1.335a3.498 3.498 0 0 0 5.75-.362A3.5 3.5 0 0 0 24 4.5V.647A.646.646 0 0 0 23.354 0h-5.708a.647.647 0 0 0-.146.017.647.647 0 0 0-.146-.017H.646ZM2 2v2.5a1.5 1.5 0 1 0 3 0V2H2Zm17 0v2.5a1.5 1.5 0 0 0 3 0V2h-3Zm-6 2.5V2h3v2.5a1.5 1.5 0 0 1-3 0ZM7.5 2v2.5a1.5 1.5 0 1 0 3 0V2h-3Z"
-                      />
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M1 22V8.45a3.491 3.491 0 0 0 2 1.015V22h8V12h7.5v10H21V9.465a3.49 3.49 0 0 0 2-1.016V22a1 1 0 1 1 0 2H1a1 1 0 1 1 0-2Zm12 0h3.5v-8H13v8Z"
-                      />
-                      <path d="M5.5 12a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3Z" />
-                    </svg>
-                    <span className="text-black">Stores</span>
-                  </a>
-                  
-                  <a  role="tab"
-                    aria-selected="false"
-                    className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition-all duration-150 hover:bg-orange-300"
-                    href="/LP/Khomas/Towns/Restaurants"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="size-6 fill-current text-black"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M10 1a1 1 0 112 0v5a4.009 4.009 0 01-2.667 3.772.5.5 0 00-.333.471V23a1 1 0 11-2 0V10.243a.5.5 0 00-.333-.471A4.009 4.009 0 014 6V1a1 1 0 112 0v5c0 .522.205 1.025.571 1.398A.251.251 0 007 7.223V1a1 1 0 112 0v6.225a.251.251 0 00.429.175c.367-.374.572-.877.571-1.4V1zM20.5.75a.75.75 0 00-.75-.75C17.418 0 15.064 6.055 15 13.243v.021c.004.686.563 1.24 1.25 1.236H18a.5.5 0 01.5.5v8a1 1 0 102 0V.75z"
-                      />
-                    </svg>
-                    <span className="text-black">Restaurants</span>
-                  </a>
-                  
-                  <a  role="tab"
-                    aria-selected="false"
-                    className="flex items-center gap-2 space-x-2 rounded-full bg-white px-4 py-2 shadow-md transition duration-150 hover:bg-orange-300"
-                    href="/LP/Khomas/Towns/Pharmacies"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="size-6 fill-current text-black"
-                    >
-                       <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M9 2a1 1 0 0 0-1 1v1H4a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h16a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3h-4V3a1 1 0 0 0-1-1H9zm0 2h6v1H9V4zM4 7h16v12H4V7zm7 3a1 1 0 0 0-1 1v1H9a1 1 0 1 0 0 2h1v1a1 1 0 1 0 2 0v-1h1a1 1 0 1 0 0-2h-1v-1a1 1 0 0 0-1-1z"
-                      />
-                    </svg>
-                    <span className="text-black">Pharmacies</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
+        {navigationTabs}
 
         {/* Icon Categories Carousel */}
-        {renderCarousel(iconscategories, iconscategoriescarouselscroll, (category, index) => (
+        {renderCarousel(iconCategories, iconsCategoriesCarouselRef, (category, index) => (
           <div key={index} className="shrink-0">
             <a href={category.href} className="block">
               <div className="flex w-16 flex-col items-center sm:w-20 md:w-24">
@@ -249,7 +321,7 @@ function Stores() {
                   <LazyLoadImage
                     src={category.imgSrc}
                     alt={category.name}
-                    className="size-full object-fill"
+                    className="size-full object-contain"
                     effect="blur"
                   />
                 </div>
@@ -274,7 +346,7 @@ function Stores() {
         </section>
 
         {/* Supermarkets Carousel */}
-        {renderCarousel(supermarkets, supermarketsscroll, renderSupermarketCard)}
+        {renderCarousel(supermarkets, supermarketsCarouselRef, renderSupermarketCard)}
 
         {/* Supermarkets All Near Me Section */}
         <section className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 md:mt-16 lg:px-8">
@@ -291,7 +363,7 @@ function Stores() {
         {/* Store Cards Container */}
         <div className="container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
           <div className="-mx-2 flex flex-wrap">
-            {supermarketsstorescards1.map((category, index) => renderStoreCard(category, index))}
+            {supermarketsStoresCards.map((category, index) => renderStoreCard(category, index))}
           </div>
         </div>
       </main>
