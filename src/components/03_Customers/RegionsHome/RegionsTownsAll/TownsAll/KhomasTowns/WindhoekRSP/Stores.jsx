@@ -4,7 +4,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useSupermarketsStoresCards1, useSupermarkets } from "./CardsDataWindhoekRSP/cardsDataStores";
 import Footer from "../../../../../../04_Footer/Footer";
 import KhomasOPNavBar from "../../../../02_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
-import { useIconsCategories } from "../cardsDataKhomasTowns/cardsDataKhomasTowns";
+import { useIconsCategories } from "../cardsDataKhomasTowns/cardsDataWindhoek/cardsDataWindhoek";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 /**

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import PropTypes from 'prop-types';
-import { useIconsCategories, useCategoriesCards, useStoresCards1, useStoresCards2, useSupermarkets, useRestaurants, usePharmacies, useCards, useAboutUs } from "./cardsDataKhomasTowns/cardsDataKhomasTowns";
+import { useIconsCategories, useCategoriesCards, useStoresCards1, useStoresCards2, useSupermarkets, useRestaurants, usePharmacies, useCards, useAboutUs } from "./cardsDataKhomasTowns/cardsDataWindhoek/cardsDataWindhoek";
 import Footer from "../../../../../04_Footer/Footer";
 import KhomasOPNavBar from "../../../02_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
 
@@ -22,8 +22,8 @@ const usePerformanceMeasure = (name) => {
  * KhomasTowns component
  * @returns {JSX.Element} The rendered KhomasTowns component
  */
-function KhomasTowns() {
-  usePerformanceMeasure('KhomasTowns');
+function Windhoek() {
+  usePerformanceMeasure('Windhoek');
 
   // Combined state using a single useState call
   const [state, setState] = useState({
@@ -322,6 +322,7 @@ function KhomasTowns() {
                     href="/LP/Khomas/Towns/Stores"
                   >
                     <svg viewBox="0 0 24 24" className="size-4 fill-current text-black sm:size-6">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M.646 0A.646.646 0 0 0 0 .646V4.5a3.5 3.5 0 0 0 6.25 2.165A3.494 3.494 0 0 0 9 8c1.116 0 2.11-.522 2.75-1.335a3.498 3.498 0 0 0 5.75-.362A3.5 3.5 0 0 0 24 4.5V.647A.646.646 0 0 0 23.354 0h-5.708a.647.647 0 0 0-.146.017.647.647 0 0 0-.146-.017H.646ZM2 2v2.5a1.5 1.5 0 1 0 3 0V2H2Zm17 0v2.5a1.5 1.5 0 0 0 3 0V2h-3Zm-6 2.5V2h3v2.5a1.5 1.5 0 0 1-3 0ZM7.5 2v2.5a1.5 1.5 0 1 0 3 0V2h-3Z" />
                       <path fillRule="evenodd" clipRule="evenodd" d="M1 22V8.45a3.491 3.491 0 0 0 2 1.015V22h8V12h7.5v10H21V9.465a3.49 3.49 0 0 0 2-1.016V22a1 1 0 1 1 0 2H1a1 1 0 1 1 0-2Zm12 0h3.5v-8H13v8Z" />
                       <path d="M5.5 12a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3Z" />
                     </svg>
@@ -477,8 +478,8 @@ function KhomasTowns() {
                   <button
                     key={index}
                     className={`size-2 rounded-full transition-colors duration-200 ${index === state.currentIndex % cards.length
-                        ? "bg-white"
-                        : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
+                      ? "bg-white"
+                      : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
                       }`}
                     onClick={() => handleDotClick(index)}
                     aria-label={`Go to slide ${index + 1}`}
@@ -669,8 +670,8 @@ function KhomasTowns() {
                   <button
                     key={index}
                     className={`size-2 rounded-full transition-colors duration-200 ${index === state.currentIndexau % aboutus.length
-                        ? "bg-white"
-                        : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
+                      ? "bg-white"
+                      : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
                       }`}
                     onClick={() => handleDotClickau(index)}
                     aria-label={`Go to slide ${index + 1}`}
@@ -688,8 +689,8 @@ function KhomasTowns() {
   );
 }
 
-KhomasTowns.propTypes = {
+Windhoek.propTypes = {
   // Add prop types here if needed
 };
 
-export default KhomasTowns;
+export default Windhoek;
