@@ -1,23 +1,21 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import XClearButton from "../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/ComponentsCalled/XClearButton";
 import Footer from "../../../04_Footer/Footer";
 import LPNavBar from "../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/LPNavBar";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 function RegionHome() {
+  const { regionName } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
   const videoRef = useRef(null);
+
+  // Decode the URL-encoded regionName
+  const decodedRegionName = decodeURIComponent(regionName);
 
   // State management
   const [state, setState] = useState({
@@ -39,7 +37,138 @@ function RegionHome() {
     selectedTown: null,
   });
 
-  const selectedRegionButton = location.state?.selectedRegion || {};
+  const regions = useMemo(
+    () => ({
+      Khomas: [
+        {
+          code: "ALB",
+          name: "Khomas",
+          flagPath: "/images/regions/khomas2.jpeg",
+          path: "/LP/Region/Khomas",
+        },
+      ],
+      Erongo: [
+        {
+          code: "HRV",
+          name: "Erongo",
+          flagPath: "/images/regions/erongo.jpeg",
+          path: "/LP/Region/Erongo",
+        },
+      ],
+      Oshana: [
+        {
+          code: "CYP",
+          name: "Oshana",
+          flagPath: "/images/regions/oshana.jpeg",
+          path: "/LP/Region/Oshana",
+        },
+      ],
+      Omusati: [
+        {
+          code: "ALB",
+          name: "Omusati",
+          flagPath: "/images/regions/omusati.jpeg",
+          path: "/LP/Region/Omusati",
+        },
+      ],
+      Karas: [
+        {
+          code: "HRV",
+          name: "Karas",
+          flagPath: "/images/regions/kharas2.jpeg",
+          path: "/LP/Region/Karas",
+        },
+      ],
+      Ohangwena: [
+        {
+          code: "CYP",
+          name: "Ohangwena",
+          flagPath: "/images/regions/ohangwena.jpeg",
+          path: "/LP/Region/Ohangwena",
+        },
+      ],
+      Zambezi: [
+        {
+          code: "ALB",
+          name: "Zambezi",
+          flagPath: "/images/regions/zambezi.jpeg",
+          path: "/LP/Region/Zambezi",
+        },
+      ],
+      Oshikoto: [
+        {
+          code: "HRV",
+          name: "Oshikoto",
+          flagPath: "/images/regions/oshikoto.jpeg",
+          path: "/LP/Region/Oshikoto",
+        },
+      ],
+      Omaheke: [
+        {
+          code: "CYP",
+          name: "Omaheke",
+          flagPath: "/images/regions/omaheke.jpeg",
+          path: "/LP/Region/Omaheke",
+        },
+      ],
+      Hardap: [
+        {
+          code: "ALB",
+          name: "Hardap",
+          flagPath: "/images/regions/hardap.jpeg",
+          path: "/LP/Region/Hardap",
+        },
+      ],
+      Otjozondjupa: [
+        {
+          code: "HRV",
+          name: "Otjozondjupa",
+          flagPath: "/images/regions/otjozondjupa.jpeg",
+          path: "/LP/Region/Otjozondjupa",
+        },
+      ],
+      Kunene: [
+        {
+          code: "CYP",
+          name: "Kunene",
+          flagPath: "/images/regions/kunene2.jpeg",
+          path: "/LP/Region/Kunene",
+        },
+      ],
+      "Kavango East": [
+        {
+          code: "ALB",
+          name: "Kavango East",
+          flagPath: "/images/regions/kavango_east.jpeg",
+          path: "/LP/Region/KavangoEast",
+        },
+      ],
+      "Kavango West": [
+        {
+          code: "HRV",
+          name: "Kavango West",
+          flagPath: "/images/regions/kavango_west.jpeg",
+          path: "/LP/Region/KavangoWest",
+        },
+      ],
+    }),
+    []
+  );
+
+  const selectedRegionButton = useMemo(() => {
+    if (decodedRegionName) {
+      return regions[decodedRegionName] ? regions[decodedRegionName][0] : {};
+    }
+    return location.state?.selectedRegion || {};
+  }, [decodedRegionName, location.state, regions]);
+
+  const getRegionDetails = useCallback(
+    (regionName) => {
+      if (!regionName) return null;
+      return regions[regionName] ? regions[regionName][0] : null;
+    },
+    [regions]
+  );
 
   // Define the region data as a constant outside the component
   // Memoized data
@@ -501,123 +630,7 @@ function RegionHome() {
     []
   );
 
-  const regions = useMemo(
-    () => ({
-      Khomas: [
-        {
-          code: "ALB",
-          name: "Khomas",
-          flagPath: "/images/regions/khomas2.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Erongo: [
-        {
-          code: "HRV",
-          name: "Erongo",
-          flagPath: "/images/regions/erongo.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Oshana: [
-        {
-          code: "CYP",
-          name: "Oshana",
-          flagPath: "/images/regions/oshana.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Omusati: [
-        {
-          code: "ALB",
-          name: "Omusati",
-          flagPath: "/images/regions/omusati.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Karas: [
-        {
-          code: "HRV",
-          name: "Karas",
-          flagPath: "/images/regions/kharas2.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Ohangwena: [
-        {
-          code: "CYP",
-          name: "Ohangwena",
-          flagPath: "/images/regions/ohangwena.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Zambezi: [
-        {
-          code: "ALB",
-          name: "Zambezi",
-          flagPath: "/images/regions/zambezi.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Oshikoto: [
-        {
-          code: "HRV",
-          name: "Oshikoto",
-          flagPath: "/images/regions/oshikoto.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Omaheke: [
-        {
-          code: "CYP",
-          name: "Omaheke",
-          flagPath: "/images/regions/omaheke.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Hardap: [
-        {
-          code: "ALB",
-          name: "Hardap",
-          flagPath: "/images/regions/hardap.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Otjozondjupa: [
-        {
-          code: "HRV",
-          name: "Otjozondjupa",
-          flagPath: "/images/regions/otjozondjupa.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      Kunene: [
-        {
-          code: "CYP",
-          name: "Kunene",
-          flagPath: "/images/regions/kunene2.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      "Kavango East": [
-        {
-          code: "ALB",
-          name: "Kavango East",
-          flagPath: "/images/regions/kavango_east.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-      "Kavango West": [
-        {
-          code: "HRV",
-          name: "Kavango West",
-          flagPath: "/images/regions/kavango_west.jpeg",
-          path: "/LP/Region",
-        },
-      ],
-    }),
-    []
-  );
+
 
   const townsByRegion = {
     Khomas: [
@@ -625,61 +638,61 @@ function RegionHome() {
         code: "ALB",
         name: "Windhoek",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
       {
         code: "BUK",
         name: "Brakwater",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
       {
         code: "DOE",
         name: "Dordabis",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
       {
         code: "GBN",
         name: "Gobabis",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
       {
         code: "GRS",
         name: "Groendrift",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
       {
         code: "HCH",
         name: "Hochfeld",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
       {
         code: "KHR",
         name: "Khorixas",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
       {
         code: "OJO",
         name: "Ojozondjupa",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
       {
         code: "RHN",
         name: "Rehoboth",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
       {
         code: "WSN",
         name: "Witvlei",
         flagPath: "/images/regions/khomas2.jpeg",
-        path: "/LP/Khomas/Towns",
+        path: "/LP/Region/Khomas/Towns",
       },
     ],
     Erongo: [
@@ -1003,17 +1016,17 @@ function RegionHome() {
   // Update the getRegionDetails function
 
   // Update the getRegionTowns function
-  const getRegionDetails = useCallback(
-    (regionName) => {
-      if (!regionName) return null;
-      const normalizedRegionName = normalizeRegionName(regionName);
-      const matchingRegion = Object.entries(regions).find(
-        ([key, value]) => normalizeRegionName(key) === normalizedRegionName
-      );
-      return matchingRegion ? matchingRegion[1][0] : null;
-    },
-    [regions]
-  );
+  // const getRegionDetails = useCallback(
+  //   (regionName) => {
+  //     if (!regionName) return null;
+  //     const normalizedRegionName = normalizeRegionName(regionName);
+  //     const matchingRegion = Object.entries(regions).find(
+  //       ([key, value]) => normalizeRegionName(key) === normalizedRegionName
+  //     );
+  //     return matchingRegion ? matchingRegion[1][0] : null;
+  //   },
+  //   [regions]
+  // );
 
   const getRegionTowns = useCallback(
     (regionName) => {
@@ -1471,7 +1484,7 @@ function RegionHome() {
                       </div>
                     </button>
                     <a
-                      href="/LP"
+                      href="/LP/Regions"
                       className="flex h-14 min-w-[150px] items-center justify-center overflow-hidden rounded-[36px] bg-white px-6 py-2 font-josefin_sans text-black shadow-lg hover:bg-orange-300"
                       aria-label="View all regions"
                     >

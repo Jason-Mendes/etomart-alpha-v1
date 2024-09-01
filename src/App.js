@@ -28,13 +28,13 @@ function App() {
           <Routes>
             {/* Routes for LandingPage */}
             <Route path="/" element={<LandingPage />} />
-            <Route path="/LP" element={<LandingPage />} />
+            <Route path="/LP/Regions" element={<LandingPage />} />
             <Route path="/LandingPage" element={<LandingPage />} />
             <Route path="/LandingPageTest" element={<LandingPageTest />} />
 
             {/* Routes for Regions */}
-            <Route path="/LP/Region" element={<RegionHome />} />
-
+            <Route path="/LP/Regions" element={<RegionHome />} />
+            <Route path="/LP/Region/:regionName" element={<RegionHome />} />
             {/* Routes for Towns per Region */}
             <Route path="/LP/Khomas/Towns" element={<KhomasTowns />} />
             <Route path="/LP/Erongo/Towns" element={<ErongoTowns />} />

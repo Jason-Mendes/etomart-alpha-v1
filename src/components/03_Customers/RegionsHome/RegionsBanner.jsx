@@ -3,6 +3,11 @@ import React, { useEffect, useCallback } from "react";
 const RegionsBanner = ({ isVisible, imageSrc, closeBanner, goBack }) => {
   const handleClose = useCallback(() => {
     closeBanner();
+    // Check if the URL has changed and trigger navigation if necessary
+    const currentPath = window.location.pathname;
+    if (currentPath.startsWith('/LP/Region/') && currentPath !== '/LP') {
+      window.history.pushState(null, '', '/LP');
+    }
   }, [closeBanner]);
 
   useEffect(() => {

@@ -237,7 +237,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         >
           <div className="mx-auto flex items-center justify-between">
             <h1 className="mr-2 whitespace-nowrap pt-1 font-shrikhand text-xl sm:text-2xl md:text-3xl text-[#ee9613]">
-              <Link to="/LP">Etomart</Link>
+              <Link to="/LP/Regions">Etomart</Link>
             </h1>
   
             <div className="flex-grow mx-4">

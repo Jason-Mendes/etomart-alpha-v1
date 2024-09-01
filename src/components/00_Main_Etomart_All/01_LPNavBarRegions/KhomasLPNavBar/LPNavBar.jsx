@@ -50,7 +50,7 @@ const LPNavBar = () => {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between py-4">
           <Link
-            to="/LP"
+            to="/LP/Regions"
             className="whitespace-nowrap font-shrikhand text-3xl text-[#ee9613]"
           >
             Etomart

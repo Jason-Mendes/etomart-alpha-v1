@@ -92,7 +92,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Centered Etomart logo */}
         <div className="mb-8 flex justify-center">
-          <a href="/LP" className="font-shrikhand text-3xl text-black">
+          <a href="/LP/Regions" className="font-shrikhand text-3xl text-black">
             Etomart
           </a>
         </div>
