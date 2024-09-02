@@ -699,7 +699,7 @@ const LandingPage = () => {
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="ml-2 h-6 w-4 shrink-0 fill-current text-zinc-950"
+                    className="ml-2 h-8 w-6 shrink-0 fill-current text-zinc-950"
                     aria-hidden="true"
                   >
                     <path

@@ -1,0 +1,952 @@
+import { useMemo } from 'react';
+
+export function useRegions() {
+  return useMemo(() => ({
+    Khomas: [
+      {
+        code: "ALB",
+        name: "Khomas",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas",
+      },
+    ],
+    Erongo: [
+      {
+        code: "HRV",
+        name: "Erongo",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Region/Erongo",
+      },
+    ],
+    Oshana: [
+      {
+        code: "CYP",
+        name: "Oshana",
+        flagPath: "/images/regions/oshana.jpeg",
+        path: "/LP/Region/Oshana",
+      },
+    ],
+    Omusati: [
+      {
+        code: "ALB",
+        name: "Omusati",
+        flagPath: "/images/regions/omusati.jpeg",
+        path: "/LP/Region/Omusati",
+      },
+    ],
+    Karas: [
+      {
+        code: "HRV",
+        name: "Karas",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Region/Karas",
+      },
+    ],
+    Ohangwena: [
+      {
+        code: "CYP",
+        name: "Ohangwena",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Region/Ohangwena",
+      },
+    ],
+    Zambezi: [
+      {
+        code: "ALB",
+        name: "Zambezi",
+        flagPath: "/images/regions/zambezi.jpeg",
+        path: "/LP/Region/Zambezi",
+      },
+    ],
+    Oshikoto: [
+      {
+        code: "HRV",
+        name: "Oshikoto",
+        flagPath: "/images/regions/oshikoto.jpeg",
+        path: "/LP/Region/Oshikoto",
+      },
+    ],
+    Omaheke: [
+      {
+        code: "CYP",
+        name: "Omaheke",
+        flagPath: "/images/regions/omaheke.jpeg",
+        path: "/LP/Region/Omaheke",
+      },
+    ],
+    Hardap: [
+      {
+        code: "ALB",
+        name: "Hardap",
+        flagPath: "/images/regions/hardap.jpeg",
+        path: "/LP/Region/Hardap",
+      },
+    ],
+    Otjozondjupa: [
+      {
+        code: "HRV",
+        name: "Otjozondjupa",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Region/Otjozondjupa",
+      },
+    ],
+    Kunene: [
+      {
+        code: "CYP",
+        name: "Kunene",
+        flagPath: "/images/regions/kunene2.jpeg",
+        path: "/LP/Region/Kunene",
+      },
+    ],
+    "Kavango East": [
+      {
+        code: "ALB",
+        name: "Kavango East",
+        flagPath: "/images/regions/kavango_east.jpeg",
+        path: "/LP/Region/KavangoEast",
+      },
+    ],
+    "Kavango West": [
+      {
+        code: "HRV",
+        name: "Kavango West",
+        flagPath: "/images/regions/kavango_west.jpeg",
+        path: "/LP/Region/KavangoWest",
+      },
+    ],
+  }), []);
+}
+
+export function useTownsData() {
+  return useMemo(() => ({
+    Khomas: [
+      {
+        code: "ALB",
+        name: "Windhoek",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -22.559722,
+        longitude: 17.083611,
+      },
+      {
+        code: "BUK",
+        name: "Brakwater",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -22.580278,
+        longitude: 17.122222,
+      },
+      {
+        code: "DOE",
+        name: "Dordabis",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -22.870833,
+        longitude: 17.405278,
+      },
+      {
+        code: "GBN",
+        name: "Gobabis",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -22.442778,
+        longitude: 18.980833,
+      },
+      {
+        code: "GRS",
+        name: "Groendrift",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -22.764722,
+        longitude: 17.069722,
+      },
+      {
+        code: "HCH",
+        name: "Hochfeld",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -22.425278,
+        longitude: 17.072222,
+      },
+      {
+        code: "KHR",
+        name: "Khorixas",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -20.379722,
+        longitude: 14.791111,
+      },
+      {
+        code: "OJO",
+        name: "Ojozondjupa",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -21.263056,
+        longitude: 16.806111,
+      },
+      {
+        code: "RHN",
+        name: "Rehoboth",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -23.318056,
+        longitude: 17.090278,
+      },
+      {
+        code: "WSN",
+        name: "Witvlei",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Khomas/Towns",
+        latitude: -22.809722,
+        longitude: 18.423611,
+      },
+    ],
+    Erongo: [
+      {
+        code: "ARA",
+        name: "Arandis",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+        latitude: -22.359722,
+        longitude: 15.659722,
+      },
+      {
+        code: "HEN",
+        name: "Henties Bay",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+        latitude: -22.119444,
+        longitude: 14.280833,
+      },
+      {
+        code: "KAR",
+        name: "Karibib",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+        latitude: -21.945833,
+        longitude: 15.582222,
+      },
+      {
+        code: "OMA",
+        name: "Omaruru",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+        latitude: -21.833056,
+        longitude: 15.945833,
+      },
+      {
+        code: "SWA",
+        name: "Swakopmund",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+        latitude: -22.680833,
+        longitude: 14.532222,
+      },
+      {
+        code: "UIS",
+        name: "Uis",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+        latitude: -21.2675,
+        longitude: 14.9344,
+      },
+      {
+        code: "WAL",
+        name: "Walvis Bay",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+        latitude: -22.957222,
+        longitude: 14.5125,
+      },
+    ],
+    Oshana: [
+      {
+        code: "ONG",
+        name: "Ongwediva",
+        flagPath: "/images/regions/oshana.jpeg",
+        path: "/LP/Oshana/Towns",
+        latitude: -17.827778,
+        longitude: 15.969444,
+      },
+      {
+        code: "OSH",
+        name: "Oshakati",
+        flagPath: "/images/regions/oshana.jpeg",
+        path: "/LP/Oshana/Towns",
+        latitude: -17.762222,
+        longitude: 15.677222,
+      },
+      {
+        code: "OND",
+        name: "Ondangwa",
+        flagPath: "/images/regions/oshana.jpeg",
+        path: "/LP/Oshana/Towns",
+        latitude: -17.891111,
+        longitude: 15.8525,
+      },
+    ],
+    Omusati: [
+      {
+        code: "OUT",
+        name: "Outapi",
+        flagPath: "/images/regions/omusati.jpeg",
+        path: "/LP/Omusati/Towns",
+        latitude: -17.531111,
+        longitude: 14.968056,
+      },
+      {
+        code: "OKA",
+        name: "Okahao",
+        flagPath: "/images/regions/omusati.jpeg",
+        path: "/LP/Omusati/Towns",
+        latitude: -17.429444,
+        longitude: 14.850833,
+      },
+      {
+        code: "OZO",
+        name: "Oshifo",
+        flagPath: "/images/regions/omusati.jpeg",
+        path: "/LP/Omusati/Towns",
+        latitude: -17.539444,
+        longitude: 14.7725,
+      },
+    ],
+    Karas: [
+      {
+        code: "KHB",
+        name: "Keetmanshoop",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Karas/Towns",
+        latitude: -26.583056,
+        longitude: 16.924444,
+      },
+      {
+        code: "LUD",
+        name: "Luderitz",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Karas/Towns",
+        latitude: -26.641944,
+        longitude: 15.159444,
+      },
+      {
+        code: "RSH",
+        name: "Rosh Pinah",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Karas/Towns",
+        latitude: -27.488333,
+        longitude: 16.370833,
+      },
+      {
+        code: "ORM",
+        name: "Oranjemund",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Karas/Towns",
+        latitude: -28.665278,
+        longitude: 16.553611,
+      },
+    ],
+    Ohangwena: [
+      {
+        code: "ENH",
+        name: "Eenhana",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Ohangwena/Towns",
+        latitude: -17.627222,
+        longitude: 15.949444,
+      },
+      {
+        code: "HNM",
+        name: "Helao Nafidi",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Ohangwena/Towns",
+        latitude: -17.5925,
+        longitude: 15.8742,
+      },
+      {
+        code: "OHS",
+        name: "Ohangwena",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Ohangwena/Towns",
+        latitude: -17.684722,
+        longitude: 15.919444,
+      },
+      {
+        code: "OKG",
+        name: "Okongo",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Ohangwena/Towns",
+        latitude: -17.368611,
+        longitude: 15.601111,
+      },
+    ],
+    Zambezi: [
+      {
+        code: "KAT",
+        name: "Katima Mulilo",
+        flagPath: "/images/regions/zambezi.jpeg",
+        path: "/LP/Zambezi/Towns",
+        latitude: -17.498333,
+        longitude: 24.315833,
+      },
+      {
+        code: "BUK",
+        name: "Bukalo",
+        flagPath: "/images/regions/zambezi.jpeg",
+        path: "/LP/Zambezi/Towns",
+        latitude: -17.571944,
+        longitude: 24.291389,
+      },
+    ],
+    Oshikoto: [
+      {
+        code: "TSU",
+        name: "Tsumeb",
+        flagPath: "/images/regions/oshikoto.jpeg",
+        path: "/LP/Oshikoto/Towns",
+        latitude: -19.233333,
+        longitude: 17.733333,
+      },
+      {
+        code: "ONK",
+        name: "Onankali",
+        flagPath: "/images/regions/oshikoto.jpeg",
+        path: "/LP/Oshikoto/Towns",
+        latitude: -18.755833,
+        longitude: 17.685833,
+      },
+      {
+        code: "OMU",
+        name: "Omuthiya",
+        flagPath: "/images/regions/oshikoto.jpeg",
+        path: "/LP/Oshikoto/Towns",
+        latitude: -18.694444,
+        longitude: 17.588056,
+      },
+    ],
+    Omaheke: [
+      {
+        code: "GOB",
+        name: "Gobabis",
+        flagPath: "/images/regions/omaheke.jpeg",
+        path: "/LP/Omaheke/Towns",
+        latitude: -22.442778,
+        longitude: 18.980833,
+      },
+      {
+        code: "WIT",
+        name: "Witvlei",
+        flagPath: "/images/regions/omaheke.jpeg",
+        path: "/LP/Omaheke/Towns",
+        latitude: -22.809722,
+        longitude: 18.423611,
+      },
+      {
+        code: "LEO",
+        name: "Leonardville",
+        flagPath: "/images/regions/omaheke.jpeg",
+        path: "/LP/Omaheke/Towns",
+        latitude: -22.591944,
+        longitude: 19.134444,
+      },
+    ],
+    Hardap: [
+      {
+        code: "MAR",
+        name: "Mariental",
+        flagPath: "/images/regions/hardap.jpeg",
+        path: "/LP/Hardap/Towns",
+        latitude: -24.573611,
+        longitude: 17.961389,
+      },
+      {
+        code: "REH",
+        name: "Rehoboth",
+        flagPath: "/images/regions/hardap.jpeg",
+        path: "/LP/Hardap/Towns",
+        latitude: -23.318056,
+        longitude: 17.090278,
+      },
+      {
+        code: "GIB",
+        name: "Gibeon",
+        flagPath: "/images/regions/hardap.jpeg",
+        path: "/LP/Hardap/Towns",
+        latitude: -24.823333,
+        longitude: 17.329722,
+      },
+    ],
+    Otjozondjupa: [
+      {
+        code: "OKA",
+        name: "Okahandja",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Otjozondjupa/Towns",
+        latitude: -21.816944,
+        longitude: 15.973611,
+      },
+      {
+        code: "GRD",
+        name: "Grootfontein",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Otjozondjupa/Towns",
+        latitude: -19.550833,
+        longitude: 17.082222,
+      },
+      {
+        code: "OTJ",
+        name: "Otjiwarongo",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Otjozondjupa/Towns",
+        latitude: -20.4625,
+        longitude: 16.645,
+      },
+      {
+        code: "OTV",
+        name: "Otavi",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Otjozondjupa/Towns",
+        latitude: -19.666111,
+        longitude: 17.400833,
+      },
+    ],
+    Kunene: [
+      {
+        code: "OPO",
+        name: "Opuwo",
+        flagPath: "/images/regions/kunene2.jpeg",
+        path: "/LP/Kunene/Towns",
+        latitude: -18.059722,
+        longitude: 13.842222,
+      },
+      {
+        code: "KHX",
+        name: "Khorixas",
+        flagPath: "/images/regions/kunene2.jpeg",
+        path: "/LP/Kunene/Towns",
+        latitude: -20.379722,
+        longitude: 14.791111,
+      },
+      {
+        code: "SES",
+        name: "Sesfontein",
+        flagPath: "/images/regions/kunene2.jpeg",
+        path: "/LP/Kunene/Towns",
+        latitude: -19.964167,
+        longitude: 14.655833,
+      },
+    ],
+    "Kavango East": [
+      {
+        code: "RUN",
+        name: "Rundu",
+        flagPath: "/images/regions/kavango_east.jpeg",
+        path: "/LP/KavangoEast/Towns",
+        latitude: -17.930833,
+        longitude: 19.774444,
+      },
+      {
+        code: "DIV",
+        name: "Divundu",
+        flagPath: "/images/regions/kavango_east.jpeg",
+        path: "/LP/KavangoEast/Towns",
+        latitude: -17.470833,
+        longitude: 19.063611,
+      },
+    ],
+    "Kavango West": [
+      {
+        code: "NKU",
+        name: "Nkurenkuru",
+        flagPath: "/images/regions/kavango_west.jpeg",
+        path: "/LP/KavangoWest/Towns",
+        latitude: -17.8325,
+        longitude: 19.0842,
+      },
+      {
+        code: "MPU",
+        name: "Mpungu",
+        flagPath: "/images/regions/kavango_west.jpeg",
+        path: "/LP/KavangoWest/Towns",
+        latitude: -17.8361,
+        longitude: 19.0761,
+      },
+    ],
+  }), []);
+}
+
+export function useTownsByRegion() {
+  return useMemo(() => ({
+    Khomas: [
+      {
+        code: "ALB",
+        name: "Windhoek",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+      {
+        code: "BUK",
+        name: "Brakwater",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+      {
+        code: "DOE",
+        name: "Dordabis",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+      {
+        code: "GBN",
+        name: "Gobabis",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+      {
+        code: "GRS",
+        name: "Groendrift",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+      {
+        code: "HCH",
+        name: "Hochfeld",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+      {
+        code: "KHR",
+        name: "Khorixas",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+      {
+        code: "OJO",
+        name: "Ojozondjupa",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+      {
+        code: "RHN",
+        name: "Rehoboth",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+      {
+        code: "WSN",
+        name: "Witvlei",
+        flagPath: "/images/regions/khomas2.jpeg",
+        path: "/LP/Region/Khomas/Towns",
+      },
+    ],
+    Erongo: [
+      {
+        code: "ARA",
+        name: "Arandis",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+      },
+      {
+        code: "HEN",
+        name: "Henties Bay",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+      },
+      {
+        code: "KAR",
+        name: "Karibib",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+      },
+      {
+        code: "OMA",
+        name: "Omaruru",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+      },
+      {
+        code: "SWA",
+        name: "Swakopmund",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+      },
+      {
+        code: "UIS",
+        name: "Uis",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+      },
+      {
+        code: "WAL",
+        name: "Walvis Bay",
+        flagPath: "/images/regions/erongo.jpeg",
+        path: "/LP/Erongo/Towns",
+      },
+    ],
+    Oshana: [
+      {
+        code: "ONG",
+        name: "Ongwediva",
+        flagPath: "/images/regions/oshana.jpeg",
+        path: "/LP/Oshana/Towns",
+      },
+      {
+        code: "OSH",
+        name: "Oshakati",
+        flagPath: "/images/regions/oshana.jpeg",
+        path: "/LP/Oshana/Towns",
+      },
+      {
+        code: "OND",
+        name: "Ondangwa",
+        flagPath: "/images/regions/oshana.jpeg",
+        path: "/LP/Oshana/Towns",
+      },
+    ],
+    Omusati: [
+      {
+        code: "OUT",
+        name: "Outapi",
+        flagPath: "/images/regions/omusati.jpeg",
+        path: "/LP/Omusati/Towns",
+      },
+      {
+        code: "OKA",
+        name: "Okahao",
+        flagPath: "/images/regions/omusati.jpeg",
+        path: "/LP/Omusati/Towns",
+      },
+      {
+        code: "OZO",
+        name: "Oshifo",
+        flagPath: "/images/regions/omusati.jpeg",
+        path: "/LP/Omusati/Towns",
+      },
+    ],
+    Karas: [
+      {
+        code: "KHB",
+        name: "Keetmanshoop",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Karas/Towns",
+      },
+      {
+        code: "LUD",
+        name: "Luderitz",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Karas/Towns",
+      },
+      {
+        code: "RSH",
+        name: "Rosh Pinah",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Karas/Towns",
+      },
+      {
+        code: "ORM",
+        name: "Oranjemund",
+        flagPath: "/images/regions/kharas2.jpeg",
+        path: "/LP/Karas/Towns",
+      },
+    ],
+    Ohangwena: [
+      {
+        code: "ENH",
+        name: "Eenhana",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Ohangwena/Towns",
+      },
+      {
+        code: "HNM",
+        name: "Helao Nafidi",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Ohangwena/Towns",
+      },
+      {
+        code: "OHS",
+        name: "Ohangwena",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Ohangwena/Towns",
+      },
+      {
+        code: "OKG",
+        name: "Okongo",
+        flagPath: "/images/regions/ohangwena.jpeg",
+        path: "/LP/Ohangwena/Towns",
+      },
+    ],
+    Zambezi: [
+      {
+        code: "KAT",
+        name: "Katima Mulilo",
+        flagPath: "/images/regions/zambezi.jpeg",
+        path: "/LP/Zambezi/Towns",
+      },
+      {
+        code: "BUK",
+        name: "Bukalo",
+        flagPath: "/images/regions/zambezi.jpeg",
+        path: "/LP/Zambezi/Towns",
+      },
+    ],
+    Oshikoto: [
+      {
+        code: "TSU",
+        name: "Tsumeb",
+        flagPath: "/images/regions/oshikoto.jpeg",
+        path: "/LP/Oshikoto/Towns",
+      },
+      {
+        code: "ONK",
+        name: "Onankali",
+        flagPath: "/images/regions/oshikoto.jpeg",
+        path: "/LP/Oshikoto/Towns",
+      },
+      {
+        code: "OMU",
+        name: "Omuthiya",
+        flagPath: "/images/regions/oshikoto.jpeg",
+        path: "/LP/Oshikoto/Towns",
+      },
+    ],
+    Omaheke: [
+      {
+        code: "GOB",
+        name: "Gobabis",
+        flagPath: "/images/regions/omaheke.jpeg",
+        path: "/LP/Omaheke/Towns",
+      },
+      {
+        code: "WIT",
+        name: "Witvlei",
+        flagPath: "/images/regions/omaheke.jpeg",
+        path: "/LP/Omaheke/Towns",
+      },
+      {
+        code: "LEO",
+        name: "Leonardville",
+        flagPath: "/images/regions/omaheke.jpeg",
+        path: "/LP/Omaheke/Towns",
+      },
+    ],
+    Hardap: [
+      {
+        code: "MAR",
+        name: "Mariental",
+        flagPath: "/images/regions/hardap.jpeg",
+        path: "/LP/Hardap/Towns",
+      },
+      {
+        code: "REH",
+        name: "Rehoboth",
+        flagPath: "/images/regions/hardap.jpeg",
+        path: "/LP/Hardap/Towns",
+      },
+      {
+        code: "GIB",
+        name: "Gibeon",
+        flagPath: "/images/regions/hardap.jpeg",
+        path: "/LP/Hardap/Towns",
+      },
+    ],
+    Otjozondjupa: [
+      {
+        code: "OKA",
+        name: "Okahandja",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Otjozondjupa/Towns",
+      },
+      {
+        code: "GRD",
+        name: "Grootfontein",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Otjozondjupa/Towns",
+      },
+      {
+        code: "OTJ",
+        name: "Otjiwarongo",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Otjozondjupa/Towns",
+      },
+      {
+        code: "OTV",
+        name: "Otavi",
+        flagPath: "/images/regions/otjozondjupa.jpeg",
+        path: "/LP/Otjozondjupa/Towns",
+      },
+    ],
+    Kunene: [
+      {
+        code: "OPO",
+        name: "Opuwo",
+        flagPath: "/images/regions/kunene2.jpeg",
+        path: "/LP/Kunene/Towns",
+      },
+      {
+        code: "KHX",
+        name: "Khorixas",
+        flagPath: "/images/regions/kunene2.jpeg",
+        path: "/LP/Kunene/Towns",
+      },
+      {
+        code: "SES",
+        name: "Sesfontein",
+        flagPath: "/images/regions/kunene2.jpeg",
+        path: "/LP/Kunene/Towns",
+      },
+    ],
+    "Kavango East": [
+      {
+        code: "RUN",
+        name: "Rundu",
+        flagPath: "/images/regions/kavango_east.jpeg",
+        path: "/LP/KavangoEast/Towns",
+      },
+      {
+        code: "DIV",
+        name: "Divundu",
+        flagPath: "/images/regions/kavango_east.jpeg",
+        path: "/LP/KavangoEast/Towns",
+      },
+    ],
+    "Kavango West": [
+      {
+        code: "NKU",
+        name: "Nkurenkuru",
+        flagPath: "/images/regions/kavango_west.jpeg",
+        path: "/LP/KavangoWest/Towns",
+      },
+      {
+        code: "MPU",
+        name: "Mpungu",
+        flagPath: "/images/regions/kavango_west.jpeg",
+        path: "/LP/KavangoWest/Towns",
+      },
+    ],
+  }), []);
+}
+
+export function useTestimonials() {
+  return useMemo(() => [
+    {
+      imageSrc: "/images/img_ellipse1.png",
+      textBelowImage: "Lorem ipsum dolor sit amet consectetur.",
+      numStars: 1,
+      testimonialAuthor: "John Doe",
+    },
+    {
+      imageSrc: "/images/img_ellipse1.png",
+      textBelowImage:
+        "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
+      numStars: 5,
+      testimonialAuthor: "John Doe",
+    },
+    {
+      imageSrc: "/images/img_ellipse1.png",
+      textBelowImage:
+        "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
+      numStars: 3,
+      testimonialAuthor: "John Doe",
+    },
+    // Add more testimonials as needed
+  ], []);
+}

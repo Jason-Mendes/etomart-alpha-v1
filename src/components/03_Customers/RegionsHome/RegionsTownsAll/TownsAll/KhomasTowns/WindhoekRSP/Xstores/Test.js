@@ -87,7 +87,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="mb-2 mt-4 flex items-center">
             <h1 className="-mt-2 whitespace-nowrap pt-1 font-shrikhand text-3xl text-[#ee9613]">
-              <Link to="/LP">Etomart</Link>
+              <Link to="/LP/Regions">Etomart</Link>
             </h1>
             <div className="ml-4">
               <LocationButton onClick={handleLocationClick} />
