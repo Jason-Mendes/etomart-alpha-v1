@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import XClearButton from "../../../00_Main_Etomart_All/01_LPNavBarRegions/LPNavBar/ComponentsCalled/XClearButton";
+import XClearButton from "../../../00_Main_Etomart_All/ComponentsCalled/XClearButton";
 import Footer from "../../../04_Footer/Footer";
 import LPNavBar from "../../../00_Main_Etomart_All/01_LPNavBarRegions/LPNavBar/LPNavBar";
 import { useRegions, useTownsData, useTownsByRegion, useTestimonials } from "./regionsTownsAllData/regionsTownsAllData";

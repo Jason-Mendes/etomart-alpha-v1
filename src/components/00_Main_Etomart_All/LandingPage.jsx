@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
-import XClearButton from "./01_LPNavBarRegions/LPNavBar/ComponentsCalled/XClearButton";
+import XClearButton from "./ComponentsCalled/XClearButton";
 import Footer from "../04_Footer/Footer";
 import LPNavBar from "./01_LPNavBarRegions/LPNavBar/LPNavBar";
 import RegionsBanner from "../03_Customers/RegionsHome/RegionsBanner";

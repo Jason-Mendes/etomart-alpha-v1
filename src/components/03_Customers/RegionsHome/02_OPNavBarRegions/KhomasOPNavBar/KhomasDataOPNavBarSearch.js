@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { pharmaciesstorescards1 } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/CardsDataWindhoekRSP/cardsDataPharmacies';
-import { restaurantsstorescards1 } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/CardsDataWindhoekRSP/cardsDataRestaurants';
-import { supermarketsstorescards1 } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/CardsDataWindhoekRSP/cardsDataStores';
+import { pharmaciesstorescards1 } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/CardsDataWindhoekXRSP/cardsDataPharmacies';
+import { restaurantsstorescards1 } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/CardsDataWindhoekXRSP/cardsDataRestaurants';
+import { supermarketsstorescards1 } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/CardsDataWindhoekXRSP/cardsDataStores';
 import { pharmacycards } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xpharmacies/Clicks/cardsDataClicks';
 import { restaurantCards } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xrestaurants/JoesBeerHouse/cardsDataJoesBeerhouse';
 import { storecards } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xstores/Checkers/cardsDataCheckers';

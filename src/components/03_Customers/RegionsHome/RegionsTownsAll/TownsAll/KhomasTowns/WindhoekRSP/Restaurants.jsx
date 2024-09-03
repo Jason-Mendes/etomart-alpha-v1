@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import PropTypes from 'prop-types';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useRestaurantsStoresCards1, useRestaurants } from "./CardsDataWindhoekRSP/cardsDataRestaurants";
+import { useRestaurantsStoresCards1, useRestaurants } from "./CardsDataWindhoekXRSP/cardsDataRestaurants";
 import Footer from "../../../../../../04_Footer/Footer";
 import KhomasOPNavBar from "../../../../02_OPNavBarRegions/KhomasOPNavBar/KhomasOPNavBar";
-import { useIconsCategories } from "../cardsDataKhomasTowns/cardsDataWindhoek/cardsDataWindhoek";
+import { useIconsCategories } from "../cardsDataWindhoek/cardsDataWindhoek";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 /**
