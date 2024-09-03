@@ -5,10 +5,10 @@ const LocationButton = ({ onClick, location }) => {
   return (
     <button
       onClick={onClick}
-      className="flex px-2 items-center space-x-2 rounded-md bg-white py-2 text-center text-[#000000] hover:bg-[#ffaf5e4b]"
+      className="flex px-2 items-center space-x-2 rounded-2xl py-2 text-center  bg-[#ffaf5e4b] transition duration-500 hover:bg-[#ffaf5e9c] active:scale-95"
     >
       <MapPin size={20} className="text-orange-500" />
-      <span className="font-medium">{location}</span>
+      <span className=" text z-50  items-center justify-center  font-semibold text-[#ee9613] transition duration-500">{location}</span>
     </button>
   );
 };
