@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
-import XClearButton from "./01_LPNavBarRegions/KhomasLPNavBar/ComponentsCalled/XClearButton";
+import XClearButton from "./01_LPNavBarRegions/LPNavBar/ComponentsCalled/XClearButton";
 import Footer from "../04_Footer/Footer";
-import LPNavBar from "./01_LPNavBarRegions/KhomasLPNavBar/LPNavBar";
+import LPNavBar from "./01_LPNavBarRegions/LPNavBar/LPNavBar";
 import RegionsBanner from "../03_Customers/RegionsHome/RegionsBanner";
 import { useRegionsData, useTestimonialsData } from "./landingPageData/landingPageData";
 import "react-lazy-load-image-component/src/effects/blur.css";
