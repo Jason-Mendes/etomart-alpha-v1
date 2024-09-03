@@ -644,8 +644,8 @@ const LandingPage = () => {
             onClick={(e) => e.stopPropagation()} // Prevents the overlay click event
           >
             <div className="mb-4 text-center">
-              <h3 className="text-2xl font-bold">This is Etomart!</h3>
-            </div>
+            <h3 className="text-2xl text-black font-bold font-Agbalumo">This is Etomart!</h3>
+          </div>
             <div className="aspect-w-16 aspect-h-9 relative">
               <video
                 ref={videoRef}
@@ -667,7 +667,7 @@ const LandingPage = () => {
             </div>
             <div className="mt-4 flex justify-center">
               <button
-                className="rounded-full bg-orange-500 px-6 py-2 text-white transition-colors duration-300 hover:bg-orange-600"
+                className="rounded-full bg-orange-500 px-6 py-2 text-white font-bold transition-colors duration-300 hover:bg-orange-600"
                 onClick={handleGoBack}
               >
                 Close
