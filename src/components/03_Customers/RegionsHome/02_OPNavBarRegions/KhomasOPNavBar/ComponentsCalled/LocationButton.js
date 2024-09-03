@@ -5,7 +5,7 @@ const LocationButton = ({ onClick, location }) => {
   return (
     <button
       onClick={onClick}
-      className="flex items-center space-x-2 rounded-md bg-white px-3 py-2 text-gray-700 hover:bg-gray-100"
+      className="flex px-2 items-center space-x-2 rounded-md bg-white py-2 text-center text-[#000000] hover:bg-[#ffaf5e4b]"
     >
       <MapPin size={20} className="text-orange-500" />
       <span className="font-medium">{location}</span>

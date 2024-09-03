@@ -86,7 +86,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  
+
   //Dropdown visibility
   useEffect(() => {
     const handleResize = () => {
@@ -270,15 +270,12 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
             <h1 className="mr-2 whitespace-nowrap pt-1 font-shrikhand text-xl sm:text-2xl md:text-3xl text-[#ee9613]">
               <Link to="/LP/Regions">Etomart</Link>
             </h1>
-             {/* Show the LocationButton only on larger screens */}
-             {!state.isMobile && (
             <div className="hidden sm:flex items-center space-x-4">
-              <LocationButton
-                onClick={handleLocationClick}
-                location={location ? location.suburb : "Select Location"}
-              />
-            </div>
-            )}
+            <LocationButton
+              onClick={handleLocationClick}
+              location={location ? location.suburb : "Select Location"}
+            />
+          </div>
             <div className="flex-grow mx-4">
               <div className="relative">
                 <input
@@ -381,7 +378,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
             <div className="fixed inset-0 z-30 mt-[calc(5rem+1px)] bg-black bg-opacity-50" onClick={handleOverlayClick}></div>
           </>
         )}
-        {state.showLocationModal && (
+       {state.showLocationModal && (
           <LocationModal
             showModal={state.showLocationModal}
             closeModal={closeLocationModal}
@@ -409,14 +406,9 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
                 <div className="mb-2 flex items-center justify-center">
                   <CartIcon />
                 </div>
-                 {/* Mobile toggle button for menu */}
-                 {state.isMobile && (
-                <div className="mb-2 flex items-center justify-center">
-                  <LocationButton
-                    onClick={handleLocationClick}
-                    location={location ? location.suburb : "Select Location"}
-                  /></div>
-                )}
+                <div className="sm:hidden flex items-center space-x-4">
+                  <LocationButton onClick={handleLocationClick} />
+                </div>
                 <div className="mb-2">
                   <button className="w-full rounded-md py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b]">
                     Login or register
