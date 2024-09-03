@@ -8,6 +8,7 @@ import LocationButton from "./ComponentsCalled/LocationButton";
 import LocationModal from "./Modals/LocationModal";
 import UserProfileIcon from "./ComponentsCalled/UserProfileIcon";
 import PropTypes from 'prop-types';
+import { useLocation } from './ComponentsCalled/LocationContext';
 
 /** 
  * KhomasOPNavBar component
@@ -16,6 +17,7 @@ import PropTypes from 'prop-types';
  * @param {boolean} props.isHidden - Flag to hide the navbar
  */
 const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
+  const { location, setLocation } = useLocation();
   const [state, setState] = useState({
     showLocationModal: false,
     nav: false,
@@ -27,7 +29,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
       product: []
     },
     isMobile: false,
-    isSearchFocused: false
+    isSearchFocused: false,
   });
 
   const dropdownRef = useRef(null);
@@ -153,6 +155,22 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     setState(prevState => ({ ...prevState, showLocationModal: true }));
   }, []);
 
+  const handleLocationSelect = useCallback((address, suburb) => {
+    setLocation({ address, suburb });
+    setState(prevState => ({ ...prevState, showLocationModal: false }));
+  }, [setLocation]);
+
+  const closeLocationModal = useCallback(() => {
+    setState(prevState => ({ ...prevState, showLocationModal: false }));
+  }, []);
+
+  useEffect(() => {
+    if (!location) {
+      setState(prevState => ({ ...prevState, showLocationModal: true }));
+    }
+  }, [location]);
+
+
   const closeModals = useCallback(() => {
     setState(prevState => ({ ...prevState, showLocationModal: false }));
   }, []);
@@ -247,17 +265,17 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
   return (
     <div className={`mx-auto max-w-screen-2xl px-4 overflow-hidden ${isHidden ? 'hidden' : ''}`}>
       <div className="font-josefin_sans">
-        <nav
-          id="KhomasOPNavBar"
-          className={`bg-[#f9f9f9] px-2 sm:px-4 text-[#ee9613] transition-all duration-300 ${state.isExpanded ? 'py-2 sm:py-6' : 'py-2 sm:py-4'} relative z-50`}
-        >
+        <nav id="KhomasOPNavBar" className={`bg-[#f9f9f9] px-2 sm:px-4 text-[#ee9613] transition-all duration-300 ${state.isExpanded ? 'py-2 sm:py-6' : 'py-2 sm:py-4'} relative z-50`}>
           <div className="mx-auto flex items-center justify-between">
             <h1 className="mr-2 whitespace-nowrap pt-1 font-shrikhand text-xl sm:text-2xl md:text-3xl text-[#ee9613]">
               <Link to="/LP/Regions">Etomart</Link>
             </h1>
             <div className="hidden sm:flex items-center space-x-4">
-              <LocationButton onClick={handleLocationClick} />
-            </div>
+            <LocationButton
+              onClick={handleLocationClick}
+              location={location ? location.suburb : "Select Location"}
+            />
+          </div>
             <div className="flex-grow mx-4">
               <div className="relative">
                 <input
@@ -360,13 +378,13 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
             <div className="fixed inset-0 z-30 mt-[calc(5rem+1px)] bg-black bg-opacity-50" onClick={handleOverlayClick}></div>
           </>
         )}
-        {state.showLocationModal && (
+       {state.showLocationModal && (
           <LocationModal
             showModal={state.showLocationModal}
-            closeModal={closeModals}
+            closeModal={closeLocationModal}
+            onLocationSelect={handleLocationSelect}
           />
         )}
-
         {state.nav && (
           <div
             ref={dropdownRef}

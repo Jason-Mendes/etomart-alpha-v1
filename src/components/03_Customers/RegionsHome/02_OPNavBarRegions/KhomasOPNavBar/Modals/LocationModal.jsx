@@ -1,139 +1,107 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { X, MapPin, Navigation } from 'lucide-react';
 
-// LocationModal component: handles displaying and controlling the modal for selecting a delivery location
-const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
-  // Handle click event for "Continue" button
-  const handleNewLocationButtonClick = () => {
-    openNewLocationModal();
+const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
+  const [address, setAddress] = useState("");
+  const [suburb, setSuburb] = useState("");
+  const [useCurrentLocation, setUseCurrentLocation] = useState(false);
+  const [error, setError] = useState("");
+
+  const windhoekSuburbs = [
+    "Windhoek Central", "Windhoek East", "Windhoek West", "Windhoek North",
+    "Windhoek South", "Khomasdal", "Katutura", "Eros", "Ludwigsdorf",
+    "Olympia", "Pioneers Park", "Klein Windhoek", "Hochland Park"
+  ];
+
+  useEffect(() => {
+    if (useCurrentLocation) {
+      getCurrentLocation();
+    }
+  }, [useCurrentLocation]);
+
+  const getCurrentLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          // Here, you'd normally use a geocoding service to get the address
+          // For this example, we'll just set a dummy address
+          setAddress("123 Main St");
+          setSuburb("Windhoek Central");
+          setError("");
+        },
+        error => {
+          setError("Unable to get your location. Please enter it manually.");
+          setUseCurrentLocation(false);
+        }
+      );
+    } else {
+      setError("Geolocation is not supported by your browser");
+      setUseCurrentLocation(false);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!address || !suburb) {
+      setError("Please enter both address and suburb");
+      return;
+    }
+    onLocationSelect(address, suburb);
+    closeModal();
   };
 
   return (
-    <>
-      {/* Modal wrapper */}
-      <div
-        className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity ${showModal ? "opacity-100" : "pointer-events-none opacity-0"
-          }`}
-      >
-        {/* Modal background: overlay with a semi-transparent black background */}
-        <div
-          className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity ${showModal ? "duration-300 ease-out" : "duration-300 ease-in"
-            }`}
-          onClick={closeModal} // Close modal when clicking outside the content
-        />
-
-        {/* Modal content */}
-        <div
-          id="Orange_container"
-          className={`fixed bottom-6 left-1/2 top-24 flex -translate-x-1/2 flex-col rounded-lg bg-[#ee9613] p-4 transition-all${showModal ? "scale-100 opacity-100" : "scale-95 opacity-0"
-            }`}
-          style={{
-            width: "90%",
-            maxWidth: "600px",
-            maxHeight: "85vh",
-            overflow: "auto",
-          }} // Responsive and constrained dimensions
-        >
-          {/* Close button */}
-          <div className="flex justify-end">
-            <button
-              className="text-[#000000] hover:text-white"
-              onClick={closeModal}
+    <div className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity ${showModal ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+      <div className="absolute inset-0 bg-black bg-opacity-50" onClick={closeModal} />
+      <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+        <button onClick={closeModal} className="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
+          <X size={24} />
+        </button>
+        <h2 className="mb-4 text-2xl font-bold">Choose Your Location</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="address" className="mb-2 block text-sm font-medium text-gray-700">Street Address</label>
+            <input
+              type="text"
+              id="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full rounded-md border border-gray-300 p-2"
+              placeholder="Enter your street address"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="suburb" className="mb-2 block text-sm font-medium text-gray-700">Suburb</label>
+            <select
+              id="suburb"
+              value={suburb}
+              onChange={(e) => setSuburb(e.target.value)}
+              className="w-full rounded-md border border-gray-300 p-2"
             >
-              <svg
-                className="size-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+              <option value="">Select a suburb</option>
+              {windhoekSuburbs.map((sub) => (
+                <option key={sub} value={sub}>{sub}</option>
+              ))}
+            </select>
           </div>
-
-          {/* Modal header */}
-          <div className="flex flex-col items-center">
-            <h1 className="mb-4 text-center font-shrikhand text-4xl text-[#000000]">
-              Choose where to deliver
-            </h1>
-            <span className="mb-4 text-center text-lg text-white">
-              Please enter your details
-            </span>
-
-            {/* Suburb selector */}
-            <div className="mb-4 w-full">
-              <label
-                className="mb-2 block text-lg font-bold text-gray-700"
-                htmlFor="town"
-              >
-                Suburb
-              </label>
-              <select
-                id="town"
-                data-test-id="TownsSelect"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-              >
-                <option value="Windhoek_Central">Windhoek Central</option>
-                <option value="Windhoek_East">Windhoek East</option>
-                <option value="Windhoek_West">Windhoek West</option>
-                <option value="Windhoek_North">Windhoek North</option>
-                <option value="Windhoek_South">Windhoek South</option>
-                <option value="Khomasdal">Khomasdal</option>
-                <option value="Katutura">Katutura</option>
-                <option value="Eros">Eros</option>
-                <option value="Ludwigsdorf">Ludwigsdorf</option>
-                <option value="Olympia">Olympia</option>
-                <option value="Pioneers_Park">Pioneers Park</option>
-                <option value="Klein_Windhoek">Klein Windhoek</option>
-                <option value="Hochland_Park">Hochland Park</option>
-              </select>
-            </div>
-
-            {/* Address input */}
-            <div className="mb-4 w-full">
-              <label
-                className="mb-2 block text-sm font-bold text-gray-700"
-                htmlFor="address-query-input"
-              >
-                Street name and number
-              </label>
-              <input
-                id="address-query-input"
-                data-test-id="AddressQueryInput"
-                placeholder="Street name and number"
-                autoComplete="off"
-                spellCheck="false"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-              />
-            </div>
-
-            {/* Continue button */}
-            <button
-              onClick={handleNewLocationButtonClick}
-              className="w-full rounded-lg bg-black py-2 text-white transition-colors duration-200 hover:border hover:border-gray-300 hover:bg-white hover:text-black"
-            >
-              Continue
-            </button>
-          </div>
-
-          {/* Image section */}
-          <div className=" m-8 w-10/12 rounded-lg bg-white p-4 pt-8">
-            <div className="relative">
-              <img
-                src="/images/Mais_rdedeverse.jpg"
-                alt="img"
-                className="max-h-[30vh] w-full rounded-b-lg object-cover"
-              />
-            </div>
-          </div>
-        </div>
+          {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
+          <button
+            type="button"
+            onClick={() => setUseCurrentLocation(true)}
+            className="mb-4 flex w-full items-center justify-center rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600"
+          >
+            <Navigation className="mr-2" size={20} />
+            Use My Current Location
+          </button>
+          <button
+            type="submit"
+            className="w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
+          >
+            Confirm Location
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 
