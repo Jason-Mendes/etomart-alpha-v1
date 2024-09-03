@@ -2,11 +2,11 @@ import React, { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import { Search, X, Menu } from 'lucide-react';
 import { Link } from "react-router-dom";
 import { useStoresCards, useRestaurantsCards, useProductsCards } from "./KhomasDataOPNavBarSearch";
-import CartIcon from "../../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/CartIcon";
-import HomeIcon from "../../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/HomeIcon";
+import CartIcon from "../CartIcon";
+import HomeIcon from "../HomeIcon";
 import LocationButton from "../../RegionsTownsAll/LocationButton";
 import LocationModal from "../../RegionsTownsAll/LocationModal";
-import UserProfileIcon from "../../../../00_Main_Etomart_All/01_LPNavBarRegions/KhomasLPNavBar/UserProfileIcon";
+import UserProfileIcon from "../UserProfileIcon";
 import PropTypes from 'prop-types';
 
 /** 
