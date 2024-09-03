@@ -177,7 +177,7 @@ function RegionHome() {
       (Math.cos(lat1 * (Math.PI / 180)) *
         Math.cos(lat2 * (Math.PI / 180)) *
         (1 - Math.cos(dLon))) /
-        2;
+      2;
     return R * 2 * Math.asin(Math.sqrt(a));
   }, []);
 
@@ -190,12 +190,12 @@ function RegionHome() {
         suggestions:
           value.length > 0
             ? Object.entries(townsData).flatMap(([regionName, towns]) =>
-                towns
-                  .filter((town) =>
-                    town.name.toLowerCase().includes(value.toLowerCase())
-                  )
-                  .map((town) => ({ ...town, region: regionName }))
-              )
+              towns
+                .filter((town) =>
+                  town.name.toLowerCase().includes(value.toLowerCase())
+                )
+                .map((town) => ({ ...town, region: regionName }))
+            )
             : [],
         isDropdownOpen: value.length > 0,
       }));
@@ -499,9 +499,8 @@ function RegionHome() {
                   <LazyLoadImage
                     className="mr-2 h-8 rounded-[36px]"
                     src={selectedRegionButton.flagPath}
-                    alt={`${
-                      selectedRegionButton.name || "Selected Region"
-                    } flag`}
+                    alt={`${selectedRegionButton.name || "Selected Region"
+                      } flag`}
                     effect="blur"
                   />
                   <p className="text-center text-sm font-bold text-gray-700 md:text-base lg:text-lg xl:text-xl 2xl:text-xl">
@@ -509,8 +508,8 @@ function RegionHome() {
                   </p>
                 </div>
               </button>
-              
-              <a  href="/LP/Regions"
+
+              <a href="/LP/Regions"
                 className="flex h-14 min-w-[150px] items-center justify-center overflow-hidden rounded-[36px] bg-white px-6 py-2 font-josefin_sans text-black shadow-lg hover:bg-orange-300"
                 aria-label="View all regions"
               >
@@ -537,8 +536,8 @@ function RegionHome() {
         <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {townsData[selectedRegionButton.name]?.map((town) => (
             <div key={town.code} className="flex w-full justify-center">
-              
-              <a  href={town.path}
+
+              <a href={town.path}
                 className="flex h-[55px] w-[280px] items-center justify-between overflow-hidden rounded-[36px] bg-white px-4 font-josefin_sans text-black shadow-lg transition-transform hover:scale-105 hover:bg-orange-300"
                 aria-label={`Select ${town.name}`}
               >
@@ -548,8 +547,8 @@ function RegionHome() {
                 <svg
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
-                   className="ml-2 h-8 w-6 shrink-0 fill-current text-zinc-950"
-                    aria-hidden="true"
+                  className="ml-2 h-8 w-6 shrink-0 fill-current text-zinc-950"
+                  aria-hidden="true"
                 >
                   <path
                     d="M16.5 18a.498.498 0 01-.37-.836L20.824 12 16.13 6.836a.499.499 0 11.74-.672l5 5.5a.5.5 0 010 .672l-5 5.5a.498.498 0 01-.37.164"
@@ -688,7 +687,7 @@ function RegionHome() {
       className="py-8 md:py-16"
     >
       <div className="container mx-auto flex flex-col items-center px-4">
-      <h2
+        <h2
           id="testimonials-title"
           className="mb-2 text-center font-shrikhand text-3xl font-bold text-orange-500 md:mb-4 md:text-4xl"
         >
@@ -707,14 +706,13 @@ function RegionHome() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className={`absolute inset-x-4 top-8 rounded-3xl border border-slate-200 bg-white p-4 shadow-md transition-all duration-500 ease-in-out md:rounded-[200px] md:p-6 ${
-                  state.currentSlide === index
+                className={`absolute inset-x-4 top-8 rounded-3xl border border-slate-200 bg-white p-4 shadow-md transition-all duration-500 ease-in-out md:rounded-[200px] md:p-6 ${state.currentSlide === index
                     ? "translate-x-0 opacity-100"
                     : state.currentSlide ===
                       (index + 1) % testimonials.length
-                    ? "translate-x-full opacity-0"
-                    : "-translate-x-full opacity-0"
-                }`}
+                      ? "translate-x-full opacity-0"
+                      : "-translate-x-full opacity-0"
+                  }`}
               >
                 <div className="flex w-auto flex-col items-center justify-center px-2 py-4 md:px-6 md:py-10">
                   <LazyLoadImage
@@ -739,11 +737,10 @@ function RegionHome() {
                       {Array.from({ length: 5 }, (_, starIndex) => (
                         <div
                           key={starIndex}
-                          className={`flex size-6 items-center justify-center md:size-10 ${
-                            starIndex < testimonial.numStars
+                          className={`flex size-6 items-center justify-center md:size-10 ${starIndex < testimonial.numStars
                               ? "text-orange-400"
                               : "text-gray-300"
-                          }`}
+                            }`}
                         >
                           <svg
                             fill="currentColor"
@@ -891,8 +888,8 @@ function RegionHome() {
                 <h3 className="mb-4 h-16 text-xl font-bold">
                   {item.title}
                 </h3>
-                
-                <a  href={item.link}
+
+                <a href={item.link}
                   className="inline-block rounded bg-orange-500 px-4 py-2 font-semibold text-white transition-colors hover:bg-orange-600"
                   target="_blank"
                   rel="noopener noreferrer"

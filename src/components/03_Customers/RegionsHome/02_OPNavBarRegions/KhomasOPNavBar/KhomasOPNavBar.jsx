@@ -85,12 +85,12 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
   }, []);
 
 
-//Dropdown visibility
+  //Dropdown visibility
   useEffect(() => {
     const handleResize = () => {
       const newIsMobile = window.innerWidth <= 1090;
-      setState(prevState => ({ 
-        ...prevState, 
+      setState(prevState => ({
+        ...prevState,
         isMobile: newIsMobile,
         nav: newIsMobile ? prevState.nav : false // Close dropdown if screen becomes larger than 1090px
       }));
@@ -367,7 +367,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
           />
         )}
 
-{state.nav && (
+        {state.nav && (
           <div
             ref={dropdownRef}
             className="absolute right-0 top-16 z-50 w-56 rounded-lg bg-[#fdfdfd] shadow-lg transition-opacity duration-200"

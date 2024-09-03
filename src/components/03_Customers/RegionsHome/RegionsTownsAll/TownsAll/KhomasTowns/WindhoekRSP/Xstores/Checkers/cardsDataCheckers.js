@@ -102,7 +102,7 @@ const navcategories = [
     href: "/en/isr/eilat/venue/123-alcohol-wine-eilat/items/menucategory-1",
   },
 ];
-  
+
 const cards = [
   {
     title: "Fresh Produce",
@@ -489,7 +489,7 @@ export const storecards = [
   },
 ];
 
-  
+
 const supermarkets = [
   {
     name: "Checkers",

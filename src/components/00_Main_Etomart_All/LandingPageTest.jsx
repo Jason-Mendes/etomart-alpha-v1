@@ -289,7 +289,7 @@ const LandingPage = () => {
       (Math.cos(lat1 * (Math.PI / 180)) *
         Math.cos(lat2 * (Math.PI / 180)) *
         (1 - Math.cos(dLon))) /
-        2;
+      2;
     return R * 2 * Math.asin(Math.sqrt(a));
   }, []);
 
@@ -302,17 +302,17 @@ const LandingPage = () => {
       suggestions:
         value.length > 0
           ? regionsData
-              .filter((region) =>
-                region.name.toLowerCase().includes(value.toLowerCase())
-              )
-              .map(({ code, name, flagPath, path }) => ({
-                value: code,
-                label: name,
-                code,
-                name,
-                flagPath,
-                path,
-              }))
+            .filter((region) =>
+              region.name.toLowerCase().includes(value.toLowerCase())
+            )
+            .map(({ code, name, flagPath, path }) => ({
+              value: code,
+              label: name,
+              code,
+              name,
+              flagPath,
+              path,
+            }))
           : [],
       isDropdownOpen: value.length > 0,
     }));
@@ -332,7 +332,7 @@ const LandingPage = () => {
       nextPage: `/LP/Region/${formattedRegion.name}`,
     }));
     console.log("Selected Region:", formattedRegion);
-    
+
     // Update URL without navigating
     window.history.pushState(null, '', `/LP/Region/${formattedRegion.name}`);
   }, []);
@@ -853,13 +853,12 @@ const LandingPage = () => {
               {testimonials.map((testimonial, index) => (
                 <div
                   key={index}
-                  className={`absolute inset-x-4 top-8 rounded-3xl border border-slate-200 bg-white p-4 shadow-md transition-all duration-500 ease-in-out md:rounded-[200px] md:p-6 ${
-                    state.currentSlide === index
+                  className={`absolute inset-x-4 top-8 rounded-3xl border border-slate-200 bg-white p-4 shadow-md transition-all duration-500 ease-in-out md:rounded-[200px] md:p-6 ${state.currentSlide === index
                       ? "translate-x-0 opacity-100"
                       : state.currentSlide === (index + 1) % testimonials.length
-                      ? "translate-x-full opacity-0"
-                      : "-translate-x-full opacity-0"
-                  }`}
+                        ? "translate-x-full opacity-0"
+                        : "-translate-x-full opacity-0"
+                    }`}
                 >
                   <div className="flex w-auto flex-col items-center justify-center px-2 py-4 md:px-6 md:py-10">
                     <LazyLoadImage
@@ -884,11 +883,10 @@ const LandingPage = () => {
                         {Array.from({ length: 5 }, (_, starIndex) => (
                           <div
                             key={starIndex}
-                            className={`flex size-6 items-center justify-center md:size-10 ${
-                              starIndex < testimonial.numStars
+                            className={`flex size-6 items-center justify-center md:size-10 ${starIndex < testimonial.numStars
                                 ? "text-orange-400"
                                 : "text-gray-300"
-                            }`}
+                              }`}
                           >
                             <svg
                               fill="currentColor"

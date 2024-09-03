@@ -16,14 +16,12 @@ const AccessibilityModal = ({
           <span className="text-gray-800">Increase contrast</span>
           <button
             onClick={onContrastToggle}
-            className={`h-6 w-12 rounded-full p-1 transition-colors ${
-              isHighContrastEnabled ? "bg-orange-500" : "bg-gray-300"
-            }`}
+            className={`h-6 w-12 rounded-full p-1 transition-colors ${isHighContrastEnabled ? "bg-orange-500" : "bg-gray-300"
+              }`}
           >
             <div
-              className={`size-4 rounded-full bg-white transition-transform ${
-                isHighContrastEnabled ? "translate-x-6" : ""
-              }`}
+              className={`size-4 rounded-full bg-white transition-transform ${isHighContrastEnabled ? "translate-x-6" : ""
+                }`}
             />
           </button>
         </div>

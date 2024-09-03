@@ -44,9 +44,8 @@ const LPNavBar = () => {
     <div>
       <nav
         id="lpnavbar"
-        className={`bg-[#f9f9f9] px-4 transition-all duration-300 ${
-          isNavbarSticky ? "sticky top-0 z-50 shadow-md" : ""
-        }`}
+        className={`bg-[#f9f9f9] px-4 transition-all duration-300 ${isNavbarSticky ? "sticky top-0 z-50 shadow-md" : ""
+          }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between py-4">
           <Link

@@ -37,8 +37,8 @@ const ForgotPasswordModal = ({
   if (!showModal) return null;
 
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity" 
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity"
       onClick={closeModal}
       aria-labelledby="modal-title"
       role="dialog"

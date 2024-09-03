@@ -95,9 +95,8 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
           </div>
           <div className="mr-4 hidden w-full grow md:flex md:w-auto md:flex-none">
             <div
-              className={`flex items-center rounded-full bg-white bg-opacity-20 p-2 transition-all duration-300 ${
-                isExpanded ? 'w-96' : 'w-72'
-              }`}
+              className={`flex items-center rounded-full bg-white bg-opacity-20 p-2 transition-all duration-300 ${isExpanded ? 'w-96' : 'w-72'
+                }`}
             >
               <input
                 type="text"
@@ -178,7 +177,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         />
       )}
 
-{nav && (
+      {nav && (
         <div
           className="absolute right-0 top-24 z-50 w-56 rounded-lg bg-[#fdfdfd] shadow-lg transition-opacity duration-200"
           role="dialog"

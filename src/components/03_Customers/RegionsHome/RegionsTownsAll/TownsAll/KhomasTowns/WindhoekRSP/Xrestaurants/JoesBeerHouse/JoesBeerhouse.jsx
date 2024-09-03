@@ -814,8 +814,8 @@ function JoesBeerhouse() {
                     <button
                       key={index}
                       className={`size-2 rounded-full transition-colors duration-200 ${index === state.currentIndex % cards.length
-                          ? "bg-white"
-                          : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
+                        ? "bg-white"
+                        : "bg-gray-400 bg-opacity-50 hover:bg-opacity-75"
                         }`}
                       onClick={() => handleDotClick(index)}
                       aria-label={`Go to slide ${index + 1}`}

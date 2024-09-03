@@ -8,14 +8,14 @@ import { storecards } from '../../RegionsTownsAll/TownsAll/KhomasTowns/WindhoekR
 
 // Rest of the code remains the same
 const storesCards = [...supermarketsstorescards1, ...restaurantsstorescards1, ...pharmaciesstorescards1].map(card => ({
-    ...card,
-    storetype: card.storetype || card.cuisine || 'General'
-  }));
-  
+  ...card,
+  storetype: card.storetype || card.cuisine || 'General'
+}));
+
 const restaurantsCards = [...restaurantCards];
 
 const productsCards = [...pharmacycards, ...storecards];
-  
+
 export function useStoresCards() {
   return useMemo(() => storesCards, []);
 }

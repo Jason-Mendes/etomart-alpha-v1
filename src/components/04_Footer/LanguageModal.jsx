@@ -86,11 +86,10 @@ const LanguageModal = ({
                 <span className="text-gray-800">{lang}</span>
                 <button
                   onClick={() => onLanguageChange(lang)}
-                  className={`rounded px-4 py-2 font-semibold transition-colors ${
-                    lang === currentLanguage
+                  className={`rounded px-4 py-2 font-semibold transition-colors ${lang === currentLanguage
                       ? "cursor-default bg-gray-200 text-orange-400"
                       : "bg-orange-500 text-white hover:bg-orange-600"
-                  }`}
+                    }`}
                   disabled={lang === currentLanguage}
                 >
                   {lang === currentLanguage ? "Chosen" : "Choose"}

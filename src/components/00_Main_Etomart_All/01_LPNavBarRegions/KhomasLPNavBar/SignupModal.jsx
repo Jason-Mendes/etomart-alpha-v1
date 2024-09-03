@@ -50,8 +50,8 @@ const SignupModal = ({
   if (!showModal) return null;
 
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity" 
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity"
       onClick={closeModal}
     >
       <div
@@ -109,8 +109,8 @@ const SignupModal = ({
                       field.includes("password")
                         ? "password"
                         : field === "email"
-                        ? "email"
-                        : "text"
+                          ? "email"
+                          : "text"
                     }
                     name={field}
                     id={field}
@@ -218,7 +218,7 @@ const SignupModal = ({
             </div>
           </div>
         </div>
-        
+
         {/* Login link */}
         <div className="bg-[#ee9613] px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
           <p className="mt-2 text-center text-sm text-black">

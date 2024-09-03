@@ -684,7 +684,7 @@ function JoesBeerhouse() {
         <main className="relative z-10 pt-20">
           {/* Header section */}
           <header className="relative size-full">
-          <div className="relative mx-auto max-w-xs p-4">
+            <div className="relative mx-auto max-w-xs p-4">
               <LazyLoadImage
                 src="/images/restaurants/joesbeerhouse.png"
                 alt="Joe's Beerhouse"
@@ -713,7 +713,7 @@ function JoesBeerhouse() {
                   </svg>
                 </button>
               </div>
-              <div  ref={dropdownRef} className="relative px-4">
+              <div ref={dropdownRef} className="relative px-4">
                 <button ref={dropdownRef}
                   aria-label="More options"
                   className="p-2 text-white"
@@ -729,8 +729,8 @@ function JoesBeerhouse() {
                   </svg>
                 </button>
                 {state.isDropdownOpen && (
-                  <div  className="absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-                    <div  className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <div className="absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                       <button
                         aria-label={state.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                         onClick={toggleFavorite}
@@ -876,185 +876,185 @@ function JoesBeerhouse() {
 
           {/* Search and Filter Section */}
           <section
-  ref={searchAndFilterRef}
-  className={`p-4 transition-all duration-300 ease-in-out ${state.isSticky ? 'fixed inset-x-0 z-50 bg-white shadow-md' : ''}`}
-  style={{ top: state.isSticky ? 0 : 'auto' }}
->
-  <div className="container mx-auto px-4">
-    {/* Mobile layout (smaller than md) */}
-    <div className="md:hidden">
-      {/* Search Input */}
-      <div className="relative mb-4 w-full">
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={state.searchTerm}
-          onChange={handleSearch}
-          className="w-full rounded-full border border-gray-300 px-4 py-2 pr-10 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
-        />
-        <svg
-          viewBox="0 0 24 24"
-          className="absolute right-3 top-1/2 size-6 -translate-y-1/2 text-gray-500"
-        >
-          <path
-            d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
-            fill="#ee9613"
-          />
-        </svg>
-      </div>
-
-      {/* Category Buttons and More Button */}
-      <div className="flex items-center space-x-4">
-        {/* Category Buttons Container */}
-        <div className="flex-1 overflow-x-auto">
-          <div className="grid auto-cols-max grid-flow-col gap-2 pb-2">
-            <button
-              onClick={() => handleCategorySelect("")}
-              className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-            >
-              All
-            </button>
-            {state.visibleCategories.map((category) => (
-              <button
-                key={category}
-                data-category={category}
-                onClick={() => handleCategorySelect(category)}
-                className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* More Button Container */}
-        <div className="shrink-0">
-          {state.hiddenCategories.length > 0 && (
-            <div className="relative">
-              <button
-                ref={moreButtonRef}
-                onClick={toggleMoreDropdown}
-                className="flex w-[130px] items-center justify-between whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
-              >
-                More <ChevronDownIcon className="size-4" />
-              </button>
-
-              {/* Dropdown Menu */}
-              {state.isMoreDropdownOpen && (
-                <div
-                  ref={dropdownRef}
-                  className="absolute right-0 z-50 mt-1 w-[130px] overflow-visible rounded-md bg-white shadow-lg"
-                  style={{ top: 'calc(100% + 2px)' }}
-                >
-                  <div className="flex flex-col gap-2 p-2">
-                    {state.hiddenCategories.map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => {
-                          handleCategorySelect(category);
-                          setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                        }}
-                        className="whitespace-nowrap rounded px-3 py-2 text-left hover:bg-gray-100"
-                      >
-                        {category}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-
-    {/* Desktop layout (md and above) */}
-    <div className="hidden md:flex md:flex-col md:space-y-4">
-      <div className="flex items-center justify-between space-x-4">
-        {/* Category Buttons Container */}
-        <div className="w-2/3 overflow-x-auto">
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => handleCategorySelect("")}
-              className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-            >
-              All
-            </button>
-            {state.visibleCategories.map((category) => (
-              <button
-                key={category}
-                data-category={category}
-                onClick={() => handleCategorySelect(category)}
-                className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* More Button Container */}
-        <div className="relative w-auto min-w-[150px]">
-          {state.hiddenCategories.length > 0 && (
-            <div className="relative">
-              <button
-                ref={moreButtonRef}
-                onClick={toggleMoreDropdown}
-                className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
-              >
-                More <ChevronDownIcon className="mx-2 size-4" />
-              </button>
-
-              {/* Dropdown Menu */}
-              {state.isMoreDropdownOpen && (
-                <div
-                  ref={dropdownRef}
-                  className="absolute left-0 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
-                  style={{ top: 'calc(100% + 2px)' }}
-                >
-                  <div className="grid grid-cols-2 gap-2 p-2">
-                    {state.hiddenCategories.map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => {
-                          handleCategorySelect(category);
-                          setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
-                        }}
-                        className="whitespace-nowrap rounded px-3 py-2 text-left hover:bg-gray-100"
-                      >
-                        {category}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Search Input */}
-        <div className="relative w-1/3">
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={state.searchTerm}
-            onChange={handleSearch}
-            className="w-full rounded-full border border-gray-300 px-4 py-2 pr-10 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
-          />
-          <svg
-            viewBox="0 0 24 24"
-            className="absolute right-3 top-1/2 size-6 -translate-y-1/2 text-gray-500"
+            ref={searchAndFilterRef}
+            className={`p-4 transition-all duration-300 ease-in-out ${state.isSticky ? 'fixed inset-x-0 z-50 bg-white shadow-md' : ''}`}
+            style={{ top: state.isSticky ? 0 : 'auto' }}
           >
-            <path
-              d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
-              fill="#ee9613"
-            />
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+            <div className="container mx-auto px-4">
+              {/* Mobile layout (smaller than md) */}
+              <div className="md:hidden">
+                {/* Search Input */}
+                <div className="relative mb-4 w-full">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={state.searchTerm}
+                    onChange={handleSearch}
+                    className="w-full rounded-full border border-gray-300 px-4 py-2 pr-10 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+                  />
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="absolute right-3 top-1/2 size-6 -translate-y-1/2 text-gray-500"
+                  >
+                    <path
+                      d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
+                      fill="#ee9613"
+                    />
+                  </svg>
+                </div>
+
+                {/* Category Buttons and More Button */}
+                <div className="flex items-center space-x-4">
+                  {/* Category Buttons Container */}
+                  <div className="flex-1 overflow-x-auto">
+                    <div className="grid auto-cols-max grid-flow-col gap-2 pb-2">
+                      <button
+                        onClick={() => handleCategorySelect("")}
+                        className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                      >
+                        All
+                      </button>
+                      {state.visibleCategories.map((category) => (
+                        <button
+                          key={category}
+                          data-category={category}
+                          onClick={() => handleCategorySelect(category)}
+                          className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                        >
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* More Button Container */}
+                  <div className="shrink-0">
+                    {state.hiddenCategories.length > 0 && (
+                      <div className="relative">
+                        <button
+                          ref={moreButtonRef}
+                          onClick={toggleMoreDropdown}
+                          className="flex w-[130px] items-center justify-between whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
+                        >
+                          More <ChevronDownIcon className="size-4" />
+                        </button>
+
+                        {/* Dropdown Menu */}
+                        {state.isMoreDropdownOpen && (
+                          <div
+                            ref={dropdownRef}
+                            className="absolute right-0 z-50 mt-1 w-[130px] overflow-visible rounded-md bg-white shadow-lg"
+                            style={{ top: 'calc(100% + 2px)' }}
+                          >
+                            <div className="flex flex-col gap-2 p-2">
+                              {state.hiddenCategories.map((category) => (
+                                <button
+                                  key={category}
+                                  onClick={() => {
+                                    handleCategorySelect(category);
+                                    setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+                                  }}
+                                  className="whitespace-nowrap rounded px-3 py-2 text-left hover:bg-gray-100"
+                                >
+                                  {category}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Desktop layout (md and above) */}
+              <div className="hidden md:flex md:flex-col md:space-y-4">
+                <div className="flex items-center justify-between space-x-4">
+                  {/* Category Buttons Container */}
+                  <div className="w-2/3 overflow-x-auto">
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => handleCategorySelect("")}
+                        className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === "" ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                      >
+                        All
+                      </button>
+                      {state.visibleCategories.map((category) => (
+                        <button
+                          key={category}
+                          data-category={category}
+                          onClick={() => handleCategorySelect(category)}
+                          className={`w-auto max-w-[130px] whitespace-nowrap rounded-md px-4 py-2 transition-colors duration-300 ${state.selectedCategory === category ? "bg-[#ee9613] text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                        >
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* More Button Container */}
+                  <div className="relative w-auto min-w-[150px]">
+                    {state.hiddenCategories.length > 0 && (
+                      <div className="relative">
+                        <button
+                          ref={moreButtonRef}
+                          onClick={toggleMoreDropdown}
+                          className="flex w-auto max-w-[130px] items-center whitespace-nowrap rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
+                        >
+                          More <ChevronDownIcon className="mx-2 size-4" />
+                        </button>
+
+                        {/* Dropdown Menu */}
+                        {state.isMoreDropdownOpen && (
+                          <div
+                            ref={dropdownRef}
+                            className="absolute left-0 z-50 mt-1 w-auto min-w-[200px] overflow-visible rounded-md bg-white shadow-lg"
+                            style={{ top: 'calc(100% + 2px)' }}
+                          >
+                            <div className="grid grid-cols-2 gap-2 p-2">
+                              {state.hiddenCategories.map((category) => (
+                                <button
+                                  key={category}
+                                  onClick={() => {
+                                    handleCategorySelect(category);
+                                    setState(prevState => ({ ...prevState, isMoreDropdownOpen: false }));
+                                  }}
+                                  className="whitespace-nowrap rounded px-3 py-2 text-left hover:bg-gray-100"
+                                >
+                                  {category}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Search Input */}
+                  <div className="relative w-1/3">
+                    <input
+                      type="text"
+                      placeholder="Search products..."
+                      value={state.searchTerm}
+                      onChange={handleSearch}
+                      className="w-full rounded-full border border-gray-300 px-4 py-2 pr-10 transition-transform duration-200 hover:scale-105 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ee9613]"
+                    />
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="absolute right-3 top-1/2 size-6 -translate-y-1/2 text-gray-500"
+                    >
+                      <path
+                        d="M23.384 21.6191L16.855 15.0901C19.8122 11.2028 19.2517 5.689 15.5728 2.47626C11.894 -0.736477 6.35493 -0.549369 2.90126 2.90431C-0.552421 6.35798 -0.739529 11.897 2.47321 15.5759C5.68595 19.2548 11.1997 19.8152 15.087 16.8581L21.616 23.3871C22.1078 23.8667 22.8923 23.8667 23.384 23.3871C23.8718 22.8987 23.8718 22.1075 23.384 21.6191ZM2.75002 9.50007C2.75002 5.77215 5.7721 2.75007 9.50002 2.75007C13.2279 2.75007 16.25 5.77215 16.25 9.50007C16.25 13.228 13.2279 16.2501 9.50002 16.2501C5.77393 16.2457 2.75443 13.2262 2.75002 9.50007Z"
+                        fill="#ee9613"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
           {/* Restaurant Products Section */}
           <section ref={productsSectionRef} className="container mx-auto px-4 pb-4" data-test-id="restaurant-products">

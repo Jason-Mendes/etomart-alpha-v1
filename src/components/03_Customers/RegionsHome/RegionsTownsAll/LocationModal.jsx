@@ -11,24 +11,21 @@ const LocationModal = ({ showModal, closeModal, openNewLocationModal }) => {
     <>
       {/* Modal wrapper */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity ${
-          showModal ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
+        className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity ${showModal ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
       >
         {/* Modal background: overlay with a semi-transparent black background */}
         <div
-          className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity ${
-            showModal ? "duration-300 ease-out" : "duration-300 ease-in"
-          }`}
+          className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity ${showModal ? "duration-300 ease-out" : "duration-300 ease-in"
+            }`}
           onClick={closeModal} // Close modal when clicking outside the content
         />
 
         {/* Modal content */}
         <div
           id="Orange_container"
-          className={`fixed bottom-6 left-1/2 top-24 flex -translate-x-1/2 flex-col rounded-lg bg-[#ee9613] p-4 transition-all${
-            showModal ? "scale-100 opacity-100" : "scale-95 opacity-0"
-          }`}
+          className={`fixed bottom-6 left-1/2 top-24 flex -translate-x-1/2 flex-col rounded-lg bg-[#ee9613] p-4 transition-all${showModal ? "scale-100 opacity-100" : "scale-95 opacity-0"
+            }`}
           style={{
             width: "90%",
             maxWidth: "600px",

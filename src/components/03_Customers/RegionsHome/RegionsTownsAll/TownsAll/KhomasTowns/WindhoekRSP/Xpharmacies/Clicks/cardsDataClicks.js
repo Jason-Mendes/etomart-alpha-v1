@@ -234,35 +234,35 @@ export const pharmacycards = [
 
 const pharmacies = [
   {
-  name: "Dis-Chem",
-  imgSrc: "/images/pharmacies/dischem.png",
-  href: "/en/discovery/category/dischem",
-},
-{
-  name: "Clicks Pharmacy",
-  imgSrc: "/images/pharmacies/clicks.png",
-  href: "/LP/Khomas/Towns/Pharmacy/Clicks",
-},
-{
-  name: "Nampharm Pharmacy",
-  imgSrc: "/images/pharmacies/nampharm.png",
-  href: "/en/discovery/category/nampharm",
-},
-{
-  name: "Alpha Pharm",
-  imgSrc: "/images/pharmacies/alphapharm.png",
-  href: "/en/discovery/category/alphapharm",
-},
-{
-  name: "Medicine World",
-  imgSrc: "/images/pharmacies/medicineworld.png",
-  href: "/en/discovery/category/medicineworld",
-},
-{
-  name: "City Pharmacy",
-  imgSrc: "/images/pharmacies/citypharmacy.png",
-  href: "/en/discovery/category/citypharmacy",
-},
+    name: "Dis-Chem",
+    imgSrc: "/images/pharmacies/dischem.png",
+    href: "/en/discovery/category/dischem",
+  },
+  {
+    name: "Clicks Pharmacy",
+    imgSrc: "/images/pharmacies/clicks.png",
+    href: "/LP/Khomas/Towns/Pharmacy/Clicks",
+  },
+  {
+    name: "Nampharm Pharmacy",
+    imgSrc: "/images/pharmacies/nampharm.png",
+    href: "/en/discovery/category/nampharm",
+  },
+  {
+    name: "Alpha Pharm",
+    imgSrc: "/images/pharmacies/alphapharm.png",
+    href: "/en/discovery/category/alphapharm",
+  },
+  {
+    name: "Medicine World",
+    imgSrc: "/images/pharmacies/medicineworld.png",
+    href: "/en/discovery/category/medicineworld",
+  },
+  {
+    name: "City Pharmacy",
+    imgSrc: "/images/pharmacies/citypharmacy.png",
+    href: "/en/discovery/category/citypharmacy",
+  },
 ];
 
 export function useNavcategories() {
