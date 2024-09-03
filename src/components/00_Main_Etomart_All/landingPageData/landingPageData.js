@@ -116,7 +116,7 @@ export const useRegionsData = () => useMemo(() => [
   },
 ], []);
 
-export const useTestimonials = () => useMemo(() => [
+export const useTestimonialsData = () => useMemo(() => [
   {
     imageSrc: "/images/img_ellipse1.png",
     textBelowImage: "Lorem ipsum dolor sit amet consectetur.",

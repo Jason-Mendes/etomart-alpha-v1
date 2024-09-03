@@ -1,177 +1,26 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
 import XClearButton from "./01_LPNavBarRegions/KhomasLPNavBar/ComponentsCalled/XClearButton";
 import Footer from "../04_Footer/Footer";
 import LPNavBar from "./01_LPNavBarRegions/KhomasLPNavBar/LPNavBar";
 import RegionsBanner from "../03_Customers/RegionsHome/RegionsBanner";
+import { useRegionsData, useTestimonialsData } from "./landingPageData/landingPageData";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 /**
  * LandingPage Component
  * This component represents the main landing page of the application.
  */
-
-// Moved outside component to avoid recreation on each render
-
-// Define regions data
-const regionsData = [
-  {
-    code: "ALB",
-    name: "Khomas",
-    flagPath: "/images/regions/khomas2.jpeg",
-    path: "/LP/Region/Khomas",
-    latitude: -22.57,
-    longitude: 17.08,
-  },
-  {
-    code: "HRV",
-    name: "Erongo",
-    flagPath: "/images/regions/erongo.jpeg",
-    path: "/LP/Region/Erongo",
-    latitude: -22.55,
-    longitude: 14.28,
-  },
-  {
-    code: "CYP",
-    name: "Oshana",
-    flagPath: "/images/regions/oshana.jpeg",
-    path: "/LP/Region/Oshana",
-    latitude: -18.46,
-    longitude: 15.64,
-  },
-  {
-    code: "ALB",
-    name: "Omusati",
-    flagPath: "/images/regions/omusati.jpeg",
-    path: "/LP/Region/Omusati",
-    latitude: -18.13,
-    longitude: 15.37,
-  },
-  {
-    code: "HRV",
-    name: "Karas",
-    flagPath: "/images/regions/kharas2.jpeg",
-    path: "/LP/Region/Karas",
-    latitude: -27.38,
-    longitude: 17.92,
-  },
-  {
-    code: "CYP",
-    name: "Ohangwena",
-    flagPath: "/images/regions/ohangwena.jpeg",
-    path: "/LP/Region/Ohangwena",
-    latitude: -17.6,
-    longitude: 16.06,
-  },
-  {
-    code: "ALB",
-    name: "Zambezi",
-    flagPath: "/images/regions/zambezi.jpeg",
-    path: "/LP/Region/Zambezi",
-    latitude: -17.5,
-    longitude: 24.27,
-  },
-  {
-    code: "HRV",
-    name: "Oshikoto",
-    flagPath: "/images/regions/oshikoto.jpeg",
-    path: "/LP/Region/Oshikoto",
-    latitude: -18.81,
-    longitude: 16.92,
-  },
-  {
-    code: "CYP",
-    name: "Omaheke",
-    flagPath: "/images/regions/omaheke.jpeg",
-    path: "/LP/Region/Omaheke",
-    latitude: -21.76,
-    longitude: 19.59,
-  },
-  {
-    code: "ALB",
-    name: "Hardap",
-    flagPath: "/images/regions/hardap.jpeg",
-    path: "/LP/Region/Hardap",
-    latitude: -24.43,
-    longitude: 18.29,
-  },
-  {
-    code: "HRV",
-    name: "Otjozondjupa",
-    flagPath: "/images/regions/otjozondjupa.jpeg",
-    path: "/LP/Region/Otjozondjupa",
-    latitude: -20.45,
-    longitude: 17.23,
-  },
-  {
-    code: "CYP",
-    name: "Kunene",
-    flagPath: "/images/regions/kunene2.jpeg",
-    path: "/LP/Region/Kunene",
-    latitude: -19.58,
-    longitude: 13.41,
-  },
-  {
-    code: "ALB",
-    name: "Kavango East",
-    flagPath: "/images/regions/kavango_east.jpeg",
-    path: "/LP/Region/KavangoEast",
-    latitude: -18.03,
-    longitude: 20.78,
-  },
-  {
-    code: "HRV",
-    name: "Kavango West",
-    flagPath: "/images/regions/kavango_west.jpeg",
-    path: "/LP/Region/KavangoWest",
-    latitude: -18.12,
-    longitude: 19.79,
-  },
-];
-
-// Testimonials data
-const testimonials = [
-  {
-    imageSrc: "/images/img_ellipse1.png",
-    textBelowImage: "Lorem ipsum dolor sit amet consectetur.",
-    numStars: 1,
-    testimonialAuthor: "John Doe",
-  },
-  {
-    imageSrc: "/images/img_ellipse1.png",
-    textBelowImage:
-      "Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.",
-    numStars: 5,
-    testimonialAuthor: "John Doe",
-  },
-  {
-    imageSrc: "/images/img_ellipse1.png",
-    textBelowImage:
-      "Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil Dolor at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil at fringilla quam. Dolor turpis molestie dui magnis facilisis at fringil",
-    numStars: 3,
-    testimonialAuthor: "John Doe",
-  },
-  {
-    imageSrc: "/images/img_ellipse1.png",
-    textBelowImage:
-      "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTtttttttteststssyvhgvehevfjhvf ejhfvehvdjhssb dfvhsvdhjvdws b j",
-    numStars: 3,
-    testimonialAuthor: "John Doe",
-  },
-];
-
 const LandingPage = () => {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
   const videoRef = useRef(null);
+
+  // Use memoized data
+  const regionsData = useRegionsData();
+  const testimonials = useTestimonialsData();
 
   // State management
   const [state, setState] = useState({
@@ -192,7 +41,9 @@ const LandingPage = () => {
     nextPage: "",
     selectedRegion: null,
     bannerImage: "",
+    selectedRegionButton: null, // Add this line
   });
+
   // Memoized regions data
   const regions = useMemo(
     () =>
@@ -202,12 +53,10 @@ const LandingPage = () => {
         flagPath,
         path: path.replace(" ", ""), // Remove spaces from path
       })),
-    []
+    [regionsData]
   );
 
   // Callbacks
-  // Update the closeBanner function
-  // Helper functions
   const closeBanner = useCallback(() => {
     setState((prev) => ({ ...prev, isBannerVisible: false }));
   }, []);
@@ -216,9 +65,10 @@ const LandingPage = () => {
     setState((prev) => ({
       ...prev,
       selectedRegion: option,
+      selectedRegionButton: option, // Add this line
       bannerImage: option.flagPath,
       isBannerVisible: true,
-      nextPage: `/LP/Region/`,
+      nextPage: `/LP/Region/${option.name}`,
     }));
     console.log("Selected Region:", option);
   }, []);
@@ -277,7 +127,7 @@ const LandingPage = () => {
       },
       { distance: Infinity }
     );
-  }, []);
+  }, [regionsData]);
 
   const getDistance = useCallback((lat1, lon1, lat2, lon2) => {
     const R = 6371; // Radius of the Earth in kilometers
@@ -316,9 +166,8 @@ const LandingPage = () => {
           : [],
       isDropdownOpen: value.length > 0,
     }));
-  }, []);
+  }, [regionsData]);
 
-  // In your handleRegionClick function
   const handleRegionClick = useCallback((region) => {
     const formattedRegion = {
       ...region,
@@ -337,7 +186,6 @@ const LandingPage = () => {
     window.history.pushState(null, '', `/LP/Region/${formattedRegion.name}`);
   }, []);
 
-  // In your confirmRegionSelection function
   const confirmRegionSelection = useCallback(() => {
     if (state.userSelectedRegion) {
       const selectedRegionObject = regionsData.find(
@@ -346,19 +194,25 @@ const LandingPage = () => {
       if (selectedRegionObject) {
         const formattedRegion = {
           ...selectedRegionObject,
-          formattedName: selectedRegionObject.name.replace(" ", ""), // Add this line
+          formattedName: selectedRegionObject.name.replace(" ", ""),
         };
         setState((prev) => ({
           ...prev,
           selectedRegion: formattedRegion,
+          selectedRegionButton: formattedRegion, // Add this line
           bannerImage: formattedRegion.flagPath,
           isBannerVisible: true,
-          nextPage: `/LP/Region/`,
+          nextPage: `/LP/Region/${formattedRegion.name}`,
         }));
         console.log("Selected Region:", formattedRegion);
+        
+        // Navigate to RegionsTownsAll with the selected region
+        navigate(`/LP/Region/${formattedRegion.name}`, {
+          state: { selectedRegion: formattedRegion },
+        });
       }
     }
-  }, [state.userSelectedRegion]);
+  }, [state.userSelectedRegion, regionsData, navigate]);
 
   const goBack = useCallback(() => {
     setState((prev) => ({
@@ -387,7 +241,7 @@ const LandingPage = () => {
     setTimeout(() => {
       setState((prev) => ({ ...prev, isPaused: false }));
     }, 8000);
-  }, []);
+  }, [testimonials.length]);
 
   const handlePrevSlide = useCallback(
     () => handleSlideChange("prev"),
@@ -419,7 +273,6 @@ const LandingPage = () => {
   }, [handleGoBack]);
 
   // Effect hooks
-
   useEffect(() => {
     let timer;
     if (!state.isPaused) {
@@ -429,10 +282,10 @@ const LandingPage = () => {
           currentSlide:
             (prev.currentSlide - 1 + testimonials.length) % testimonials.length,
         }));
-      }, 6000); // Change slide every 2 seconds
+      }, 6000); // Change slide every 6 seconds
     }
     return () => clearInterval(timer);
-  }, [state.isPaused]);
+  }, [state.isPaused, testimonials.length]);
 
   useEffect(() => {
     if (!state.isBannerVisible && state.selectedRegion && state.nextPage) {
@@ -547,7 +400,7 @@ const LandingPage = () => {
                     <div className="flex max-w-sm flex-col items-center space-y-4">
                       <div
                         id="protected-div"
-                        className="relative flex items-center rounded-full border border-gray-300 bg-white px-8 py-2 text-gray-600 shadow-md transition-transform hover:scale-105"
+                        className="relative flex w-full items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-gray-600 shadow-md transition-transform hover:scale-105"
                         onClick={() =>
                           setState((prev) => ({
                             ...prev,
@@ -560,19 +413,18 @@ const LandingPage = () => {
                         aria-expanded={state.isDropdownOpen}
                       >
                         <img
-                          className="mr-2 h-7"
+                          className="mr-2 h-6"
                           src="/images/img_linkedin.svg"
                           alt="Location icon"
-                          loading="lazy"
+                          aria-hidden="true"
                         />
                         {state.isEditing ? (
                           <input
-                            ref={inputRef}
+                          ref={inputRef}
                             className="text-md grow border-none bg-transparent focus:outline-none"
                             type="text"
                             value={state.location}
                             placeholder="Search for a town"
-                            autoFocus
                             onChange={handleInputChange}
                             aria-label="Search for a town"
                           />
@@ -587,50 +439,48 @@ const LandingPage = () => {
                               e.stopPropagation();
                               clearLocation();
                             }}
-                            className="absolute right-2 top-1/2 -translate-y-2.5"
+                            className="absolute right-2 top-1/2 -translate-y-1/2"
                             aria-label="Clear location"
                           />
                         )}
                       </div>
                       {state.isDropdownOpen && state.suggestions.length > 0 && (
-                        <div
+                        <ul
                           ref={dropdownRef}
                           className="z-10 flex max-h-60 w-full max-w-sm flex-col items-center space-y-2 overflow-y-auto border border-gray-300 bg-white shadow-md"
                           role="listbox"
                         >
                           {state.suggestions.map((option) => (
-                            <div
+                            <li
                               key={`${option.region}-${option.name}`}
                               onClick={() => handleSelect(option)}
                               className="w-full cursor-pointer px-4 py-2 text-left hover:bg-gray-100"
                               role="option"
-                              aria-selected={
-                                state.selectedRegion?.code === option.code
-                              }
+                              aria-selected={state.selectedRegion?.code === option.code}
                             >
                               {option.label}
-                            </div>
+                            </li>
                           ))}
-                        </div>
+                        </ul>
                       )}
                     </div>
                     <button
                       className="mt-4 flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-black shadow-md transition-transform hover:scale-105"
                       onClick={handleUseCurrentLocation}
                       disabled={state.isLoading}
-                      aria-label="Use current location"
+                      aria-label={state.isLoading ? "Getting location..." : "Use current location"}
                     >
                       {state.isLoading ? (
                         <div
-                          className="mr-2 size-5 animate-spin rounded-full border-b-2 border-gray-900"
+                          className="mr-2 h-5 w-5 animate-spin rounded-full border-b-2 border-gray-900"
                           aria-hidden="true"
                         ></div>
                       ) : (
                         <img
                           className="mr-2 h-5"
                           src="/images/img_save.svg"
-                          alt="Location icon"
-                          loading="lazy"
+                          alt=""
+                          aria-hidden="true"
                         />
                       )}
                       <p className="text-base font-bold">
@@ -644,7 +494,7 @@ const LandingPage = () => {
                 {!state.isLoading &&
                   state.confirmRegion &&
                   state.userSelectedRegion && (
-                    <div className="text-center">
+                    <div className="mt-4 text-center">
                       <p>
                         Are you in <b>{state.userSelectedRegion}</b> region?
                       </p>
@@ -662,7 +512,7 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-      {/* Explore Etomart Regions */}
+       {/* Explore Etomart Regions */}
       {/* Regions Buttons */}
       <section
         aria-labelledby="what-is-etomart-title"
@@ -699,7 +549,7 @@ const LandingPage = () => {
                   <svg
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="ml-2 h-8 w-6 shrink-0 fill-current text-zinc-950"
+                    className="ml-2 h-6 w-4 shrink-0 fill-current text-zinc-950"
                     aria-hidden="true"
                   >
                     <path
@@ -713,7 +563,6 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-
       {/* Did You Know Section */}
       <section aria-labelledby="did-you-know-title" className="py-16">
         <div className="container mx-auto px-4">
@@ -772,7 +621,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-          <div className="mt-8 flex justify-center  md:hidden">
+          <div className="mt-8 flex justify-center md:hidden">
             <button
               className="rounded-full bg-white px-8 py-3 font-semibold text-black shadow-md transition-all duration-300 hover:bg-orange-300"
               onClick={handleWatchVideo}
@@ -795,9 +644,7 @@ const LandingPage = () => {
             onClick={(e) => e.stopPropagation()} // Prevents the overlay click event
           >
             <div className="mb-4 text-center">
-              <h3 className="font-Agbalumo text-4xl font-bold">
-                This is Etomart!
-              </h3>
+              <h3 className="text-2xl font-bold">This is Etomart!</h3>
             </div>
             <div className="aspect-w-16 aspect-h-9 relative">
               <video
@@ -880,7 +727,7 @@ const LandingPage = () => {
                   </div>
                   <div className="mt-4 flex w-full flex-wrap items-center justify-center gap-4 md:gap-6">
                     <div className="flex w-auto flex-col items-center justify-center px-2 pb-2 md:px-6 md:pb-4">
-                      <div className="md:shadow-bs3 flex w-full flex-wrap items-center justify-center gap-2 rounded-3xl border border-slate-200 p-2 shadow-md md:mb-4  md:gap-4 md:rounded-[200px] md:p-2">
+                      <div className="md:shadow-bs3 flex w-full flex-wrap items-center justify-center gap-2 rounded-3xl border border-slate-200 p-2 shadow-md md:mb-4 md:gap-4 md:rounded-[200px] md:p-2">
                         {Array.from({ length: 5 }, (_, starIndex) => (
                           <div
                             key={starIndex}
@@ -927,6 +774,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+
       {/* How it Works Section */}
       <section
         aria-labelledby="how-it-works-title"
@@ -1030,8 +878,8 @@ const LandingPage = () => {
                 </div>
                 <div className="p-6 text-center">
                   <h3 className="mb-4 h-16 text-xl font-bold">{item.title}</h3>
-                  <a
-                    href={item.link}
+                  
+                  <a  href={item.link}
                     className="inline-block rounded bg-orange-500 px-4 py-2 font-semibold text-white transition-colors hover:bg-orange-600"
                     target="_blank"
                     rel="noopener noreferrer"
