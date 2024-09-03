@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import AuthenticatedLoginModal from "./AuthenticatedLoginModal";
-import AuthenticatedSignupModal from "./AuthenticatedSignupModal";
-import ForgotPasswordModal from "./ForgotPasswordModal";
-import LoginModal from "./LoginModal";
-import SignupModal from "./SignupModal";
+import AuthenticatedLoginModal from "./Modals/AuthenticatedLoginModal";
+import AuthenticatedSignupModal from "./Modals/AuthenticatedSignupModal";
+import ForgotPasswordModal from "./Modals/ForgotPasswordModal";
+import LoginModal from "./Modals/LoginModal";
+import SignupModal from "./Modals/SignupModal";
 
 const LPNavBar = () => {
   const [isNavbarSticky, setIsNavbarSticky] = useState(false);
