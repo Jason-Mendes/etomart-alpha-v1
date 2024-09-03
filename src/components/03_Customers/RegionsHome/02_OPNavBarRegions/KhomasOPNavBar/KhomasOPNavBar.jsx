@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { useStoresCards, useRestaurantsCards, useProductsCards } from "./KhomasDataOPNavBarSearch";
 import CartIcon from "./ComponentsCalled/CartIcon";
 import HomeIcon from "./ComponentsCalled/HomeIcon";
-import LocationButton from "../../RegionsTownsAll/LocationButton";
-import LocationModal from "../../RegionsTownsAll/LocationModal";
+import LocationButton from "./ComponentsCalled/LocationButton";
+import LocationModal from "./Modals/LocationModal";
 import UserProfileIcon from "./ComponentsCalled/UserProfileIcon";
 import PropTypes from 'prop-types';
 

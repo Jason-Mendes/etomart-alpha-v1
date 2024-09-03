@@ -3,8 +3,8 @@ import { CgMenuRound, CgClose } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import CartIcon from "../../../../../02_OPNavBarRegions/KhomasOPNavBar/ComponentsCalled/CartIcon";
 import HomeIcon from "../../../../../02_OPNavBarRegions/KhomasOPNavBar/ComponentsCalled/HomeIcon";
-import LocationButton from "../../../../LocationButton";
-import LocationModal from "../../../../LocationModal";
+import LocationButton from "../../../../../02_OPNavBarRegions/KhomasOPNavBar/ComponentsCalled/LocationButton";
+import LocationModal from "../../../../../02_OPNavBarRegions/KhomasOPNavBar/Modals/LocationModal";
 import UserProfileIcon from "../../../../../02_OPNavBarRegions/KhomasOPNavBar/ComponentsCalled/UserProfileIcon";
 
 const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
