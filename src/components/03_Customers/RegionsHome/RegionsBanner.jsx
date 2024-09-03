@@ -5,8 +5,8 @@ const RegionsBanner = ({ isVisible, imageSrc, closeBanner, goBack }) => {
     closeBanner();
     // Check if the URL has changed and trigger navigation if necessary
     const currentPath = window.location.pathname;
-    if (currentPath.startsWith('/LP/Region/') && currentPath !== '/LP') {
-      window.history.pushState(null, '', '/LP');
+    if (currentPath.startsWith('/LP/Region/') && currentPath !== '/LP/Regions') {
+      window.history.pushState(null, '', '/LP/Regions');
     }
   }, [closeBanner]);
 
