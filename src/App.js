@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { LocationProvider, useLocation as useLocationContext } from "./components/03_Customers/RegionsHome/02_OPNavBarRegions/KhomasOPNavBar/ComponentsCalled/LocationContext"
 
@@ -19,6 +19,7 @@ import Checkers from "./components/03_Customers/RegionsHome/RegionsTownsAll/Town
 // Clear Selected Location and Browsing Mode from specific routes
 const ClearLocationAndBrowsingOnSpecificRoutes = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { clearLocation, setIsBrowsing } = useLocationContext();
 
   useEffect(() => {
@@ -29,6 +30,24 @@ const ClearLocationAndBrowsingOnSpecificRoutes = () => {
       setIsBrowsing(false);
     }
   }, [location, clearLocation, setIsBrowsing]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const currentPath = window.location.pathname;
+      const routesToClear = ['/LP', '/LP/Regions', '/LP/Region', '/LP/Region/:regionName'];
+      
+      if (routesToClear.includes(currentPath)) {
+        clearLocation();
+        setIsBrowsing(false);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [clearLocation, setIsBrowsing]);
 
   return null;
 };
@@ -78,7 +97,6 @@ function App() {
 }
 
 export default App;
-
 
 // import React, { useEffect } from "react";
 // import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
