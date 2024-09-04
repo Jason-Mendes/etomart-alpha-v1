@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { X, MapPin, Navigation } from 'lucide-react';
+import { X, Navigation } from 'lucide-react';
 import { useLocation } from "../ComponentsCalled/LocationContext";
 
 const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
-  const { setBrowsingMode } = useLocation();
   const [address, setAddress] = useState("");
   const [suburb, setSuburb] = useState("");
   const [useCurrentLocation, setUseCurrentLocation] = useState(false);
   const [error, setError] = useState("");
-  const [showConfirmClose, setShowConfirmClose] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const { setIsBrowsing } = useLocation();
 
   const windhoekSuburbs = [
     "Windhoek Central", "Windhoek East", "Windhoek West", "Windhoek North",
@@ -54,33 +54,51 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
   };
 
   const handleClose = () => {
-    setShowConfirmClose(true);
+    setShowOptions(true);
   };
 
   const handleBrowse = () => {
-    setBrowsingMode(true);
+    setIsBrowsing(true);
     closeModal();
   };
 
-  const handleConfirmClose = (confirmed) => {
-    if (confirmed) {
-      handleBrowse();
-    } else {
-      setShowConfirmClose(false);
-    }
+  const handleAddLocation = () => {
+    setShowOptions(false);
   };
+
+  if (showOptions) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center transition-opacity">
+        <div className="absolute inset-0 bg-black bg-opacity-50" onClick={closeModal} />
+        <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+          <h2 className="mb-4 text-2xl font-bold">Choose an Option</h2>
+          <p className="mb-4 text-sm text-gray-600">Note: If you select browsing mode, you will not be able to order anything.</p>
+          <button
+            onClick={handleBrowse}
+            className="mb-4 w-full rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600"
+          >
+            Just browse Etomart
+          </button>
+          <button
+            onClick={handleAddLocation}
+            className="w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
+          >
+            Add location
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity ${showModal ? "opacity-100" : "pointer-events-none opacity-0"}`}>
-      <div className="absolute inset-0 bg-black bg-opacity-50" onClick={handleClose} />
+      <div className="absolute inset-0 bg-black bg-opacity-50" onClick={closeModal} />
       <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-        {!showConfirmClose ? (
-          <>
-            <button onClick={handleClose} className="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
-              <X size={24} />
-            </button>
-            <h2 className="mb-4 text-2xl font-bold">Choose Your Location</h2>
-            <form onSubmit={handleSubmit}>
+        <button onClick={handleClose} className="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
+          <X size={24} />
+        </button>
+        <h2 className="mb-4 text-2xl font-bold">Choose Your Location</h2>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="address" className="mb-2 block text-sm font-medium text-gray-700">Street Address</label>
             <input
@@ -116,33 +134,12 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
             Use My Current Location
           </button>
           <button
-                type="submit"
-                className="w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
-              >
-                Confirm Location
-              </button>
-            </form>
-          </>
-        ) : (
-          <div className="text-center">
-            <h2 className="mb-4 text-2xl font-bold">Just browsing?</h2>
-            <p className="mb-4">You won't be able to order anything without setting a location.</p>
-            <div className="flex justify-center space-x-4">
-              <button
-                onClick={() => handleConfirmClose(true)}
-                className="rounded-md bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300"
-              >
-                Browse Etomart
-              </button>
-              <button
-                onClick={() => handleConfirmClose(false)}
-                className="rounded-md bg-orange-500 px-4 py-2 text-white hover:bg-orange-600"
-              >
-                Add Location
-              </button>
-            </div>
-          </div>
-        )}
+            type="submit"
+            className="w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
+          >
+            Confirm Location
+          </button>
+        </form>
       </div>
     </div>
   );
