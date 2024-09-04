@@ -10,6 +10,13 @@ import UserProfileIcon from "./ComponentsCalled/UserProfileIcon";
 import PropTypes from 'prop-types';
 import { useLocation } from './ComponentsCalled/LocationContext';
 
+/** 
+ * KhomasOPNavBar component
+ * @param {Object} props - Component props
+ * @param {boolean} props.disableInternalScroll - Flag to disable internal scrolling
+ * @param {boolean} props.isHidden - Flag to hide the navbar
+ */
+
 const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
   const { location, setLocation, isBrowsing, setIsBrowsing, toggleBrowsingMode } = useLocation();
   const [state, setState] = useState({
@@ -172,7 +179,87 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     setState(prevState => ({ ...prevState, nav: !prevState.nav }));
   }, []);
 
-  // Render functions (renderStoreCard, renderFoodCard, renderPharmacyCard) remain the same
+  // Render functions 
+  // Render functions
+  const renderStoreCard = useCallback((store) => (
+    <div className="h-40 w-full sm:h-48 sm:w-64 md:h-52 md:w-72 lg:h-56 lg:w-80 xl:h-60 xl:w-96 shrink-0 p-2" key={store.name}>
+      <Link to={store.href} className="flex h-full flex-col rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+        <div className="relative h-3/5 w-full overflow-hidden rounded-t-lg">
+          <img src={store.imgSrc} alt={store.name} className="h-full w-full object-cover" loading="lazy" />
+          <div data-testid="venue-storetype-label" className="absolute left-0 top-0 mr-2 mt-2 rounded-r-full bg-[#ee9613] p-2 text-xs text-black">{store.storetype}</div>
+        </div>
+        <div className="flex flex-col justify-between p-2 h-2/5">
+          <p className="w-full truncate text-sm font-bold">{store.name}</p>
+          <div className="mt-1 flex items-start text-xs">
+            <span className="font-bold text-[#ee9613]">{store.priceRange}</span>
+            <span className="mx-1">•</span>
+            <span>{store.cuisine}</span>
+          </div>
+          <div className="mt-1 text-left text-xs text-gray-500">Pickup: {store.pickupTime}</div>
+        </div>
+      </Link>
+    </div>
+  ), []);
+  const renderFoodCard = useCallback((food) => (
+    <Link to={food.href} className="group relative flex h-32 sm:h-36 md:h-40 lg:h-44 xl:h-48 w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="food-card-link" key={food.name}>
+      <div className="relative w-1/3 overflow-hidden">
+        <img src={food.imgSrc} alt={food.name} className="absolute left-0 top-0 h-full w-full object-cover" loading="lazy" />
+      </div>
+      <div className="flex w-2/3 flex-col justify-between p-3">
+        <div>
+          <h3 data-testid="food-name" className="mb-1 truncate text-sm font-bold">{food.name}</h3>
+          <div className="mb-1 flex items-center text-xs text-gray-600">
+            <span className="font-semibold text-[#ee9613]">{food.priceRange}</span>
+            <span className="mx-2">•</span>
+            <span className="truncate">{food.cuisine}</span>
+          </div>
+          <p className="mb-1 line-clamp-2 text-xs text-gray-600">{food.description}</p>
+        </div>
+        <div className="text-xs text-gray-500">Pickup: {food.pickupTime}</div>
+        <div className="mt-auto">
+          <div className="rounded py-1 text-xs text-black">
+            <span className="text-black">Etomart </span>
+            <span className={`text-[#${food.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
+              {food.deliveryTime ? 'Delivery Available' : 'Delivery Not Available'}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="absolute right-2 top-2 flex h-6 w-8 items-center justify-center rounded bg-[#ee9613] text-lg text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        +
+      </div>
+    </Link>
+  ), []);
+  const renderPharmacyCard = useCallback((product) => (
+    <Link to={product.href} className="group relative flex h-32 sm:h-36 md:h-40 lg:h-44 xl:h-48 w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="product-card-link" key={product.name}>
+      <div className="relative w-1/3 overflow-hidden">
+        <img src={product.imgSrc} alt={product.name} className="absolute left-0 top-0 h-full w-full object-cover" loading="lazy" />
+      </div>
+      <div className="flex w-2/3 flex-col justify-between p-3">
+        <div>
+          <h3 data-testid="product-name" className="mb-1 truncate text-sm font-bold">{product.name}</h3>
+          <div className="mb-1 flex items-center text-xs text-gray-600">
+            <span className="font-semibold text-[#ee9613]">{product.priceRange}</span>
+            <span className="mx-2">•</span>
+            <span className="truncate">{product.category}</span>
+          </div>
+          <p className="mb-1 line-clamp-2 text-xs text-gray-600">{product.description}</p>
+        </div>
+        <div className="text-xs text-gray-500">Pickup: {product.pickupTime}</div>
+        <div className="mt-auto">
+          <div className="rounded py-1 text-xs text-black">
+            <span className="text-black">Etomart </span>
+            <span className={`text-[#${product.deliveryTime ? 'ee9613' : 'ee1313'}] font-bold`}>
+              {product.deliveryTime ? 'Delivery Available' : 'Delivery Not Available'}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="absolute right-2 top-2 flex h-6 w-8 items-center justify-center rounded bg-[#ee9613] text-lg text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        +
+      </div>
+    </Link>
+  ), []);
 
   return (
     <div className={`mx-auto max-w-screen-2xl px-4 overflow-hidden ${isHidden ? 'hidden' : ''}`}>
