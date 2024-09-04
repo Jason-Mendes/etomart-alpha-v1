@@ -21,6 +21,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
   const { location, setLocation, isBrowsing, setIsBrowsing, toggleBrowsingMode } = useLocation();
   const [state, setState] = useState({
     showLocationModal: false,
+    showExitBrowsingConfirmation: false,
     nav: false,
     isExpanded: false,
     searchQuery: "",
@@ -144,16 +145,32 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     }
   }, [handleCollapseNavbar]);
 
+  // const handleLocationClick = useCallback(() => {
+  //   if (isBrowsing) {
+  //     if (window.confirm("Would you like to exit browsing mode and select a location?")) {
+  //       setIsBrowsing(false);
+  //       setState(prevState => ({ ...prevState, showLocationModal: true }));
+  //     }
+  //   } else {
+  //     setState(prevState => ({ ...prevState, showLocationModal: true }));
+  //   }
+  // }, [isBrowsing, setIsBrowsing]);
   const handleLocationClick = useCallback(() => {
     if (isBrowsing) {
-      if (window.confirm("Would you like to exit browsing mode and select a location?")) {
-        setIsBrowsing(false);
-        setState(prevState => ({ ...prevState, showLocationModal: true }));
-      }
+      setState(prevState => ({ ...prevState, showExitBrowsingConfirmation: true }));
     } else {
       setState(prevState => ({ ...prevState, showLocationModal: true }));
     }
-  }, [isBrowsing, setIsBrowsing]);
+  }, [isBrowsing]);
+
+  const handleExitBrowsing = useCallback(() => {
+    setIsBrowsing(false);
+    setState(prevState => ({ ...prevState, showExitBrowsingConfirmation: false, showLocationModal: true }));
+  }, [setIsBrowsing]);
+
+  const handleContinueBrowsing = useCallback(() => {
+    setState(prevState => ({ ...prevState, showExitBrowsingConfirmation: false }));
+  }, []);
 
   const handleLocationSelect = useCallback((address, suburb) => {
     setLocation({ address, suburb });
@@ -381,16 +398,50 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
           </>
         )}
        {state.showLocationModal && (
-          <LocationModal
-            showModal={state.showLocationModal}
-            closeModal={closeLocationModal}
-            onLocationSelect={handleLocationSelect}
-            onBrowse={() => {
-              setIsBrowsing(true);
-              closeLocationModal();
-            }}
-          />
-        )}
+        <LocationModal
+          showModal={state.showLocationModal}
+          closeModal={closeLocationModal}
+          onLocationSelect={handleLocationSelect}
+          onBrowse={() => {
+            setIsBrowsing(true);
+            closeLocationModal();
+          }}
+        />
+      )}
+
+      {state.showExitBrowsingConfirmation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center transition-opacity">
+          <div className="absolute inset-0 bg-black bg-opacity-50" onClick={handleContinueBrowsing} />
+          <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+            <button onClick={handleContinueBrowsing} className="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
+              <X size={24} />
+            </button>
+            <h2 className="mb-4 text-2xl font-bold">Exit Browsing Mode?</h2>
+            <div className="mb-4 w-full rounded-lg bg-white">
+              <div className="relative">
+                <img
+                  src="/images/Mais_rdedeverse.jpg"
+                  alt="Exit browsing mode"
+                  className="max-h-[30vh] w-full rounded-lg object-cover"
+                />
+              </div>
+            </div>
+            <p className="mb-4 text-sm text-gray-600">Would you like to exit browsing mode and select a location?</p>
+            <button
+              onClick={handleExitBrowsing}
+              className="mb-4 w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
+            >
+              Exit Browsing Mode
+            </button>
+            <button
+              onClick={handleContinueBrowsing}
+              className="w-full rounded-md bg-gray-700 p-2 text-white hover:bg-gray-500"
+            >
+              Continue Browsing
+            </button>
+          </div>
+        </div>
+      )}
         {state.nav && (
           <div
             ref={dropdownRef}

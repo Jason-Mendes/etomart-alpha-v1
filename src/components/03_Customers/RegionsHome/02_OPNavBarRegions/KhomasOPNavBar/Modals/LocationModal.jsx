@@ -75,7 +75,7 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
           <p className="mb-4 text-sm text-gray-600">Note: If you select browsing mode, you will not be able to order anything.</p>
           <button
             onClick={handleBrowse}
-            className="mb-4 w-full rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600"
+            className="mb-4 w-full rounded-md bg-gray-700 p-2 text-white hover:bg-gray-500"
           >
             Just browse Etomart
           </button>
@@ -128,7 +128,7 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
           <button
             type="button"
             onClick={() => setUseCurrentLocation(true)}
-            className="mb-4 flex w-full items-center justify-center rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600"
+            className="mb-4 flex w-full items-center justify-center rounded-md bg-gray-700 p-2 text-white hover:bg-gray-500"
           >
             <Navigation className="mr-2" size={20} />
             Use My Current Location
