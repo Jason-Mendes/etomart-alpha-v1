@@ -1,13 +1,12 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo, lazy, Suspense } from "react";
-import PropTypes from 'prop-types';
-import axios from "axios";
-import mapboxgl from "mapbox-gl";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { toast } from "react-toastify";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 import { Search, X } from 'lucide-react';
-import { useNavcategories, useCards, useStoresCards, useSupermarkets } from "./cardsDataCheckers";
+import mapboxgl from "mapbox-gl";
+import React, { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { toast } from "react-toastify";
+import { useCards, useNavcategories, useStoresCards, useSupermarkets } from "./cardsDataCheckers";
 
 // Lazy load components for better performance
 const Footer = lazy(() => import("../../../../../../../../04_Footer/Footer"));
@@ -161,10 +160,10 @@ function Checkers() {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
   // Marker coordinates for the map
-  const MARKER_COORDINATES = [
+  const MARKER_COORDINATES = useMemo(() => [
     { lng: 17.09449450474923, lat: -22.584210677171924 },
     { lng: 17.073723364157306, lat: -22.561939983264068 },
-  ];
+  ], []);
 
   // Function to fetch and display the route on the map
   const fetchAndDisplayRoute = useCallback(async (mapInstance) => {
@@ -201,7 +200,7 @@ function Checkers() {
       console.error("Error fetching route:", error);
       toast.error("Failed to load route. Please try again later.");
     }
-  }, []);
+  }, [MARKER_COORDINATES]);
 
   // Function to initialize the map
   const initializeMap = useCallback((mapContainer) => {
@@ -246,7 +245,7 @@ function Checkers() {
       console.error("Error initializing map:", error);
       toast.error("Failed to initialize map. Please check your internet connection and try again.");
     }
-  }, [fetchAndDisplayRoute]);
+  }, [MARKER_COORDINATES, fetchAndDisplayRoute]);
 
   // Effect hooks for various functionalities
   useEffect(() => {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { X, Navigation } from 'lucide-react';
+import { Navigation, X } from 'lucide-react';
+import React, { useEffect, useState } from "react";
 import { useLocation } from "../ComponentsCalled/LocationContext";
 
 const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
@@ -31,6 +31,76 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
   }, [showModal]);
 
   useEffect(() => {
+    const getCurrentLocation = () => {
+      if ("geolocation" in navigator) {
+        setIsLoading(true);
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            try {
+              const { latitude, longitude } = position.coords;
+              console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+              
+              const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
+              console.log(`Google Maps API URL: ${url}`);
+  
+              const response = await fetch(url);
+              const data = await response.json();
+              
+              console.log('Google Maps API Response:', data);
+  
+              if (data.results && data.results.length > 0) {
+                const result = data.results[0];
+                console.log('First result:', result);
+  
+                let streetNumber = '';
+                let route = '';
+                let suburbName = '';
+  
+                result.address_components.forEach(component => {
+                  if (component.types.includes('street_number')) {
+                    streetNumber = component.long_name;
+                  } else if (component.types.includes('route')) {
+                    route = component.long_name;
+                  } else if (component.types.includes('sublocality') || component.types.includes('neighborhood')) {
+                    suburbName = component.long_name;
+                  }
+                });
+  
+                setHouseNumber(streetNumber);
+                setAddress(route);
+                setSuburb(suburbName || 'Unknown');
+                setError("");
+  
+                // Save location to localStorage
+                saveLocation(streetNumber, route, suburbName || 'Unknown');
+              } else {
+                throw new Error("No results found in Location tagging response");
+              }
+            } catch (error) {
+              console.error("Detailed Geocoding error:", error);
+              console.error("Error stack:", error.stack);
+              setError(`Unable to get your exact address: ${error.message}. Please enter it manually.`);
+            } finally {
+              setIsLoading(false);
+              setUseCurrentLocation(false);
+            }
+          },
+          (error) => {
+            console.error("Geolocation error:", error);
+            console.error("Geolocation error code:", error.code);
+            console.error("Geolocation error message:", error.message);
+            setError(`Unable to get your location: ${error.message}. Please enter it manually.`);
+            setIsLoading(false);
+            setUseCurrentLocation(false);
+          },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+      } else {
+        setError("Geolocation is not supported by your browser");
+        setUseCurrentLocation(false);
+      }
+    };
+  
     if (useCurrentLocation) {
       getCurrentLocation();
     }
@@ -154,7 +224,7 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
             onClick={handleBrowse}
             className="mb-4 w-full rounded-md bg-gray-700 p-2 text-white hover:bg-gray-500"
           >
-            Just browse Etomart
+            Browse Etomart Instead
           </button>
           <button
             onClick={handleAddLocation}

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const LocationContext = createContext();
 
@@ -15,13 +15,14 @@ export const LocationProvider = ({ children }) => {
   useEffect(() => {
     if (location) {
       localStorage.setItem('userLocation', JSON.stringify(location));
+    } else {
+      localStorage.removeItem('userLocation');
     }
     localStorage.setItem('isBrowsing', isBrowsing);
   }, [location, isBrowsing]);
 
   const clearLocation = () => {
     setLocation(null);
-    localStorage.removeItem('userLocation');
   };
 
   const toggleBrowsingMode = () => {

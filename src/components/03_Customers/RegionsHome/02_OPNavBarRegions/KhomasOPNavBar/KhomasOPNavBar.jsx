@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
-import { Search, X, Menu } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
+import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useStoresCards, useRestaurantsCards, useProductsCards } from "./KhomasDataOPNavBarSearch";
 import CartIcon from "./ComponentsCalled/CartIcon";
 import HomeIcon from "./ComponentsCalled/HomeIcon";
 import LocationButton from "./ComponentsCalled/LocationButton";
-import LocationModal from "./Modals/LocationModal";
-import UserProfileIcon from "./ComponentsCalled/UserProfileIcon";
-import PropTypes from 'prop-types';
 import { useLocation } from './ComponentsCalled/LocationContext';
+import UserProfileIcon from "./ComponentsCalled/UserProfileIcon";
+import { useProductsCards, useRestaurantsCards, useStoresCards } from "./KhomasDataOPNavBarSearch";
+import LocationModal from "./Modals/LocationModal";
 
 /** 
  * KhomasOPNavBar component
