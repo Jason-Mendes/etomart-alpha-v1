@@ -1,5 +1,6 @@
 import { Navigation, X } from 'lucide-react';
 import React, { useEffect, useState } from "react";
+import XClearButton from '../../../../../00_Main_Etomart_All/ComponentsCalled/XClearButton';
 import { useLocation } from "../ComponentsCalled/LocationContext";
 
 const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
@@ -17,7 +18,7 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
     "Windhoek South", "Khomasdal", "Katutura", "Eros", "Ludwigsdorf",
     "Olympia", "Pioneers Park", "Klein Windhoek", "Hochland Park"
   ];
-
+  
   useEffect(() => {
     if (showModal) {
       // Load saved location from localStorage when modal opens
@@ -237,83 +238,141 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
     );
   }
 
+  const clearInput = (setter) => {
+    setter("");
+  };
+
+  if (showOptions) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center transition-opacity">
+        <div className="absolute inset-0 bg-black bg-opacity-50" onClick={closeModal} />
+        <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+          <h2 className="mb-4 text-2xl font-bold">Choose an Option</h2>
+          <p className="mb-4 text-sm text-gray-600">Note: If you select browsing mode, you will not be able to order anything.</p>
+          <button
+            onClick={handleBrowse}
+            className="mb-4 w-full rounded-md bg-gray-700 p-2 text-white hover:bg-gray-500"
+          >
+            Browse Etomart Instead
+          </button>
+          <button
+            onClick={handleAddLocation}
+            className="w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
+          >
+            Add location
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity ${showModal ? "opacity-100" : "pointer-events-none opacity-0"}`}>
-      <div className="absolute inset-0 bg-black bg-opacity-50" onClick={closeModal} />
-      <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-        <button onClick={handleClose} className="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
-          <X size={24} />
-        </button>
-        <h2 className="mb-4 text-2xl font-bold">Choose Your Location</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="houseNumber" className="mb-2 block text-sm font-medium text-gray-700">House Number (optional)</label>
-            <input
-              type="text"
-              id="houseNumber"
-              value={houseNumber}
-              onChange={(e) => setHouseNumber(e.target.value)}
-              className="w-full rounded-md border border-gray-300 p-2"
-              placeholder="Enter your house number"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="address" className="mb-2 block text-sm font-medium text-gray-700">Street Address</label>
-            <input
-              type="text"
-              id="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="w-full rounded-md border border-gray-300 p-2"
-              placeholder="Enter your street address"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="suburb" className="mb-2 block text-sm font-medium text-gray-700">Suburb</label>
-            <select
-              id="suburb"
-              value={suburb}
-              onChange={(e) => setSuburb(e.target.value)}
-              className="w-full rounded-md border border-gray-300 p-2"
-              required
-            >
-              <option value="">Select a suburb</option>
-              {windhoekSuburbs.map((sub) => (
-                <option key={sub} value={sub}>{sub}</option>
-              ))}
-            </select>
-          </div>
-          {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
+    <div className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity ${showModal ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+      <div className="absolute inset-0" onClick={closeModal} />
+      <div className="relative z-50 w-full max-w-lg rounded-lg bg-[#ee9613] shadow-xl" onClick={(e) => e.stopPropagation()}>
+        <div className="absolute right-0 top-0 pr-4 pt-4">
           <button
-            type="button"
-            onClick={() => setUseCurrentLocation(true)}
-            className="mb-4 flex w-full items-center justify-center rounded-md bg-gray-700 p-2 text-white hover:bg-gray-500"
-            disabled={isLoading}
+            onClick={handleClose}
+            className="rounded-md bg-transparent text-black hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            {isLoading ? (
-              <div className="mr-2 h-5 w-5 animate-spin rounded-full border-b-2 border-white"></div>
-            ) : (
-              <Navigation className="mr-2" size={20} />
-            )}
-            {isLoading ? "Getting Location..." : "Use My Current Location"}
+            <span className="sr-only">Close</span>
+            <X size={24} />
           </button>
-          <button
-            type="submit"
-            className="mb-4 w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
-          >
-            Confirm Location
-          </button>
-          {hasLocationInfo && (
+        </div>
+        <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+          <h2 className="mb-4 font-Agbalumo text-3xl leading-6 text-black">Choose Your Location</h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="houseNumber" className="block text-sm font-medium text-black">
+                House Number (optional)
+              </label>
+              <div className="relative mt-1 rounded-md shadow-sm">
+                <input
+                  type="text"
+                  id="houseNumber"
+                  value={houseNumber}
+                  onChange={(e) => setHouseNumber(e.target.value)}
+                  className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  placeholder="Enter your house number"
+                />
+                {houseNumber && (
+                  <XClearButton
+                    onClick={() => clearInput(setHouseNumber)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  />
+                )}
+              </div>
+            </div>
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-black">
+                Street Address
+              </label>
+              <div className="relative mt-1 rounded-md shadow-sm">
+                <input
+                  type="text"
+                  id="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  placeholder="Enter your street address"
+                  required
+                />
+                {address && (
+                  <XClearButton
+                    onClick={() => clearInput(setAddress)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  />
+                )}
+              </div>
+            </div>
+            <div>
+              <label htmlFor="suburb" className="block text-sm font-medium text-black">
+                Suburb
+              </label>
+              <select
+                id="suburb"
+                value={suburb}
+                onChange={(e) => setSuburb(e.target.value)}
+                className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                required
+              >
+                <option value="">Select a suburb</option>
+                {windhoekSuburbs.map((sub) => (
+                  <option key={sub} value={sub}>{sub}</option>
+                ))}
+              </select>
+            </div>
+            {error && <p className="text-sm text-red-600">{error}</p>}
             <button
               type="button"
-              onClick={clearLocation}
-              className="w-full rounded-md bg-red-500 p-2 text-white hover:bg-red-600"
+              onClick={() => setUseCurrentLocation(true)}
+              className="flex w-full items-center justify-center rounded-md bg-black px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              disabled={isLoading}
             >
-              Clear Location
+              {isLoading ? (
+                <div className="mr-2 h-5 w-5 animate-spin rounded-full border-b-2 border-white"></div>
+              ) : (
+                <Navigation className="mr-2" size={20} />
+              )}
+              {isLoading ? "Getting Location..." : "Use My Current Location"}
             </button>
-          )}
-        </form>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black hover:text-white shadow-sm transition-colors duration-300 hover:bg-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Confirm Location
+            </button>
+            {(houseNumber || address || suburb) && (
+              <button
+                type="button"
+                onClick={clearLocation}
+                className="flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              >
+                Clear Location
+              </button>
+            )}
+          </form>
+        </div>
       </div>
     </div>
   );

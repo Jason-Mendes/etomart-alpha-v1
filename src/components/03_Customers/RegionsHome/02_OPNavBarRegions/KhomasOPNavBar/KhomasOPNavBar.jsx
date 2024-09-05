@@ -409,39 +409,49 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         />
       )}
 
-      {state.showExitBrowsingConfirmation && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center transition-opacity">
-          <div className="absolute inset-0 bg-black bg-opacity-50" onClick={handleContinueBrowsing} />
-          <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-            <button onClick={handleContinueBrowsing} className="absolute right-4 top-4 text-gray-500 hover:text-gray-700">
-              <X size={24} />
-            </button>
-            <h2 className="mb-4 text-2xl font-bold">Exit Browsing Mode?</h2>
-            <div className="mb-4 w-full rounded-lg bg-white">
-              <div className="relative">
-                <img
-                  src="/images/Mais_rdedeverse.jpg"
-                  alt="Exit browsing mode"
-                  className="max-h-[30vh] w-full rounded-lg object-cover"
-                />
-              </div>
-            </div>
-            <p className="mb-4 text-sm text-gray-600">Would you like to exit browsing mode and select a location?</p>
-            <button
-              onClick={handleExitBrowsing}
-              className="mb-4 w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
-            >
-              Exit Browsing Mode
-            </button>
-            <button
-              onClick={handleContinueBrowsing}
-              className="w-full rounded-md bg-gray-700 p-2 text-white hover:bg-gray-500"
-            >
-              Continue Browsing
-            </button>
+{state.showExitBrowsingConfirmation && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity">
+    <div className="absolute inset-0" onClick={handleContinueBrowsing} />
+    <div className="relative z-50 w-full max-w-lg rounded-lg bg-[#ee9613] shadow-xl" onClick={(e) => e.stopPropagation()}>
+      <div className="absolute right-0 top-0 pr-4 pt-4">
+        <button
+          onClick={handleContinueBrowsing}
+          className="rounded-md bg-transparent text-black hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          <span className="sr-only">Close</span>
+          <X size={24} />
+        </button>
+      </div>
+      <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+        <h2 className="mb-4 font-Agbalumo text-3xl leading-6 text-black">Exit Browsing Mode?</h2>
+        <div className="mb-4 w-full rounded-lg bg-white">
+          <div className="relative">
+            <img
+              src="/images/Mais_rdedeverse.jpg"
+              alt="Exit browsing mode"
+              className="max-h-[30vh] w-full rounded-lg object-cover"
+            />
           </div>
         </div>
-      )}
+        <p className="mb-4 text-sm text-white">Would you like to exit browsing mode and select a location?</p>
+        <div className="space-y-4">
+          <button
+            onClick={handleExitBrowsing}
+            className="flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Exit Browsing Mode
+          </button>
+          <button
+            onClick={handleContinueBrowsing}
+            className="flex w-full justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black hover:text-white shadow-sm transition-colors duration-300 hover:bg-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Continue Browsing
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
         {state.nav && (
           <div
             ref={dropdownRef}
