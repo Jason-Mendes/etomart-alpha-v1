@@ -64,7 +64,7 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
               setSuburb(suburbName || 'Unknown');
               setError("");
             } else {
-              throw new Error("No results found in Google Maps response");
+              throw new Error("No results found in Location tagging response");
             }
           } catch (error) {
             console.error("Detailed Geocoding error:", error);
