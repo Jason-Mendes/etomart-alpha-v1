@@ -19,6 +19,18 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
   ];
 
   useEffect(() => {
+    if (showModal) {
+      // Load saved location from localStorage when modal opens
+      const savedLocation = JSON.parse(localStorage.getItem('savedLocation'));
+      if (savedLocation) {
+        setHouseNumber(savedLocation.houseNumber || "");
+        setAddress(savedLocation.address || "");
+        setSuburb(savedLocation.suburb || "");
+      }
+    }
+  }, [showModal]);
+
+  useEffect(() => {
     if (useCurrentLocation) {
       getCurrentLocation();
     }
@@ -63,6 +75,9 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
               setAddress(route);
               setSuburb(suburbName || 'Unknown');
               setError("");
+
+              // Save location to localStorage
+              saveLocation(streetNumber, route, suburbName || 'Unknown');
             } else {
               throw new Error("No results found in Location tagging response");
             }
@@ -91,12 +106,17 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
     }
   };
 
+  const saveLocation = (houseNumber, address, suburb) => {
+    localStorage.setItem('savedLocation', JSON.stringify({ houseNumber, address, suburb }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!address || !suburb) {
       setError("Please enter both address and suburb");
       return;
     }
+    saveLocation(houseNumber, address, suburb);
     onLocationSelect(houseNumber, address, suburb);
     closeModal();
   };
@@ -113,6 +133,15 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
   const handleAddLocation = () => {
     setShowOptions(false);
   };
+
+  const clearLocation = () => {
+    setHouseNumber("");
+    setAddress("");
+    setSuburb("");
+    localStorage.removeItem('savedLocation');
+  };
+
+  const hasLocationInfo = houseNumber || address || suburb;
 
   if (showOptions) {
     return (
@@ -201,10 +230,19 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
           </button>
           <button
             type="submit"
-            className="w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
+            className="mb-4 w-full rounded-md bg-orange-500 p-2 text-white hover:bg-orange-600"
           >
             Confirm Location
           </button>
+          {hasLocationInfo && (
+            <button
+              type="button"
+              onClick={clearLocation}
+              className="w-full rounded-md bg-red-500 p-2 text-white hover:bg-red-600"
+            >
+              Clear Location
+            </button>
+          )}
         </form>
       </div>
     </div>
