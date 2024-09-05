@@ -4,10 +4,12 @@ import { useLocation } from "../ComponentsCalled/LocationContext";
 
 const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
   const [address, setAddress] = useState("");
+  const [houseNumber, setHouseNumber] = useState("");
   const [suburb, setSuburb] = useState("");
   const [useCurrentLocation, setUseCurrentLocation] = useState(false);
   const [error, setError] = useState("");
   const [showOptions, setShowOptions] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { setIsBrowsing } = useLocation();
 
   const windhoekSuburbs = [
@@ -24,18 +26,64 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
 
   const getCurrentLocation = () => {
     if ("geolocation" in navigator) {
+      setIsLoading(true);
       navigator.geolocation.getCurrentPosition(
-        position => {
-          // Here, you'd normally use a geocoding service to get the address
-          // For this example, we'll just set a dummy address
-          setAddress("123 Main St");
-          setSuburb("Windhoek Central");
-          setError("");
+        async (position) => {
+          try {
+            const { latitude, longitude } = position.coords;
+            console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+            
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
+            console.log(`Google Maps API URL: ${url}`);
+
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            console.log('Google Maps API Response:', data);
+
+            if (data.results && data.results.length > 0) {
+              const result = data.results[0];
+              console.log('First result:', result);
+
+              let streetNumber = '';
+              let route = '';
+              let suburbName = '';
+
+              result.address_components.forEach(component => {
+                if (component.types.includes('street_number')) {
+                  streetNumber = component.long_name;
+                } else if (component.types.includes('route')) {
+                  route = component.long_name;
+                } else if (component.types.includes('sublocality') || component.types.includes('neighborhood')) {
+                  suburbName = component.long_name;
+                }
+              });
+
+              setHouseNumber(streetNumber);
+              setAddress(route);
+              setSuburb(suburbName || 'Unknown');
+              setError("");
+            } else {
+              throw new Error("No results found in Google Maps response");
+            }
+          } catch (error) {
+            console.error("Detailed Geocoding error:", error);
+            console.error("Error stack:", error.stack);
+            setError(`Unable to get your exact address: ${error.message}. Please enter it manually.`);
+          } finally {
+            setIsLoading(false);
+            setUseCurrentLocation(false);
+          }
         },
-        error => {
-          setError("Unable to get your location. Please enter it manually.");
+        (error) => {
+          console.error("Geolocation error:", error);
+          console.error("Geolocation error code:", error.code);
+          console.error("Geolocation error message:", error.message);
+          setError(`Unable to get your location: ${error.message}. Please enter it manually.`);
+          setIsLoading(false);
           setUseCurrentLocation(false);
-        }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     } else {
       setError("Geolocation is not supported by your browser");
@@ -49,7 +97,7 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
       setError("Please enter both address and suburb");
       return;
     }
-    onLocationSelect(address, suburb);
+    onLocationSelect(houseNumber, address, suburb);
     closeModal();
   };
 
@@ -100,6 +148,17 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
         <h2 className="mb-4 text-2xl font-bold">Choose Your Location</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
+            <label htmlFor="houseNumber" className="mb-2 block text-sm font-medium text-gray-700">House Number (optional)</label>
+            <input
+              type="text"
+              id="houseNumber"
+              value={houseNumber}
+              onChange={(e) => setHouseNumber(e.target.value)}
+              className="w-full rounded-md border border-gray-300 p-2"
+              placeholder="Enter your house number"
+            />
+          </div>
+          <div className="mb-4">
             <label htmlFor="address" className="mb-2 block text-sm font-medium text-gray-700">Street Address</label>
             <input
               type="text"
@@ -108,6 +167,7 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
               onChange={(e) => setAddress(e.target.value)}
               className="w-full rounded-md border border-gray-300 p-2"
               placeholder="Enter your street address"
+              required
             />
           </div>
           <div className="mb-4">
@@ -117,6 +177,7 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
               value={suburb}
               onChange={(e) => setSuburb(e.target.value)}
               className="w-full rounded-md border border-gray-300 p-2"
+              required
             >
               <option value="">Select a suburb</option>
               {windhoekSuburbs.map((sub) => (
@@ -129,9 +190,14 @@ const LocationModal = ({ showModal, closeModal, onLocationSelect }) => {
             type="button"
             onClick={() => setUseCurrentLocation(true)}
             className="mb-4 flex w-full items-center justify-center rounded-md bg-gray-700 p-2 text-white hover:bg-gray-500"
+            disabled={isLoading}
           >
-            <Navigation className="mr-2" size={20} />
-            Use My Current Location
+            {isLoading ? (
+              <div className="mr-2 h-5 w-5 animate-spin rounded-full border-b-2 border-white"></div>
+            ) : (
+              <Navigation className="mr-2" size={20} />
+            )}
+            {isLoading ? "Getting Location..." : "Use My Current Location"}
           </button>
           <button
             type="submit"
