@@ -437,13 +437,13 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
         <div className="space-y-4">
           <button
             onClick={handleExitBrowsing}
-            className="flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="flex w-full justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black hover:text-white shadow-sm transition-colors duration-300 hover:bg-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Exit Browsing Mode
           </button>
           <button
             onClick={handleContinueBrowsing}
-            className="flex w-full justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black hover:text-white shadow-sm transition-colors duration-300 hover:bg-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Continue Browsing
           </button>
