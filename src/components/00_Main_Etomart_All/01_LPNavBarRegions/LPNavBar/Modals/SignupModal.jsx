@@ -1,5 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import XClearButton from "../../../ComponentsCalled/XClearButton";
+import { ChevronDownIcon, ChevronUpIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 
 const SignupModal = ({
   showModal,
@@ -11,12 +13,28 @@ const SignupModal = ({
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
-    email: "",
     phoneNumber: "",
+    email: "",
     password: "",
     confirmPassword: "",
+    namibianId: "",
     rememberMe: false,
   });
+
+  const [showOptionalFields, setShowOptionalFields] = useState({
+    email: false,
+    namibianId: false,
+  });
+
+  const [autoOpenedFields, setAutoOpenedFields] = useState({
+    email: false,
+    namibianId: false,
+  });
+
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
 
   const handleInputChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
@@ -24,19 +42,85 @@ const SignupModal = ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-  }, []);
+
+    // Check for password mismatch
+    if (name === 'password' || name === 'confirmPassword') {
+      setPasswordMismatch(false);
+      setErrors((prev) => ({ ...prev, confirmPassword: null }));
+    }
+    // Auto-open the next optional field only if it hasn't been toggled before
+    if (name === "phoneNumber" && value && !autoOpenedFields.email) {
+      setShowOptionalFields((prev) => ({ ...prev, email: true }));
+      setAutoOpenedFields((prev) => ({ ...prev, email: true }));
+    } else if (name === "confirmPassword" && value && !autoOpenedFields.namibianId) {
+      setShowOptionalFields((prev) => ({ ...prev, namibianId: true }));
+      setAutoOpenedFields((prev) => ({ ...prev, namibianId: true }));
+    }
+  }, [autoOpenedFields]);
 
   const clearInput = useCallback((field) => {
     setFormData((prev) => ({ ...prev, [field]: "" }));
   }, []);
 
+  const toggleOptionalField = useCallback((field) => {
+    setShowOptionalFields((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+    // Reset the auto-opened state when manually toggled
+    setAutoOpenedFields((prev) => ({
+      ...prev,
+      [field]: false,
+    }));
+  }, []);
+
+  const togglePasswordVisibility = useCallback((field) => {
+    if (field === 'password') {
+      setShowPassword((prev) => !prev);
+    } else if (field === 'confirmPassword') {
+      setShowConfirmPassword((prev) => !prev);
+    }
+  }, []);
+
+  const validateForm = useCallback(() => {
+    const newErrors = {};
+
+    // Validate required fields
+    if (!formData.name) newErrors.name = "Name is required";
+    if (!formData.surname) newErrors.surname = "Surname is required";
+    if (!formData.phoneNumber) newErrors.phoneNumber = "Phone number is required";
+    if (!formData.password) newErrors.password = "Password is required";
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    // Validate optional fields if they're filled
+    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Invalid email address";
+    }
+    if (formData.namibianId && !/^\d{11}$/.test(formData.namibianId)) {
+      newErrors.namibianId = "Invalid Namibian ID (must be 11 digits)";
+    }
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+      setPasswordMismatch(true);
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }, [formData]);
+
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      openAuthenticatedSignupModal();
-      // Add your signup logic here
+      if (validateForm()) {
+        if (formData.password === formData.confirmPassword) {
+          openAuthenticatedSignupModal();
+          // Add your signup logic here
+        }
+      }
     },
-    [openAuthenticatedSignupModal]
+    [validateForm, formData.password, formData.confirmPassword, openAuthenticatedSignupModal]
   );
 
   const handleModalTransition = useCallback(
@@ -48,6 +132,110 @@ const SignupModal = ({
   );
 
   if (!showModal) return null;
+
+  const optionalFieldVariants = {
+    hidden: { opacity: 0, height: 0, overflow: "hidden" },
+    visible: { opacity: 1, height: "auto", overflow: "visible" },
+  };
+
+  const renderPasswordField = (field) => {
+    const isVisible = field === 'password' ? showPassword : showConfirmPassword;
+    return (
+      <div key={field}>
+        <label
+          htmlFor={field}
+          className="block text-sm font-medium capitalize text-black"
+        >
+          {field === "confirmPassword" ? "Confirm Password" : field}
+        </label>
+        <div className="relative mt-1 rounded-md shadow-sm">
+          <input
+            type={isVisible ? "text" : "password"}
+            name={field}
+            id={field}
+            className={`block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+              errors[field] || (field === 'confirmPassword' && passwordMismatch) ? "border-red-500" : ""
+            }`}
+            value={formData[field]}
+            onChange={handleInputChange}
+            required
+          />
+          <button
+            type="button"
+            onClick={() => togglePasswordVisibility(field)}
+            className="absolute inset-y-0 right-0 flex items-center pr-3"
+          >
+            {isVisible ? (
+              <EyeSlashIcon className="size-5 text-gray-400" aria-hidden="true" />
+            ) : (
+              <EyeIcon className="size-5 text-gray-400" aria-hidden="true" />
+            )}
+          </button>
+        </div>
+       <div className="flex">
+         {(errors[field] || (field === 'confirmPassword' && passwordMismatch)) && (
+           <p className="mt-2 px-2 text-sm text-red-600 bg-white">
+             {errors[field] || "Passwords do not match"}
+           </p>
+         )}
+       </div>
+      </div>
+    );
+  };
+
+  const renderOptionalField = (field, label) => (
+    <div>
+      <div
+        className="flex cursor-pointer items-center"
+        onClick={() => toggleOptionalField(field)}
+      >
+        <label
+          htmlFor={field}
+          className="block text-sm font-medium text-black"
+        >
+          {label}
+        </label>
+        {showOptionalFields[field] ? (
+          <ChevronUpIcon className="ml-2 size-5" />
+        ) : (
+          <ChevronDownIcon className="ml-2 size-5" />
+        )}
+      </div>
+      <AnimatePresence>
+        {showOptionalFields[field] && (
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={optionalFieldVariants}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="relative mt-1 rounded-md shadow-sm">
+              <input
+                type={field === "email" ? "email" : "text"}
+                name={field}
+                id={field}
+                className={`block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+                  errors[field] ? "border-red-500" : ""
+                }`}
+                value={formData[field]}
+                onChange={handleInputChange}
+              />
+              {formData[field] && (
+                <XClearButton
+                  onClick={() => clearInput(field)}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3"
+                />
+              )}
+            </div>
+            {errors[field] && (
+              <p className="mt-1 text-sm text-red-600">{errors[field]}</p>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 
   return (
     <div
@@ -61,31 +249,7 @@ const SignupModal = ({
         role="dialog"
         aria-modal="true"
       >
-        <div className="absolute right-0 top-0 pr-4 pt-4">
-          <button
-            type="button"
-            className="rounded-md bg-transparent text-black hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            onClick={closeModal}
-          >
-            <span className="sr-only">Close</span>
-            <svg
-              className="size-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-
+        {/* Modal content */}
         <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
           <h3
             className="mb-4 font-Agbalumo text-3xl leading-6 text-black"
@@ -93,28 +257,24 @@ const SignupModal = ({
           >
             Sign Up
           </h3>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Form fields remain the same */}
-            {["name", "surname", "email", "phoneNumber", "password", "confirmPassword"].map((field) => (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Required fields */}
+            {["name", "surname", "phoneNumber"].map((field) => (
               <div key={field}>
                 <label
                   htmlFor={field}
                   className="block text-sm font-medium capitalize text-black"
                 >
-                  {field === "confirmPassword" ? "Confirm Password" : field}
+                  {field}
                 </label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <input
-                    type={
-                      field.includes("password")
-                        ? "password"
-                        : field === "email"
-                          ? "email"
-                          : "text"
-                    }
+                    type={field === "phoneNumber" ? "tel" : "text"}
                     name={field}
                     id={field}
-                    className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className={`block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+                      errors[field] ? "border-red-500" : ""
+                    }`}
                     value={formData[field]}
                     onChange={handleInputChange}
                     required
@@ -126,8 +286,21 @@ const SignupModal = ({
                     />
                   )}
                 </div>
+                {errors[field] && (
+                  <p className="mt-1 text-sm text-red-600">{errors[field]}</p>
+                )}
               </div>
             ))}
+
+            {/* Email field (optional but placed after phone number) */}
+            {renderOptionalField("email", "Email (Optional)")}
+
+            {/* Password fields with visibility toggles */}
+            {renderPasswordField("password")}
+            {renderPasswordField("confirmPassword")}
+
+            {/* Optional Namibian ID field */}
+            {renderOptionalField("namibianId", "Namibian ID (Optional)")}
 
             {/* Remember me and Forgot password section */}
             <div className="flex items-center justify-between">
