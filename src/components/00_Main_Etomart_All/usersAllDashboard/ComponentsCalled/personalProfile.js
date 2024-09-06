@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { User } from 'lucide-react';
-
+import React, { useState } from 'react';
+import UnavailableFeatureOverlay from '../../../UnavailableFeatureOverlay';
 const PersonalProfile = ({ user, setUser }) => {
   const [favorites, setFavorites] = useState([]);
 
@@ -76,7 +76,7 @@ const PersonalProfile = ({ user, setUser }) => {
           </div>
         </div>
       </div>
-      
+
       {/* Your Favorites Section */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
         <div className="flex justify-between items-center mb-4">
@@ -113,6 +113,7 @@ const PersonalProfile = ({ user, setUser }) => {
       </div>
 
       <div className="space-y-6">
+      <UnavailableFeatureOverlay>
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold mb-2">Etomart tokens</h3>
           <p className="text-sm text-gray-600 mb-4">Each token will get you a standard delivery with no delivery fee.</p>
@@ -127,14 +128,17 @@ const PersonalProfile = ({ user, setUser }) => {
           </div>
         </div>
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-2">Etomart credits</h3>
-          <p className="text-sm text-gray-600 mb-4">You can use credits to pay for your orders.</p>
-          <div className="flex justify-between items-center">
-            <button className="text-orange-600 font-medium">View credits</button>
-            <span className="font-semibold">N$ 0.00</span>
+            <h3 className="text-lg font-semibold mb-2">Etomart credits</h3>
+            <p className="text-sm text-gray-600 mb-4">You can use credits to pay for your orders.</p>
+            <div className="flex justify-between items-center">
+              <button className="text-orange-600 font-medium">View credits</button>
+              <span className="font-semibold">N$ 0.00</span>
+            </div>
           </div>
-        </div>
+         
+          </UnavailableFeatureOverlay>
       </div>
+      
     </div>
   );
 };
