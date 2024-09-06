@@ -15,7 +15,7 @@ import Clicks from "./components/03_Customers/RegionsHome/RegionsTownsAll/TownsA
 import Test from "./components/03_Customers/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xpharmacies/Test";
 import JoesBeerhouse from "./components/03_Customers/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xrestaurants/JoesBeerHouse/JoesBeerhouse";
 import Checkers from "./components/03_Customers/RegionsHome/RegionsTownsAll/TownsAll/KhomasTowns/WindhoekRSP/Xstores/Checkers/Checkers";
-
+import MyUsers from "./components/00_Main_Etomart_All/usersAllDashboard/myUsers";
 // Clear Selected Location and Browsing Mode from specific routes
 const ClearLocationAndBrowsingOnSpecificRoutes = () => {
   const location = useLocation();
@@ -64,6 +64,7 @@ function AppRoutes() {
           <Route path="/LP" element={<LandingPage />} />
           <Route path="/LP/Regions" element={<LandingPage />} />
           <Route path="/LandingPageTest" element={<LandingPageTest />} />
+          <Route path="/my/*" element={<MyUsers />} />
           {/* Routes for Regions */}
           <Route path="/LP/Region" element={<RegionHome />} />
           <Route path="/LP/Region/:regionName" element={<RegionHome />} />
