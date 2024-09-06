@@ -131,7 +131,7 @@ const PersonalProfile = ({ user, setUser }) => {
           <p className="text-sm text-gray-600 mb-4">You can use credits to pay for your orders.</p>
           <div className="flex justify-between items-center">
             <button className="text-orange-600 font-medium">View credits</button>
-            <span className="font-semibold">DKK 0.00</span>
+            <span className="font-semibold">N$ 0.00</span>
           </div>
         </div>
       </div>
