@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ChevronLeft, User } from 'lucide-react';
-import PersonalProfile from './ComponentsCalled/personalProfile';
-import PaymentMethods from './ComponentsCalled/paymentMethods';
-import OrderHistory from './ComponentsCalled/orderHistory';
+import { ChevronLeft, ChevronRight, HelpCircle, User } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Addresses from './ComponentsCalled/addresses';
 import EarnCredits from './ComponentsCalled/earnCredits';
+import Feedback from './ComponentsCalled/feedback';
+import OrderHistory from './ComponentsCalled/orderHistory';
+import PaymentMethods from './ComponentsCalled/paymentMethods';
+import PersonalProfile from './ComponentsCalled/personalProfile';
 import RedeemCode from './ComponentsCalled/redeemCode';
 import Settings from './ComponentsCalled/settings';
-import Feedback from './ComponentsCalled/feedback';
-import Addresses from './ComponentsCalled/addresses';
 
 const MyUsers = () => {
   const navigate = useNavigate();
@@ -19,10 +19,11 @@ const MyUsers = () => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [user, setUser] = useState({
-    name: 'J M',
+    name: 'Jason Mendes',
     email: 'jaxmendes2@gmail.com',
     phoneNumber: '+264813138171',
-    profileImage: null
+    profileImage: null,
+    useInitials: true
   });
 
   useEffect(() => {
@@ -68,6 +69,14 @@ const MyUsers = () => {
       });
     }
   };
+  const getInitials = (name) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+  };
+
+  const handleGetHelp = () => {
+    // Implement the get help functionality here
+    console.log('Get Help clicked');
+  };
 
   const renderSection = () => {
     switch (activeSection) {
@@ -108,22 +117,33 @@ const MyUsers = () => {
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
           <div className="p-6">
-            <div className="flex flex-row items-center mb-6">
-              <div className="w-20 h-20 bg-orange-200 rounded-full flex items-center justify-center mr-4">
-                {user.profileImage ? (
-                  <img
-                    src={user.profileImage}
-                    alt="Profile"
-                    className="w-20 h-20 rounded-full object-cover"
-                  />
-                ) : (
-                  <User size={40} className="text-orange-600" />
-                )}
+            <div className="flex flex-row items-center justify-between mb-6">
+              <div className="flex items-center">
+                <div className="w-20 h-20 bg-orange-200 rounded-full flex items-center justify-center mr-4">
+                  {user.useInitials ? (
+                    <span className="text-3xl font-bold text-orange-600">{getInitials(user.name)}</span>
+                  ) : user.profileImage ? (
+                    <img
+                      src={user.profileImage}
+                      alt="Profile"
+                      className="w-20 h-20 rounded-full object-cover"
+                    />
+                  ) : (
+                    <User size={40} className="text-orange-600" />
+                  )}
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-800">Welcome, {user.name}!</h1>
+                  <p className="text-gray-600">Manage your account and preferences here.</p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-800">Welcome, {user.name}!</h1>
-                <p className="text-gray-600">Manage your account and preferences here.</p>
-              </div>
+              <button
+                onClick={handleGetHelp}
+                className="flex items-center bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-700 transition-colors duration-200"
+              >
+                <HelpCircle size={18} className="mr-2" />
+                Get Help
+              </button>
             </div>
             <div className="mb-6 relative">
               {showLeftArrow && (
@@ -145,8 +165,8 @@ const MyUsers = () => {
                       key={item.id}
                       onClick={() => handleNavigation(item.id)}
                       className={`px-4 py-2 rounded-full transition-colors duration-200 ${activeSection === item.id
-                          ? 'bg-orange-600 text-white'
-                          : 'bg-white text-gray-700 hover:bg-orange-100'
+                        ? 'bg-orange-600 text-white'
+                        : 'bg-white text-gray-700 hover:bg-orange-100'
                         }`}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}

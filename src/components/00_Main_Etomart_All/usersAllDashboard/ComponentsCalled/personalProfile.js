@@ -1,6 +1,7 @@
-import { User } from 'lucide-react';
+import { Edit, Trash2, User } from 'lucide-react';
 import React, { useState } from 'react';
 import UnavailableFeatureOverlay from '../../../UnavailableFeatureOverlay';
+
 const PersonalProfile = ({ user, setUser }) => {
   const [favorites, setFavorites] = useState([]);
 
@@ -11,7 +12,8 @@ const PersonalProfile = ({ user, setUser }) => {
       reader.onloadend = () => {
         setUser(prevUser => ({
           ...prevUser,
-          profileImage: reader.result
+          profileImage: reader.result,
+          useInitials: false
         }));
       };
       reader.readAsDataURL(file);
@@ -21,7 +23,8 @@ const PersonalProfile = ({ user, setUser }) => {
   const handleDeleteImage = () => {
     setUser(prevUser => ({
       ...prevUser,
-      profileImage: null
+      profileImage: null,
+      useInitials: true
     }));
   };
 
@@ -30,42 +33,63 @@ const PersonalProfile = ({ user, setUser }) => {
     console.log('Add favorite');
   };
 
+  const getInitials = (name) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+  };
+
+  const toggleInitials = () => {
+    setUser(prevUser => ({
+      ...prevUser,
+      useInitials: !prevUser.useInitials
+    }));
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Profile</h1>
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div className="flex items-center mb-6">
-          <div className="relative mr-6">
-            {user.profileImage ? (
-              <img
-                src={user.profileImage}
-                alt="Profile"
-                className="w-24 h-24 rounded-full object-cover"
-              />
-            ) : (
-              <div className="w-24 h-24 bg-orange-200 rounded-full flex items-center justify-center">
-                <User size={48} className="text-orange-600" />
-              </div>
-            )}
-            <div className="absolute bottom-0 right-0 flex space-x-2">
-              <label htmlFor="file-upload" className="cursor-pointer bg-white text-orange-600 px-2 py-1 rounded-full text-sm font-medium shadow-sm hover:bg-gray-50">
-                Edit
-              </label>
-              <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
-              <button
-                onClick={handleDeleteImage}
-                className="bg-white text-red-600 px-2 py-1 rounded-full text-sm font-medium shadow-sm hover:bg-gray-50"
-                disabled={!user.profileImage}
-              >
-                Delete
-              </button>
+        <div className="flex flex-col items-center mb-6">
+          <div className="relative mb-4">
+            <div className="w-24 h-24 bg-orange-200 rounded-full flex items-center justify-center overflow-hidden">
+              {user.useInitials ? (
+                <span className="text-4xl font-bold text-orange-600">{getInitials(user.name)}</span>
+              ) : user.profileImage ? (
+                <img
+                  src={user.profileImage}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <User size={64} className="text-orange-600" />
+              )}
             </div>
           </div>
-          <div>
-            <h2 className="text-2xl font-semibold">{user.name}</h2>
+          <div className="flex space-x-2 mb-4">
+            <label htmlFor="file-upload" className="cursor-pointer bg-orange-600 text-white px-3 py-2 rounded-md text-sm font-medium shadow-sm hover:bg-orange-700 transition-colors duration-200 flex items-center">
+              <Edit size={16} className="mr-2" />
+              Edit Picture
+            </label>
+            <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
+            <button
+              onClick={handleDeleteImage}
+              className="bg-white text-red-600 px-3 py-2 rounded-md text-sm font-medium shadow-sm hover:bg-red-50 transition-colors duration-200 flex items-center border border-red-600"
+              disabled={!user.profileImage && user.useInitials}
+            >
+              <Trash2 size={16} className="mr-2" />
+              Delete Picture
+            </button>
+          </div>
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold mb-2">{user.name}</h2>
+            <button
+              onClick={toggleInitials}
+              className="bg-white text-orange-600 px-4 py-2 rounded-full text-sm font-medium border border-orange-600 hover:bg-orange-50 transition-colors duration-200"
+            >
+              {user.useInitials ? 'Use Profile Picture' : 'Use Initials'}
+            </button>
           </div>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-4 mt-6">
           <div>
             <h3 className="text-sm font-medium text-gray-500">Email</h3>
             <p className="mt-1">{user.email}</p>
