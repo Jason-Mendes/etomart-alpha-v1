@@ -1,5 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import { Formik, Form, Field } from "formik";
+import { useAuth } from "../../../../../Authentication/context/AuthContext";
+import { loginSchema } from "../../../../../Authentication/validation/authValidationSchemas";
 import XClearButton from "../../../ComponentsCalled/XClearButton";
+import { ChevronDownIcon, ChevronUpIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
+import { AnimatePresence, motion } from "framer-motion";
 
 const LoginModal = ({
   showModal,
@@ -8,31 +13,23 @@ const LoginModal = ({
   openForgotPasswordModal,
   openAuthenticatedLoginModal,
 }) => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    rememberMe: false,
-  });
-
-  const handleInputChange = useCallback((e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  }, []);
-
-  const clearInput = useCallback((field) => {
-    setFormData((prev) => ({ ...prev, [field]: "" }));
-  }, []);
+  const { login, error } = useAuth();
+  const [showEmailField, setShowEmailField] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      openAuthenticatedLoginModal();
-      // Add your login logic here
+    async (values, { setSubmitting }) => {
+      try {
+        // Update to use phone number for login
+        await login(values.phoneNumber, values.password, values.email);
+        openAuthenticatedLoginModal();
+      } catch (error) {
+        console.error("Login error:", error);
+      } finally {
+        setSubmitting(false);
+      }
     },
-    [openAuthenticatedLoginModal]
+    [login, openAuthenticatedLoginModal]
   );
 
   const handleModalTransition = useCallback(
@@ -43,7 +40,15 @@ const LoginModal = ({
     [closeModal]
   );
 
+  const toggleEmailField = () => setShowEmailField(!showEmailField);
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
   if (!showModal) return null;
+
+  const optionalFieldVariants = {
+    hidden: { opacity: 0, height: 0, overflow: "hidden" },
+    visible: { opacity: 1, height: "auto", overflow: "visible" },
+  };
 
   return (
     <div
@@ -57,6 +62,7 @@ const LoginModal = ({
         role="dialog"
         aria-modal="true"
       >
+        {/* Close button */}
         <div className="absolute right-0 top-0 pr-4 pt-4">
           <button
             type="button"
@@ -87,101 +93,180 @@ const LoginModal = ({
             className="mb-4 font-Agbalumo text-3xl leading-6 text-black"
             id="modal-title"
           >
-            Login / Sign Up
+            Login
           </h3>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-black"
-              >
-                Email
-              </label>
-              <div className="relative mt-1 rounded-md shadow-sm">
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                />
-                {formData.email && (
-                  <XClearButton
-                    onClick={() => clearInput("email")}
-                    className="absolute inset-y-0 right-0 flex items-center pr-3"
-                  />
+          <Formik
+            initialValues={{ phoneNumber: "", email: "", password: "", rememberMe: false }}
+            validationSchema={loginSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ errors, touched, isSubmitting, values, setFieldValue }) => (
+              <Form className="space-y-6">
+                {/* Phone Number Field */}
+                <div>
+                  <label
+                    htmlFor="phoneNumber"
+                    className="block text-sm font-medium text-black"
+                  >
+                    Phone Number
+                  </label>
+                  <div className="relative mt-1 rounded-md shadow-sm">
+                    <Field
+                      type="tel"
+                      name="phoneNumber"
+                      id="phoneNumber"
+                      className={`block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+                        errors.phoneNumber && touched.phoneNumber ? "border-red-500" : ""
+                      }`}
+                      placeholder="+1234567890"
+                    />
+                    {values.phoneNumber && (
+                      <XClearButton
+                        onClick={() => setFieldValue("phoneNumber", "")}
+                        className="absolute inset-y-0 right-0 flex items-center pr-3"
+                      />
+                    )}
+                  </div>
+                  {errors.phoneNumber && touched.phoneNumber && (
+                    <div className="mt-1 text-sm text-red-500">{errors.phoneNumber}</div>
+                  )}
+                </div>
+
+                {/* Optional Email Field */}
+                <div>
+                  <div
+                    className="flex cursor-pointer items-center"
+                    onClick={toggleEmailField}
+                  >
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Email (Optional)
+                    </label>
+                    {showEmailField ? (
+                      <ChevronUpIcon className="ml-2 size-5" />
+                    ) : (
+                      <ChevronDownIcon className="ml-2 size-5" />
+                    )}
+                  </div>
+                  <AnimatePresence>
+                    {showEmailField && (
+                      <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        variants={optionalFieldVariants}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="relative mt-1 rounded-md shadow-sm">
+                          <Field
+                            type="email"
+                            name="email"
+                            id="email"
+                            className={`block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+                              errors.email && touched.email ? "border-red-500" : ""
+                            }`}
+                            placeholder="you@example.com"
+                          />
+                          {values.email && (
+                            <XClearButton
+                              onClick={() => setFieldValue("email", "")}
+                              className="absolute inset-y-0 right-0 flex items-center pr-3"
+                            />
+                          )}
+                        </div>
+                        {errors.email && touched.email && (
+                          <div className="mt-1 text-sm text-red-500">{errors.email}</div>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Password Field */}
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-black"
+                  >
+                    Password
+                  </label>
+                  <div className="relative mt-1 rounded-md shadow-sm">
+                    <Field
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      id="password"
+                      className={`block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+                        errors.password && touched.password ? "border-red-500" : ""
+                      }`}
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute inset-y-0 right-0 flex items-center pr-3"
+                    >
+                      {showPassword ? (
+                        <EyeSlashIcon className="size-5 text-gray-400" aria-hidden="true" />
+                      ) : (
+                        <EyeIcon className="size-5 text-gray-400" aria-hidden="true" />
+                      )}
+                    </button>
+                  </div>
+                  {errors.password && touched.password && (
+                    <div className="mt-1 text-sm text-red-500">{errors.password}</div>
+                  )}
+                </div>
+
+                {/* Remember Me and Forgot Password */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Field
+                      type="checkbox"
+                      id="rememberMe"
+                      name="rememberMe"
+                      className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <label
+                      htmlFor="rememberMe"
+                      className="ml-2 block text-sm text-black"
+                    >
+                      Remember me
+                    </label>
+                  </div>
+
+                  <div className="text-sm">
+                    <button
+                      type="button"
+                      onClick={() => handleModalTransition(openForgotPasswordModal)}
+                      className="font-medium text-white hover:text-black"
+                    >
+                      Forgot your password?
+                    </button>
+                  </div>
+                </div>
+
+                {/* Submit Button */}
+                <div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    {isSubmitting ? "Signing in..." : "Sign in"}
+                  </button>
+                </div>
+
+                {error && (
+                  <div className="mt-2 text-center text-sm text-red-500">
+                    {error}
+                  </div>
                 )}
-              </div>
-            </div>
+              </Form>
+            )}
+          </Formik>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-black"
-              >
-                Password
-              </label>
-              <div className="relative mt-1 rounded-md shadow-sm">
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                />
-                {formData.password && (
-                  <XClearButton
-                    onClick={() => clearInput("password")}
-                    className="absolute inset-y-0 right-0 flex items-center pr-3"
-                  />
-                )}
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="rememberMe"
-                  type="checkbox"
-                  className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  checked={formData.rememberMe}
-                  onChange={handleInputChange}
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-black"
-                >
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <button
-                  type="button"
-                  onClick={() => handleModalTransition(openForgotPasswordModal)}
-                  className="font-medium text-white hover:text-black"
-                >
-                  Forgot your password?
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-
+          {/* Social login section */}
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -194,36 +279,32 @@ const LoginModal = ({
               </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-3">
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div>
                 <button
                   type="button"
-                  className="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm transition-colors duration-300 hover:bg-gray-50 md:justify-start"
+                  className="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm transition-colors duration-300 hover:bg-gray-50"
                 >
                   <img
                     src="/images/google.svg"
                     alt="Google Logo"
                     className="size-5"
                   />
-                  <span className="sr-only md:not-sr-only md:inline-block md:px-2">
-                    Sign in with Google
-                  </span>
+                  <span className="ml-2">Sign in with Google</span>
                 </button>
               </div>
 
               <div>
                 <button
                   type="button"
-                  className="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm transition-colors duration-300 hover:bg-gray-50 md:justify-start"
+                  className="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm transition-colors duration-300 hover:bg-gray-50"
                 >
                   <img
                     src="/images/apple.svg"
                     alt="Apple Logo"
                     className="size-5"
                   />
-                  <span className="sr-only md:not-sr-only md:inline-block md:px-2">
-                    Sign in with Apple
-                  </span>
+                  <span className="ml-2">Sign in with Apple</span>
                 </button>
               </div>
             </div>

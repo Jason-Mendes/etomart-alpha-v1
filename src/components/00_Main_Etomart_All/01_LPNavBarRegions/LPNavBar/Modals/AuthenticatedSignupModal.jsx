@@ -1,8 +1,11 @@
 import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { useAuth } from "../../../../../Authentication/context/AuthContext";
 
 const AuthenticatedSignupModal = ({ showModal, closeModal }) => {
+  const { user } = useAuth();
+
   if (!showModal) return null;
 
   return (
@@ -23,7 +26,7 @@ const AuthenticatedSignupModal = ({ showModal, closeModal }) => {
               className="mb-4 text-center font-Agbalumo text-3xl leading-6 text-black"
               id="modal-title"
             >
-              Welcome to Etomart!
+              Welcome to Etomart, {user?.name || 'New Friend'}!
             </h3>
             <div className="mb-6 mt-2 text-center">
               <p className="text-sm text-gray-700">
