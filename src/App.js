@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from
 import { CartProvider } from "./Authentication/context/CartContext";
 import { LocationProvider, useLocation as useLocationContext } from "./components/03_Customers/RegionsHome/02_OPNavBarRegions/KhomasOPNavBar/ComponentsCalled/LocationContext"
 import { AuthProvider } from "./Authentication/context/AuthContext";
+import PrivateRoute from "./components/Navigation_Routing/PrivateRoute";
 
 import LandingPage from "./components/00_Main_Etomart_All/LandingPage";
 import LandingPageTest from "./components/00_Main_Etomart_All/LandingPageTest";
@@ -66,7 +67,7 @@ function AppRoutes() {
             <Route path="/LP" element={<LandingPage />} />
             <Route path="/LP/Regions" element={<LandingPage />} />
             <Route path="/LandingPageTest" element={<LandingPageTest />} />
-            <Route path="/my/*" element={<MyUsers />} />
+            {/* <Route path="/my/*" element={<MyUsers />} /> */}
             {/* Routes for Regions */}
             <Route path="/LP/Region" element={<RegionHome />} />
             <Route path="/LP/Region/:regionName" element={<RegionHome />} />
@@ -83,6 +84,17 @@ function AppRoutes() {
             <Route path="/LP/Khomas/Towns/Pharmacies" element={<Pharmacies />} />
             <Route path="/LP/Khomas/Towns/Pharmacy/Clicks" element={<Clicks />} />
             <Route path="/tests" element={<Test />} />
+{/* User Dashboard Routes */}
+            <Route path="/my/*"  element={<PrivateRoute><MyUsers /></PrivateRoute>} />
+            <Route path="/my/personal-info" element={<PrivateRoute><MyUsers /></PrivateRoute>} />
+            <Route path="/my/payments" element={<PrivateRoute><MyUsers /></PrivateRoute>} />
+            <Route path="/my/addresses" element={<PrivateRoute><MyUsers /></PrivateRoute>} />
+            <Route path="/my/order-history" element={<PrivateRoute><MyUsers /></PrivateRoute>} />
+            <Route path="/my/earn-credits" element={<PrivateRoute><MyUsers /></PrivateRoute>} />
+            <Route path="/my/redeem-code" element={<PrivateRoute><MyUsers /></PrivateRoute>} />
+            <Route path="/my/settings" element={<PrivateRoute><MyUsers /></PrivateRoute>} />
+            <Route path="/my/feedback" element={<PrivateRoute><MyUsers /></PrivateRoute>} />
+          
           </Routes>
         </div>
       </CartProvider>

@@ -303,7 +303,7 @@ function Windhoek() {
   ), []);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white relative">
       <KhomasOPNavBar />
       <main className="relative z-10">
         {/* Navigation Tabs */}

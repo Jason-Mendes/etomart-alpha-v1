@@ -1,11 +1,23 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../../../../Authentication/context/AuthContext";
 const UserProfileIcon = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (user) {
+      navigate('/my/personal-info');
+    } else {
+      // Implement login logic or navigation to login page
+      navigate('/LP');
+    }
+  };
+
   return (
-    <div>
-      <a
-        href="#"
-        className=" tab flex h-9  w-10  cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#ffaf5e4b] p-3 transition-all duration-300 hover:bg-[#ffaf5e9c] "
+    <div onClick={handleClick}>
+      
+      <a  href="#"
+        className="tab flex h-9 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#ffaf5e4b] p-3 transition-all duration-300 hover:bg-[#ffaf5e9c]"
       >
         <svg
           width="104"

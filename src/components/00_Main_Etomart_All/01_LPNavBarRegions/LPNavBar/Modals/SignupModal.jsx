@@ -22,12 +22,17 @@ const SignupModal = ({
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = useCallback(
-    async (values, { setSubmitting }) => {
+    async (values, { setSubmitting, setFieldError }) => {
       try {
         await signup(values.name, values.surname, values.phoneNumber, values.password, values.email, values.namibianId);
         openAuthenticatedSignupModal();
       } catch (error) {
         console.error("Signup error:", error);
+        if (error.message === 'User already exists') {
+          setFieldError('phoneNumber', 'This phone number is already registered');
+        } else {
+          setFieldError('general', error.message);
+        }
       } finally {
         setSubmitting(false);
       }
@@ -266,9 +271,9 @@ const SignupModal = ({
                   </button>
                 </div>
 
-                {error && (
+                {errors.general && (
                   <div className="mt-2 text-center text-sm text-red-500">
-                    {error}
+                    {errors.general}
                   </div>
                 )}
               </Form>

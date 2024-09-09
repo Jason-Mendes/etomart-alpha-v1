@@ -1,24 +1,19 @@
-import { Menu, Search, X } from 'lucide-react';
+import { Menu, Search, X, ChevronUp, ChevronDown, User } from 'lucide-react';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartIcon from "./ComponentsCalled/CartIcon";
 import HomeIcon from "./ComponentsCalled/HomeIcon";
 import LocationButton from "./ComponentsCalled/LocationButton";
 import { useLocation } from './ComponentsCalled/LocationContext';
-import UserProfileIcon from "./ComponentsCalled/UserProfileIcon";
 import { useProductsCards, useRestaurantsCards, useStoresCards } from "./KhomasDataOPNavBarSearch";
 import LocationModal from "./Modals/LocationModal";
-
-/** 
- * KhomasOPNavBar component
- * @param {Object} props - Component props
- * @param {boolean} props.disableInternalScroll - Flag to disable internal scrolling
- * @param {boolean} props.isHidden - Flag to hide the navbar
- */
+import { useAuth } from '../../../../../Authentication/context/AuthContext';
 
 const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => {
-  const { location, setLocation, isBrowsing, setIsBrowsing, toggleBrowsingMode } = useLocation();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const { location, setLocation, isBrowsing, setIsBrowsing } = useLocation();
   const [state, setState] = useState({
     showLocationModal: false,
     showExitBrowsingConfirmation: false,
@@ -32,7 +27,9 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     },
     isMobile: false,
     isSearchFocused: false,
+    isProfileDropdownOpen: false,
   });
+  const [currentLanguage, setCurrentLanguage] = useState("English");
 
   const dropdownRef = useRef(null);
   const searchInputRef = useRef(null);
@@ -41,6 +38,25 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
   const storesCards = useStoresCards();
   const restaurantsCards = useRestaurantsCards();
   const productsCards = useProductsCards();
+
+  const handleProfileClick = () => {
+    setState(prevState => ({ ...prevState, isProfileDropdownOpen: !prevState.isProfileDropdownOpen }));
+  };
+
+  const handleEditProfile = () => {
+    navigate('/my/personal-info');
+    setState(prevState => ({ ...prevState, isProfileDropdownOpen: false }));
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/LP');
+      setState(prevState => ({ ...prevState, isProfileDropdownOpen: false }));
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
+  };
 
   const shuffleArray = useCallback((array) => {
     return array
@@ -145,16 +161,6 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     }
   }, [handleCollapseNavbar]);
 
-  // const handleLocationClick = useCallback(() => {
-  //   if (isBrowsing) {
-  //     if (window.confirm("Would you like to exit browsing mode and select a location?")) {
-  //       setIsBrowsing(false);
-  //       setState(prevState => ({ ...prevState, showLocationModal: true }));
-  //     }
-  //   } else {
-  //     setState(prevState => ({ ...prevState, showLocationModal: true }));
-  //   }
-  // }, [isBrowsing, setIsBrowsing]);
   const handleLocationClick = useCallback(() => {
     if (isBrowsing) {
       setState(prevState => ({ ...prevState, showExitBrowsingConfirmation: true }));
@@ -196,8 +202,47 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     setState(prevState => ({ ...prevState, nav: !prevState.nav }));
   }, []);
 
-  // Render functions 
   // Render functions
+
+  const renderProfileDropdown = () => (
+    <div className="relative">
+      <div className="absolute z-50 right-0 mt-2 w-56 rounded-lg bg-white shadow-lg">
+        <div className="p-4">
+          <button
+            onClick={handleEditProfile}
+            className="mb-2 w-full rounded-md py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]"
+          >
+            Edit Profile
+          </button>
+          <div className="mb-2">
+            <select
+              value={currentLanguage}
+              onChange={(e) => setCurrentLanguage(e.target.value)}
+              className="w-full rounded-md bg-[#ffaf5e4b] px-3 py-2 text-[#ee9613]"
+            >
+              <option value="English">English</option>
+              <option value="Deutsch">Deutsch</option>
+              <option value="Français">Français</option>
+              <option value="Español">Español</option>
+              <option value="Русский">Русский</option>
+              <option value="中文">中文</option>
+            </select>
+          </div>
+          <button
+            className="mb-2 w-full rounded-md py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]"
+          >
+            Get Help
+          </button>
+          <button
+            onClick={handleLogout}
+            className="w-full rounded-md py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]"
+          >
+            Log out
+          </button>
+        </div>
+      </div>
+    </div>
+  );
   const renderStoreCard = useCallback((store) => (
     <div className="h-40 w-full sm:h-48 sm:w-64 md:h-52 md:w-72 lg:h-56 lg:w-80 xl:h-60 xl:w-96 shrink-0 p-2" key={store.name}>
       <Link to={store.href} className="flex h-full flex-col rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl">
@@ -217,6 +262,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
       </Link>
     </div>
   ), []);
+
   const renderFoodCard = useCallback((food) => (
     <Link to={food.href} className="group relative flex h-32 sm:h-36 md:h-40 lg:h-44 xl:h-48 w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="food-card-link" key={food.name}>
       <div className="relative w-1/3 overflow-hidden">
@@ -247,6 +293,7 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
       </div>
     </Link>
   ), []);
+
   const renderPharmacyCard = useCallback((product) => (
     <Link to={product.href} className="group relative flex h-32 sm:h-36 md:h-40 lg:h-44 xl:h-48 w-full overflow-hidden rounded-lg bg-slate-50 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-xl" data-test-id="product-card-link" key={product.name}>
       <div className="relative w-1/3 overflow-hidden">
@@ -278,16 +325,16 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
     </Link>
   ), []);
 
+
   return (
-    <div className={`mx-auto max-w-screen-2xl px-4 overflow-hidden ${isHidden ? 'hidden' : ''}`}>
-    <div className="font-josefin_sans">
-      <nav id="KhomasOPNavBar" className={`bg-[#f9f9f9] px-2 sm:px-4 text-[#ee9613] transition-all duration-300 ${state.isExpanded ? 'py-2 sm:py-6' : 'py-2 sm:py-4'} relative z-50`}>
-        <div className="mx-auto flex items-center justify-between">
-          <h1 className="mr-2 whitespace-nowrap pt-1 font-shrikhand text-xl sm:text-2xl md:text-3xl text-[#ee9613]">
-            <Link to="/LP/Regions">Etomart</Link>
-          </h1>
-             {/* Show the LocationButton only on larger screens */}
-             {!state.isMobile && (
+    <div className={`mx-auto max-w-screen-2xl px-4  ${isHidden ? 'hidden' : ''}`}>
+      <div className="font-josefin_sans">
+        <nav id="KhomasOPNavBar" className={`bg-[#f9f9f9] px-2 sm:px-4 text-[#ee9613] transition-all duration-300 ${state.isExpanded ? 'py-2 sm:py-6' : 'py-2 sm:py-4'} relative z-50`}>
+          <div className="mx-auto flex items-center justify-between">
+            <h1 className="mr-2 whitespace-nowrap pt-1 font-shrikhand text-xl sm:text-2xl md:text-3xl text-[#ee9613]">
+              <Link to="/LP/Regions">Etomart</Link>
+            </h1>
+            {!state.isMobile && (
               <div className="hidden sm:flex items-center space-x-4">
                 <LocationButton
                   onClick={handleLocationClick}
@@ -352,7 +399,17 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
               <div className="hidden sm:flex items-center space-x-4">
                 <HomeIcon />
                 <CartIcon />
-                <UserProfileIcon />
+                <div className="relative">
+                  <button
+                    onClick={handleProfileClick}
+                    className="flex items-center space-x-2 rounded bg-[#f7a832] px-4 py-2 font-josefin_sans text-black transition-colors duration-300 hover:bg-black hover:text-white"
+                    aria-label="Profile"
+                  >
+                    <User size={24} />
+                    {state.isProfileDropdownOpen ? <ChevronDown size={24} /> : <ChevronUp size={24} />}
+                  </button>
+                  {state.isProfileDropdownOpen && renderProfileDropdown()}
+                </div>
               </div>
             )}
           </div>
@@ -397,61 +454,62 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
             <div className="fixed inset-0 z-30 mt-[calc(5rem+1px)] bg-black bg-opacity-50" onClick={handleOverlayClick}></div>
           </>
         )}
-       {state.showLocationModal && (
-        <LocationModal
-          showModal={state.showLocationModal}
-          closeModal={closeLocationModal}
-          onLocationSelect={handleLocationSelect}
-          onBrowse={() => {
-            setIsBrowsing(true);
-            closeLocationModal();
-          }}
-        />
-      )}
+        {state.showLocationModal && (
+          <LocationModal
+            showModal={state.showLocationModal}
+            closeModal={closeLocationModal}
+            onLocationSelect={handleLocationSelect}
+            onBrowse={() => {
+              setIsBrowsing(true);
+              closeLocationModal();
+            }}
+          />
+        )}
 
-{state.showExitBrowsingConfirmation && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity">
-    <div className="absolute inset-0" onClick={handleContinueBrowsing} />
-    <div className="relative z-50 w-full max-w-lg rounded-lg bg-[#ee9613] shadow-xl" onClick={(e) => e.stopPropagation()}>
-      <div className="absolute right-0 top-0 pr-4 pt-4">
-        <button
-          onClick={handleContinueBrowsing}
-          className="rounded-md bg-transparent text-black hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
-          <span className="sr-only">Close</span>
-          <X size={24} />
-        </button>
-      </div>
-      <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-        <h2 className="mb-4 font-Agbalumo text-3xl leading-6 text-black">Exit Browsing Mode?</h2>
-        <div className="mb-4 w-full rounded-lg bg-white">
-          <div className="relative">
-            <img
-              src="/images/Mais_rdedeverse.jpg"
-              alt="Exit browsing mode"
-              className="max-h-[30vh] w-full rounded-lg object-cover"
-            />
+        {state.showExitBrowsingConfirmation && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity">
+            <div className="absolute inset-0" onClick={handleContinueBrowsing} />
+            <div className="relative z-50 w-full max-w-lg rounded-lg bg-[#ee9613] shadow-xl" onClick={(e) => e.stopPropagation()}>
+              <div className="absolute right-0 top-0 pr-4 pt-4">
+                <button
+                  onClick={handleContinueBrowsing}
+                  className="rounded-md bg-transparent text-black hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                  <span className="sr-only">Close</span>
+                  <X size={24} />
+                </button>
+              </div>
+              <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <h2 className="mb-4 font-Agbalumo text-3xl leading-6 text-black">Exit Browsing Mode?</h2>
+                <div className="mb-4 w-full rounded-lg bg-white">
+                  <div className="relative">
+                    <img
+                      src="/images/Mais_rdedeverse.jpg"
+                      alt="Exit browsing mode"
+                      className="max-h-[30vh] w-full rounded-lg object-cover"
+                    />
+                  </div>
+                </div>
+                <p className="mb-4 text-sm text-white">Would you like to exit browsing mode and select a location?</p>
+                <div className="space-y-4">
+                  <button
+                    onClick={handleExitBrowsing}
+                    className="flex w-full justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black hover:text-white shadow-sm transition-colors duration-300 hover:bg-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    Exit Browsing Mode
+                  </button>
+                  <button
+                    onClick={handleContinueBrowsing}
+                    className="flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    Continue Browsing
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <p className="mb-4 text-sm text-white">Would you like to exit browsing mode and select a location?</p>
-        <div className="space-y-4">
-          <button
-            onClick={handleExitBrowsing}
-            className="flex w-full justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black hover:text-white shadow-sm transition-colors duration-300 hover:bg-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Exit Browsing Mode
-          </button>
-          <button
-            onClick={handleContinueBrowsing}
-            className="flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Continue Browsing
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
+
+        )}
         {state.nav && (
           <div
             ref={dropdownRef}
@@ -473,37 +531,50 @@ const KhomasOPNavBar = ({ disableInternalScroll = false, isHidden = false }) => 
                 <div className="mb-2 flex items-center justify-center">
                   <CartIcon />
                 </div>
-                 {/* Mobile toggle button for menu */}
-                 {state.isMobile && (
-                <div className="mb-2 flex items-center justify-center">
-                  <LocationButton
-                    onClick={handleLocationClick}
-                    location={location ? location.suburb : "Select Location"}
-                  /></div>
+                {state.isMobile && (
+                  <div className="mb-2 flex items-center justify-center">
+                    <LocationButton
+                      onClick={handleLocationClick}
+                      location={location ? location.suburb : "Select Location"}
+                    />
+                  </div>
                 )}
                 <div className="mb-2">
-                  <button className="w-full rounded-md py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b]">
-                    Login or register
-                  </button>
+                  {user ? (
+                    <>
+                      <button onClick={handleEditProfile} className="w-full rounded-md py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b]">
+                        Edit Profile
+                      </button>
+                      <button onClick={handleLogout} className="w-full rounded-md py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b]">
+                        Log out
+                      </button>
+                    </>
+                  ) : (
+                    <button className="w-full rounded-md py-2 text-center text-[#ee9613] hover:bg-[#ffaf5e4b]">
+                      Login or register
+                    </button>
+                  )}
                 </div>
                 <hr className="border-gray-200" />
                 <div className="mt-2 w-full py-2 text-center">
                   <select
                     id="language-selector"
+                    value={currentLanguage}
+                    onChange={(e) => setCurrentLanguage(e.target.value)}
                     className="mt-1 block w-full rounded-md border bg-[#ffaf5e4b] bg-white px-3 py-2 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                     aria-label="Select language"
                   >
-                    <option value="en">English</option>
-                    <option value="de">Deutsch</option>
-                    <option value="fr">Français</option>
-                    <option value="es">Español</option>
-                    <option value="ru">Русский</option>
-                    <option value="zh">中文</option>
+                    <option value="English">English</option>
+                    <option value="Deutsch">Deutsch</option>
+                    <option value="Français">Français</option>
+                    <option value="Español">Español</option>
+                    <option value="Русский">Русский</option>
+                    <option value="中文">中文</option>
                   </select>
                 </div>
                 <div className="mt-2">
                   <button className="w-full rounded-md px-4 py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]">
-                    Support
+                    Get Help
                   </button>
                 </div>
               </div>
@@ -520,4 +591,4 @@ KhomasOPNavBar.propTypes = {
   isHidden: PropTypes.bool
 };
 
-export default KhomasOPNavBar;
+export default KhomasOPNavBar;                                    

@@ -44,12 +44,13 @@ export const signupSchema = Yup.object().shape({
     surname: Yup.string()
       .min(2, 'Surname must be at least 2 characters')
       .required('Surname is required'),
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Email is required'),
     phoneNumber: Yup.string()
       .matches(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number')
       .required('Phone number is required'),
-    email: Yup.string()
-      .email('Invalid email address'),
     namibianId: Yup.string()
-      .matches(/^[0-9]{11}$/, 'Invalid Namibian ID (must be 11 digits)'),
-    // Add more fields as needed for profile updates
+      .matches(/^[0-9]{11}$/, 'Invalid Namibian ID (must be 11 digits)')
+      .nullable(),
   });

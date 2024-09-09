@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, HelpCircle, User } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../Authentication/context/AuthContext';
 import Addresses from './ComponentsCalled/addresses';
 import EarnCredits from './ComponentsCalled/earnCredits';
 import Feedback from './ComponentsCalled/feedback';
@@ -12,19 +13,13 @@ import RedeemCode from './ComponentsCalled/redeemCode';
 import Settings from './ComponentsCalled/settings';
 
 const MyUsers = () => {
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [activeSection, setActiveSection] = useState('personal-info');
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const [user, setUser] = useState({
-    name: 'Jason Mendes',
-    email: 'jaxmendes2@gmail.com',
-    phoneNumber: '+264813138171',
-    profileImage: null,
-    useInitials: true
-  });
 
   useEffect(() => {
     const path = location.pathname.split('/').pop();
@@ -69,6 +64,7 @@ const MyUsers = () => {
       });
     }
   };
+
   const getInitials = (name) => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
@@ -81,7 +77,7 @@ const MyUsers = () => {
   const renderSection = () => {
     switch (activeSection) {
       case 'personal-info':
-        return <PersonalProfile user={user} setUser={setUser} />;
+        return <PersonalProfile />;
       case 'payments':
         return <PaymentMethods />;
       case 'addresses':
@@ -97,7 +93,7 @@ const MyUsers = () => {
       case 'settings':
         return <Settings />;
       default:
-        return <PersonalProfile user={user} setUser={setUser} />;
+        return <PersonalProfile />;
     }
   };
 
@@ -111,6 +107,14 @@ const MyUsers = () => {
     { id: 'settings', label: 'Settings' },
     { id: 'feedback', label: 'Feedback' },
   ];
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>Please log in to view your dashboard.</div>;
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen">

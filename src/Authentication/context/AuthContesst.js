@@ -1,6 +1,5 @@
-// AuthContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { getStoredUsers, storeUser, updateUser } from '../utils/authUtils';
+import { getStoredUsers, storeUser, removeUser } from '../utils/authUtils';
 
 const AuthContext = createContext();
 
@@ -80,21 +79,6 @@ export const AuthProvider = ({ children }) => {
       } else {
         throw new Error('User not found');
       }
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateUserProfile = async (updatedUserData) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const updatedUser = { ...user, ...updatedUserData };
-      updateUser(updatedUser);
-      setUser(updatedUser);
-      localStorage.setItem('currentUser', JSON.stringify(updatedUser));
     } catch (error) {
       setError(error.message);
     } finally {

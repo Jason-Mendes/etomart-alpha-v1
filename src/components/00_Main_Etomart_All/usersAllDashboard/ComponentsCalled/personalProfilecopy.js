@@ -1,49 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import { Edit, Trash2, User, Save } from 'lucide-react';
-import { useAuth } from '../../../../Authentication/context/AuthContext';
-import { profileUpdateSchema } from '../../../../Authentication/validation/authValidationSchemas';
-import { formatUserData, maskSensitiveInfo } from '../../../../Authentication/utils/userProfileUtils';
+import { Edit, Trash2, User } from 'lucide-react';
+import React, { useState } from 'react';
 import UnavailableFeatureOverlay from '../../../UnavailableFeatureOverlay';
 
-const PersonalProfile = () => {
-  const { user, updateUserProfile, loading } = useAuth();
-  const [isEditing, setIsEditing] = useState(false);
+const PersonalProfile = ({ user, setUser }) => {
   const [favorites, setFavorites] = useState([]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return <div>Please log in to view your profile.</div>;
-  }
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        updateUserProfile({ profileImage: reader.result });
+        setUser(prevUser => ({
+          ...prevUser,
+          profileImage: reader.result,
+          useInitials: false
+        }));
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleDeleteImage = () => {
-    updateUserProfile({ profileImage: null, useInitials: true });
+    setUser(prevUser => ({
+      ...prevUser,
+      profileImage: null,
+      useInitials: true
+    }));
   };
 
   const handleAddFavorite = () => {
+    // This would typically open a modal or navigate to a page to add a favorite
     console.log('Add favorite');
   };
 
-  const getInitials = (name, surname) => {
-    return `${name[0]}${surname[0]}`.toUpperCase();
+  const getInitials = (name) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
   const toggleInitials = () => {
-    updateUserProfile({ useInitials: !user.useInitials });
+    setUser(prevUser => ({
+      ...prevUser,
+      useInitials: !prevUser.useInitials
+    }));
   };
 
   return (
@@ -54,7 +52,7 @@ const PersonalProfile = () => {
           <div className="relative mb-4">
             <div className="w-24 h-24 bg-orange-200 rounded-full flex items-center justify-center overflow-hidden">
               {user.useInitials ? (
-                <span className="text-4xl font-bold text-orange-600">{getInitials(user.name, user.surname)}</span>
+                <span className="text-4xl font-bold text-orange-600">{getInitials(user.name)}</span>
               ) : user.profileImage ? (
                 <img
                   src={user.profileImage}
@@ -82,7 +80,7 @@ const PersonalProfile = () => {
             </button>
           </div>
           <div className="text-center">
-            <h2 className="text-2xl font-semibold mb-2">{`${user.name} ${user.surname}`}</h2>
+            <h2 className="text-2xl font-semibold mb-2">{user.name}</h2>
             <button
               onClick={toggleInitials}
               className="bg-white text-orange-600 px-4 py-2 rounded-full text-sm font-medium border border-orange-600 hover:bg-orange-50 transition-colors duration-200"
@@ -91,102 +89,16 @@ const PersonalProfile = () => {
             </button>
           </div>
         </div>
-        
-        <Formik
-          initialValues={formatUserData(user)}
-          validationSchema={profileUpdateSchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            try {
-              await updateUserProfile(values);
-              setIsEditing(false);
-            } catch (error) {
-              console.error('Error updating profile:', error);
-            } finally {
-              setSubmitting(false);
-            }
-          }}
-        >
-          {({ errors, touched, isSubmitting }) => (
-            <Form className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                <Field
-                  type="text"
-                  name="name"
-                  id="name"
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm ${errors.name && touched.name ? 'border-red-500' : ''}`}
-                  disabled={!isEditing}
-                />
-                {errors.name && touched.name && <div className="text-red-500 text-sm mt-1">{errors.name}</div>}
-              </div>
-
-              <div>
-                <label htmlFor="surname" className="block text-sm font-medium text-gray-700">Surname</label>
-                <Field
-                  type="text"
-                  name="surname"
-                  id="surname"
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm ${errors.surname && touched.surname ? 'border-red-500' : ''}`}
-                  disabled={!isEditing}
-                />
-                {errors.surname && touched.surname && <div className="text-red-500 text-sm mt-1">{errors.surname}</div>}
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                <Field
-                  type="email"
-                  name="email"
-                  id="email"
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm ${errors.email && touched.email ? 'border-red-500' : ''}`}
-                  disabled={!isEditing}
-                />
-                {errors.email && touched.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
-              </div>
-
-              <div>
-                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                <Field
-                  type="tel"
-                  name="phoneNumber"
-                  id="phoneNumber"
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm ${errors.phoneNumber && touched.phoneNumber ? 'border-red-500' : ''}`}
-                  disabled={!isEditing}
-                />
-                {errors.phoneNumber && touched.phoneNumber && <div className="text-red-500 text-sm mt-1">{errors.phoneNumber}</div>}
-              </div>
-
-              {isEditing ? (
-                <div className="flex justify-end space-x-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsEditing(false)}
-                    className="bg-white text-gray-700 px-4 py-2 rounded-md text-sm font-medium shadow-sm hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm hover:bg-orange-700 transition-colors duration-200 flex items-center"
-                  >
-                    <Save size={16} className="mr-2" />
-                    {isSubmitting ? 'Saving...' : 'Save Changes'}
-                  </button>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setIsEditing(true)}
-                  className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm hover:bg-orange-700 transition-colors duration-200 flex items-center"
-                >
-                  <Edit size={16} className="mr-2" />
-                  Edit Profile
-                </button>
-              )}
-            </Form>
-          )}
-        </Formik>
+        <div className="space-y-4 mt-6">
+          <div>
+            <h3 className="text-sm font-medium text-gray-500">Email</h3>
+            <p className="mt-1">{user.email}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-500">Phone number</h3>
+            <p className="mt-1">{user.phoneNumber}</p>
+          </div>
+        </div>
       </div>
 
       {/* Your Favorites Section */}

@@ -1,4 +1,4 @@
-// Utility function to format user data
+// userProfileUtils.js
 export const formatUserData = (userData) => {
   return {
     id: userData.id || '',
@@ -7,7 +7,8 @@ export const formatUserData = (userData) => {
     phoneNumber: userData.phoneNumber || '',
     email: userData.email || '',
     namibianId: userData.namibianId || '',
-    // Add more fields as needed
+    profileImage: userData.profileImage || null,
+    useInitials: userData.useInitials || false,
   };
 };
 
@@ -45,4 +46,12 @@ export const maskSensitiveInfo = (info, showLast = 4) => {
   if (!info) return '';
   const length = info.length;
   return '*'.repeat(length - showLast) + info.slice(-showLast);
+};
+
+export const validateProfileData = (profileData) => {
+  const errors = {};
+  if (!profileData.name) errors.name = 'Name is required';
+  if (!profileData.email) errors.email = 'Email is required';
+  if (!profileData.phoneNumber) errors.phoneNumber = 'Phone number is required';
+  return errors;
 };
