@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../Authentication/context/AuthContext";
-import { ChevronUp, ChevronDown, User } from 'lucide-react';
+import { ChevronUp, ChevronDown, ChevronRight, User } from 'lucide-react';
 import AuthenticatedLoginModal from "./Modals/AuthenticatedLoginModal";
 import AuthenticatedSignupModal from "./Modals/AuthenticatedSignupModal";
 import ForgotPasswordModal from "./Modals/ForgotPasswordModal";
@@ -69,6 +69,10 @@ const LPNavBar = () => {
     closeModal: closeModals,
   };
 
+  const getInitials = (name, surname) => {
+    return `${name?.[0] || ''}${surname?.[0] || ''}`.toUpperCase();
+  };
+
   return (
     <div>
       <nav
@@ -99,24 +103,35 @@ const LPNavBar = () => {
                     <div className="p-4">
                       <button
                         onClick={handleEditProfile}
-                        className="mb-2 w-full rounded-md py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]"
+                        className="mb-2 w-full rounded-md py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b] flex items-center justify-between"
                       >
-                        Edit Profile
+                        <div className="flex items-center">
+                          <div className="flex w-8 h-8 bg-orange-200 rounded-full items-center justify-center mr-2 overflow-hidden">
+                            <span className="text-sm font-bold text-orange-600">
+                              {getInitials(user.name, user.surname)}
+                            </span>
+                          </div>
+                          <span>Edit Profile</span>
+                        </div>
+                        <ChevronRight size={16} className="mr-12" />
                       </button>
-                      <div className="mb-2">
-                        <select
-                          value={currentLanguage}
-                          onChange={(e) => setCurrentLanguage(e.target.value)}
-                          className="w-full rounded-md bg-[#ffaf5e4b] px-3 py-2 text-[#ee9613]"
-                        >
-                          <option value="English">English</option>
-                          <option value="Deutsch">Deutsch</option>
-                          <option value="Français">Français</option>
-                          <option value="Español">Español</option>
-                          <option value="Русский">Русский</option>
-                          <option value="中文">中文</option>
-                        </select>
-                      </div>
+                      <hr className="border-gray-200" />
+                <div className=" w-full py-2 text-center">
+                  <select
+                    id="language-selector"
+                    value={currentLanguage}
+                    onChange={(e) => setCurrentLanguage(e.target.value)}
+                    className="mt-1 block w-full rounded-md border bg-[#ffaf5e4b] bg-white px-3 py-2 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
+                    aria-label="Select language"
+                  >
+                    <option value="English">English</option>
+                    <option value="Deutsch">Deutsch</option>
+                    <option value="Français">Français</option>
+                    <option value="Español">Español</option>
+                    <option value="Русский">Русский</option>
+                    <option value="中文">中文</option>
+                  </select>
+                </div>
                       <button
                         className="mb-2 w-full rounded-md py-2 text-left text-[#ee9613] hover:bg-[#ffaf5e4b]"
                       >
