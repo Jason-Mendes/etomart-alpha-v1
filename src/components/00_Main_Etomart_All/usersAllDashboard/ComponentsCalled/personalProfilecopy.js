@@ -1,6 +1,6 @@
 import { Edit, Trash2, User } from 'lucide-react';
 import React, { useState } from 'react';
-import UnavailableFeatureOverlay from '../../../UnavailableFeatureOverlay';
+import UnavailableFeatureOverlay from '../../../common/UnavailableFeatureOverlay';
 
 const PersonalProfile = ({ user, setUser }) => {
   const [favorites, setFavorites] = useState([]);

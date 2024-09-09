@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle, CreditCard, Plus, Trash2, XCircle } from 'lucide-react';
 import React, { useState } from 'react';
-import UnavailableFeatureOverlay from '../../../UnavailableFeatureOverlay';
+import UnavailableFeatureOverlay from '../../../common/UnavailableFeatureOverlay';
 const PaymentMethods = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [isAddingNew, setIsAddingNew] = useState(false);

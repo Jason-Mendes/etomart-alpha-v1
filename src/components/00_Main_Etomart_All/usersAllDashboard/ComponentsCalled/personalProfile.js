@@ -4,7 +4,7 @@ import { Edit, Trash2, User, Save } from 'lucide-react';
 import { useAuth } from '../../../../Authentication/context/AuthContext';
 import { profileUpdateSchema } from '../../../../Authentication/validation/authValidationSchemas';
 import { formatUserData, maskSensitiveInfo } from '../../../../Authentication/utils/userProfileUtils';
-import UnavailableFeatureOverlay from '../../../UnavailableFeatureOverlay';
+import UnavailableFeatureOverlay from '../../../common/UnavailableFeatureOverlay';
 
 const PersonalProfile = () => {
   const { user, updateUserProfile, loading } = useAuth();
