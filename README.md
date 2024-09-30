@@ -165,6 +165,11 @@ A robust infrastructure is the foundation for innovative platforms.
 
 ![image](https://github.com/Jason-Mendes/etomart/assets/67435959/12684e5e-2ff0-4db3-af82-b0e21c7cc7ea)
 
+### 5. System Architecture Diagram/High-Level Architecture Diagram
+A High-Level Architecture Diagram
+
+![alt text](image-1.png)
+
 ## Periodic Table of DevOps Tools
 
 ![image](https://github.com/Jason-Mendes/etomart/assets/67435959/2d38a9a9-c704-4d95-811d-6262598f39e7)
