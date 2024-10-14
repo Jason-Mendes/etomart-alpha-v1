@@ -338,52 +338,83 @@ const LandingPage = () => {
       />
       <LPNavBar />
       <div id="Landing_Page_Main_Body" className="content-wrapper">
-        <div className="overflow-auto bg-[#fafafa]">
-          {/* Hero Section */}
-          <div className="border-white-A700_19 relative w-full overflow-auto rounded-r-[150px] rounded-bl-[150px] border border-solid bg-[#ee9613] p-4 shadow-xl">
-            <div id="text_1_image_container" className="relative">
-              <div className="container mx-auto flex flex-row items-center rounded-b-[150px] px-10 md:flex-row">
+  <div className="overflow-auto">
+    {/* Hero Section */}
+    <div className="border-white-A700_19 relative w-full overflow-auto rounded-r-[150px] rounded-bl-[150px] border border-solid lg:bg-[#ee9613] md:bg-[#ee9613] md:opacity-100 lg:opacity-100 bg-[#000000] opacity-95 p-4 shadow-xl">
+      {/* Small screen layout - Unchanged */}
+      <div className="container mx-auto flex flex-col items-center justify-between px-4 sm:hidden">
+        {/* Text Section */}
+        <div id="text_container" className="z-10 flex flex-col items-start justify-center text-left w-full space-y-4 p-4">
+          <p className="text-[#ee9613] font-Agbalumo font-bold text-3xl leading-tight">
+            Your Daily Food<br />
+            Delivered<br />
+            Hot & Fresh
+          </p>
+          <p className="text-white font-josefin_sans text-base font-bold">
+            Groceries, Meals, Pharmacies, anything!
+          </p>
+        </div>
+        {/* Image Section */}
+        <div className="w-full h-full absolute inset-0">
+          <img
+            className="w-full h-full object-cover opacity-50"
+            src="/images/Main_groceries_reverse.jpg"
+            loading="lazy"
+            alt="Groceries"
+          />
+        </div>
+      </div>
+
+      {/* Large screen layout - Modified */}
+      <div className="hidden sm:block">
+        <div id="text_1_image_container" className="relative">
+          <div className="container mx-auto flex flex-row items-center rounded-b-[150px] px-10 md:flex-row">
+            <div
+              id="text_1_container"
+              className="relative flex items-center justify-between p-2 pb-14 md:pb-20"
+              style={{ width: "100%", margin: "0 auto" }}
+            >
+              <p className="text-black-900 relative text-nowrap font-Agbalumo font-bold sm:text-3xl md:text-4xl lg:ml-24 lg:text-5xl xl:text-5xl 2xl:text-6xl">
+                Your Daily Food
+                <br />
+                Delivered
+                <br />
+                Hot & Fresh
+              </p>
+            </div>
+            <div
+              id="text_1_image_container"
+              className="mr-2 flex flex-row items-center justify-evenly md:mr-2 md:flex-row md:gap-0 md:p-2 lg:gap-16 xl:gap-20 2xl:gap-72"
+              style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
+            >
+              <div id="image_container" className="relative m-2 px-10">
+                <img
+                  className="relative h-auto w-96 rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] object-cover md:h-60 md:w-screen lg:h-64 lg:w-screen xl:h-72 xl:w-screen 2xl:h-80 2xl:w-screen"
+                  src="/images/Main_groceries_reverse.jpg"
+                  loading="lazy"
+                  alt="Groceries"
+                />
                 <div
-                  id="text_1_container"
-                  className="relative flex items-center justify-between p-2 pb-14 md:pb-20"
-                  style={{ width: "100%", margin: "0 auto" }}
+                  id="text_2_container"
+                  className="relative flex w-auto flex-col items-center justify-center p-2"
                 >
-                  <p className="text-black-900 relative text-nowrap font-Agbalumo font-bold sm:text-3xl md:text-4xl lg:ml-24 lg:text-5xl xl:text-5xl 2xl:text-6xl">
-                    Your Daily Food
-                    <br />
-                    Delivered
-                    <br />
-                    Hot & Fresh
+                  <p
+                    className="whitespace-nowrap text-center font-josefin_sans text-xs font-bold text-white sm:text-base md:text-2xl lg:text-3xl xl:text-3xl 2xl:text-5xl"
+                    style={{ width: "100%", margin: "0 auto" }}
+                  >
+                    Groceries, Meals, Pharmacies, anything!
                   </p>
-                </div>
-                <div
-                  id="text_1_image_container"
-                  className="mr-2 flex flex-row items-center justify-evenly md:mr-2 md:flex-row md:gap-0 md:p-2 lg:gap-16 xl:gap-20 2xl:gap-72"
-                  style={{ width: "100%", maxWidth: "100vw", margin: "0 auto" }}
-                >
-                  <div id="image_container" className="relative m-2 px-10">
-                    <img
-                      className="relative h-auto w-96 rounded-bl-[200px] rounded-br-[126px] rounded-tr-[200px] object-cover md:h-60 md:w-screen lg:h-64 lg:w-screen xl:h-72 xl:w-screen 2xl:h-80 2xl:w-screen"
-                      src="/images/Main_groceries_reverse.jpg"
-                      loading="lazy"
-                      alt="Groceries"
-                    />
-                    <div
-                      id="text_2_container"
-                      className="relative flex w-auto flex-col items-center justify-center p-2"
-                    >
-                      <p
-                        className="whitespace-nowrap text-center font-josefin_sans text-xs font-bold text-white sm:text-base md:text-2xl lg:text-3xl xl:text-3xl 2xl:text-5xl"
-                        style={{ width: "100%", margin: "0 auto" }}
-                      >
-                        Groceries, Meals, Pharmacies, anything!
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  
+  
+
+  
 
           {/* Location Buttons Section */}
           <div className="container mx-auto px-4">
