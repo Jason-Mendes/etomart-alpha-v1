@@ -152,20 +152,25 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 ## Development Pipeline
 
 ### 1. Process
+Software Development Fundamentals.
+
+![gif](1729582086078.gif)
+
+### 2. Process
 Processes must enable faster feedback cycles and create a culture for learning 
 
-### 2. Architecture
+### 3. Architecture
 Architecture should be agile for change and resilient to failure
 
-### 3. Technology
+### 4. Technology
 Technology is imperative for innovation, increasing productivity and maximizing impact
 
-### 4. Infrastructure
+### 5. Infrastructure
 A robust infrastructure is the foundation for innovative platforms.
 
 ![image](https://github.com/Jason-Mendes/etomart/assets/67435959/12684e5e-2ff0-4db3-af82-b0e21c7cc7ea)
 
-### 5. System Architecture Diagram/High-Level Architecture Diagram
+### 6. System Architecture Diagram/High-Level Architecture Diagram
 A High-Level Architecture Diagram
 
 ![alt text](image-1.png)
